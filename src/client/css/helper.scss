@@ -1,0 +1,54 @@
+//@import "color.scss";
+
+@mixin bg-img($url) {
+  background: url($url) center;
+  background-size: cover;
+}
+
+@mixin line($color) {
+  display: inline-block;
+  padding: 4px 16px;
+  background: $color;
+  border-radius: 30px;
+  margin-bottom: 8px;
+}
+
+@mixin button-effect-white($color) {
+  transition: 0.4s;
+
+  &:hover, &:active {
+    background: $color;
+    color: white;
+  }
+}
+
+@mixin box-shadow {
+  box-shadow: -2px -2px 8px rgba(0, 0, 0, 0.1), 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@mixin box-shadow-down($y) {
+  box-shadow: 0 $y 4px rgba(0, 0, 0, 0.2);
+}
+
+.ellip {
+  display: block;
+  height: 100%;
+}
+
+.ellip-line {
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  max-width: 100%;
+}
+
+.ellip,
+.ellip-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.none {
+  display: none;
+}

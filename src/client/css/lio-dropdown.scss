@@ -1,0 +1,53 @@
+.lio-dropdown {
+  .lio-dropdown-button {
+    display: block;
+    background: $blue;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 8px;
+    position: relative;
+
+    i {
+      position: absolute;
+      right: 16px;
+      color: #FFF;
+      font-size: 20px;
+    }
+  }
+
+  .group {
+    z-index: 100 !important;
+    display: none;
+    position: absolute;
+    background: white;
+    padding: 16px;
+    left: 24px;
+    right: 24px;
+    border: 1px solid $light-grey;
+    @include box-shadow;
+
+    label {
+      display: flex;
+      align-items: center;
+      span {
+        display: block;
+        margin-right: auto;
+      }
+      input {
+        display: block;
+      }
+    }
+
+    .button {
+      display: block;
+      background: $blue;
+      color: white;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 8px;
+    }
+
+  }
+
+}
