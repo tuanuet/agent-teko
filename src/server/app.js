@@ -1,37 +1,27 @@
-const express = require('express');
-const path = require('path');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-require('dotenv').config({path: '.env'});
-const chalk = require('chalk');
-/**
- * Create Express server.
- */
-const app = express();
-/**
- * Express configuration.
- */
-app.set('port', process.env.PORT || 3000);
-app.use(logger('dev'));
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-    res.header('access-control-allow-methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    next();
+
+var path = require('path');
+var webpack = require('webpack');
+var express = require('express');
+const webpackConfig = require('../../webpack.config');
+let compiler = webpack(webpackConfig);
+let app = express();
+
+app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: false, publicPath: webpackConfig.output.publicPath
+}));
+
+
+app.use(require('webpack-hot-middleware')(compiler));
+app.use(express.static(path.join(__dirname, '../../static')));
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../static/index.html'));
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use('/', express.static(path.join(__dirname, '../..', 'static')));
+app.listen(3000, function(err) {
+    if (err) {
+        return console.error(err);
+    }
 
-var server = require('http').createServer(app);
-
-server.listen(app.get('port'), () => {
-    console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env'));
-    console.log('  Press CTRL-C to stop\n');
+    console.log('Listening at http://localhost:3000/');
 });
-
-
-
-
-

@@ -1,19 +1,33 @@
 const path = require('path');
+const webpack = require('webpack');
+
 module.exports = {
-    entry: ['babel-polyfill', './src/client/index.js'],
+
+    devtool: 'cheap-module-eval-source-map',
+    entry: [
+        'babel-polyfill', // Necessary for hot reloading with IE
+        'webpack-hot-middleware/client?reload=true',
+        './src/client/index'
+    ],
     output: {
-        path: path.resolve(__dirname, './static/dist'),
+        path: path.join(__dirname, 'static'),
         filename: 'bundle.js',
-        publicPath: '/dist/'
+        publicPath: '/'
     },
+    plugins: [
+	    new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+    ],
+
     module: {
         loaders: [
             {
                 test: /.js?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
-                query: {
-                    presets: ['es2015', 'react', 'stage-0']
+                options: {
+                    presets: ['es2015','react']
                 }
             },
             {
@@ -22,8 +36,11 @@ module.exports = {
             },
             {
                 test: /\.woff|\.svg|\.ttf|\.eot|\.woff2/, loader: 'url-loader'
-            }
+            }, {
+                test: /\.json$/,
+                loader: 'json-loader',
+            },
         ]
+
     }
 };
-

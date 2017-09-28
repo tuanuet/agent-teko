@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import Chatbox from '../../components/Chatbox';
 import Scroll from '../../components/Scroll';
 import BottomBarContainer from '../BottomBarContainer';
-import {getMetaLink} from "../BottomBarContainer/actions";
 
 class ChatboxContainer extends React.Component {
 

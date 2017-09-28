@@ -57,3 +57,4 @@ uploads/
 /src/client/constants/Server.js
 !/src/client/constants/Server.js
 /package-lock.json
+/static/bundle.js
