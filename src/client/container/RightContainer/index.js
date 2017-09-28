@@ -51,7 +51,7 @@ class RightContainer extends React.Component {
 
                     <div className="px-md py-sm note-item">
                         <div className="note-item-content d-flex">
-                            <div className="pr-sm ps-type-ellipsis" contentEditable={true}>
+                            <div className="pr-sm ps-type-ellipsis" >
                                 This is the first note of this roome 2134e21321321r32444444444444444444444452345235
                             </div>
                             <div className="note-item-timestamp d-flex">
