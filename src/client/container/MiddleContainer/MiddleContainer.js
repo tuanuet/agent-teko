@@ -36,8 +36,12 @@ class MiddleContainer extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     return {};
 }
 
-export default connect(mapStateToProps)(MiddleContainer);
+function mapDispatchToProps(dispatch) {
+    return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MiddleContainer);

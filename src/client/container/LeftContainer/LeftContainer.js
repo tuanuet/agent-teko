@@ -11,8 +11,12 @@ class LeftContainer extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     return {};
 }
 
-export default connect(mapStateToProps)(LeftContainer);
+function mapDispatchToProps(dispatch) {
+    return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeftContainer);

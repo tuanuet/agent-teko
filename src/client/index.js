@@ -3,8 +3,11 @@ import ReactDom from 'react-dom';
 import {Provider} from 'react-redux';
 import store from './store/store';
 import App from './container/App/App';
+import startConnection from './middleware/socketMiddleware';
 require('babel-core/register');
 require('babel-polyfill');
+
+startConnection(store);
 
 /**
  * Create DOM with id chat-root

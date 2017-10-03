@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import RightComponent from '../../components/right/RightComponent';
+import {bindActionCreators} from 'redux';
 
 class RightContainer extends React.Component {
 
@@ -11,8 +12,12 @@ class RightContainer extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     return {};
 }
 
-export default connect(mapStateToProps)(RightContainer);
+function mapDispatchToProps(dispatch) {
+    return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RightContainer);
