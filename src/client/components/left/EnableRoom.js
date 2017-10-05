@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
+import _ from 'lodash';
 
-const AvailableTabPanel = () => {
+const EnableRoom = ({enableRoom}) => {
     return (
-        <div className="tab-pane active" id="chat" role="tabpanel">
+        <div className="tab-pane" id="unchat" role="tabpanel">
             <div className="room-item">
                 <div className="customer-control">
                     <img
@@ -11,16 +12,16 @@ const AvailableTabPanel = () => {
                 </div>
                 <div className="customer-info">
                     <div className="title">
-                        <div className="name">Vu Tuan</div>
+                        <div className="name">{enableRoom.customer.customerName}</div>
                         <div className="timer">
-                            <span>10:20 PM</span>
+                            <span>{enableRoom.createdAt}</span>
                         </div>
                     </div>
                     <div className="d-flex justify-content-between">
-                        <div className="last-massage">hello
-                            worldasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf!
+                        <div className="last-massage new-message">
+                            {_.last(enableRoom.messages).content}
                         </div>
-                        <i className="fa fa-paperclip" aria-hidden="true"></i>
+                        <i className="fa fa-exclamation-triangle text-red" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
@@ -28,4 +29,8 @@ const AvailableTabPanel = () => {
     );
 };
 
-export default AvailableTabPanel;
+EnableRoom.propTypes = {
+    enableRoom: PropTypes.object.isRequired
+};
+
+export default EnableRoom;

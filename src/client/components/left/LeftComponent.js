@@ -1,19 +1,31 @@
 import React, {PropTypes} from 'react';
 import SearchBar from './SearchBar';
 import TabBar from './TabBar';
-import AvailableTabPanel from './AvailableTabPanel';
-import EnableTabPanel from './EnableTabPanel';
-const LeftComponent = () => {
+import AvailableRooms from './AvailableRooms';
+import EnableRooms from './EnableRooms';
+const LeftComponent = ({rooms}) => {
+    let availableRooms = rooms.filter(room => {
+        return room.status === 2;
+    });
+
+    let enableRooms = rooms.filter(room => {
+        return room.status === 1;
+    });
+
     return(
         <div className="left">
             <TabBar/>
             <SearchBar/>
             <div className="tab-content">
-                <AvailableTabPanel/>
-                <EnableTabPanel/>
+                <AvailableRooms availableRooms={availableRooms}/>
+                <EnableRooms enableRooms={enableRooms}/>
             </div>
         </div>
     );
+};
+
+LeftComponent.propTypes = {
+    rooms: PropTypes.array.isRequired
 };
 
 export default LeftComponent;

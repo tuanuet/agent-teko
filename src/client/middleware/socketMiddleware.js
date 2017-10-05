@@ -1,9 +1,5 @@
 import io from 'socket.io-client';
-// import * as types from '../actions/actionTypes';
-// import * as messageActions from '../actions/messageActions';
-// import * as tabActions from '../actions/tabActions';
-// import * as roomActions from '../actions/roomActions';
-// import * as config from '../config/config';
+
 import axios from 'axios';
 
 let socket = null;
@@ -55,9 +51,7 @@ export function socketMiddleware() {
 export default async function(Store) {
     store = Store;
     socket = io('http://localhost:3000');
-    console.log("socket", socket);
-    // let adminId = await axios.get('http://local.chat.com/api/get-admin-id').then(res => res.data);
-    let adminId = 1;
+    let adminId = await axios.get('http://local.chat.com/api/get-admin-id').then(res => res.data);
     socket.emit('admin-join-default-room',{adminId: adminId}, function (ack) {
 
     });

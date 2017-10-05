@@ -4,11 +4,12 @@ import {Provider} from 'react-redux';
 import store from './store/store';
 import App from './container/App/App';
 import startConnection from './middleware/socketMiddleware';
+import {fetchRooms} from './container/LeftContainer/roomActions';
 require('babel-core/register');
 require('babel-polyfill');
 
 startConnection(store);
-
+store.dispatch(fetchRooms());
 /**
  * Create DOM with id chat-root
  * for rendering
