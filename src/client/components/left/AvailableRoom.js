@@ -12,7 +12,7 @@ const AvailableRoom = ({availableRoom}) => {
             </div>
             <div className="customer-info">
                 <div className="title">
-                    <div className="name">{availableRoom.customer.customerName}</div>
+                    <div className="name">{availableRoom.customers[0].customerName}</div>
                     <div className="timer">
                         <span>{availableRoom.createdAt}</span>
                     </div>

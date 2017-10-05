@@ -12,7 +12,7 @@ const EnableRoom = ({enableRoom}) => {
                 </div>
                 <div className="customer-info">
                     <div className="title">
-                        <div className="name">{enableRoom.customer.customerName}</div>
+                        <div className="name">{enableRoom.customers[0].customerName}</div>
                         <div className="timer">
                             <span>{enableRoom.createdAt}</span>
                         </div>
