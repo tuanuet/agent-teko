@@ -4,10 +4,10 @@ import {fetchMetadataSuccess, fetchMetadataFailure,} from './actions';
 import {FETCH_META, UPLOAD_IMAGE,} from './constants';
 import {API_GET_METADATA_URL, API_UPLOAD_IMAGE_URL} from '../../constants/Server';
 
-// function fetchMetadata(link) {
-//     return fetch(API_GET_METADATA_URL + link)
-//         .then(resolve => resolve.json());
-// }
+function fetchMetadata(link) {
+    return fetch(API_GET_METADATA_URL + link)
+        .then(resolve => resolve.json());
+}
 
 function uploadImage(form) {
     return fetch(API_UPLOAD_IMAGE_URL, {
@@ -16,16 +16,16 @@ function uploadImage(form) {
     }).then(resolve => resolve.json());
 }
 
-// function* handleFetMetaLink(action) {
-//     try {
-//         const {meta} = yield call(fetchMetadata, action.link);
-//         yield put(fetchMetadataSuccess({meta}));
-//         yield put(updateMessageMetadata(action.content, meta.title, meta.description, meta.image));
-//     } catch (err) {
-//         console.error('FETCH META DATA FAIL!', err.message);
-//         yield put(fetchMetadataFailure(err.message));
-//     }
-// }
+function* handleFetMetaLink(action) {
+    try {
+        const {meta} = yield call(fetchMetadata, action.link);
+        yield put(fetchMetadataSuccess({meta}));
+        yield put(updateMessageMetadata(action.content, meta.title, meta.description, meta.image));
+    } catch (err) {
+        console.error('FETCH META DATA FAIL!', err.message);
+        yield put(fetchMetadataFailure(err.message));
+    }
+}
 
 function* handleUploadImage(action) {
     try {
@@ -46,6 +46,6 @@ export function* uploadImageSaga() {
     yield takeEvery(UPLOAD_IMAGE, handleUploadImage);
 }
 
-// export function* fetchMetaLinkSaga() {
-//     yield takeEvery(FETCH_META, handleFetMetaLink);
-// }
+export function* fetchMetaLinkSaga() {
+    yield takeEvery(FETCH_META, handleFetMetaLink);
+}
