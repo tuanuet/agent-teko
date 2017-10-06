@@ -3,7 +3,7 @@ import SearchBar from './SearchBar';
 import TabBar from './TabBar';
 import AvailableRooms from './AvailableRooms';
 import EnableRooms from './EnableRooms';
-const LeftComponent = ({rooms}) => {
+const LeftComponent = ({rooms, adminChooseRoom}) => {
     let availableRooms = rooms.filter(room => {
         return room.status === 2;
     });
@@ -14,10 +14,13 @@ const LeftComponent = ({rooms}) => {
 
     return(
         <div className="left">
-            <TabBar/>
+            <TabBar numberOfEnableRooms={enableRooms.length}/>
             <SearchBar/>
             <div className="tab-content">
-                <AvailableRooms availableRooms={availableRooms}/>
+                <AvailableRooms
+                    availableRooms={availableRooms}
+                    adminChooseRoom={adminChooseRoom}
+                />
                 <EnableRooms enableRooms={enableRooms}/>
             </div>
         </div>
@@ -25,7 +28,8 @@ const LeftComponent = ({rooms}) => {
 };
 
 LeftComponent.propTypes = {
-    rooms: PropTypes.array.isRequired
+    rooms: PropTypes.array.isRequired,
+    adminChooseRoom: PropTypes.func.isRequired
 };
 
 export default LeftComponent;

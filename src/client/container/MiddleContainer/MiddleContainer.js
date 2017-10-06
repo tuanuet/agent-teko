@@ -25,19 +25,28 @@ class MiddleContainer extends React.Component {
     }
 
     render() {
-        $('#test').tooltip();
-        return (
-            <MiddleComponent
-                showTheme={this.showTheme}
-                theme={this.state.theme}
-                changeTheme={this.changeTheme}
-            />
-        );
+
+        const {currentRoomId} = this.props;
+        if (currentRoomId == 0) {
+            return <div>WELCOME</div>;
+        } else {
+            $('#test').tooltip();
+            return (
+                <MiddleComponent
+                    showTheme={this.showTheme}
+                    theme={this.state.theme}
+                    changeTheme={this.changeTheme}
+                />
+            );
+        }
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    return {};
+    return {
+        rooms: state.rooms,
+        currentRoomId: state.currentRoomId
+    };
 }
 
 function mapDispatchToProps(dispatch) {
