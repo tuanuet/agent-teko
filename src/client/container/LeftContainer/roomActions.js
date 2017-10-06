@@ -1,6 +1,6 @@
 import * as types from '../../constants/actionTypes';
 
-export function fetchRooms() {
+export function roomsFetchRequested() {
     return {type: types.ROOMS_FETCH_REQUESTED}
 }
 

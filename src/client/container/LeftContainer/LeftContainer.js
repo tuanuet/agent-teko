@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import LeftComponent from '../../components/left/LeftComponent';
 import {bindActionCreators} from 'redux';
 import * as roomActions from './roomActions';
+import * as chatActions from '../MiddleContainer/chatActions';
 
 class LeftContainer extends React.Component {
 
@@ -16,9 +17,10 @@ class LeftContainer extends React.Component {
      * @param event
      */
     adminChooseRoom(event) {
-        let roomId = event.target.value;
-        console.log("roomid", roomId);
+        console.log("choose room");
+        let roomId = event;
         this.props.actions.adminChooseRoom(roomId);
+        this.props.actions.messagesFetchRequested(roomId);
     }
 
     /**
@@ -27,7 +29,10 @@ class LeftContainer extends React.Component {
      */
     render() {
         const {rooms} = this.props;
-        console.log("rooms", rooms);
+        const {currentRoomId} = this.props;
+
+        console.log("current room id", currentRoomId);
+
         return (
             <LeftComponent
                 adminChooseRoom={this.adminChooseRoom}
@@ -39,13 +44,14 @@ class LeftContainer extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        rooms: state.rooms
+        rooms: state.rooms,
+        currentRoomId: state.currentRoomId
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({...{}, ...roomActions}, dispatch)
+        actions: bindActionCreators({...{}, ...roomActions, ...chatActions}, dispatch)
     };
 }
 

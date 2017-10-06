@@ -12,6 +12,7 @@ const LeftComponent = ({rooms, adminChooseRoom}) => {
         return room.status === 1;
     });
 
+
     return(
         <div className="left">
             <TabBar numberOfEnableRooms={enableRooms.length}/>
