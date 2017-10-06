@@ -88,27 +88,19 @@ class BottomBar extends React.Component {
 
     render() {
         return (
-            <div id="footer">
-                <div className="d-flex align-items-start">
-
-                    <div className="input">
-                        <input type="text" id="chat" placeholder="Type here!" onKeyPress={this.enter.bind(this)}
-                               ref="chat">
-                        </input>
-                    </div>
-                    <div className="icon-button">
-                        <i className="fa fa-smile-o" onClick={this.showEmojiBoard.bind(this)}/>
-                        <label>
-                            <input type="file" accept="image/*" ref="attach" onChange={this.uploadImage.bind(this)}/>
-                            <i className="fa fa-paperclip"/>
-                        </label>
-                        <i className="fa fa-paper-plane-o" onClick={this.send.bind(this)}/>
-                    </div>
-
-                    {this.state.isShowEmojiBoard ? <EmojiBoard/> : ''}
-
+            <div className="bottom">
+                <div className="chat-input">
+                    <input className="form-control" ref="chat" onKeyPress={this.enter.bind(this)} type="text" placeholder="Type here"/>
                 </div>
-
+                <div className="icon-button">
+                    <i className="fa fa-smile-o" onClick={this.showEmojiBoard.bind(this)}/>
+                    <label>
+                        <input type="file" accept="image/*" ref="attach" onChange={this.uploadImage.bind(this)}/>
+                        <i className="fa fa-paperclip"/>
+                    </label>
+                    <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true" onClick={this.send.bind(this)}></i></a>
+                </div>
+                {this.state.isShowEmojiBoard ? <EmojiBoard/> : ''}
             </div>
         );
     }

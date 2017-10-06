@@ -1,5 +1,8 @@
 export default {
-    rooms: [],
+    rooms: [{
+
+    }],
     activeRoomId: 0
     // numAjaxCallInProgress: 0
+
 };

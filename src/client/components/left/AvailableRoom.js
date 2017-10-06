@@ -19,7 +19,8 @@ const AvailableRoom = ({availableRoom}) => {
                 </div>
                 <div className="d-flex justify-content-between">
                     <div className="last-massage">
-                        {_.last(availableRoom.messages).content}
+                        {/*{_.last(availableRoom.messages).content}*/}
+                        dad
                     </div>
                     <i className="fa fa-paperclip" aria-hidden="true"></i>
                 </div>

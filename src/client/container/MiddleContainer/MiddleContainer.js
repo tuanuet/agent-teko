@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import MiddleComponent from '../../components/middle/MiddleComponent';
+import MiddleComponent from '../../components/Middle/index';
 
 class MiddleContainer extends React.Component {
     constructor(props) {

@@ -4,20 +4,14 @@ export default class Default extends React.Component {
     render() {
         let msg = this.props.msg;
         let metabox = msg.metadata ? <li className={msg.typeSender}><Metabox metadata={msg.metadata}/></li> : null;
+
         return (
             <div>
-                <li className={msg.typeSender}>
-                    <div className="msg">
-                        <p className="msg-name">{msg.sender}</p>
-                        <p>{msg.message.content}</p>
-                    </div>
-                </li>
-                {metabox}
-                <time>{msg.time}</time>
+                <div className={`chat-group ${msg.typeSender}`}>
+                    <div className="chat">{msg.message.content}</div>
+                </div>
             </div>
-        );
-
-
+        )
     }
 }
 
