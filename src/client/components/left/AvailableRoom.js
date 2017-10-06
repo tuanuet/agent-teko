@@ -1,12 +1,13 @@
 import React, {PropTypes} from 'react';
 import _ from 'lodash';
 
-const AvailableRoom = ({availableRoom}) => {
+const AvailableRoom = ({availableRoom, adminChooseRoom}) => {
     // let lastMessage =
+    console.log("3333", availableRoom.id);
     return (
-        <div className="room-item">
+        <div className="room-item" onClick={adminChooseRoom} value={availableRoom.id}>
             <div className="customer-control">
-                <img
+                <img value={availableRoom.id}
                     src="https://pluralsight.imgix.net/author/lg/70ada62d-cb01-4114-aa65-e3d18d0494ed.jpeg?w=200"
                     className="avatar" alt="image"/>
             </div>
@@ -20,7 +21,7 @@ const AvailableRoom = ({availableRoom}) => {
                 <div className="d-flex justify-content-between">
                     <div className="last-massage">
                         {/*{_.last(availableRoom.messages).content}*/}
-                        dad
+                        message
                     </div>
                     <i className="fa fa-paperclip" aria-hidden="true"></i>
                 </div>
@@ -30,7 +31,8 @@ const AvailableRoom = ({availableRoom}) => {
 };
 
 AvailableRoom.propTypes = {
-    availableRoom: PropTypes.object.isRequired
+    availableRoom: PropTypes.object.isRequired,
+    adminChooseRoom: PropTypes.func.isRequired
 };
 
 export default AvailableRoom;
