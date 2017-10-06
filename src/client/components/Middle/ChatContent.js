@@ -4,7 +4,7 @@ import {
     setAdmin,
     fetchMetadata
 } from '../../actions/action';
-import Scroll from '../Scroll'
+import Scroll from '../../container/ScrollContainer'
 import * as MessageTypes from '../../constants/MessageTypes';
 import {execLink} from '../../actions/execLink';
 

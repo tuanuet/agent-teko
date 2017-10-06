@@ -3,6 +3,13 @@ var path = require('path');
 var webpack = require('webpack');
 var express = require('express');
 var open = require('open');
+var cors = require('cors');
+
+var corsOptions = {
+    origin: 'http://local.chat.com',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 const webpackConfig = require('../../webpack.config');
 let compiler = webpack(webpackConfig);
 let app = express();
@@ -14,7 +21,7 @@ app.use(require("webpack-dev-middleware")(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 app.use(express.static(path.join(__dirname, '../../static')));
-
+app.use(cors(corsOptions));
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../../static/index.html'));
 });

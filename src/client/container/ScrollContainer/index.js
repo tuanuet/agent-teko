@@ -1,9 +1,9 @@
 import React from 'react';
-import ListMessage from '../ListMessage/index';
+import ListMessage from '../../components/ListMessage/index';
 import {connect} from 'react-redux';
 import {addMessage} from "../../actions/action";
 import * as MessageTypes from "../../constants/MessageTypes";
-import {getMetaLink} from "../../container/BottomBarContainer/actions";
+import {getMetaLink} from "../BottomBarContainer/actions";
 
 class Scroll extends React.Component {
     componentDidUpdate() {

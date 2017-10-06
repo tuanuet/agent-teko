@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Chatbox from '../../components/Chatbox';
-import Scroll from '../../components/Scroll';
+import Scroll from '../ScrollContainer';
 import BottomBarContainer from '../BottomBarContainer';
 
 class ChatboxContainer extends React.Component {
