@@ -2,13 +2,14 @@ import React from 'react';
 
 export default class Image extends React.Component {
     render() {
-        let msg = this.props.msg;
+        let message = this.props.message;
+        let role = message.messageFrom === 1 ? 'self' : 'other';
         return (
-            <li className={msg.typeSender}>
+            <li className={role}>
                 <div className="image">
                     <div className="content">
                         <img src={this.props.content} alt=""/>
-                        <time>{msg.time}</time>
+                        <time>{message.time}</time>
                     </div>
                 </div>
             </li>

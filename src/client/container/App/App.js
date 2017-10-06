@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import HeaderContainer from '../HeaderComponent/index';
 import LeftContainer from '../LeftContainer/LeftContainer';
 import MiddleContainer from '../MiddleContainer/MiddleContainer';
@@ -23,9 +22,4 @@ class App extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        hideForm: state.toggleForm,
-    };
-}
-export default connect(mapStateToProps)(App);
+export default (App);

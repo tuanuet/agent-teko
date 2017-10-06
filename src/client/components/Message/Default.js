@@ -4,6 +4,8 @@ export default class Default extends React.Component {
     render() {
         let message = this.props.message;
         // let metabox = msg.metadata ? <li className={msg.typeSender}><Metabox metadata={msg.metadata}/></li> : null;
+        // messageFrom === 1 then self
+        // todo : check right agent because many agent agentId === message.senderId
         let role = message.messageFrom === 1 ? 'self' : 'other';
         return (
             <div>

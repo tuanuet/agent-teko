@@ -71,11 +71,24 @@ export function setRoom(id) {
     };
 }
 
-
-export function setAdmin(name) {
+/**
+ * Init state for agent
+ * @returns {{type}}
+ */
+export function agentRequested() {
     return {
-        type: Types.SET_ADMIN,
-        assignee: name
+        type: Types.AGENT_INFO_FETCH_REQUESTED
+    };
+}
+export function agentSucceed(agent) {
+    return {
+        type: Types.AGENT_INFO_FETCH_SUCCEED,
+        agent
+    };
+}
+export function agentFailure() {
+    return {
+        type: Types.AGENT_INFO_FETCH_FAILED,
     };
 }
 

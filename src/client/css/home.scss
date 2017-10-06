@@ -147,6 +147,8 @@ header {
       right: 0;
       bottom: 50px;
       padding: 16px 0;
+      overflow-y: auto;
+      overflow-x: hidden;
 
       .chat-group {
         display: flex;

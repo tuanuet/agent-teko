@@ -1,7 +1,7 @@
 export default {
 
     rooms: [],
-    currentRoomId: null
-
+    currentRoomId: null,
+    agent : {}
 
 };

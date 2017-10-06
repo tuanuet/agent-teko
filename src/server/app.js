@@ -22,6 +22,7 @@ app.use(require("webpack-dev-middleware")(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 app.use(express.static(path.join(__dirname, '../../static')));
 app.use(cors(corsOptions));
+
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../../static/index.html'));
 });

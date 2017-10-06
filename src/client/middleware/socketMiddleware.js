@@ -1,6 +1,8 @@
 import io from 'socket.io-client';
 
 import axios from 'axios';
+import {addMessage, agentFailure,agentRequested,agentSucceed} from "../actions/action";
+import {execLink} from "../actions/execLink";
 
 let socket = null;
 
@@ -46,15 +48,45 @@ export function socketMiddleware() {
     };
 }
 
+// no use saga
+let initAgent = (store) => {
+    store.dispatch(agentRequested());
+    return axios.get('http://local.chat.com/api/get-admin-info')
+        .then(res => res.data)
+        .then(agent => {
+            store.dispatch(agentSucceed(agent));
+            return agent;
+        })
+        .catch(err => store.dispatch(agentFailure()));
+}
 
-
-export default async function(Store) {
-    store = Store;
+export default function(store) {
     socket = io('http://localhost:3000');
-    let adminId = await axios.get('http://local.chat.com/api/get-admin-id').then(res => res.data);
-    socket.emit('admin-join-default-room',{adminId: adminId}, function (ack) {
+
+    initAgent(store).then((agent) => {
+        // join default room
+        socket.emit('admin-join-default-room',{adminId: agent.id}, function (ack) {
+
+        });
+    });
+
+    socket.on('server-send-join-room', (({success}) => console.log(`join room ${success}`)));
+
+    socket.on('server-send-message', ({name, message, type}) => {
+        console.log({name, message, type});
+        let date = new Date().getHours() + ':' + new Date().getSeconds();
+
+        store.dispatch(addMessage({typeSender: 'other', sender: name, message: {content: message, type}, time: date}));
+
+        // detect link
+        // let link = execLink(message);
+        // if (link) {
+        //     store.dispatch(fetchMetadata(link, message));
+        // }
 
     });
+
+
 
 
     // socket.on('server-send-message', data => {
