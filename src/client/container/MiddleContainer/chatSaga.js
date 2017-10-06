@@ -7,9 +7,10 @@ import * as chatActions from './chatActions';
 function* fetchMessages(action) {
     try {
         const messages = yield call(chatApi.messagesFetchRequested, action.roomId);
-        yield put(chatActions.messagesFetchSucced(action.roomId, messages));
+        console.log("messages fetched", messages);
+        yield put(chatActions.messagesFetchSucceed(action.roomId, messages));
     } catch (e) {
-        console.log("fetch message failed", e.message);
+        console.log("fetch message failed", e);
         yield put({type: types.MESSAGES_FETCH_FAILED, message: e.message});
     }
 }

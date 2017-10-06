@@ -4,7 +4,7 @@ export function messagesFetchRequested(roomId) {
     return {type: types.MESSAGES_FETCH_REQUESTED, roomId}
 }
 
-export function messagesFetchSucced(roomId, messages) {
+export function messagesFetchSucceed(roomId, messages) {
     console.log(roomId, messages);
-    return {type: types.MESSAGES_FETCH_SUCCEED}
+    return {type: types.MESSAGES_FETCH_SUCCEED, roomId, messages}
 }
