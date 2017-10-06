@@ -25,8 +25,6 @@ function getListChat(messages) {
 
 class ListMessage extends React.Component {
 
-
-
     render() {
         let listMsg = getListChat(this.props.messages);
         return (

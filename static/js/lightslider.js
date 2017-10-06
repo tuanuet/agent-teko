@@ -30,7 +30,7 @@
         gallery: false,
         galleryMargin: 5,
         thumbMargin: 5,
-        currentPagerPosition: 'middle',
+        currentPagerPosition: 'Middle',
         enableTouch: true,
         enableDrag: true,
         freeMove: true,
@@ -615,7 +615,7 @@
                 case 'left':
                     position = 0;
                     break;
-                case 'middle':
+                case 'Middle':
                     position = (elSize / 2) - (thumbWidth / 2);
                     break;
                 case 'right':

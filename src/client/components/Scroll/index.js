@@ -22,10 +22,9 @@ class Scroll extends React.Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        console.log('props', this.props);
-        console.log('nextProps', nextProps);
-
+        if(nextProps.messages.length === 0) return;
         //Check for first message and add stay stun
+
         if (nextProps.messages.length === 1) {
             this.props.dispatch(addMessage({
                 typeSender: 'other',
@@ -36,7 +35,6 @@ class Scroll extends React.Component {
         }
 
         //Check metadata when refresh
-
         const index = nextProps.messages.length - 1;
         const newMessage = nextProps.messages[index];
         if (!newMessage.metadata) {
@@ -46,8 +44,9 @@ class Scroll extends React.Component {
     }
 
     render() {
+        let {theme} = this.props;
         return (
-            <div className="main" ref="main">
+            <div className={`body ${theme}`} ref="main">
                 <ListMessage messages={this.props.messages}/>
                 <div style={{float: 'left', clear: 'both'}}
                      ref={(el) => {
@@ -60,17 +59,6 @@ class Scroll extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return ({
-        getMetaData: (text) => {
-            let link = checkLink(text);
-            if (link) {
-                dispatch(getMetaLink(link, text));
-            }
-        },
-        dispatch: dispatch
-    });
-}
 
 const checkLink = (content) => {
     let patt = /\bhttps?:\/\/\S+\.([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal)\S*/i;
@@ -83,9 +71,25 @@ const checkLink = (content) => {
 };
 
 function mapToProps(state) {
+    let availableRoomId = state.activeRoomId;
+    let availableRoom = state.rooms[availableRoomId];
+    if(!availableRoom) return {messages : []};
+    let messages = availableRoom.messages;
     return {
-        messages: state.messages
+        messages
     };
 }
+function mapDispatchToProps(dispatch) {
+    return ({
+        getMetaData: (text) => {
+            let link = checkLink(text);
+            if (link) {
+                dispatch(getMetaLink(link, text));
+            }
+        },
+        dispatch: dispatch
+    });
+}
+
 
 export default connect(mapToProps, mapDispatchToProps)(Scroll);

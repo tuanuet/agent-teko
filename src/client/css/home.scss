@@ -239,8 +239,33 @@ header {
       align-items: center;
       padding: 0 4px;
 
+      .icon-button {
+        font-size: 24px;
+        padding: 0 16px;
+        line-height: 30px;
+        color: #1077ff;
+
+        input[type="file"] {
+          display: none;
+        }
+        i {
+          margin: 0 8px;
+          transition-duration: 0.1s;
+        }
+
+        i:hover {
+          font-size: 20px;
+          color: #5792ff;
+        }
+
+        i:active {
+          font-size: 20px;
+        }
+      }
+
       .chat-input {
         flex-grow: 1;
+
         input {
           border: none;
           background: transparent;

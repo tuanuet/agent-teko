@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import MiddleComponent from '../../components/middle/MiddleComponent';
+import MiddleComponent from '../../components/Middle/index';
 
 class MiddleContainer extends React.Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class MiddleContainer extends React.Component {
     render() {
 
         const {currentRoomId} = this.props;
-        if (currentRoomId == 0) {
+        if (currentRoomId !== 0) {
             return <div>WELCOME</div>;
         } else {
             $('#test').tooltip();
