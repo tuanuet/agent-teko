@@ -11,6 +11,21 @@ export default function roomReducer(state=initialState.rooms, action) {
                 ...action.rooms
             ];
 
+        case types.MESSAGES_FETCH_SUCCEED:
+            console.log("reducer", action);
+            return state.map(room => {
+                if (room.id !== action.roomId) {
+                    // This isn't the item we care about - keep it as-is
+                    return room;
+                }
+
+                return {
+                    ...room,
+                    messages: action.messages
+                };
+            });
+
+
         //TODO: default case, return current state
         default:
             return state;

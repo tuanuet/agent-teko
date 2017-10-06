@@ -2,13 +2,13 @@ import React from 'react';
 
 export default class Default extends React.Component {
     render() {
-        let msg = this.props.msg;
-        let metabox = msg.metadata ? <li className={msg.typeSender}><Metabox metadata={msg.metadata}/></li> : null;
-
+        let message = this.props.message;
+        // let metabox = msg.metadata ? <li className={msg.typeSender}><Metabox metadata={msg.metadata}/></li> : null;
+        let role = message.messageFrom === 1 ? 'self' : 'other';
         return (
             <div>
-                <div className={`chat-group ${msg.typeSender}`}>
-                    <div className="chat">{msg.message.content}</div>
+                <div className={`chat-group ${role}`}>
+                    <div className="chat">{message.content}</div>
                 </div>
             </div>
         )

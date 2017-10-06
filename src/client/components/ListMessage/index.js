@@ -10,7 +10,7 @@ import * as MessageTypes from '../../constants/MessageTypes';
 function getListChat(messages) {
     return messages.map((e, i) => {
             //Type message default is undefined
-        switch (e.message.type) {
+        switch (e.messageType) {
         case MessageTypes.NOTIFICATION:
             return <Notification content={e.message.content} key={i}/>;
         case MessageTypes.RATING:
@@ -18,7 +18,7 @@ function getListChat(messages) {
         case MessageTypes.IMAGE:
             return <Image key={i} msg={e} content={e.message.content}/>;
         default:
-            return <Default msg={e} key={i}/>;
+            return <Default message={e} key={i}/>;
         }
     });
 }

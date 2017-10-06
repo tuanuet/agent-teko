@@ -27,7 +27,7 @@ class MiddleContainer extends React.Component {
     render() {
 
         const {currentRoomId} = this.props;
-        if (currentRoomId !== 0) {
+        if (!currentRoomId) {
             return <div>WELCOME</div>;
         } else {
             $('#test').tooltip();
@@ -36,6 +36,7 @@ class MiddleContainer extends React.Component {
                     showTheme={this.showTheme}
                     theme={this.state.theme}
                     changeTheme={this.changeTheme}
+                    {...this.props}
                 />
             );
         }
@@ -43,9 +44,14 @@ class MiddleContainer extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
+    let availableRoomId = state.currentRoomId;
+    let availableRoom = state.rooms.filter(room => room.id === availableRoomId)[0];
+    if(!availableRoom) return {messages : []};
+    let messages = availableRoom.messages;
     return {
         rooms: state.rooms,
-        currentRoomId: state.currentRoomId
+        currentRoomId: state.currentRoomId,
+        messages
     };
 }
 

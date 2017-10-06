@@ -23,22 +23,14 @@ class Scroll extends React.Component {
 
     componentWillUpdate(nextProps, nextState) {
         if(nextProps.messages.length === 0) return;
-        //Check for first message and add stay stun
-
-        if (nextProps.messages.length === 1) {
-            this.props.dispatch(addMessage({
-                typeSender: 'other',
-                sender: '',
-                message: {content: 'Stay stun in minutes', type: MessageTypes.NOTIFICATION},
-                time: ''
-            }));
-        }
 
         //Check metadata when refresh
-        const index = nextProps.messages.length - 1;
-        const newMessage = nextProps.messages[index];
-        if (!newMessage.metadata) {
-            this.props.getMetaData(newMessage.message.content, index);
+        if(nextProps.messages.length >= 1){
+            const index = nextProps.messages.length - 1;
+            const newMessage = nextProps.messages[index];
+            if (newMessage.checkedMetaLink) {
+                this.props.getMetaData(newMessage.message.content, index);
+            }
         }
 
     }
@@ -54,7 +46,6 @@ class Scroll extends React.Component {
                      }}>
                 </div>
             </div>
-
         );
     }
 }
@@ -71,13 +62,7 @@ const checkLink = (content) => {
 };
 
 function mapToProps(state) {
-    let availableRoomId = state.activeRoomId;
-    let availableRoom = state.rooms[availableRoomId];
-    if(!availableRoom) return {messages : []};
-    let messages = availableRoom.messages;
-    return {
-        messages
-    };
+    return {};
 }
 function mapDispatchToProps(dispatch) {
     return ({

@@ -3,8 +3,8 @@ import * as apiTypes from '../constants/apiTypes';
 
 class ChatApi {
     static messagesFetchRequested(roomId) {
-        return axios.post(apiTypes.MESSAGES_FETCH_REQUESTED, {roomId})
-            .then(response => console.log(response));
+        return axios.get(`${apiTypes.MESSAGES_FETCH_REQUESTED}?roomId=${roomId}`)
+            .then(response => response.data);
     }
 
     // static sendRequestJoinRoom(room) {

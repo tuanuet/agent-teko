@@ -17,7 +17,6 @@ class LeftContainer extends React.Component {
      * @param event
      */
     adminChooseRoom(event) {
-        console.log("choose room");
         let roomId = event;
         this.props.actions.adminChooseRoom(roomId);
         this.props.actions.messagesFetchRequested(roomId);
@@ -29,10 +28,6 @@ class LeftContainer extends React.Component {
      */
     render() {
         const {rooms} = this.props;
-        const {currentRoomId} = this.props;
-
-        console.log("current room id", currentRoomId);
-
         return (
             <LeftComponent
                 adminChooseRoom={this.adminChooseRoom}
@@ -45,7 +40,6 @@ class LeftContainer extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         rooms: state.rooms,
-        currentRoomId: state.currentRoomId
     };
 }
 

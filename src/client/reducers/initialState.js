@@ -1,7 +1,7 @@
 export default {
 
     rooms: [],
-    currentRoomId: 0
+    currentRoomId: null
 
 
 };
