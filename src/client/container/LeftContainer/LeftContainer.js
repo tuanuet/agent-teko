@@ -40,6 +40,7 @@ class LeftContainer extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         rooms: state.rooms,
+        currentRoomId: state.currentRoomId,
     };
 }
 

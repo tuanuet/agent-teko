@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const Customer = () => {
+const Customer = ({customer}) => {
     return (
         <div className="customer" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
              aria-controls="collapseExample">
@@ -12,13 +12,17 @@ const Customer = () => {
 
                 </div>
                 <div className="col-md-10 customer-short-info">
-                    <p>Nguyễn Đức Thuần</p>
-                    <p>01664 375 871</p>
+                    <p>{customer.customerName}</p>
+                    <p>{customer.customerPhone}</p>
                 </div>
 
             </div>
         </div>
     );
+};
+
+Customer.propTypes = {
+    customer: PropTypes.object.isRequired
 };
 
 export default Customer;

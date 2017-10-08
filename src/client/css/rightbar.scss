@@ -2,23 +2,17 @@
   border: 1px solid rgba(0, 0, 0, .10);
   padding: 15px;
 }
-
-
 .take-note {
   padding: 15px;
 }
-
 .customer {
-
   div {
     img, p {
       vertical-align: middle;
     }
 
   }
-
   vertical-align: text-top;
-
   img:first-child {
     width: 100%;
   }
@@ -32,32 +26,25 @@
     opacity: 0.8;
   }
 }
-
 .customer:hover{
   cursor: pointer;
 }
-
 .customer-full-info {
   font-size: 0.8em;
-
   i {
     font-size: 0.9em;
   }
   strong, a{
     padding-left: 0.5em;
   }
-
   li a{
     font-size: 0.8em;
     padding-left: 0.5em;
   }
 }
-
 .notes-list{
   border: 1px solid rgba(0, 0, 0, .10);
-
   background-color: #F6F6F6;
-
   overflow-y: auto;
   flex-grow: 1;
   overflow-x: hidden;
@@ -84,6 +71,7 @@
         text-overflow: ellipsis;
       }
       .pr-sm {
+        width: 80%;
         padding-right: .75rem !important;
       }
       .note-item-timestamp{
@@ -91,52 +79,48 @@
         align-items: center;
       }
     }
-
-
-
   }
-
   .note-item:hover {
     background-color: #fff;
     cursor: pointer;
-
   }
-
-
-
 }
-
 .take-note{
   font-size: 0.8em;
   flex-flow: column;
   align-items: center;
-  height: 150px;
+  height: 200px;
   bottom: 0;
-
+  .save-note{
+    margin-top: 10px;
+    width: 100%;
+    transition: opacity .2s ease-in-out 50ms;
+    opacity: 1;
+    z-index: 400;
+  }
+  .save-note:hover{
+    cursor: pointer;
+  }
   .press-enter{
     margin-top: 5px;
     padding-top: 3px;
     align-items: center;
   }
-
   .ps-color-border-gray-02 {
     border: 1px solid #aaa;
     display: flex;
     align-items: center;
   }
-
   .px-tiny {
     padding: 0.25rem;
     display: flex;
     align-items: center;
   }
-
   .mx-tiny {
     margin-right: .25rem !important;
     margin-left: .25rem !important;
     margin-top: .25em;
   }
-
   .btn-toggle {
     margin-left: 5px;
     padding: 0;
@@ -174,5 +158,4 @@
   .btn-toggle.active {
     background-color: #29b5a8;
   }
-
 }

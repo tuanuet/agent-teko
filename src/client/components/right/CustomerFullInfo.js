@@ -1,14 +1,17 @@
 import React, {PropTypes} from 'react';
 
-const CustomerFullInfo = () => {
+const CustomerFullInfo = ({customer}) => {
+    if (customer.historyChat == undefined) {
+        customer.historyChat = [];
+    }
     return (
         <div className="customer-full-info" id="collapseExample">
 
             <div>
-                <p><i className="fa fa-user" aria-hidden="true"></i><strong>Nguyễn Đức Thuần</strong></p>
+                <p><i className="fa fa-user" aria-hidden="true"></i><strong>{customer.customerName}</strong></p>
             </div>
             <div>
-                <p><i className="fa fa-phone" aria-hidden="true"></i><strong>01664 375 871</strong></p>
+                <p><i className="fa fa-phone" aria-hidden="true"></i><strong>{customer.customerPhone}</strong></p>
             </div>
             <div>
                 <p><i className="fa fa-home" aria-hidden="true"></i><strong>Đại học Công Nghệ - ĐHQGHN</strong></p>
@@ -19,12 +22,17 @@ const CustomerFullInfo = () => {
             <div>
                 <p><i className="fa fa-history" aria-hidden="true"></i><strong>Lịch sử chat</strong></p>
                 <ol>
-                    <li><a href="#">Room 1 - Đã đóng</a></li>
-                    <li><a href="#">Room 2 - Đang hoạt động</a></li>
+                    {customer.historyChat.map(room => {
+                        return <li key={room.id}><a href="#">Room {room.id} - {room.status == 2? "Đang hoạt động" : "Đã đóng"}</a></li>
+                    })}
                 </ol>
             </div>
         </div>
     );
+};
+
+CustomerFullInfo.propTypes = {
+    customer: PropTypes.object.isRequired
 };
 
 export default CustomerFullInfo;
