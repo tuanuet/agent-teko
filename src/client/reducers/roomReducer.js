@@ -54,6 +54,20 @@ export default function roomReducer(state=initialState.rooms, action) {
                 };
             });
 
+        //create a new note
+        case types.CREATE_NOTE_SUCCEED:
+            return state.map(room => {
+                if (room.id !== action.roomId) {
+                    // This isn't the item we care about - keep it as-is
+                    return room;
+                }
+
+                return {
+                    ...room,
+                    notes: [...room.notes, action.note]
+                };
+            });
+
 
         //TODO: default case, return current state
         default:

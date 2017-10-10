@@ -5,6 +5,8 @@ import {bindActionCreators} from 'redux';
 import * as chatActions from '../MiddleContainer/chatActions';
 import * as roomActions from '../LeftContainer/roomActions';
 import * as customerActions from './action/customerActions';
+import * as noteActions from './action/noteActions';
+import toastr from 'toastr';
 
 class RightContainer extends React.Component {
     constructor(props, context) {
@@ -13,6 +15,8 @@ class RightContainer extends React.Component {
             newNote: ""
         };
         this.updateNoteState = this.updateNoteState.bind(this);
+        this.handleOnKeyUpTakeNote = this.handleOnKeyUpTakeNote.bind(this);
+        this.onClickSaveNote = this.onClickSaveNote.bind(this);
     }
 
     //update when input a note
@@ -23,11 +27,52 @@ class RightContainer extends React.Component {
         });
     }
 
+    //handle on key up take note
+    handleOnKeyUpTakeNote(event){
+        if (event.keyCode === 13) {
+            this.saveNote(this.state.newNote.trim());
+        }
+    }
+
+    //on click to save note
+    onClickSaveNote(event) {
+        this.saveNote(this.state.newNote);
+    }
+
     //take new note
-    saveNote(event) {
-        const note = event.target.value;
+    saveNote(content) {
+        let note = {
+            content: content,
+            roomId: this.props.currentRoomId
+        };
+        console.log('new note', note);
+        this.props.actions.saveNote(note)
+            .then(() => this.setState({
+                newNote: ""
+            }))
+            .catch(error => {
+                console.log("error while saving note", error);
+            });
+    }
+
+    //edit note
+    editNote(id, event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            let newContent = event.target.value;
+            console.log("new content", newContent);
+            const {notes} = this.props;
+            let oldNote = notes.filter(note => note.id === id)[0];
+            if (oldNote.content === newContent) {
+                console.log("nothing to save");
+            } else {
+                console.log(oldNote.content, newContent);
+                console.log("changed");
+            }
+        }
 
     }
+
 
     render() {
         const {customer} = this.props;
@@ -38,6 +83,9 @@ class RightContainer extends React.Component {
                 notes={notes}
                 newNote={this.state.newNote}
                 updateNoteState={this.updateNoteState}
+                onClickSaveNote={this.onClickSaveNote}
+                handleOnKeyUpTakeNote={this.handleOnKeyUpTakeNote}
+                editNote={this.editNote.bind(this)}
             />
         );
     }
@@ -61,7 +109,13 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({...{}, ...roomActions, ...chatActions ,...customerActions}, dispatch)
+        actions: bindActionCreators({
+            ...{},
+            ...roomActions,
+            ...chatActions ,
+            ...customerActions,
+            ...noteActions
+        }, dispatch)
     };
 }
 

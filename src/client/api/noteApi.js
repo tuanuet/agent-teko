@@ -7,7 +7,11 @@ class NoteApi {
             .then(response => response.data);
     }
 
-    static saveNote(){}
+    static saveNote(note) {
+        let data = new FormData();
+        data.append("note", JSON.stringify(note));
+        return axios.post(apiType.SAVE_NOTE_REQUESTED, data);
+    }
 }
 
 export default NoteApi;

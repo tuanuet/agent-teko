@@ -4,13 +4,19 @@ import CustomerFullInfo from './CustomerFullInfo';
 import NoteList from './NoteList';
 import TakeNote from './TakeNote';
 
-const RightComponent = ({customer, notes, updateNoteState, newNote}) => {
+const RightComponent = ({customer, notes, updateNoteState, newNote, handleOnKeyUpTakeNote, onClickSaveNote, editNote}) => {
     return(
         <div className="right">
             <Customer customer={customer}/>
             <CustomerFullInfo customer={customer}/>
-            <NoteList notes={notes}/>
-            <TakeNote updateNoteState={updateNoteState} newNote={newNote}/>
+            <NoteList notes={notes} editNote={editNote} />
+            <TakeNote
+                updateNoteState={updateNoteState}
+                newNote={newNote}
+                handleOnKeyUpTakeNote={handleOnKeyUpTakeNote}
+                onClickSaveNote={onClickSaveNote}
+                editNote={editNote}
+            />
         </div>
     );
 };
@@ -18,7 +24,10 @@ const RightComponent = ({customer, notes, updateNoteState, newNote}) => {
 RightComponent.propTypes = {
     customer: PropTypes.object.isRequired,
     newNote: PropTypes.string.isRequired,
-    updateNoteState: PropTypes.func.isRequired
+    updateNoteState: PropTypes.func.isRequired,
+    handleOnKeyUpTakeNote: PropTypes.func.isRequired,
+    onClickSaveNote: PropTypes.func.isRequired,
+    editNote: PropTypes.func
 };
 
 export default RightComponent;

@@ -1,20 +1,22 @@
 import React, {PropTypes} from 'react';
 import ContentEditable from 'react-contenteditable';
 
-const NoteList = ({note}) => {
+const NoteItem = ({note, editNote}) => {
     return (
             <div className="px-md py-sm note-item">
                 <div className="note-item-content d-flex">
                     <ContentEditable
                         className="pr-sm ps-type-ellipsis"
                         html={note.content}
+                        value={note.id}
+                        onKeyUp={editNote.bind(this, note.id)}
                     />
                     <div className="note-item-timestamp d-flex">
                         {note.createdAt}
                         <div className="dropdown">
                             <i className="fa fa-cog" aria-hidden="true" id="dropdownMenuButton" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false"></i>
-                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a className="dropdown-item" href="#">Sửa</a>
                                 <a className="dropdown-item" href="#">Xóa</a>
                             </div>
@@ -26,8 +28,9 @@ const NoteList = ({note}) => {
     );
 };
 
-NoteList.propTypes={
-    note: PropTypes.object.isRequired
+NoteItem.propTypes={
+    note: PropTypes.object.isRequired,
+    editNote: PropTypes.func
 };
 
-export default NoteList;
+export default NoteItem;
