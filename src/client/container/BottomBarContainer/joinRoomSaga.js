@@ -5,28 +5,30 @@ import * as types from '../../constants/actionTypes';
 
 function* handleAdminSendRequestJoinRoom(action) {
     try {
-        console.log("result", "321");
-        const result = yield call(roomApi.adminSendRequestJoinRoom, action.room);
-        if (result) {
+        const response = yield call(roomApi.sendRequestJoinRoom, action.room);
+        if (response.result) {
             yield put({type: types.ADMIN_SEND_REQUEST_JOIN_ROOM_SUCCEED, room: action.room});
         } else {
+            console.log("error room was assigned");
             put({type: types.ADMIN_SEND_REQUEST_JOIN_ROOM_FAILED});
         }
     } catch (e) {
-        console.log("123", e);
+        console.log("error while send request join room", e);
         yield put({type: types.ADMIN_SEND_REQUEST_JOIN_ROOM_FAILED, message: e.message});
     }
 }
 
 function* handleAdminSendRequestJoinRoomToSocketSucceed(action) {
     try {
-        const result = yield call(roomApi.adminJoinRoomToSocketSucceed, action.room);
-        if (result) {
+        const response = yield call(roomApi.adminJoinRoomToSocketSucceed, action.room);
+        if (response.result) {
             yield put({type: types.ADMIN_JOIN_ROOM_SUCCEED, room: action.room});
         } else {
+            console.log("error while updating assignee");
             put({type: types.ADMIN_JOIN_ROOM_FAILED});
         }
     } catch (e) {
+        console.log("error while send request join room", e);
         yield put({type: types.ADMIN_JOIN_ROOM_FAILED, message: e.message});
     }
 }

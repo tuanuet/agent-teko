@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-
+import * as types from '../constants/actionTypes';
 import axios from 'axios';
 import {addMessage, agentFailure,agentRequested,agentSucceed} from "../actions/action";
 import {execLink} from "../actions/execLink";
@@ -11,6 +11,12 @@ let store = null;
 export function socketMiddleware() {
     return next => (action) => {
         const result = next(action);
+        if (socket && action.type === types.ADMIN_SEND_REQUEST_JOIN_ROOM_SUCCEED) {
+            socket.emit('admin-join-room', action.room,function (ackValidation) {
+                if (!ackValidation) return;
+                store.dispatch({type: types.ADMIN_SEND_REQUEST_JOIN_ROOM_TO_SOCKET_SUCCEED, room: action.room});
+            });
+        }
 
         // if (socket && action.type === types.ADMIN_SEND_MESSAGE) {
         //     socket.emit('client-send-message', action.message, function (data) {
@@ -49,7 +55,8 @@ export function socketMiddleware() {
 }
 
 // no use saga
-let initAgent = (store) => {
+let initAgent = (Store) => {
+    store = Store;
     store.dispatch(agentRequested());
     return axios.get('http://local.chat.com/api/get-admin-info')
         .then(res => res.data)
@@ -58,7 +65,7 @@ let initAgent = (store) => {
             return agent;
         })
         .catch(err => store.dispatch(agentFailure()));
-}
+};
 
 export default function(store) {
     socket = io('http://localhost:3000/chat');

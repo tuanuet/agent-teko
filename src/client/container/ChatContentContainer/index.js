@@ -4,7 +4,6 @@ import ChatContent from '../../components/Middle/ChatContent'
 
 class ChatContentContainer extends React.Component {
     render() {
-        console.log('chat content', this.props);
       return (
         <ChatContent {...this.props}/>
       )

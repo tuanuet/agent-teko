@@ -7,13 +7,14 @@ class RoomApi {
             .then(response => response.data);
     }
 
-    static sendRequestJoinRoom(roomId) {
-        return axios.get(`${apiType.SEND_REQUEST_JOIN_ROOM}?roomid=${room.id}`)
-            .then(res => res.data.result);
+    static sendRequestJoinRoom(room) {
+        return axios.get(`${apiType.SEND_REQUEST_JOIN_ROOM}?roomId=${room.id}`)
+            .then(res => res.data);
     }
 
     static adminJoinRoomToSocketSucceed(room) {
-        return axios.get(`${apiType.ADMIN_JOIN_ROOM_SUCCEED}?roomid=${room.id}`);
+        return axios.get(`${apiType.ADMIN_JOIN_ROOM_SUCCEED}?roomId=${room.id}`)
+            .then(res => res.data);
     }
 }
 

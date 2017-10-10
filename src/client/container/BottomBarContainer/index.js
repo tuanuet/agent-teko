@@ -31,6 +31,9 @@ function mapDispatchToProps(dispatch) {
         },
         uploadImage : ({formData}) => {
             dispatch(uploadImage(formData));
+        },
+        adminSendRequestJoinRoom: ({room}) => {
+            dispatch({type: 'ADMIN_SEND_REQUEST_JOIN_ROOM', room})
         }
     };
 }

@@ -68,6 +68,21 @@ export default function roomReducer(state=initialState.rooms, action) {
                 };
             });
 
+        //admin join room succeed
+        case types.ADMIN_JOIN_ROOM_SUCCEED:
+            console.log("state", state);
+            return state.map(room => {
+                if (room.id !== action.room.id) {
+                    // This isn't the item we care about - keep it as-is
+                    return room;
+                }
+
+                return {
+                    ...{},
+                    ...room,
+                    status: 2
+                };
+            });
 
         //TODO: default case, return current state
         default:

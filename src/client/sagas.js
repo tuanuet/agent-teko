@@ -13,5 +13,6 @@ export default function* rootSaga() {
     yield fork(fetchMessagesSaga);
     yield fork(fetchHistoryChatSaga);
     yield fork(fetchNotesSaga);
-    yield fork(adminSendRequestJoinRoomToSocketSucceed, adminSendRequestJoinRoom)
+    yield fork(adminSendRequestJoinRoomToSocketSucceed);
+    yield fork(adminSendRequestJoinRoom);
 }
