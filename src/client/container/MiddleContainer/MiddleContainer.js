@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import MiddleComponent from '../../components/Middle/index';
+import ChatContentContainer from '../ChatContentContainer'
+import Header from '../../components/Middle/Header'
+import BottomBarContainer from '../BottomBarContainer'
 
 class MiddleContainer extends React.Component {
     constructor(props) {
@@ -27,31 +29,36 @@ class MiddleContainer extends React.Component {
     render() {
 
         const {currentRoomId} = this.props;
+        console.log('MiddleComponent run',currentRoomId);
         if (!currentRoomId) {
             return <div>WELCOME</div>;
         } else {
             $('#test').tooltip();
             return (
-                <MiddleComponent
+
+              <div className="middle">
+                  <Header
+                      showTheme={this.showTheme}
+                      theme={this.state.theme}
+                      changeTheme={this.changeTheme}
+                  />
+
+                  <ChatContentContainer
                     showTheme={this.showTheme}
                     theme={this.state.theme}
                     changeTheme={this.changeTheme}
-                    {...this.props}
-                />
+                  />
+
+                  <BottomBarContainer/>
+              </div>
             );
         }
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    let availableRoomId = state.currentRoomId;
-    let availableRoom = state.rooms.filter(room => room.id === availableRoomId)[0];
-    if(!availableRoom) return {messages : []};
-    let messages = availableRoom.messages;
     return {
-        rooms: state.rooms,
         currentRoomId: state.currentRoomId,
-        messages
     };
 }
 

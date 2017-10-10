@@ -17,8 +17,6 @@ class BottomBarContainer extends React.Component {
 function mapStateToProps(state) {
     return {
         customer: state.customer,
-        room: state.room,
-        socket : state.socket,
         image : state.image,
     };
 }
