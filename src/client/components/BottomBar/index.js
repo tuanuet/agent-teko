@@ -80,7 +80,8 @@ class BottomBar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {isShowEmojiBoard: false}
+        this.state = {isShowEmojiBoard: false};
+        this.adminSendRequestJoinRoom = this.adminSendRequestJoinRoom.bind(this);
     }
 
     showEmojiBoard() {
@@ -88,15 +89,20 @@ class BottomBar extends React.Component {
     }
 
     adminSendRequestJoinRoom() {
-        this.props.dispatch({type: types.ADMIN_SEND_REQUEST_JOIN_ROOM, roomId: this.props.currentRoom})
+        console.log("run admin send request join room");
+        this.props.dispatch({type: types.ADMIN_SEND_REQUEST_JOIN_ROOM, room: this.props.currentRoom})
     }
-
 
     render() {
         if (this.props.currentRoom.status === 1) {
             return (
                 <div className="bottom">
-                    <input type="button" className="btn btn-primary accept-room" onClick={this.adminSendRequestJoinRoom.bind(this)} value="Tiếp nhận tư vấn"/>
+                    <input
+                        type="button"
+                        className="btn btn-primary accept-room"
+                        onClick={this.adminSendRequestJoinRoom.bind(this)}
+                        value="Tiếp nhận tư vấn"
+                    />
                 </div>
             )
         } else {

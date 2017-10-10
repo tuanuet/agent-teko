@@ -35,7 +35,7 @@ class RightContainer extends React.Component {
     }
 
     //on click to save note
-    onClickSaveNote(event) {
+    onClickSaveNote() {
         this.saveNote(this.state.newNote);
     }
 
