@@ -96,7 +96,7 @@ export default function(store) {
             customerEmail : data.customer.customerEmail,
             customerPhone : data.customer.customerPhone
           }]
-        }
+        };
         console.log(room);
     })
 

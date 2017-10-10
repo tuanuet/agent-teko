@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
 import _ from 'lodash';
 
-const EnableRoom = ({enableRoom}) => {
+const EnableRoom = ({enableRoom, adminChooseRoom}) => {
     return (
-        <div className="tab-pane" id="unchat" role="tabpanel">
+        <div className="tab-pane" id="unchat" role="tabpanel" onClick={adminChooseRoom.bind(this, enableRoom.id)}>
             <div className="room-item">
                 <div className="customer-control">
                     <img
@@ -30,7 +30,8 @@ const EnableRoom = ({enableRoom}) => {
 };
 
 EnableRoom.propTypes = {
-    enableRoom: PropTypes.object.isRequired
+    enableRoom: PropTypes.object.isRequired,
+    adminChooseRoom: PropTypes.func.isRequired
 };
 
 export default EnableRoom;

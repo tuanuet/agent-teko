@@ -14,3 +14,7 @@ export function messagesFetchRequested(roomId) {
 export function messagesFetchSucceed(roomId, messages) {
     return {type: types.MESSAGES_FETCH_SUCCEED, roomId, messages}
 }
+
+export function adminSendRequestJoinRoomToSocketSucceed(room) {
+    return {type: types.ADMIN_SEND_REQUEST_JOIN_ROOM_TO_SOCKET_SUCCEED, room}
+}

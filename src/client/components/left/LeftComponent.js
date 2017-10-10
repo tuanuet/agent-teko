@@ -22,7 +22,10 @@ const LeftComponent = ({rooms, adminChooseRoom}) => {
                     availableRooms={availableRooms}
                     adminChooseRoom={adminChooseRoom}
                 />
-                <EnableRooms enableRooms={enableRooms}/>
+                <EnableRooms
+                    enableRooms={enableRooms}
+                    adminChooseRoom={adminChooseRoom}
+                />
             </div>
         </div>
     );

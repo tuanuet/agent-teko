@@ -15,7 +15,9 @@ class BottomBarContainer extends React.Component {
 }
 
 function mapStateToProps(state) {
+    let currentRoom = state.rooms.filter(room => room.id === state.currentRoomId)[0];
     return {
+        currentRoom: currentRoom,
         customer: state.customer,
         image : state.image,
     };
