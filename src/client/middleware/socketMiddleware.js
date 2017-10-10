@@ -61,29 +61,50 @@ let initAgent = (store) => {
 }
 
 export default function(store) {
-    socket = io('http://localhost:3000');
+    socket = io('http://localhost:3000/chat');
 
     initAgent(store).then((agent) => {
         // join default room
         socket.emit('admin-join-default-room',{adminId: agent.id}, function (ack) {
-
+            console.log('admin join room default ',ack);
         });
     });
 
-    socket.on('server-send-join-room', (({success}) => console.log(`join room ${success}`)));
+    // socket.on('server-send-join-room', ({success}) => console.log(`join room ${success}`));
 
-    socket.on('server-send-message', ({name, message, type}) => {
-        console.log({name, message, type});
+    socket.on('server-send-auto-assigned-room', data => {
+        let room = {
+          id : data.id,
+          topicName : data.topicName,
+          roomType : data.roomType,
+          status : data.status,
+          createdAt : data.createdAt,
+          messages : [{
+            id: 1,
+            senderId: 1,
+            messageType: 100,
+            messageFrom: 1,
+            checkedMetaLink: false,
+            senderName: "room1",
+            content: "hello room 1",
+            name: "Attachment file",
+          }],
+          note : [],
+          customers : [{
+            id : data.customer.id,
+            customerName : data.customer.customerName,
+            customerEmail : data.customer.customerEmail,
+            customerPhone : data.customer.customerPhone
+          }]
+        }
+        console.log(room);
+    })
+
+    socket.on('server-send-message', (message) => {
         let date = new Date().getHours() + ':' + new Date().getSeconds();
-
-        store.dispatch(addMessage({typeSender: 'other', sender: name, message: {content: message, type}, time: date}));
-
-        // detect link
-        // let link = execLink(message);
-        // if (link) {
-        //     store.dispatch(fetchMetadata(link, message));
-        // }
-
+        console.log(date);
+        // store.dispatch(addMessage({typeSender: 'other', sender: name, message: {content: message, type}, time: date}));
+        console.log('message from server ',message)
     });
 
 
@@ -119,16 +140,7 @@ export default function(store) {
     //     store.dispatch(roomActions.addNewRoom(room));
     // });
 
-    // socket.on('server-send-auto-assigned-room', data => {
-    //     let room = {
-    //         id: data.roomId,
-    //         topicName: data.topic,
-    //         customerName: data.customerName,
-    //         createdAt: data.createdAt,
-    //         roomType: data.roomType,
-    //         customerId: data.customerId,
-    //         status: 2
-    //     };
+
     //
     //     store.dispatch(roomActions.addNewRoom(room));
     //
