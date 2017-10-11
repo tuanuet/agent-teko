@@ -28,13 +28,14 @@ export function socketMiddleware() {
             });
         } else if (socket && action.type === types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED) {
             _(action.rooms).forEach(room => {
-                socket.emit('admin-join-room', action.room, function (ackValidation) {
+                console.log("room to socket server", room);
+                socket.emit('admin-join-room', room, function (ackValidation) {
                     if (!ackValidation) {
-                        console.log(`rejoin room ${room.id} succeed`);
+                        console.log(`rejoin room ${room.id} failed`);
                         store.dispatch(roomActions.reJoinRoomToSocketFailed(room))
                     }
                     else {
-                        console.log(`re join room ${room.id} failed`);
+                        console.log(`re join room ${room.id} succeed`);
                         store.dispatch(roomActions.reJoinRoomToSocketSucceed(room));
                     }
                 });
