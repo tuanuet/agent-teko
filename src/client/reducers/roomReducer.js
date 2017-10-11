@@ -72,13 +72,28 @@ export default function roomReducer(state=initialState.rooms, action) {
     case types.ADD_ROOM_AVAILABLE:
         return [action.room,...state];
 
+        //admin join room succeed
+        case types.JOIN_ROOM_SUCCEED:
+            return state.map(room => {
+                if (room.id !== action.room.id) {
+                    // This isn't the item we care about - keep it as-is
+                    return room;
+                }
+
+                return {
+                    ...{},
+                    ...room,
+                    status: 2
+                };
+            });
+
         //add more room enable
     case types.ADD_ROOM_ENABLE:
         return [action.room,...state];
 
     case types.ADD_MESSAGE_FOR_ROOM : {
         let currentRoom = _(state).find({id : action.roomId});
-        let message = state.message;
+        let message = action.message;
 
         let messages = [...currentRoom.messages,message];
         let updateRoom = Object.assign(currentRoom,{messages});

@@ -1,21 +1,21 @@
 import React, {PropTypes} from 'react';
 
-const TakeNote = ({updateNoteState, newNote, handleOnKeyUpTakeNote, onClickSaveNote}) => {
+const TakeNote = ({newNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteState}) => {
     return (
         <div className="take-note d-flex">
             <textarea
                 className="form-control"
                 id="exampleTextarea" rows="3"
                 placeholder="Add a note..."
-                value={newNote}
                 onChange={updateNoteState}
-                onKeyUp={handleOnKeyUpTakeNote}
+                value={newNote}
+                onKeyUp={handleOnKeyUpTakeNote.bind(this)}
             />
             <input
                 className="btn btn-primary save-note"
                 type="button"
                 value="Save"
-                onClick={onClickSaveNote.bind(this, newNote)}
+                onClick={onClickSaveNote.bind(this)}
             />
             <div className="d-flex press-enter">
                 Press
@@ -30,10 +30,10 @@ const TakeNote = ({updateNoteState, newNote, handleOnKeyUpTakeNote, onClickSaveN
 };
 
 TakeNote.propTypes = {
-    note: PropTypes.string.isRequired,
-    updateNoteState: PropTypes.func.isRequired,
+    newNote: PropTypes.string.isRequired,
     handleOnKeyUpTakeNote: PropTypes.func.isRequired,
-    saveNote: PropTypes.func.isRequired
+    onClickSaveNote: PropTypes.func.isRequired,
+    updateNoteState: PropTypes.func.isRequired
 };
 
 export default TakeNote;

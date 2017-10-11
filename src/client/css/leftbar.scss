@@ -59,15 +59,20 @@
   overflow: auto;
   flex-grow: 1;
   .tab-pane {
+    .active {
+      background-color: #bababa;
+    }
     .room-item {
       padding: 12px 8px;
       margin: 0 8px 8px;
       background-color: #f7f7f7;
       border-radius: 5px;
       display: flex;
+      transition: opacity .2s ease-in-out 50ms;
       &:hover {
         background-color: #bababa;
       }
+
       .customer-control {
         .avatar {
           width: 48px;

@@ -1,13 +1,16 @@
 import io from 'socket.io-client';
-
+import * as types from '../constants/actionTypes';
 import axios from 'axios';
+import * as chatActions from '../container/MiddleContainer/chatActions';
+import * as roomActions from '../container/LeftContainer/roomActions';
+import _ from 'lodash';
 import {
     addAvailableRoom,
     addEnableRoom,
     agentFailure,
     agentRequested,
     agentSucceed,
-    addMessageForRoom
+    addMessageForRoom,
 } from '../actions/action';
 
 let socket = null;
@@ -17,6 +20,25 @@ let store = null;
 export function socketMiddleware() {
     return next => (action) => {
         const result = next(action);
+        if (socket && action.type === types.JOIN_ROOM_TO_PHP_SERVER_SUCCEED) {
+            socket.emit('admin-join-room', action.room, function (ackValidation) {
+                if (!ackValidation) return;
+                store.dispatch(chatActions.joinRoomToSocketSucceed(action.room));
+            });
+        } else if (socket && action.type === types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED) {
+            _(action.rooms).forEach(room => {
+                socket.emit('admin-join-room', action.room, function (ackValidation) {
+                    if (!ackValidation) {
+                        console.log(`rejoin room ${room.id} succeed`);
+                        store.dispatch(roomActions.reJoinRoomToSocketFailed(room))
+                    }
+                    else {
+                        console.log(`re join room ${room.id} failed`);
+                        store.dispatch(roomActions.reJoinRoomToSocketSucceed(room));
+                    }
+                });
+            });
+        }
 
         // if (socket && action.type === types.ADMIN_SEND_MESSAGE) {
         //     socket.emit('client-send-message', action.message, function (data) {
@@ -55,7 +77,8 @@ export function socketMiddleware() {
 }
 
 // no use saga
-let initAgent = (store) => {
+let initAgent = (Store) => {
+    store = Store;
     store.dispatch(agentRequested());
     return axios.get('http://local.chat.com/api/get-admin-info')
         .then(res => res.data)
@@ -77,13 +100,13 @@ function getRoomFromServer(data) {
             id: 1,
             senderId: 1,
             messageType: 100,
-            messageFrom: 1,
+            messageFrom: 0,
             checkedMetaLink: false,
             senderName: 'room1',
             content: 'hello room 1',
             name: 'Attachment file',
         }],
-        note : [],
+        notes : [],
         customers : [{
             id : data.customer.id,
             customerName : data.customer.customerName,
@@ -92,6 +115,7 @@ function getRoomFromServer(data) {
         }]
     };
 }
+
 function getMessageFromServer(message) {
     return {
         id : message.id,
@@ -106,12 +130,14 @@ function getMessageFromServer(message) {
     };
 }
 export default function(store) {
+
+
     socket = io('http://localhost:3000/chat');
 
     initAgent(store).then((agent) => {
         // join default room
-        socket.emit('admin-join-default-room',{adminId: agent.id}, function (ack) {
-            console.log('admin join room default ',ack);
+        socket.emit('admin-join-default-room', {adminId: agent.id}, function (ack) {
+            console.log('admin join room default ', ack);
         });
     });
 
@@ -120,6 +146,7 @@ export default function(store) {
         let room = getRoomFromServer(data);
         store.dispatch(addEnableRoom(room));
     });
+
     socket.on('server-send-auto-assigned-room', data => {
         let room = getRoomFromServer(data);
         store.dispatch(addAvailableRoom(room));
@@ -128,8 +155,8 @@ export default function(store) {
 
     socket.on('server-send-message', (msg) => {
         let roomId = msg.roomId;
-        console.log(msg);
         let message = getMessageFromServer(msg);
+        console.log(message);
         store.dispatch(addMessageForRoom(roomId,message));
     });
 

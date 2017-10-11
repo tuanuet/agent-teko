@@ -16,10 +16,11 @@ class LeftContainer extends React.Component {
      * handle event when admin choose a room to chat
      * @param event
      */
-    adminChooseRoom(event) {
-        let roomId = event;
+    adminChooseRoom(roomId) {
+        const {rooms} = this.props;
+        let room = rooms.filter(room => roomId === room.id)[0];
         this.props.actions.adminChooseRoom(roomId);
-        this.props.actions.messagesFetchRequested(roomId);
+        this.props.actions.messagesFetchRequested(room);
     }
 
     /**

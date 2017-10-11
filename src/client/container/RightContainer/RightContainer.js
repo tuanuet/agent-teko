@@ -21,6 +21,7 @@ class RightContainer extends React.Component {
 
     //update when input a note
     updateNoteState(event) {
+        console.log("on change");
         const note = event.target.value;
         this.setState({
             newNote: note
@@ -31,16 +32,21 @@ class RightContainer extends React.Component {
     handleOnKeyUpTakeNote(event){
         if (event.keyCode === 13) {
             this.saveNote(this.state.newNote.trim());
+        } else {
+            this.setState({
+                newNote: event.target.value
+            })
         }
     }
 
     //on click to save note
-    onClickSaveNote(event) {
+    onClickSaveNote() {
         this.saveNote(this.state.newNote);
     }
 
     //take new note
     saveNote(content) {
+        if (content === "") return;
         let note = {
             content: content,
             roomId: this.props.currentRoomId
@@ -55,28 +61,17 @@ class RightContainer extends React.Component {
             });
     }
 
-    //edit note
-    editNote(id, event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            let newContent = event.target.value;
-            console.log("new content", newContent);
-            const {notes} = this.props;
-            let oldNote = notes.filter(note => note.id === id)[0];
-            if (oldNote.content === newContent) {
-                console.log("nothing to save");
-            } else {
-                console.log(oldNote.content, newContent);
-                console.log("changed");
-            }
-        }
-
-    }
 
 
     render() {
         const {customer} = this.props;
         const {notes} = this.props;
+        const {currentRoomId} = this.props;
+        if (!currentRoomId) {
+            return (
+                <div>WELCOME</div>
+            );
+        }
         return (
             <RightComponent
                 customer={customer}
@@ -85,7 +80,6 @@ class RightContainer extends React.Component {
                 updateNoteState={this.updateNoteState}
                 onClickSaveNote={this.onClickSaveNote}
                 handleOnKeyUpTakeNote={this.handleOnKeyUpTakeNote}
-                editNote={this.editNote.bind(this)}
             />
         );
     }
@@ -95,7 +89,7 @@ function mapStateToProps(state, ownProps) {
     let currentRoomId = state.currentRoomId;
     let customer = {};
     let notes = [];
-    if (currentRoomId != null) {
+    if (currentRoomId) {
         let room = state.rooms.filter(room => room.id === currentRoomId)[0];
         customer = room.customers[0];
         notes = room.notes;

@@ -1,6 +1,7 @@
 import React from 'react';
-import EmojiBoard from "../EmojiBoard/index";
-import {setImage} from "../../actions/action";
+import EmojiBoard from '../EmojiBoard/index';
+import {setImage} from '../../actions/action';
+import * as types from '../../constants/actionTypes';
 
 class BottomBar extends React.Component {
 
@@ -43,24 +44,25 @@ class BottomBar extends React.Component {
         this.refs.chat.focus();
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        if (nextProps.image.url) {
-            let {room, customer} = this.props;
-            let roomId = room.id;
-            let senderId = customer.customerId;
-            let name = customer.name;
-            this.props.socket.emit('client-send-message', {
-                message:
-                    {type: 103, content: nextProps.image.url},
-                roomId,
-                senderId,
-                name
-            },(success) => {
-                console.log(success);
-            });
-            this.props.dispatch(setImage({url: null}));
-        }
-    }
+    //
+    // componentWillUpdate(nextProps, nextState) {
+    //     if (nextProps.image.url) {
+    //         let {room, customer} = this.props;
+    //         let roomId = room.id;
+    //         let senderId = customer.customerId;
+    //         let name = customer.name;
+    //         this.props.socket.emit('client-send-message', {
+    //             message:
+    //                 {type: 103, content: nextProps.image.url},
+    //             roomId,
+    //             senderId,
+    //             name
+    //         }, (success) => {
+    //             console.log(success);
+    //         });
+    //         this.props.dispatch(setImage({url: null}));
+    //     }
+    // }
 
     removeAttach() {
         this.refs.divPreview.setAttribute('style', 'display: none');
@@ -79,18 +81,26 @@ class BottomBar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {isShowEmojiBoard: false}
+        this.state = {isShowEmojiBoard: false};
     }
 
     showEmojiBoard() {
         this.setState({isShowEmojiBoard: !this.state.isShowEmojiBoard});
     }
 
+    sendRequestJoinRoom() {
+        console.log('send requesttttttttttttttttttttttt');
+        this.props.adminSendRequestJoinRoom({room: this.props.currentRoom});
+    }
+
+
     render() {
+
         return (
             <div className="bottom">
                 <div className="chat-input">
-                    <input className="form-control" ref="chat" onKeyPress={this.enter.bind(this)} type="text" placeholder="Type here"/>
+                    <input className="form-control" ref="chat" onKeyPress={this.enter.bind(this)} type="text"
+                           placeholder="Type here"/>
                 </div>
                 <div className="icon-button">
                     <i className="fa fa-smile-o" onClick={this.showEmojiBoard.bind(this)}/>
@@ -98,12 +108,14 @@ class BottomBar extends React.Component {
                         <input type="file" accept="image/*" ref="attach" onChange={this.uploadImage.bind(this)}/>
                         <i className="fa fa-paperclip"/>
                     </label>
-                    <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true" onClick={this.send.bind(this)}></i></a>
+                    <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true"
+                                                           onClick={this.send.bind(this)}/></a>
                 </div>
                 {this.state.isShowEmojiBoard ? <EmojiBoard/> : ''}
             </div>
         );
     }
+
 }
 
 export default BottomBar;

@@ -74,6 +74,7 @@ export function addEnableRoom(room) {
 }
 
 export function addMessageForRoom(roomId,message) {
+    console.log('action',message);
     return {
         type : Types.ADD_MESSAGE_FOR_ROOM,
         message,

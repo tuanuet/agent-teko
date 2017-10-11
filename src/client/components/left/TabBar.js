@@ -11,7 +11,8 @@ const Tab = ({numberOfEnableRooms}) => {
                 <li className="nav-item">
                     <a className="nav-link" data-toggle="tab" href="#unchat" role="tab"
                        aria-controls="enable">Enable<span
-                        className="badge badge-danger">{numberOfEnableRooms}</span></a>
+                        className="badge badge-danger">{numberOfEnableRooms}</span>
+                    </a>
                 </li>
             </ul>
         </div>

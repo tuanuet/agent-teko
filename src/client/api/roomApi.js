@@ -6,6 +6,16 @@ class RoomApi {
         return axios.get(apiType.ROOMS_FETCH_REQUESTED)
             .then(response => response.data);
     }
+
+    static sendRequestJoinRoom(room) {
+        return axios.get(`${apiType.SEND_REQUEST_JOIN_ROOM}?roomId=${room.id}`)
+            .then(res => res.data);
+    }
+
+    static adminJoinRoomToSocketSucceed(room) {
+        return axios.get(`${apiType.ADMIN_JOIN_ROOM_SUCCEED}?roomId=${room.id}`)
+            .then(res => res.data);
+    }
 }
 
 export default RoomApi;

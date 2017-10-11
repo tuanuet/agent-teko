@@ -7,10 +7,10 @@ import * as noteActions from '../RightContainer/action/noteActions';
 
 function* fetchMessages(action) {
     try {
-        const messages = yield call(chatApi.messagesFetchRequested, action.roomId);
-        yield put(chatActions.messagesFetchSucceed(action.roomId, messages));
-        yield put(customerActions.historyChatFetchRequested(action.roomId));
-        yield put(noteActions.notesFetchRequested(action.roomId));
+        const messages = yield call(chatApi.messagesFetchRequested, action.room.id);
+        yield put(chatActions.messagesFetchSucceed(action.room.id, messages));
+        yield put(customerActions.historyChatFetchRequested(action.room.id));
+        yield put(noteActions.notesFetchRequested(action.room.id));
     } catch (e) {
         yield put({type: types.MESSAGES_FETCH_FAILED, message: e.message});
     }
