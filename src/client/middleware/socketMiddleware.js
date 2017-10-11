@@ -1,8 +1,13 @@
 import io from 'socket.io-client';
 
 import axios from 'axios';
-import {addMessage, agentFailure,agentRequested,agentSucceed} from "../actions/action";
-import {execLink} from "../actions/execLink";
+import {
+    addAvailableRoom,
+    addEnableRoom,
+    agentFailure,
+    agentRequested,
+    agentSucceed
+} from '../actions/action';
 
 let socket = null;
 
@@ -58,7 +63,7 @@ let initAgent = (store) => {
             return agent;
         })
         .catch(err => store.dispatch(agentFailure()));
-}
+};
 
 export default function(store) {
     socket = io('http://localhost:3000/chat');
@@ -74,37 +79,38 @@ export default function(store) {
 
     socket.on('server-send-auto-assigned-room', data => {
         let room = {
-          id : data.id,
-          topicName : data.topicName,
-          roomType : data.roomType,
-          status : data.status,
-          createdAt : data.createdAt,
-          messages : [{
-            id: 1,
-            senderId: 1,
-            messageType: 100,
-            messageFrom: 1,
-            checkedMetaLink: false,
-            senderName: "room1",
-            content: "hello room 1",
-            name: "Attachment file",
-          }],
-          note : [],
-          customers : [{
-            id : data.customer.id,
-            customerName : data.customer.customerName,
-            customerEmail : data.customer.customerEmail,
-            customerPhone : data.customer.customerPhone
-          }]
-        }
-        console.log(room);
-    })
+            id : data.id,
+            topicName : data.topicName,
+            roomType : data.roomType,
+            status : data.status,
+            createdAt : data.createdAt,
+            messages : [{
+                id: 1,
+                senderId: 1,
+                messageType: 100,
+                messageFrom: 1,
+                checkedMetaLink: false,
+                senderName: 'room1',
+                content: 'hello room 1',
+                name: 'Attachment file',
+            }],
+            note : [],
+            customers : [{
+                id : data.customer.id,
+                customerName : data.customer.customerName,
+                customerEmail : data.customer.customerEmail,
+                customerPhone : data.customer.customerPhone
+            }]
+        };
+        store.dispatch(addAvailableRoom(room));
+
+    });
 
     socket.on('server-send-message', (message) => {
         let date = new Date().getHours() + ':' + new Date().getSeconds();
         console.log(date);
         // store.dispatch(addMessage({typeSender: 'other', sender: name, message: {content: message, type}, time: date}));
-        console.log('message from server ',message)
+        console.log('message from server ',message);
     });
 
 
