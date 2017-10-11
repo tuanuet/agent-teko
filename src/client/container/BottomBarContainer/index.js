@@ -12,7 +12,6 @@ import * as roomActions from '../LeftContainer/roomActions';
 class BottomBarContainer extends React.Component {
 
     sendRequestJoinRoom() {
-        console.log("dasdasdasdas");
         const {currentRoom} = this.props;
         this.props.actions.sendRequestJoinRoomToPHPServer(currentRoom);
     }
@@ -20,7 +19,7 @@ class BottomBarContainer extends React.Component {
     render() {
         const {currentRoom} = this.props;
         if (currentRoom.status === 1) {
-            return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom.bind(this)}/>
+            return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom.bind(this)}/>;
         }
         return (
             <BottomBar {...this.props}/>
@@ -49,7 +48,7 @@ function mapDispatchToProps(dispatch) {
         },
         adminSendRequestJoinRoom: ({room}) => {
             // console.log("run admin send request join room", room);
-            dispatch({type: types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, room})
+            dispatch({type: types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, room});
         }
     };
 }

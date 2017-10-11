@@ -1,6 +1,6 @@
 import React from 'react';
-import EmojiBoard from "../EmojiBoard/index";
-import {setImage} from "../../actions/action";
+import EmojiBoard from '../EmojiBoard/index';
+import {setImage} from '../../actions/action';
 import * as types from '../../constants/actionTypes';
 
 class BottomBar extends React.Component {
@@ -89,7 +89,7 @@ class BottomBar extends React.Component {
     }
 
     sendRequestJoinRoom() {
-        console.log("send requesttttttttttttttttttttttt");
+        console.log('send requesttttttttttttttttttttttt');
         this.props.adminSendRequestJoinRoom({room: this.props.currentRoom});
     }
 
@@ -109,7 +109,7 @@ class BottomBar extends React.Component {
                         <i className="fa fa-paperclip"/>
                     </label>
                     <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true"
-                                                           onClick={this.send.bind(this)}></i></a>
+                                                           onClick={this.send.bind(this)}/></a>
                 </div>
                 {this.state.isShowEmojiBoard ? <EmojiBoard/> : ''}
             </div>

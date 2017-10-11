@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
-import {execLink} from "../actions/execLink";
 import * as chatActions from '../container/MiddleContainer/chatActions';
 import * as roomActions from '../container/LeftContainer/roomActions';
 import _ from 'lodash';
@@ -10,8 +9,8 @@ import {
     addEnableRoom,
     agentFailure,
     agentRequested,
-    agentSucceed
-
+    agentSucceed,
+    addMessageForRoom,
 } from '../actions/action';
 
 let socket = null;
@@ -102,13 +101,13 @@ function getRoomFromServer(data) {
             id: 1,
             senderId: 1,
             messageType: 100,
-            messageFrom: 1,
+            messageFrom: 0,
             checkedMetaLink: false,
             senderName: 'room1',
             content: 'hello room 1',
             name: 'Attachment file',
         }],
-        note : [],
+        notes : [],
         customers : [{
             id : data.customer.id,
             customerName : data.customer.customerName,
@@ -118,7 +117,22 @@ function getRoomFromServer(data) {
     };
 }
 
-export default function (store) {
+function getMessageFromServer(message) {
+    return {
+        id : message.id,
+        senderId: message.senderId,
+        messageType: message.type,
+        messageFrom: message.messageFrom,
+        checkedMetaLink: false,
+        senderName: message.name,
+        content: message.message,
+        name: message.fileName,
+        createdAt : message.createdAt
+    };
+}
+export default function(store) {
+
+
     socket = io('http://localhost:3000/chat');
 
     initAgent(store).then((agent) => {
@@ -140,11 +154,11 @@ export default function (store) {
 
     });
 
-    socket.on('server-send-message', (message) => {
-        let date = new Date().getHours() + ':' + new Date().getSeconds();
-        console.log(date);
-        // store.dispatch(addMessage({typeSender: 'other', sender: name, message: {content: message, type}, time: date}));
-        console.log('message from server ',message);
+    socket.on('server-send-message', (msg) => {
+        let roomId = msg.roomId;
+        let message = getMessageFromServer(msg);
+        console.log(message);
+        store.dispatch(addMessageForRoom(roomId,message));
     });
 
 
