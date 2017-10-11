@@ -10,7 +10,7 @@ const EnableRooms = ({enableRooms, adminChooseRoom}) => {
                         enableRoom={enableRoom}
                         adminChooseRoom={adminChooseRoom}/>
                 }
-            )};
+            )}
 
         </div>
     );
