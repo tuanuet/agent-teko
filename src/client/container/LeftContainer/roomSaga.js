@@ -9,7 +9,7 @@ function* fetchRooms() {
         const rooms = yield call(roomApi.roomsFetchRequested);
         yield put(roomActions.fetchRoomsSucceed(rooms));
     } catch (e) {
-        console.log("Failed", e.message);
+        console.log('Failed', e.message);
         yield put({type: types.ROOMS_FETCH_FAILED, message: e.message});
     }
 }
