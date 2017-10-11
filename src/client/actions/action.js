@@ -72,3 +72,11 @@ export function addEnableRoom(room) {
         room
     };
 }
+
+export function addMessageForRoom(roomId,message) {
+    return {
+        type : Types.ADD_MESSAGE_FOR_ROOM,
+        message,
+        roomId
+    };
+}

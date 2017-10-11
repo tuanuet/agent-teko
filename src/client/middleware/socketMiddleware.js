@@ -6,7 +6,8 @@ import {
     addEnableRoom,
     agentFailure,
     agentRequested,
-    agentSucceed
+    agentSucceed,
+    addMessageForRoom
 } from '../actions/action';
 
 let socket = null;
@@ -91,7 +92,19 @@ function getRoomFromServer(data) {
         }]
     };
 }
-
+function getMessageFromServer(message) {
+    return {
+        id : message.id,
+        senderId: message.senderId,
+        messageType: message.type,
+        messageFrom: message.messageFrom,
+        checkedMetaLink: false,
+        senderName: message.name,
+        content: message.message,
+        name: message.fileName,
+        createdAt : message.createdAt
+    };
+}
 export default function(store) {
     socket = io('http://localhost:3000/chat');
 
@@ -113,14 +126,12 @@ export default function(store) {
 
     });
 
-    socket.on('server-send-message', (message) => {
-        let date = new Date().getHours() + ':' + new Date().getSeconds();
-        console.log(date);
-        // store.dispatch(addMessage({typeSender: 'other', sender: name, message: {content: message, type}, time: date}));
-        console.log('message from server ',message);
+    socket.on('server-send-message', (msg) => {
+        let roomId = msg.roomId;
+        console.log(msg);
+        let message = getMessageFromServer(msg);
+        store.dispatch(addMessageForRoom(roomId,message));
     });
-
-
 
 
     // socket.on('server-send-message', data => {
