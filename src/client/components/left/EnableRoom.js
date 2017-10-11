@@ -21,7 +21,7 @@ const EnableRoom = ({enableRoom, adminChooseRoom}) => {
                         <div className="last-massage new-message">
                             {_.last(enableRoom.messages).content}
                         </div>
-                        <i className="fa fa-exclamation-triangle text-red" aria-hidden="true"></i>
+                        {/*<i className="fa fa-exclamation-triangle text-red" aria-hidden="true"></i>*/}
                     </div>
                 </div>
             </div>
