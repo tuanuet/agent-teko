@@ -9,7 +9,6 @@ const NoteItem = ({note, editNote}) => {
                         className="pr-sm ps-type-ellipsis"
                         html={note.content}
                         value={note.id}
-                        onKeyUp={editNote.bind(this, note.id)}
                     />
                     <div className="note-item-timestamp d-flex">
                         {note.createdAt}
@@ -30,7 +29,6 @@ const NoteItem = ({note, editNote}) => {
 
 NoteItem.propTypes={
     note: PropTypes.object.isRequired,
-    editNote: PropTypes.func
 };
 
 export default NoteItem;

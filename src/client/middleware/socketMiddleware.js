@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
-import {addMessage, agentFailure, agentRequested, agentSucceed} from "../actions/action";
 import {execLink} from "../actions/execLink";
 import * as chatActions from '../container/MiddleContainer/chatActions';
 import * as roomActions from '../container/LeftContainer/roomActions';
@@ -12,6 +11,7 @@ import {
     agentFailure,
     agentRequested,
     agentSucceed
+
 } from '../actions/action';
 
 let socket = null;
@@ -27,7 +27,6 @@ export function socketMiddleware() {
                 store.dispatch(chatActions.joinRoomToSocketSucceed(action.room));
             });
         } else if (socket && action.type === types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED) {
-            console.log("avai rooms", action.rooms);
             _(action.rooms).forEach(room => {
                 socket.emit('admin-join-room', action.room, function (ackValidation) {
                     if (!ackValidation) {
@@ -35,7 +34,7 @@ export function socketMiddleware() {
                         store.dispatch(roomActions.reJoinRoomToSocketFailed(room))
                     }
                     else {
-                        console.log(`re join room ${room.id} succeed`);
+                        console.log(`re join room ${room.id} failed`);
                         store.dispatch(roomActions.reJoinRoomToSocketSucceed(room));
                     }
                 });

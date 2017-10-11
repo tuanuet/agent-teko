@@ -4,11 +4,24 @@ import BottomBar from '../../components/BottomBar';
 import {addMessage, setImage} from '../../actions/action';
 import {getMetaLink, uploadImage} from './actions';
 import * as types from '../../constants/actionTypes';
+import AcceptRoom from '../../components/BottomBar/AcceptRoom';
+import {bindActionCreators} from 'redux';
+import * as roomActions from '../LeftContainer/roomActions';
 
 
 class BottomBarContainer extends React.Component {
 
+    sendRequestJoinRoom() {
+        console.log("dasdasdasdas");
+        const {currentRoom} = this.props;
+        this.props.actions.sendRequestJoinRoomToPHPServer(currentRoom);
+    }
+
     render() {
+        const {currentRoom} = this.props;
+        if (currentRoom.status === 1) {
+            return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom.bind(this)}/>
+        }
         return (
             <BottomBar {...this.props}/>
         );
@@ -25,6 +38,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return{
+        actions: bindActionCreators({...{}, ...roomActions}, dispatch),
         dispatch,
         sendMessage : ({name,content}) => {
             let date = new Date().getHours() + ':' + new Date().getMinutes();

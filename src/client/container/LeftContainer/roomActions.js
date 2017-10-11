@@ -24,3 +24,8 @@ export function reJoinRoomToSocketSucceed(room) {
 export function reJoinRoomToSocketFailed(room) {
     return {type: types.RE_JOIN_ROOM_TO_SOCKET_SUCCEED, room}
 }
+
+export function sendRequestJoinRoomToPHPServer(room) {
+    console.log("request join room");
+    return {type: types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, room}
+}

@@ -43,6 +43,7 @@ class BottomBar extends React.Component {
         }
         this.refs.chat.focus();
     }
+
     //
     // componentWillUpdate(nextProps, nextState) {
     //     if (nextProps.image.url) {
@@ -94,41 +95,27 @@ class BottomBar extends React.Component {
 
 
     render() {
-        console.log("this proops", this.props);
-        if (this.props.currentRoom.status === 1) {
-            this.sendRequestJoinRoom();
-            return (
-                <div className="bottom">
-                    <input
-                        type="button"
-                        className="btn btn-primary accept-room"
-                        onClick={this.sendRequestJoinRoom.bind(this)}
-                        value="Tiếp nhận tư vấn"
-                    />
 
+        return (
+            <div className="bottom">
+                <div className="chat-input">
+                    <input className="form-control" ref="chat" onKeyPress={this.enter.bind(this)} type="text"
+                           placeholder="Type here"/>
                 </div>
-            )
-        } else {
-            return (
-                <div className="bottom">
-                    <div className="chat-input">
-                        <input className="form-control" ref="chat" onKeyPress={this.enter.bind(this)} type="text"
-                               placeholder="Type here"/>
-                    </div>
-                    <div className="icon-button">
-                        <i className="fa fa-smile-o" onClick={this.showEmojiBoard.bind(this)}/>
-                        <label>
-                            <input type="file" accept="image/*" ref="attach" onChange={this.uploadImage.bind(this)}/>
-                            <i className="fa fa-paperclip"/>
-                        </label>
-                        <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true"
-                                                               onClick={this.send.bind(this)}></i></a>
-                    </div>
-                    {this.state.isShowEmojiBoard ? <EmojiBoard/> : ''}
+                <div className="icon-button">
+                    <i className="fa fa-smile-o" onClick={this.showEmojiBoard.bind(this)}/>
+                    <label>
+                        <input type="file" accept="image/*" ref="attach" onChange={this.uploadImage.bind(this)}/>
+                        <i className="fa fa-paperclip"/>
+                    </label>
+                    <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true"
+                                                           onClick={this.send.bind(this)}></i></a>
                 </div>
-            );
-        }
+                {this.state.isShowEmojiBoard ? <EmojiBoard/> : ''}
+            </div>
+        );
     }
+
 }
 
 export default BottomBar;
