@@ -5,68 +5,71 @@ export default function roomReducer(state=initialState.rooms, action) {
     switch (action.type) {
 
         //fetch rooms
-        case types.ROOMS_FETCH_SUCCEED:
-            return [
-                ...state,
-                ...action.rooms
-            ];
+    case types.ROOMS_FETCH_SUCCEED:
+        return [
+            ...state,
+            ...action.rooms
+        ];
 
 
         //fetch messages of room
-        case types.MESSAGES_FETCH_SUCCEED:
-            return state.map(room => {
-                if (room.id !== action.roomId) {
+    case types.MESSAGES_FETCH_SUCCEED:
+        return state.map(room => {
+            if (room.id !== action.roomId) {
                     // This isn't the item we care about - keep it as-is
-                    return room;
-                }
+                return room;
+            }
 
-                return {
-                    ...room,
-                    messages: action.messages
-                };
-            });
+            return {
+                ...room,
+                messages: action.messages
+            };
+        });
 
         //fetch history chat of customer
-        case types.HISTORY_CHAT_FETCH_SUCCEED:
-            return state.map(room => {
-                if (room.id !== action.roomId) {
+    case types.HISTORY_CHAT_FETCH_SUCCEED:
+        return state.map(room => {
+            if (room.id !== action.roomId) {
                     // This isn't the item we care about - keep it as-is
-                    return room;
-                }
+                return room;
+            }
 
-                return {
-                    ...room,
-                    customers: action.customers
-                };
-            });
+            return {
+                ...room,
+                customers: action.customers
+            };
+        });
 
         //fetch history chat of customer
-        case types.NOTES_FETCH_SUCCEED:
-            return state.map(room => {
-                if (room.id !== action.roomId) {
+    case types.NOTES_FETCH_SUCCEED:
+        return state.map(room => {
+            if (room.id !== action.roomId) {
                     // This isn't the item we care about - keep it as-is
-                    return room;
-                }
+                return room;
+            }
 
-                return {
-                    ...room,
-                    notes: action.notes
-                };
-            });
+            return {
+                ...room,
+                notes: action.notes
+            };
+        });
 
         //create a new note
-        case types.CREATE_NOTE_SUCCEED:
-            return state.map(room => {
-                if (room.id !== action.roomId) {
+    case types.CREATE_NOTE_SUCCEED:
+        return state.map(room => {
+            if (room.id !== action.roomId) {
                     // This isn't the item we care about - keep it as-is
-                    return room;
-                }
+                return room;
+            }
 
-                return {
-                    ...room,
-                    notes: [...room.notes, action.note]
-                };
-            });
+            return {
+                ...room,
+                notes: [...room.notes, action.note]
+            };
+        });
+        //add more room available
+    case types.ADD_ROOM_AVAILABLE:
+        return [action.room,...state];
 
         //admin join room succeed
         case types.JOIN_ROOM_SUCCEED:
@@ -83,8 +86,12 @@ export default function roomReducer(state=initialState.rooms, action) {
                 };
             });
 
-        //TODO: default case, return current state
-        default:
-            return state;
+        //add more room enable
+    case types.ADD_ROOM_ENABLE:
+        return [action.room,...state];
+
+        // default case, return current state
+    default:
+        return state;
     }
 }

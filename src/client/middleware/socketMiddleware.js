@@ -6,6 +6,13 @@ import {execLink} from "../actions/execLink";
 import * as chatActions from '../container/MiddleContainer/chatActions';
 import * as roomActions from '../container/LeftContainer/roomActions';
 import _ from 'lodash';
+import {
+    addAvailableRoom,
+    addEnableRoom,
+    agentFailure,
+    agentRequested,
+    agentSucceed
+} from '../actions/action';
 
 let socket = null;
 
@@ -84,6 +91,33 @@ let initAgent = (Store) => {
         .catch(err => store.dispatch(agentFailure()));
 };
 
+function getRoomFromServer(data) {
+    return {
+        id : data.id,
+        topicName : data.topicName,
+        roomType : data.roomType,
+        status : data.status,
+        createdAt : data.createdAt,
+        messages : [{
+            id: 1,
+            senderId: 1,
+            messageType: 100,
+            messageFrom: 1,
+            checkedMetaLink: false,
+            senderName: 'room1',
+            content: 'hello room 1',
+            name: 'Attachment file',
+        }],
+        note : [],
+        customers : [{
+            id : data.customer.id,
+            customerName : data.customer.customerName,
+            customerEmail : data.customer.customerEmail,
+            customerPhone : data.customer.customerPhone
+        }]
+    };
+}
+
 export default function (store) {
     socket = io('http://localhost:3000/chat');
 
@@ -95,40 +129,22 @@ export default function (store) {
     });
 
     // socket.on('server-send-join-room', ({success}) => console.log(`join room ${success}`));
+    socket.on('server-send-room-enable',data => {
+        let room = getRoomFromServer(data);
+        store.dispatch(addEnableRoom(room));
+    });
 
     socket.on('server-send-auto-assigned-room', data => {
-        let room = {
-            id: data.id,
-            topicName: data.topicName,
-            roomType: data.roomType,
-            status: data.status,
-            createdAt: data.createdAt,
-            messages: [{
-                id: 1,
-                senderId: 1,
-                messageType: 100,
-                messageFrom: 1,
-                checkedMetaLink: false,
-                senderName: "room1",
-                content: "hello room 1",
-                name: "Attachment file",
-            }],
-            note: [],
-            customers: [{
-                id: data.customer.id,
-                customerName: data.customer.customerName,
-                customerEmail: data.customer.customerEmail,
-                customerPhone: data.customer.customerPhone
-            }]
-        };
-        console.log(room);
-    })
+        let room = getRoomFromServer(data);
+        store.dispatch(addAvailableRoom(room));
+
+    });
 
     socket.on('server-send-message', (message) => {
         let date = new Date().getHours() + ':' + new Date().getSeconds();
         console.log(date);
         // store.dispatch(addMessage({typeSender: 'other', sender: name, message: {content: message, type}, time: date}));
-        console.log('message from server ', message)
+        console.log('message from server ',message);
     });
 
 

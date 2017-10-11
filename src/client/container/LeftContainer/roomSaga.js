@@ -11,7 +11,7 @@ function* fetchRooms() {
         let availableRooms = rooms.filter(room => room.status === 2);
         yield put(roomActions.reJoinAllAvailableRoomsToSocketRequested(availableRooms));
     } catch (e) {
-        console.log("Failed", e.message);
+        console.log('Failed', e.message);
         yield put({type: types.ROOMS_FETCH_FAILED, message: e.message});
     }
 }
