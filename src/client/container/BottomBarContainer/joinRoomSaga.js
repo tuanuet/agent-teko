@@ -7,14 +7,14 @@ function* handleAdminSendRequestJoinRoom(action) {
     try {
         const response = yield call(roomApi.sendRequestJoinRoom, action.room);
         if (response.result) {
-            yield put({type: types.ADMIN_SEND_REQUEST_JOIN_ROOM_SUCCEED, room: action.room});
+            yield put({type: types.JOIN_ROOM_TO_PHP_SERVER_SUCCEED, room: action.room});
         } else {
             console.log("error room was assigned");
-            put({type: types.ADMIN_SEND_REQUEST_JOIN_ROOM_FAILED});
+            put({type: types.JOIN_ROOM_TO_PHP_SERVER_FAILED});
         }
     } catch (e) {
         console.log("error while send request join room", e);
-        yield put({type: types.ADMIN_SEND_REQUEST_JOIN_ROOM_FAILED, message: e.message});
+        yield put({type: types.JOIN_ROOM_TO_PHP_SERVER_FAILED, message: e.message});
     }
 }
 
@@ -22,21 +22,21 @@ function* handleAdminSendRequestJoinRoomToSocketSucceed(action) {
     try {
         const response = yield call(roomApi.adminJoinRoomToSocketSucceed, action.room);
         if (response.result) {
-            yield put({type: types.ADMIN_JOIN_ROOM_SUCCEED, room: action.room});
+            yield put({type: types.JOIN_ROOM_SUCCEED, room: action.room});
         } else {
             console.log("error while updating assignee");
-            put({type: types.ADMIN_JOIN_ROOM_FAILED});
+            put({type: types.JOIN_ROOM_FAILED});
         }
     } catch (e) {
         console.log("error while send request join room", e);
-        yield put({type: types.ADMIN_JOIN_ROOM_FAILED, message: e.message});
+        yield put({type: types.JOIN_ROOM_FAILED, message: e.message});
     }
 }
 
 export function* adminSendRequestJoinRoom() {
-    yield takeEvery(types.ADMIN_SEND_REQUEST_JOIN_ROOM, handleAdminSendRequestJoinRoom);
+    yield takeEvery(types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, handleAdminSendRequestJoinRoom);
 }
 
 export function* adminSendRequestJoinRoomToSocketSucceed() {
-    yield takeEvery(types.ADMIN_SEND_REQUEST_JOIN_ROOM_TO_SOCKET_SUCCEED, handleAdminSendRequestJoinRoomToSocketSucceed);
+    yield takeEvery(types.JOIN_ROOM_TO_SOCKET_SUCCEED, handleAdminSendRequestJoinRoomToSocketSucceed);
 }

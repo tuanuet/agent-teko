@@ -68,6 +68,7 @@
       background-color: #f7f7f7;
       border-radius: 5px;
       display: flex;
+      transition: opacity .2s ease-in-out 50ms;
       &:hover {
         background-color: #bababa;
       }

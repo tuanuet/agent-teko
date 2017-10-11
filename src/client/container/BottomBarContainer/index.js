@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import BottomBar from '../../components/BottomBar';
 import {addMessage, setImage} from '../../actions/action';
 import {getMetaLink, uploadImage} from './actions';
+import * as types from '../../constants/actionTypes';
 
 
 class BottomBarContainer extends React.Component {
@@ -33,7 +34,8 @@ function mapDispatchToProps(dispatch) {
             dispatch(uploadImage(formData));
         },
         adminSendRequestJoinRoom: ({room}) => {
-            dispatch({type: 'ADMIN_SEND_REQUEST_JOIN_ROOM', room})
+            // console.log("run admin send request join room", room);
+            dispatch({type: types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, room})
         }
     };
 }

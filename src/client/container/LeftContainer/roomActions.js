@@ -11,3 +11,16 @@ export function fetchRoomsSucceed(rooms) {
 export function adminChooseRoom(roomId) {
     return {type: types.ADMIN_CHOOSE_ROOM, roomId};
 }
+
+export function reJoinAllAvailableRoomsToSocketRequested(rooms) {
+    console.log("RE JOIN ALL ROOMS");
+    return {type: types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED, rooms}
+}
+
+export function reJoinRoomToSocketSucceed(room) {
+    return {type: types.RE_JOIN_ROOM_TO_SOCKET_SUCCEED, room}
+}
+
+export function reJoinRoomToSocketFailed(room) {
+    return {type: types.RE_JOIN_ROOM_TO_SOCKET_SUCCEED, room}
+}

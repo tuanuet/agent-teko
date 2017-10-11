@@ -1,8 +1,11 @@
 import io from 'socket.io-client';
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
-import {addMessage, agentFailure,agentRequested,agentSucceed} from "../actions/action";
+import {addMessage, agentFailure, agentRequested, agentSucceed} from "../actions/action";
 import {execLink} from "../actions/execLink";
+import * as chatActions from '../container/MiddleContainer/chatActions';
+import * as roomActions from '../container/LeftContainer/roomActions';
+import _ from 'lodash';
 
 let socket = null;
 
@@ -11,10 +14,24 @@ let store = null;
 export function socketMiddleware() {
     return next => (action) => {
         const result = next(action);
-        if (socket && action.type === types.ADMIN_SEND_REQUEST_JOIN_ROOM_SUCCEED) {
-            socket.emit('admin-join-room', action.room,function (ackValidation) {
+        if (socket && action.type === types.JOIN_ROOM_TO_PHP_SERVER_SUCCEED) {
+            socket.emit('admin-join-room', action.room, function (ackValidation) {
                 if (!ackValidation) return;
-                store.dispatch({type: types.ADMIN_SEND_REQUEST_JOIN_ROOM_TO_SOCKET_SUCCEED, room: action.room});
+                store.dispatch(chatActions.joinRoomToSocketSucceed(action.room));
+            });
+        } else if (socket && action.type === types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED) {
+            console.log("avai rooms", action.rooms);
+            _(action.rooms).forEach(room => {
+                socket.emit('admin-join-room', action.room, function (ackValidation) {
+                    if (!ackValidation) {
+                        console.log(`rejoin room ${room.id} succeed`);
+                        store.dispatch(roomActions.reJoinRoomToSocketFailed(room))
+                    }
+                    else {
+                        console.log(`re join room ${room.id} succeed`);
+                        store.dispatch(roomActions.reJoinRoomToSocketSucceed(room));
+                    }
+                });
             });
         }
 
@@ -67,13 +84,13 @@ let initAgent = (Store) => {
         .catch(err => store.dispatch(agentFailure()));
 };
 
-export default function(store) {
+export default function (store) {
     socket = io('http://localhost:3000/chat');
 
     initAgent(store).then((agent) => {
         // join default room
-        socket.emit('admin-join-default-room',{adminId: agent.id}, function (ack) {
-            console.log('admin join room default ',ack);
+        socket.emit('admin-join-default-room', {adminId: agent.id}, function (ack) {
+            console.log('admin join room default ', ack);
         });
     });
 
@@ -81,28 +98,28 @@ export default function(store) {
 
     socket.on('server-send-auto-assigned-room', data => {
         let room = {
-          id : data.id,
-          topicName : data.topicName,
-          roomType : data.roomType,
-          status : data.status,
-          createdAt : data.createdAt,
-          messages : [{
-            id: 1,
-            senderId: 1,
-            messageType: 100,
-            messageFrom: 1,
-            checkedMetaLink: false,
-            senderName: "room1",
-            content: "hello room 1",
-            name: "Attachment file",
-          }],
-          note : [],
-          customers : [{
-            id : data.customer.id,
-            customerName : data.customer.customerName,
-            customerEmail : data.customer.customerEmail,
-            customerPhone : data.customer.customerPhone
-          }]
+            id: data.id,
+            topicName: data.topicName,
+            roomType: data.roomType,
+            status: data.status,
+            createdAt: data.createdAt,
+            messages: [{
+                id: 1,
+                senderId: 1,
+                messageType: 100,
+                messageFrom: 1,
+                checkedMetaLink: false,
+                senderName: "room1",
+                content: "hello room 1",
+                name: "Attachment file",
+            }],
+            note: [],
+            customers: [{
+                id: data.customer.id,
+                customerName: data.customer.customerName,
+                customerEmail: data.customer.customerEmail,
+                customerPhone: data.customer.customerPhone
+            }]
         };
         console.log(room);
     })
@@ -111,10 +128,8 @@ export default function(store) {
         let date = new Date().getHours() + ':' + new Date().getSeconds();
         console.log(date);
         // store.dispatch(addMessage({typeSender: 'other', sender: name, message: {content: message, type}, time: date}));
-        console.log('message from server ',message)
+        console.log('message from server ', message)
     });
-
-
 
 
     // socket.on('server-send-message', data => {
