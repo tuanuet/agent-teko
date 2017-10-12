@@ -26,15 +26,19 @@ export function socketMiddleware() {
                 store.dispatch(chatActions.joinRoomToSocketSucceed(action.room));
             });
         } else if (socket && action.type === types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED) {
-                socket.emit('admin-re-join-room', action.rooms, function (ackValidation) {
-                    if (!ackValidation) {
-                        console.log(`rejoin room failed`);
-                        store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms))
-                    }
-                    else {
-                        console.log(`re join room succeed`);
+            socket.emit('admin-re-join-room', action.rooms, function (ackValidation) {
+                if (!ackValidation) {
+                    console.log('rejoin room failed');
+                    store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms));
+                }
+                else {
+                    console.log('re join room succeed');
                         // store.dispatch(roomActions.reJoinRoomToSocketSucceed(room));
-                    }
+                }
+            });
+        } else if (socket && action.type === types.CLIENT_SEND_MESSAGE){
+            socket.emit('client-send-message',action.message,function (isReceived) {
+                console.log(`admin send message and server receive ${isReceived}`);
             });
         }
 
