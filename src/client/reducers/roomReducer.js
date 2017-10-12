@@ -73,19 +73,19 @@ export default function roomReducer(state=initialState.rooms, action) {
         return [action.room,...state];
 
         //admin join room succeed
-        case types.JOIN_ROOM_SUCCEED:
-            return state.map(room => {
-                if (room.id !== action.room.id) {
-                    // This isn't the item we care about - keep it as-is
-                    return room;
-                }
+    case types.JOIN_ROOM_SUCCEED:
+        return state.map(room => {
+            if (room.id !== action.room.id) {
+                // This isn't the item we care about - keep it as-is
+                return room;
+            }
 
-                return {
-                    ...{},
-                    ...room,
-                    status: 2
-                };
-            });
+            return {
+                ...{},
+                ...room,
+                status: 2
+            };
+        });
 
         //add more room enable
     case types.ADD_ROOM_ENABLE:
@@ -101,6 +101,21 @@ export default function roomReducer(state=initialState.rooms, action) {
 
         return [updateRoom,...removeState];
     }
+
+    //reset number of unread messages to 0
+    case types.RESET_NUM_OF_UNREAD_MESSAGE:
+        return state.map(room => {
+            if (room.id !== action.room.id) {
+                // This isn't the item we care about - keep it as-is
+                return room;
+            }
+
+            return {
+                ...{},
+                ...room,
+                numOfUnReadMessages: 0
+            };
+        });
 
         // default case, return current state
     default:

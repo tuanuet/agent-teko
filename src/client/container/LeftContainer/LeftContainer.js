@@ -21,6 +21,7 @@ class LeftContainer extends React.Component {
         let room = rooms.filter(room => roomId === room.id)[0];
         this.props.actions.adminChooseRoom(roomId);
         this.props.actions.messagesFetchRequested(room);
+        this.props.actions.resetNumOfUnReadMessages(room);
     }
 
     /**

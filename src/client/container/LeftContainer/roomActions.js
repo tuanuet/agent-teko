@@ -26,6 +26,9 @@ export function reJoinRoomToSocketFailed(room) {
 }
 
 export function sendRequestJoinRoomToPHPServer(room) {
-    console.log("request join room");
     return {type: types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, room}
+}
+
+export function resetNumOfUnReadMessages(room) {
+    return {type: types.RESET_NUM_OF_UNREAD_MESSAGE, room}
 }

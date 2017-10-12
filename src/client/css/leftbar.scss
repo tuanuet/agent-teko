@@ -62,6 +62,14 @@
     .active {
       background-color: #bababa;
     }
+
+    .unread {
+      font-weight: bolder;
+      color: black;
+      .last-massage {
+        color: black;
+      }
+    }
     .room-item {
       padding: 12px 8px;
       margin: 0 8px 8px;
