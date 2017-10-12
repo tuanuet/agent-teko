@@ -29,9 +29,10 @@ class LeftContainer extends React.Component {
      * @returns {XML}
      */
     render() {
-        const {rooms} = this.props;
+        const {rooms, currentRoomId} = this.props;
         return (
             <LeftComponent
+                currentRoomId={currentRoomId}
                 adminChooseRoom={this.adminChooseRoom}
                 rooms={rooms}
             />

@@ -1,9 +1,15 @@
 import React, {PropTypes} from 'react';
 import _ from 'lodash';
 
-const AvailableRoom = ({availableRoom, adminChooseRoom}) => {
-    let unread = (availableRoom.numOfUnReadMessages === 0)? "":"unread"
-    let className = (availableRoom.numOfUnReadMessages === 0)? "room-item":"room-item unread";
+const AvailableRoom = ({availableRoom, adminChooseRoom, currentRoomId}) => {
+    let className = "room-item";
+    if (availableRoom.numOfUnReadMessages > 0) {
+        className += " unread";
+    }
+
+    if (availableRoom.id === currentRoomId) {
+        className += " active";
+    }
     return (
         <div className={className} onClick={adminChooseRoom.bind(this, availableRoom.id)} >
             <div className="customer-control">
