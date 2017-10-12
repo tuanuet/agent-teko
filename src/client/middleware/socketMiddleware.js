@@ -28,21 +28,24 @@ export function socketMiddleware() {
         } else if (socket && action.type === types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED) {
             socket.emit('admin-re-join-room', action.rooms, function (ackValidation) {
                 if (!ackValidation) {
-                    console.log(`rejoin room failed`);
-                    store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms))
+                    console.log('rejoin room failed');
+                    store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms));
                 }
                 else {
-                    console.log(`re join room succeed`);
-                    // store.dispatch(roomActions.reJoinRoomToSocketSucceed(room));
+                    console.log('re join room succeed');
+                        // store.dispatch(roomActions.reJoinRoomToSocketSucceed(room));
                 }
+            });
+        } else if (socket && action.type === types.CLIENT_SEND_MESSAGE){
+            socket.emit('client-send-message',action.message,function (isReceived) {
+                console.log(`admin send message and server receive ${isReceived}`);
             });
         } else if (socket && action.type === types.RESET_NUM_OF_UNREAD_MESSAGE) {
             socket.emit('reset-number-of-unread-messages', action.room.id, ack => {
-
             });
         }
 
-        // if (socket && action.type === types.ADMIN_SEND_MESSAGE) {
+                // if (socket && action.type === types.ADMIN_SEND_MESSAGE) {
         //     socket.emit('client-send-message', action.message, function (data) {
         //         let message = {
         //             id: data.messageId,
@@ -158,8 +161,13 @@ export default function(store) {
     socket.on('server-send-message', (msg) => {
         let roomId = msg.roomId;
         let message = getMessageFromServer(msg);
-        console.log(message);
+        // console.log(message);
         store.dispatch(addMessageForRoom(roomId,message));
+
+        //if current room id is different from roomId then update number of unread messages
+        if (store.getState().currentRoomId !== roomId) {
+            store.dispatch(roomActions.updateNumberOfUnreadMessages(roomId));
+        }
     });
 
 

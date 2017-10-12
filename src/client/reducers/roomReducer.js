@@ -110,11 +110,25 @@ export default function roomReducer(state=initialState.rooms, action) {
                 return room;
             }
 
-            return {
+            return Object.assign(room, {numOfUnReadMessages: 0});
+        });
+
+    //update number of unread messages
+    case types.UPDATE_NUM_OF_UNREAD_MESSAGE:
+        return state.map(room => {
+            if (room.id !== action.roomId) {
+                // This isn't the item we care about - keep it as-is
+                return room;
+            }
+            console.log("before update", room.numOfUnReadMessages);
+            console.log("after update", {
                 ...{},
                 ...room,
-                numOfUnReadMessages: 0
-            };
+                numOfUnReadMessages: room.numOfUnReadMessages + 1
+            });
+            return Object.assign(room, {numOfUnReadMessages: room.numOfUnReadMessages + 1});
+
+
         });
 
         // default case, return current state

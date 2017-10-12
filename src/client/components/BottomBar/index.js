@@ -1,8 +1,21 @@
+import moment from 'moment';
 import React from 'react';
 import EmojiBoard from '../EmojiBoard/index';
-import {setImage} from '../../actions/action';
-import * as types from '../../constants/actionTypes';
+import * as actions from '../../actions/action';
 
+function getMessageFromClient(message) {
+    return {
+        id : null,
+        senderId: message.senderId,
+        messageType: message.type,
+        messageFrom: message.messageFrom,
+        checkedMetaLink: false,
+        senderName: message.name,
+        content: message.message.content,
+        name: message.fileName,
+        createdAt : message.createdAt
+    };
+}
 class BottomBar extends React.Component {
 
     enter(e) {
@@ -12,16 +25,24 @@ class BottomBar extends React.Component {
     }
 
     send() {
-        let {room, customer} = this.props;
-        let roomId = room.id;
+        let {currentRoom,agent} = this.props;
+        let roomId = currentRoom.id;
         let content = this.refs.chat.value;
-        let senderId = customer.customerId;
-        let name = customer.name;
+        let senderId = agent.id;
+        let name = agent.name;
 
-        this.props.socket.emit('client-send-message', {message: {content}, roomId, senderId, name}, (success) => {
-            console.log('Message sended', success);
-        });
-        this.props.sendMessage({content, name});
+        let msg = {
+            message: {content},
+            roomId,
+            senderId,
+            name,
+            type : 100,
+            messageFrom: 0,
+            createdAt:moment().format('YYYY-MM-DD hh:mm:ss')
+        };
+        this.props.dispatch(actions.addMessageForRoom(roomId,getMessageFromClient(msg)));
+
+        this.props.dispatch(actions.clientSendMessage(msg));
 
         this.refs.chat.value = '';
 
@@ -89,7 +110,6 @@ class BottomBar extends React.Component {
     }
 
     sendRequestJoinRoom() {
-        console.log('send requesttttttttttttttttttttttt');
         this.props.adminSendRequestJoinRoom({room: this.props.currentRoom});
     }
 
