@@ -18,7 +18,6 @@ const AvailableRooms = ({availableRooms, adminChooseRoom, currentRoomId}) => {
 };
 
 AvailableRooms.propTypes = {
-    currentRoomId: PropTypes.object.isRequired,
     availableRooms: PropTypes.array.isRequired,
     adminChooseRoom: PropTypes.func.isRequired
 };

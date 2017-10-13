@@ -35,7 +35,6 @@ const LeftComponent = ({rooms, adminChooseRoom, currentRoomId}) => {
 LeftComponent.propTypes = {
     rooms: PropTypes.array.isRequired,
     adminChooseRoom: PropTypes.func.isRequired,
-    currentRoomId: PropTypes.object.isRequired
 };
 
 export default LeftComponent;
