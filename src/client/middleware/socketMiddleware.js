@@ -101,6 +101,7 @@ function getRoomFromServer(data) {
         roomType : data.roomType,
         status : data.status,
         createdAt : data.createdAt,
+        numOfUnReadMessages: 1,
         messages : [{
             id: 1,
             senderId: 1,
@@ -162,9 +163,10 @@ export default function(store) {
         let roomId = msg.roomId;
         let message = getMessageFromServer(msg);
         // console.log(message);
-        store.dispatch(addMessageForRoom(roomId,message));
+        store.dispatch(addMessageForRoom(roomId, message));
 
         //if current room id is different from roomId then update number of unread messages
+        console.log("server send message", store.getState().currentRoomId, roomId);
         if (store.getState().currentRoomId !== roomId) {
             store.dispatch(roomActions.updateNumberOfUnreadMessages(roomId));
         }
