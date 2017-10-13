@@ -12,28 +12,8 @@ class ChatContent extends React.Component {
 
 
     render(){
-        // let theme = this.props.theme;
         return(
            <Scroll {...this.props}/>
-            /*
-            <div className={'body ' + theme}>
-                <div className="chat-group self">
-                    <div className="chat">Hello</div>
-                </div>
-                <div className="chat-group other">
-                    <div className="chat">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid laborum
-                        molestiae
-                        quo.
-                    </div>
-                </div>
-                <div className="chat-group self">
-                    <div className="chat">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid laborum
-                        molestiae
-                        quo.
-                    </div>
-                </div>
-
-            </div>*/
         );
     }
 

@@ -23,6 +23,7 @@ function* fetchMessagesSaga() {
 //=================FETCH AGENTS=====================
 
 function* fetchAgents(action) {
+    console.log("action", action);
     try {
         const agents = yield call(chatApi.agentsFetchRequested);
         yield put(chatActions.agentsFetchSucceed(agents));
@@ -34,7 +35,7 @@ function* fetchAgents(action) {
 function* fetchAgentsSaga() {
     yield takeEvery(types.AGENTS_FETCH_REQUESTED, fetchAgents);
 }
-export default {
+export {
     fetchMessagesSaga,
-    fetchAgents
+    fetchAgentsSaga
 };

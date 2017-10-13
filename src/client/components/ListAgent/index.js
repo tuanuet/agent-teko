@@ -3,7 +3,7 @@ import * as React from "react";
 function getAgent(agents) {
     return agents.map( (agent,key) => {
         return (
-            <div className="form-check">
+            <div className="form-check" key={key}>
                 <input className="form-check-input" type="checkbox" name="exampleRadios" id={`checkbox${key}`} value="option1" />
                 <label className="form-check-label" htmlFor={`checkbox${key}`}>
                     {agent.agentName}

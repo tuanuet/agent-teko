@@ -7,7 +7,8 @@ class ChatApi {
             .then(response => response.data);
     }
 
-    static agentsFetchRequested(roomId) {
+    static agentsFetchRequested() {
+        console.log('agentsFetchRequested');
         return axios.get(apiTypes.AGENTS_FETCH_REQUESTED)
             .then(response => response.data);
     }

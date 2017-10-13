@@ -1,21 +1,24 @@
+import {connect} from 'react-redux';
 import React, {PropTypes} from 'react';
 import ListAgent from '../../components/ListAgent';
-let agents = [
-    {agentName : "Vuong oc"},
-    {agentName : "Vuong oc22"},
-    {agentName : "Vuong oc asdkfaalsdflkasd"},
-    {agentName : "Vuong oc 123123"},
-    {agentName : "Vuong oc1"},
-    {agentName : "Vuon"}
-]
+import {bindActionCreators} from 'redux';
+import * as chatActions from '../../container/MiddleContainer/chatActions';
+
 
 class Header extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.showListAgent = this.showListAgent.bind(this);
+    }
     showTheme() {
         $('#selectTheme').toggleClass('show');
     }
     showListAgent(){
+        console.log('start');
+        this.props.actions.agentsFetchRequested();
         $('#selectListAgent').toggleClass('show');
     }
+
     componentDidMount(){
         $(document).keyup(e => {
             if(e.keyCode === 27 ) {
@@ -48,7 +51,7 @@ class Header extends React.Component {
                                 <div className="title">Select your agent</div>
                                 <hr/>
                                 <div role="form" className="list-theme">
-                                    <ListAgent agents={agents}/>
+                                    <ListAgent agents={this.props.agents}/>
                                 </div>
                                 <hr/>
                                 <div className="control">
@@ -85,4 +88,16 @@ Header.propTypes = {
     changeTheme: PropTypes.func.isRequired,
 };
 
-export default Header;
+function mapStateToProps(state) {
+    return {
+        agents: state.agents
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators({...{}, ...chatActions}, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

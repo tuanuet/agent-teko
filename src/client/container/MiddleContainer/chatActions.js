@@ -22,3 +22,8 @@ export function joinRoomToSocketSucceed(room) {
 export function agentsFetchSucceed(agents) {
     return {type : types.AGENTS_FETCH_SUCCEED,agents}
 }
+
+export function agentsFetchRequested() {
+    console.log("run here");
+    return {type: types.AGENTS_FETCH_REQUESTED}
+}
