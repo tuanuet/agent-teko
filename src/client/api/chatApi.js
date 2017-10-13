@@ -7,6 +7,11 @@ class ChatApi {
             .then(response => response.data);
     }
 
+    static agentsFetchRequested(roomId) {
+        return axios.get(apiTypes.AGENTS_FETCH_REQUESTED)
+            .then(response => response.data);
+    }
+
     // static sendRequestJoinRoom(room) {
     //     return axios.get(`${config.SEND_REQUEST_JOIN_ROOM}?roomid=${room.id}`);
     // }

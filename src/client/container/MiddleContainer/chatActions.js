@@ -18,3 +18,7 @@ export function messagesFetchSucceed(roomId, messages) {
 export function joinRoomToSocketSucceed(room) {
     return {type: types.JOIN_ROOM_TO_SOCKET_SUCCEED, room}
 }
+
+export function agentsFetchSucceed(agents) {
+    return {type : types.AGENTS_FETCH_SUCCEED,agents}
+}

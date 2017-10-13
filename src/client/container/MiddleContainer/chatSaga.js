@@ -20,4 +20,21 @@ function* fetchMessagesSaga() {
     yield takeEvery(types.MESSAGES_FETCH_REQUESTED, fetchMessages);
 }
 
-export default fetchMessagesSaga;
+//=================FETCH AGENTS=====================
+
+function* fetchAgents(action) {
+    try {
+        const agents = yield call(chatApi.agentsFetchRequested);
+        yield put(chatActions.agentsFetchSucceed(agents));
+    } catch (e) {
+        yield put({type: types.AGENTS_FETCH_FAILED, message: e.message});
+    }
+}
+
+function* fetchAgentsSaga() {
+    yield takeEvery(types.AGENTS_FETCH_REQUESTED, fetchAgents);
+}
+export default {
+    fetchMessagesSaga,
+    fetchAgents
+};
