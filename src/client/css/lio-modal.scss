@@ -23,7 +23,19 @@
     background: white;
     padding: 16px;
     border-radius: 4px;
+    .list-theme {
+      padding-top: 8px;
+    }
+    .control {
+      display: flex;
+      justify-content: flex-end;
+      font-size: 20px;
+      .save {
+        margin-right: 4px;
+      }
+    }
   }
+
 }
 
 #selectTheme {

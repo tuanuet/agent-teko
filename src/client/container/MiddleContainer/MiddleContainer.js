@@ -7,7 +7,6 @@ import BottomBarContainer from '../BottomBarContainer'
 class MiddleContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.showTheme = this.showTheme.bind(this);
         this.changeTheme = this.changeTheme.bind(this);
 
         const localStorage = window.localStorage;
@@ -15,9 +14,7 @@ class MiddleContainer extends React.Component {
         this.state = {theme: color ? color : 'blue'};
     }
 
-    showTheme() {
-        $('#selectTheme').toggleClass('show');
-    }
+
 
     changeTheme(e) {
         const localStorage = window.localStorage;
@@ -29,7 +26,6 @@ class MiddleContainer extends React.Component {
     render() {
 
         const {currentRoomId} = this.props;
-        console.log('MiddleComponent run',currentRoomId);
         if (!currentRoomId) {
             return <div>WELCOME</div>;
         } else {
@@ -38,15 +34,11 @@ class MiddleContainer extends React.Component {
 
               <div className="middle">
                   <Header
-                      showTheme={this.showTheme}
-                      theme={this.state.theme}
                       changeTheme={this.changeTheme}
                   />
 
                   <ChatContentContainer
-                    showTheme={this.showTheme}
                     theme={this.state.theme}
-                    changeTheme={this.changeTheme}
                   />
 
                   <BottomBarContainer/>
