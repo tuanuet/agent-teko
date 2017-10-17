@@ -3,32 +3,69 @@ import React, {PropTypes} from 'react';
 import ListAgent from '../../components/ListAgent';
 import {bindActionCreators} from 'redux';
 import * as chatActions from '../../container/MiddleContainer/chatActions';
+import SelectAgent from "../Modal/SelectAgent";
+import SelectTheme from "../Modal/SelectTheme";
 
 
 class Header extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.showListAgent = this.showListAgent.bind(this);
-    }
-    showTheme() {
-        $('#selectTheme').toggleClass('show');
-    }
-    showListAgent(){
-        console.log('start');
-        this.props.actions.agentsFetchRequested();
-        $('#selectListAgent').toggleClass('show');
+        this.state = {
+            showModals: {
+                selectTheme: false,
+                selectListAgent: false
+            }
+        }
+
     }
 
-    componentDidMount(){
-        $(document).keyup(e => {
-            if(e.keyCode === 27 ) {
-                $('.lio-modal').removeClass('show');
+    showTheme() {
+        this.setState({
+            showModals: {
+                selectTheme: !this.state.showModals.selectTheme,
+                selectListAgent : false
             }
         })
     }
-    render(){
-        let {changeTheme} = this.props;
-        return(
+
+    showListAgent() {
+        this.props.actions.agentsFetchRequested();
+        this.setState({
+            showModals: {
+                selectTheme: false,
+                selectListAgent: !this.state.showModals.selectListAgent
+            }
+        })
+    }
+
+    componentDidMount() {
+        $(document).keyup(e => {
+            if (e.keyCode === 27) {
+                this.setState({
+                    showModals:
+                        {
+                            selectTheme: false,
+                            selectListAgent: false
+                        }
+
+                })
+            }
+        })
+    }
+
+    render() {
+        console.log(this.state.showModals.selectListAgent);
+        let modal = null;
+
+        if (this.state.showModals.selectListAgent) {
+            modal = <SelectAgent {...this.props}/>;
+        }
+        if (this.state.showModals.selectTheme) {
+            modal = <SelectTheme {...this.props} />;
+        }
+        console.log(modal);
+        return (
             <div className="header">
                 <div className="title">
                     <div>CHAT HEADER</div>
@@ -45,32 +82,7 @@ class Header extends React.Component {
                         <button className="red" data-toggle="tooltip" data-placement="top" title="Close room"><i
                             className="fa fa-times"/></button>
 
-
-                        <div className="lio-modal" id="selectListAgent" data-toggle="modal">
-                            <div className="body">
-                                <div className="title">Select your agent</div>
-                                <hr/>
-                                <div role="form" className="list-theme">
-                                    <ListAgent agents={this.props.agents}/>
-                                </div>
-                                <hr/>
-                                <div className="control">
-                                    <button type="button" className="btn btn-primary save">Save</button>
-                                    <button type="button" className="btn cancel">Cancel</button>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div className="lio-modal" id="selectTheme" data-toggle="modal">
-                            <div className="body">
-                                <div className="title">Select your theme</div>
-                                <div className="list-theme">
-                                    <button className="black" onClick={changeTheme}/>
-                                    <button className="blue" onClick={changeTheme}/>
-                                    <button className="pink" onClick={changeTheme}/>
-                                </div>
-                            </div>
-                        </div>
+                        {modal}
                     </div>
                 </div>
 
