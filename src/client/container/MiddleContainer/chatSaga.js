@@ -35,7 +35,25 @@ function* fetchAgents(action) {
 function* fetchAgentsSaga() {
     yield takeEvery(types.AGENTS_FETCH_REQUESTED, fetchAgents);
 }
+//================POST LIST AGENT JOIN ROOM ==============
+function* saveAgents(action) {
+    try {
+        const data = yield call(chatApi.saveSelectListAgent,action.roomId,action.agents);
+        if(data.result) {
+            yield put(chatActions.onSaveSelectAgentSucceed());
+        } else {
+            throw new Error(data.error)
+        }
+
+    }catch (err){
+        console.log(err.message)
+    }
+}
+function* saveAgentsSaga() {
+    yield takeEvery(types.SAVE_LIST_AGENT_JOIN_ROOM,saveAgents)
+}
 export {
     fetchMessagesSaga,
-    fetchAgentsSaga
+    fetchAgentsSaga,
+    saveAgentsSaga
 };

@@ -24,6 +24,15 @@ export function agentsFetchSucceed(agents) {
 }
 
 export function agentsFetchRequested() {
-    console.log("run here");
     return {type: types.AGENTS_FETCH_REQUESTED}
+}
+
+
+
+export function onSaveSelectAgent(roomId,agents) {
+    return {type :types.SAVE_LIST_AGENT_JOIN_ROOM,roomId,agents}
+}
+
+export function onSaveSelectAgentSucceed() {
+    return {type :types.SAVE_LIST_AGENT_JOIN_ROOM_SUCCEED}
 }

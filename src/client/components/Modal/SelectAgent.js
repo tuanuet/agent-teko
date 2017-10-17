@@ -11,8 +11,8 @@ export default function (props) {
                 </div>
                 <hr/>
                 <div className="control">
-                    <button type="button" className="btn btn-primary save">Save</button>
-                    <button type="button" className="btn cancel">Cancel</button>
+                    <button type="button" className="btn btn-primary save" onClick={props.onSave}>Save</button>
+                    <button type="button" className="btn cancel" onClick={props.onClose}>Cancel</button>
                 </div>
             </div>
 

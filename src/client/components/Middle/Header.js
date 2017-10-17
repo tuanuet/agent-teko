@@ -1,6 +1,5 @@
 import {connect} from 'react-redux';
 import React, {PropTypes} from 'react';
-import ListAgent from '../../components/ListAgent';
 import {bindActionCreators} from 'redux';
 import * as chatActions from '../../container/MiddleContainer/chatActions';
 import SelectAgent from "../Modal/SelectAgent";
@@ -10,7 +9,12 @@ import SelectTheme from "../Modal/SelectTheme";
 class Header extends React.Component {
     constructor(props, context) {
         super(props, context);
+
         this.showListAgent = this.showListAgent.bind(this);
+        this.showTheme = this.showTheme.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.onSaveSelectListAgent = this.onSaveSelectListAgent.bind(this);
+
         this.state = {
             showModals: {
                 selectTheme: false,
@@ -39,19 +43,28 @@ class Header extends React.Component {
         })
     }
 
+
     componentDidMount() {
         $(document).keyup(e => {
             if (e.keyCode === 27) {
-                this.setState({
-                    showModals:
-                        {
-                            selectTheme: false,
-                            selectListAgent: false
-                        }
-
-                })
+                this.closeModal();
             }
         })
+    }
+
+    closeModal(){
+        this.setState({
+            showModals:
+                {
+                    selectTheme: false,
+                    selectListAgent: false
+                }
+
+        })
+    }
+
+    onSaveSelectListAgent(e){
+        this.props.actions.saveSelectListAgent();
     }
 
     render() {
@@ -59,12 +72,12 @@ class Header extends React.Component {
         let modal = null;
 
         if (this.state.showModals.selectListAgent) {
-            modal = <SelectAgent {...this.props}/>;
+            modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal}/>;
         }
         if (this.state.showModals.selectTheme) {
             modal = <SelectTheme {...this.props} />;
         }
-        console.log(modal);
+
         return (
             <div className="header">
                 <div className="title">

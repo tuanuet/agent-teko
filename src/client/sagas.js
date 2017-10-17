@@ -1,7 +1,8 @@
 import fetchRoomsSaga from './container/LeftContainer/roomSaga';
 import {
     fetchMessagesSaga,
-    fetchAgentsSaga
+    fetchAgentsSaga,
+    saveAgentsSaga
 } from './container/MiddleContainer/chatSaga';
 import fetchHistoryChatSaga from './container/RightContainer/saga/historyChatSaga';
 import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
@@ -13,6 +14,7 @@ export default function* rootSaga() {
     yield fork(uploadImageSaga);
     yield fork(fetchMetaLinkSaga);
     yield fork(fetchRoomsSaga);
+    yield fork(saveAgentsSaga);
     yield fork(fetchAgentsSaga);
     yield fork(fetchMessagesSaga);
     yield fork(fetchHistoryChatSaga);

@@ -13,6 +13,22 @@ class ChatApi {
             .then(response => response.data);
     }
 
+    static saveSelectListAgent(roomId,listAgent) {
+        let agents = listAgent.map(agent => {
+            return {
+                agentId : agent.id
+            }
+        });
+        let formData = new FormData();
+        let data = {
+            roomId: roomId,
+            agents: agents
+        };
+        formData.append("data", JSON.stringify(data));
+        return axios.post('http://local.chat.com/api/add-other-agents-to-room', formData)
+            .then(res => res.data);
+    }
+
     // static sendRequestJoinRoom(room) {
     //     return axios.get(`${config.SEND_REQUEST_JOIN_ROOM}?roomid=${room.id}`);
     // }
