@@ -43,6 +43,10 @@ export function socketMiddleware() {
         } else if (socket && action.type === types.RESET_NUM_OF_UNREAD_MESSAGE) {
             socket.emit('reset-number-of-unread-messages', action.room.id, ack => {
             });
+        } else if (socket && action.type === types.SEND_REQUEST_USER_RATING) {
+            socket.emit('admin-send-action-rating', action.roomId, ack => {
+
+            });
         }
 
                 // if (socket && action.type === types.ADMIN_SEND_MESSAGE) {

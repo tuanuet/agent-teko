@@ -11,6 +11,10 @@ export function messagesFetchRequested(room) {
     }
 }
 
+export function sendRequestUserRating(roomId) {
+    return {type: types.SEND_REQUEST_USER_RATING, roomId}
+}
+
 export function messagesFetchSucceed(roomId, messages) {
     return {type: types.MESSAGES_FETCH_SUCCEED, roomId, messages}
 }

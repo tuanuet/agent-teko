@@ -16,7 +16,8 @@ class Header extends React.Component {
                 selectTheme: false,
                 selectListAgent: false
             }
-        }
+        };
+        this.sendRequestUserRating = this.sendRequestUserRating.bind(this);
 
     }
 
@@ -39,6 +40,10 @@ class Header extends React.Component {
         })
     }
 
+    sendRequestUserRating(){
+        this.props.actions.sendRequestUserRating(this.props.currentRoomId);
+    }
+
     componentDidMount() {
         $(document).keyup(e => {
             if (e.keyCode === 27) {
@@ -48,7 +53,6 @@ class Header extends React.Component {
                             selectTheme: false,
                             selectListAgent: false
                         }
-
                 })
             }
         })
@@ -74,7 +78,7 @@ class Header extends React.Component {
                                 data-target="#exampleModal"><i
                             className="fa fa-wrench" onClick={this.showTheme}/></button>
                         <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
-                            <i className="fa fa-star"/></button>
+                            <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button>
                         <button className="" data-toggle="tooltip" data-placement="top" title="Add agent to room"><i
                             className="fa fa-plus" onClick={this.showListAgent}/></button>
                         <button className="" data-toggle="tooltip" data-placement="top" title="Push"><i
@@ -102,6 +106,7 @@ Header.propTypes = {
 
 function mapStateToProps(state) {
     return {
+        currentRoomId: state.currentRoomId,
         agents: state.agents
     };
 }
