@@ -23,7 +23,6 @@ function* fetchMessagesSaga() {
 //=================FETCH AGENTS=====================
 
 function* fetchAgents(action) {
-    console.log("action", action);
     try {
         const agents = yield call(chatApi.agentsFetchRequested);
         yield put(chatActions.agentsFetchSucceed(agents));
@@ -41,6 +40,11 @@ function* saveAgents(action) {
         const data = yield call(chatApi.saveSelectListAgent,action.roomId,action.agents);
         if(data.result) {
             yield put(chatActions.onSaveSelectAgentSucceed());
+            action.closeModal();
+
+
+            //TODO :: set state otherAgent for rooms
+            // yield put()
         } else {
             throw new Error(data.error)
         }

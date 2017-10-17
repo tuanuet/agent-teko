@@ -14,9 +14,9 @@ class ChatApi {
     }
 
     static saveSelectListAgent(roomId,listAgent) {
-        let agents = listAgent.map(agent => {
+        let agents = listAgent.map(id => {
             return {
-                agentId : agent.id
+                agentId : id
             }
         });
         let formData = new FormData();

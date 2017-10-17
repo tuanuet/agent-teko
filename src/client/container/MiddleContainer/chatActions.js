@@ -29,8 +29,8 @@ export function agentsFetchRequested() {
 
 
 
-export function onSaveSelectAgent(roomId,agents) {
-    return {type :types.SAVE_LIST_AGENT_JOIN_ROOM,roomId,agents}
+export function saveSelectAgent(roomId,agents,closeModal) {
+    return {type :types.SAVE_LIST_AGENT_JOIN_ROOM,roomId,agents,closeModal}
 }
 
 export function onSaveSelectAgentSucceed() {

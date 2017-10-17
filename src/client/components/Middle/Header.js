@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as chatActions from '../../container/MiddleContainer/chatActions';
 import SelectAgent from "../Modal/SelectAgent";
 import SelectTheme from "../Modal/SelectTheme";
+import _ from 'lodash';
 
 
 class Header extends React.Component {
@@ -63,21 +64,19 @@ class Header extends React.Component {
         })
     }
 
-    onSaveSelectListAgent(e){
-        this.props.actions.saveSelectListAgent();
+    onSaveSelectListAgent(agents){
+        let roomId = this.props.currentRoomId;
+        this.props.actions.saveSelectAgent(roomId,agents,this.closeModal);
     }
 
     render() {
-        console.log(this.state.showModals.selectListAgent);
         let modal = null;
-
         if (this.state.showModals.selectListAgent) {
             modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal}/>;
         }
         if (this.state.showModals.selectTheme) {
             modal = <SelectTheme {...this.props} />;
         }
-
         return (
             <div className="header">
                 <div className="title">
@@ -115,7 +114,9 @@ Header.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        agents: state.agents
+        currentRoomId : state.currentRoomId,
+        agents: state.agents,
+        otherAgents : _(state.rooms).find(room => room.id === state.currentRoomId).otherAgents
     };
 }
 
