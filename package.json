@@ -6,7 +6,8 @@
     "eslint-client": "eslint ./src/client --fix",
     "eslint-server": "eslint ./src/server --fix",
     "start": "babel-node ./src/server/app",
-    "r": "pm2 stop all && npm start && pm2 logs"
+    "r": "pm2 stop all && npm start && pm2 logs",
+    "build:prod": "webpack --config webpack.config.prod.js --color -p --progress --hide-modules --display-optimization-bailout "
   },
   "dependencies": {
     "babel-cli": "^6.24.1",
@@ -15,6 +16,7 @@
     "bluebird": "^3.5.0",
     "body-parser": "~1.17.1",
     "chalk": "^2.0.1",
+    "clean-webpack-plugin": "^0.1.17",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "debug": "~2.6.3",
@@ -47,7 +49,9 @@
     "socket.io-emitter": "^3.0.1",
     "socket.io-redis": "^5.1.0",
     "socketio-jwt": "^4.5.0",
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
     "web-push": "^3.2.2",
+    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0"
   },
   "devDependencies": {
