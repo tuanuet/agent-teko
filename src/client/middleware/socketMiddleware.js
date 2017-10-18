@@ -88,7 +88,8 @@ function getRoomFromServer(data) {
             id : data.customer.id,
             customerName : data.customer.customerName,
             customerEmail : data.customer.customerEmail,
-            customerPhone : data.customer.customerPhone
+            customerPhone : data.customer.customerPhone,
+            fbId : data.customer.fbId,
         }]
     };
 }
@@ -126,6 +127,7 @@ export default function(store) {
 
     socket.on('server-send-auto-assigned-room', data => {
         let room = getRoomFromServer(data);
+        console.log('room',room);
         store.dispatch(addAvailableRoom(room));
 
     });
