@@ -54,8 +54,29 @@ function* saveAgents(action) {
 function* saveAgentsSaga() {
     yield takeEvery(types.SAVE_LIST_AGENT_JOIN_ROOM,saveAgents)
 }
+
+//================ SET TAG OF ROOM ==============
+function* setTagOfRoom(action) {
+    try {
+        const data = yield call(chatApi.setTagOfRoom,action.roomId,action.tagId);
+        if(data.result) {
+            action.onSetTagStateOfRoom(action.tagId);
+            yield put(chatActions.setTagOfRoomSucceed(action.roomId,action.tagId));
+        } else {
+            throw new Error(data.error)
+        }
+
+    }catch (err){
+        console.log(err.message)
+    }
+}
+function* setTagOfRoomSaga() {
+    yield takeEvery(types.SET_TAG_OF_ROOM_REQUESTED,setTagOfRoom)
+}
+
 export {
     fetchMessagesSaga,
     fetchAgentsSaga,
-    saveAgentsSaga
+    saveAgentsSaga,
+    setTagOfRoomSaga
 };

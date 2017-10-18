@@ -1,8 +1,12 @@
-import fetchRoomsSaga from './container/LeftContainer/roomSaga';
+import {
+    fetchRoomsSaga,
+    fetchListOfTagsSaga
+} from './container/LeftContainer/roomSaga';
 import {
     fetchMessagesSaga,
     fetchAgentsSaga,
-    saveAgentsSaga
+    saveAgentsSaga,
+    setTagOfRoomSaga
 } from './container/MiddleContainer/chatSaga';
 import fetchHistoryChatSaga from './container/RightContainer/saga/historyChatSaga';
 import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
@@ -21,4 +25,6 @@ export default function* rootSaga() {
     yield fork(fetchNotesSaga);
     yield fork(adminSendRequestJoinRoomToSocketSucceed);
     yield fork(adminSendRequestJoinRoom);
+    yield fork(fetchListOfTagsSaga);
+    yield fork(setTagOfRoomSaga);
 }

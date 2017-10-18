@@ -14,25 +14,34 @@ export function adminChooseRoom(roomId) {
 
 export function reJoinAllAvailableRoomsToSocketRequested(rooms) {
     console.log("RE JOIN ALL ROOMS");
-    return {type: types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED, rooms}
+    return {type: types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED, rooms};
 }
 
 export function reJoinRoomToSocketSucceed(room) {
-    return {type: types.RE_JOIN_ROOM_TO_SOCKET_SUCCEED, room}
+    return {type: types.RE_JOIN_ROOM_TO_SOCKET_SUCCEED, room};
 }
 
 export function reJoinRoomToSocketFailed(room) {
-    return {type: types.RE_JOIN_ROOM_TO_SOCKET_SUCCEED, room}
+    return {type: types.RE_JOIN_ROOM_TO_SOCKET_SUCCEED, room};
 }
 
 export function sendRequestJoinRoomToPHPServer(room) {
-    return {type: types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, room}
+    return {type: types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, room};
 }
 
 export function resetNumOfUnReadMessages(room) {
-    return {type: types.RESET_NUM_OF_UNREAD_MESSAGE, room}
+    return {type: types.RESET_NUM_OF_UNREAD_MESSAGE, room};
 }
 
 export function updateNumberOfUnreadMessages(roomId) {
-    return {type: types.UPDATE_NUM_OF_UNREAD_MESSAGE, roomId}
+    return {type: types.UPDATE_NUM_OF_UNREAD_MESSAGE, roomId};
+}
+
+export function listOfTagsFetchRequested(){
+    return {type: types.LIST_OF_TAGS_FETCH_REQUESTED};
+}
+
+export function fetchListOfTagsSucceed(listOfTags) {
+    console.log("list of tags", listOfTags);
+    return {type: types.LIST_OF_TAGS_FETCH_SUCCEED, listOfTags};
 }

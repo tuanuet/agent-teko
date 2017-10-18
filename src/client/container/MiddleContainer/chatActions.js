@@ -11,6 +11,10 @@ export function messagesFetchRequested(room) {
     }
 }
 
+export function sendRequestUserRating(roomId) {
+    return {type: types.SEND_REQUEST_USER_RATING, roomId}
+}
+
 export function messagesFetchSucceed(roomId, messages) {
     return {type: types.MESSAGES_FETCH_SUCCEED, roomId, messages}
 }
@@ -43,4 +47,12 @@ export function saveSelectAgent(room,agents,closeModal) {
 
 export function onSaveSelectAgentSucceed() {
     return {type :types.SAVE_LIST_AGENT_JOIN_ROOM_SUCCEED}
+}
+
+export function setTagOfRoomRequested(roomId, tagId, onSetTagStateOfRoom) {
+    return {type: types.SET_TAG_OF_ROOM_REQUESTED, roomId, tagId, onSetTagStateOfRoom}
+}
+
+export function setTagOfRoomSucceed(roomId, tagId) {
+    return {type: types.SET_TAG_OF_ROOM_SUCCEED, roomId, tagId}
 }

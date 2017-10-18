@@ -15,13 +15,17 @@ class Header extends React.Component {
         this.showTheme = this.showTheme.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onSaveSelectListAgent = this.onSaveSelectListAgent.bind(this);
+        this.onSelectTag = this.onSelectTag.bind(this);
+        this.onSetTagStateOfRoom = this.onSetTagStateOfRoom.bind(this);
 
         this.state = {
             showModals: {
                 selectTheme: false,
                 selectListAgent: false
-            }
-        }
+            },
+            selectedTag: null
+        };
+        this.sendRequestUserRating = this.sendRequestUserRating.bind(this);
 
     }
 
@@ -29,7 +33,7 @@ class Header extends React.Component {
         this.setState({
             showModals: {
                 selectTheme: !this.state.showModals.selectTheme,
-                selectListAgent : false
+                selectListAgent: false
             }
         })
     }
@@ -44,16 +48,26 @@ class Header extends React.Component {
         })
     }
 
+    sendRequestUserRating() {
+        this.props.actions.sendRequestUserRating(this.props.currentRoomId);
+    }
 
     componentDidMount() {
         $(document).keyup(e => {
             if (e.keyCode === 27) {
+                this.setState({
+                    showModals:
+                        {
+                            selectTheme: false,
+                            selectListAgent: false
+                        }
+                });
                 this.closeModal();
             }
         })
     }
 
-    closeModal(){
+    closeModal() {
         this.setState({
             showModals:
                 {
@@ -64,10 +78,28 @@ class Header extends React.Component {
         })
     }
 
-    onSaveSelectListAgent(agents){
+
+    onSaveSelectListAgent(agents) {
         let room = this.props.currentRoom;
-        this.props.actions.saveSelectAgent(room,agents,this.closeModal);
+        this.props.actions.saveSelectAgent(room, agents, this.closeModal);
     }
+
+
+    onSetTagStateOfRoom(tagId){
+        console.log("set tag to ", tagId);
+        this.setState({
+            selectedTag: tagId
+        })
+    }
+
+    onSelectTag(event){
+        let tagId = event.target.value;
+        console.log(tagId);
+        if (parseInt(tagId) === 3 && !confirm("Xác nhận đóng phòng chat này lại?")) {
+            return;
+        }
+        this.props.actions.setTagOfRoomRequested(this.props.currentRoomId, tagId, this.onSetTagStateOfRoom);
+    };
 
     render() {
         let modal = null;
@@ -86,7 +118,7 @@ class Header extends React.Component {
                                 data-target="#exampleModal"><i
                             className="fa fa-wrench" onClick={this.showTheme}/></button>
                         <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
-                            <i className="fa fa-star"/></button>
+                            <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button>
                         <button className="" data-toggle="tooltip" data-placement="top" title="Add agent to room"><i
                             className="fa fa-plus" onClick={this.showListAgent}/></button>
                         <button className="" data-toggle="tooltip" data-placement="top" title="Push"><i
@@ -99,10 +131,22 @@ class Header extends React.Component {
                 </div>
 
                 <div className="list-tag">
-                    <button className="tag">Sale</button>
-                    <button className="tag">Active</button>
-                    <button className="tag red">Delay</button>
+                    <div>
+                        <button className="tag">Sale</button>
+                        <button className="tag">Active</button>
+                        <button className="tag red">Delay</button>
+                    </div>
+                    <div className="set-tag">
+                        <span>Trạng thái</span>
+                        <select value={this.state.selectedTag ? this.props.currentRoom.status:this.state.selectedTag} className="selectpicker" onChange={this.onSelectTag}>
+                            {this.props.listOfTags.map(tag => {
+                                return <option value={tag.id} key={tag.id}>{tag.title}</option>
+                            })}
+                        </select>
+                    </div>
+
                 </div>
+
             </div>
         );
     }
@@ -113,10 +157,13 @@ Header.propTypes = {
 };
 
 function mapStateToProps(state) {
+    let currentRoom = _(state.rooms).find(room => room.id === state.currentRoomId);
     return {
-        currentRoomId : state.currentRoomId,
+        listOfTags: state.listOfTags,
+        currentRoomId: state.currentRoomId,
         agents: state.agents,
-        otherAgents : _(state.rooms).find(room => room.id === state.currentRoomId).otherAgents
+        otherAgents: currentRoom.otherAgents,
+        currentRoom: currentRoom
     };
 }
 

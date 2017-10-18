@@ -29,6 +29,17 @@ class ChatApi {
             .then(res => res.data);
     }
 
+    static setTagOfRoom(roomId, tagId) {
+        let formData = new FormData();
+        let data = {
+            roomId,
+            tagId
+        };
+        formData.append("data", JSON.stringify(data));
+        return axios.post(apiTypes.SET_TAG_OF_ROOM_REQUESTED, formData)
+            .then(res => res.data);
+    }
+
     // static sendRequestJoinRoom(room) {
     //     return axios.get(`${config.SEND_REQUEST_JOIN_ROOM}?roomid=${room.id}`);
     // }

@@ -23,7 +23,6 @@ export function createNoteSucceed(note) {
 }
 
 export function saveNote(note) {
-
     return dispatch => {
         return noteApi.saveNote(note)
             .then(response => {
