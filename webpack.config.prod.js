@@ -16,7 +16,7 @@ module.exports = {
         filename: '[name]-bundle.js',
         chunkFilename: '[name]-chunk.js',
         path: path.resolve(__dirname, 'static'),
-        publicPath: 'react-redux/dist/'
+        publicPath: '/'
     },
     plugins: [
         new webpack.optimize.ModuleConcatenationPlugin(),
@@ -54,7 +54,6 @@ module.exports = {
                 return context && context.indexOf('node_modules') >= 0 && targets.find(t => new RegExp('\\\\' + t + '\\\\', 'i').test(context));
             },
         }),
-
 
     ],
 

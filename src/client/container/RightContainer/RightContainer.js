@@ -6,7 +6,6 @@ import * as chatActions from '../MiddleContainer/chatActions';
 import * as roomActions from '../LeftContainer/roomActions';
 import * as customerActions from './action/customerActions';
 import * as noteActions from './action/noteActions';
-import toastr from 'toastr';
 
 class RightContainer extends React.Component {
     constructor(props, context) {

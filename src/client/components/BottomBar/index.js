@@ -1,4 +1,4 @@
-import moment from 'moment';
+
 import React from 'react';
 import EmojiBoard from '../EmojiBoard/index';
 import * as actions from '../../actions/action';
@@ -41,7 +41,7 @@ class BottomBar extends React.Component {
             roomType: roomType,
             type : 100,
             messageFrom: 0,
-            createdAt:moment().format('YYYY-MM-DD hh:mm:ss')
+            createdAt:new Date().toLocaleString()
         };
         this.props.dispatch(actions.addMessageForRoom(roomId,getMessageFromClient(msg)));
 
