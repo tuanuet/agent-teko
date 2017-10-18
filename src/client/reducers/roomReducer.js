@@ -120,17 +120,19 @@ export default function roomReducer(state=initialState.rooms, action) {
                 // This isn't the item we care about - keep it as-is
                 return room;
             }
-            console.log("before update", room.numOfUnReadMessages);
-            console.log("after update", {
-                ...{},
-                ...room,
-                numOfUnReadMessages: room.numOfUnReadMessages + 1
-            });
+
             return Object.assign(room, {numOfUnReadMessages: room.numOfUnReadMessages + 1});
 
 
         });
+    //update room when select agents
+        case types.UPDATE_SELECT_LIST_AGENT:
+            let agentIds = _(action.agentIds).map(id => {return {agentId : id}}).value();
+            return _(state).map(room => {
+                if(room.id !== parseInt(action.roomId)) return room;
 
+                return {...room,...{otherAgents : [...agentIds,...room.otherAgents]}};
+            }).value();
         // default case, return current state
     default:
         return state;

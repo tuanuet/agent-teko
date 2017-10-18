@@ -27,7 +27,9 @@ export function agentsFetchRequested() {
     return {type: types.AGENTS_FETCH_REQUESTED}
 }
 
-
+export function updateSelectListAgent(roomId, agentIds) {
+    return {type : types.UPDATE_SELECT_LIST_AGENT,roomId,agentIds}
+}
 
 export function saveSelectAgent(roomId,agents,closeModal) {
     return {type :types.SAVE_LIST_AGENT_JOIN_ROOM,roomId,agents,closeModal}

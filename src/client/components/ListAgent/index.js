@@ -9,7 +9,9 @@ class ListAgent extends React.Component {
     }
 
     componentWillMount() {
-        this.selectAgents = [];
+        this.elderSelectAgents = _(this.props.otherAgents).map(agent => agent.agentId).value();
+        console.log('otherAgentDefault:',this.elderSelectAgents);
+        this.selectAgents = [...this.elderSelectAgents];
     }
 
     toggleCheckbox(agentId) {

@@ -30,7 +30,7 @@ function mapStateToProps(state) {
     let currentRoom = state.rooms.filter(room => room.id === state.currentRoomId)[0];
     return {
         currentRoom: currentRoom,
-        agent : state.agent
+        agent : state.agent,
     };
 }
 function mapDispatchToProps(dispatch) {

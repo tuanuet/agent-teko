@@ -42,9 +42,7 @@ function* saveAgents(action) {
             yield put(chatActions.onSaveSelectAgentSucceed());
             action.closeModal();
 
-
-            //TODO :: set state otherAgent for rooms
-            // yield put()
+            yield put(chatActions.updateSelectListAgent(action.roomId,action.agents))
         } else {
             throw new Error(data.error)
         }
