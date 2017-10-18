@@ -6,13 +6,17 @@ const Tab = ({numberOfEnableRooms}) => {
             <ul className="nav nav-tabs" role="tablist">
                 <li className="nav-item">
                     <a className="nav-link active" data-toggle="tab" href="#chat" role="tab"
-                       aria-controls="available">Available</a>
+                       aria-controls="available">Đang hoạt động</a>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" data-toggle="tab" href="#unchat" role="tab"
-                       aria-controls="enable">Enable<span
+                       aria-controls="enable">Đang chờ<span
                         className="badge badge-danger">{numberOfEnableRooms}</span>
                     </a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" data-toggle="tab" href="#chat" role="tab"
+                       aria-controls="available">Lịch sử chat</a>
                 </li>
             </ul>
         </div>

@@ -28,6 +28,23 @@ export function agentsFetchSucceed(agents) {
 }
 
 export function agentsFetchRequested() {
-    console.log("run here");
     return {type: types.AGENTS_FETCH_REQUESTED}
+}
+
+
+
+export function saveSelectAgent(roomId,agents,closeModal) {
+    return {type :types.SAVE_LIST_AGENT_JOIN_ROOM,roomId,agents,closeModal}
+}
+
+export function onSaveSelectAgentSucceed() {
+    return {type :types.SAVE_LIST_AGENT_JOIN_ROOM_SUCCEED}
+}
+
+export function setTagOfRoomRequested(roomId, tagId, onSetTagStateOfRoom) {
+    return {type: types.SET_TAG_OF_ROOM_REQUESTED, roomId, tagId, onSetTagStateOfRoom}
+}
+
+export function setTagOfRoomSucceed(roomId, tagId) {
+    return {type: types.SET_TAG_OF_ROOM_SUCCEED, roomId, tagId}
 }

@@ -1,25 +1,47 @@
 import * as React from "react";
-
-function getAgent(agents) {
-    return agents.map( (agent,key) => {
-        return (
-            <div className="form-check" key={key}>
-                <input className="form-check-input" type="checkbox" name="exampleRadios" id={`checkbox${key}`} value="option1" />
-                <label className="form-check-label" htmlFor={`checkbox${key}`}>
-                    {agent.agentName}
-                </label>
-            </div>
-        )
-    })
-}
+import _ from 'lodash';
 
 class ListAgent extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.toggleCheckbox = this.toggleCheckbox.bind(this);
+    }
+
+    componentWillMount() {
+        this.selectAgents = [];
+    }
+
+    toggleCheckbox(agentId) {
+        if (_(this.selectAgents).some(agentId)) {
+            _(this.selectAgents).remove(agentId);
+        } else {
+            this.selectAgents.push(agentId);
+        }
+        this.props.getSelectAgents(this.selectAgents)
+    }
+
+    getAgent(agents,otherAgents) {
+        return agents.map((agent,key) => {
+            let exist = _(otherAgents).some(item => agent.id === item.agentId);
+            let Input = exist ?  <input className="form-check-input" checked type="checkbox" label={agent.id} id={`checkbox${agent.id}`} onChange={this.toggleCheckbox.bind(this, agent.id)}/> :
+                <input className="form-check-input" type="checkbox" label={agent.id} id={`checkbox${agent.id}`} onChange={this.toggleCheckbox.bind(this, agent.id)}/>
+            return (
+                <div className="form-check" key={key} >
+                    {Input}
+                    <label className="form-check-label" htmlFor={`checkbox${agent.id}`}>
+                        {agent.agentName}
+                    </label>
+                </div>
+            )
+        })
+    }
     render() {
-        let agents = getAgent(this.props.agents);
+        let {agents,otherAgents} = this.props;
+        let Agents = this.getAgent(agents,otherAgents);
         return (
             <ol className="list-agents">
-                {agents}
+                {Agents}
             </ol>
         );
     }

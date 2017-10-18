@@ -8,7 +8,6 @@ function* fetchNotes(action) {
         const notes = yield call(noteApi.notesFetchRequested, action.roomId);
         yield put(noteActions.notesFetchSucceed(action.roomId, notes));
     } catch (e) {
-        console.log("fetch note failed", e);
         yield put({type: types.HISTORY_CHAT_FETCH_FAILED, message: e.message});
     }
 }

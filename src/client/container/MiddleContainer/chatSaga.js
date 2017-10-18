@@ -23,7 +23,6 @@ function* fetchMessagesSaga() {
 //=================FETCH AGENTS=====================
 
 function* fetchAgents(action) {
-    console.log("action", action);
     try {
         const agents = yield call(chatApi.agentsFetchRequested);
         yield put(chatActions.agentsFetchSucceed(agents));
@@ -35,7 +34,51 @@ function* fetchAgents(action) {
 function* fetchAgentsSaga() {
     yield takeEvery(types.AGENTS_FETCH_REQUESTED, fetchAgents);
 }
+//================POST LIST AGENT JOIN ROOM ==============
+function* saveAgents(action) {
+    try {
+        const data = yield call(chatApi.saveSelectListAgent,action.roomId,action.agents);
+        if(data.result) {
+            yield put(chatActions.onSaveSelectAgentSucceed());
+            action.closeModal();
+
+
+            //TODO :: set state otherAgent for rooms
+            // yield put()
+        } else {
+            throw new Error(data.error)
+        }
+
+    }catch (err){
+        console.log(err.message)
+    }
+}
+function* saveAgentsSaga() {
+    yield takeEvery(types.SAVE_LIST_AGENT_JOIN_ROOM,saveAgents)
+}
+
+//================ SET TAG OF ROOM ==============
+function* setTagOfRoom(action) {
+    try {
+        const data = yield call(chatApi.setTagOfRoom,action.roomId,action.tagId);
+        if(data.result) {
+            action.onSetTagStateOfRoom(action.tagId);
+            yield put(chatActions.setTagOfRoomSucceed(action.roomId,action.tagId));
+        } else {
+            throw new Error(data.error)
+        }
+
+    }catch (err){
+        console.log(err.message)
+    }
+}
+function* setTagOfRoomSaga() {
+    yield takeEvery(types.SET_TAG_OF_ROOM_REQUESTED,setTagOfRoom)
+}
+
 export {
     fetchMessagesSaga,
-    fetchAgentsSaga
+    fetchAgentsSaga,
+    saveAgentsSaga,
+    setTagOfRoomSaga
 };

@@ -117,6 +117,16 @@ header {
       }
 
       .list-tag {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 10px;
+        .set-tag{
+          display: flex;
+          justify-content: flex-end;
+        }
+        .selectpicker{
+          margin-left: 3px;
+        }
         .tag {
           border: none;
           border-radius: 20px;

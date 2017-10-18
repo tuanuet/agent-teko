@@ -16,8 +16,25 @@ function* fetchRooms() {
     }
 }
 
+function* fetchListOfTags() {
+    try {
+        const listOfTags = yield call(roomApi.listOfTagsFetchRequested);
+        yield put(roomActions.fetchListOfTagsSucceed(listOfTags));
+    } catch (e) {
+        console.log('Failed to fetch list of tags', e.message);
+        yield put({type: types.LIST_OF_TAGS_FETCH_FAILED, message: e.message});
+    }
+}
+
 function* fetchRoomsSaga() {
     yield takeEvery(types.ROOMS_FETCH_REQUESTED, fetchRooms);
 }
 
-export default fetchRoomsSaga;
+function* fetchListOfTagsSaga() {
+    yield takeEvery(types.LIST_OF_TAGS_FETCH_REQUESTED, fetchListOfTags);
+}
+
+export {
+    fetchRoomsSaga,
+    fetchListOfTagsSaga
+};
