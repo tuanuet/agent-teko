@@ -138,7 +138,7 @@ class Header extends React.Component {
                     </div>
                     <div className="set-tag">
                         <span>Trạng thái</span>
-                        <select value={this.state.selectedTag ? this.props.currentRoom.status:this.state.selectedTag} className="selectpicker" onChange={this.onSelectTag}>
+                        <select disabled={this.props.currentRoom.status === 3} value={!this.state.selectedTag? this.props.currentRoom.status:this.state.selectedTag} className="selectpicker" onChange={this.onSelectTag}>
                             {this.props.listOfTags.map(tag => {
                                 return <option value={tag.id} key={tag.id}>{tag.title}</option>
                             })}

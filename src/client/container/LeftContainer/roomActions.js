@@ -1,5 +1,7 @@
 import * as types from '../../constants/actionTypes';
 
+var firstCallOf_closedRoomsRequested = false;
+
 export function roomsFetchRequested() {
     return {type: types.ROOMS_FETCH_REQUESTED}
 }
@@ -42,6 +44,17 @@ export function listOfTagsFetchRequested(){
 }
 
 export function fetchListOfTagsSucceed(listOfTags) {
-    console.log("list of tags", listOfTags);
     return {type: types.LIST_OF_TAGS_FETCH_SUCCEED, listOfTags};
+}
+
+export function loadClosedRoomRequested() {
+    if (!firstCallOf_closedRoomsRequested) {
+        firstCallOf_closedRoomsRequested = true;
+        return {type: types.LOAD_CLOSED_ROOM_REQUESTED};
+    } else return {type: "NOTHING_TO_DO"};
+}
+
+export function fetchClosedRoomsSucceed(closedRooms) {
+    console.log("closed rooms", closedRooms);
+    return {type: types.LOAD_CLOSED_ROOM_SUCCEED, closedRooms};
 }

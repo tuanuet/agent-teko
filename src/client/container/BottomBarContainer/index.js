@@ -17,6 +17,9 @@ class BottomBarContainer extends React.Component {
 
     render() {
         const {currentRoom} = this.props;
+        if (currentRoom.status === 3) {
+            return null;
+        }
         if (currentRoom.status === 1) {
             return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom.bind(this)}/>;
         }
