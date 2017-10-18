@@ -160,13 +160,12 @@ export default function(store) {
     });
 
     socket.on('server-send-message', (msg) => {
-        let roomId = msg.roomId;
+        let roomId = parseInt(msg.roomId);
         let message = getMessageFromServer(msg);
-        // console.log(message);
         store.dispatch(addMessageForRoom(roomId, message));
 
         //if current room id is different from roomId then update number of unread messages
-        console.log("server send message", store.getState().currentRoomId, roomId);
+        console.log('server send message', store.getState().currentRoomId, roomId);
         if (store.getState().currentRoomId !== roomId) {
             store.dispatch(roomActions.updateNumberOfUnreadMessages(roomId));
         }
