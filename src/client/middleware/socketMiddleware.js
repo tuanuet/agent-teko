@@ -44,7 +44,11 @@ export function socketMiddleware() {
             socket.emit('reset-number-of-unread-messages', action.room.id, ack => {
             });
         } else if (socket && action.type === types.EMIT_SELECT_LIST_AGENT){
-            socket.emit('agent-select-other-agents',action.agentIds,ack => {
+            let data = {
+                agentIds : action.agentIds,
+                roomId : action.roomId
+            };
+            socket.emit('agent-select-other-agents',data,ack => {
                 console.log('agent-select-other-agents',ack)
             })
         }
@@ -127,7 +131,7 @@ export default function(store) {
 
     socket.on('server-send-auto-assigned-room', data => {
         let room = getRoomFromServer(data);
-        console.log('room',room);
+        console.log('RoomFromServerEmit:',room);
         store.dispatch(addAvailableRoom(room));
 
     });

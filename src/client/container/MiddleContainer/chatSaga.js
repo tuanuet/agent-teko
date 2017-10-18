@@ -37,12 +37,12 @@ function* fetchAgentsSaga() {
 //================POST LIST AGENT JOIN ROOM ==============
 function* saveAgents(action) {
     try {
-        const data = yield call(chatApi.saveSelectListAgent,action.roomId,action.agents);
+        const data = yield call(chatApi.saveSelectListAgent,action.room.id,action.agents);
         if(data.result) {
             yield put(chatActions.onSaveSelectAgentSucceed());
             action.closeModal();
-            yield put(chatActions.updateSelectListAgent(action.roomId,action.agents));
-            yield put(chatActions.emitSelectListAgent(action.agents))
+            yield put(chatActions.updateSelectListAgent(action.room.id,action.agents));
+            yield put(chatActions.emitSelectListAgent(action.agents,action.room))
         } else {
             throw new Error(data.error)
         }

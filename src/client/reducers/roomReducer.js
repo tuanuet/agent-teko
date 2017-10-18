@@ -70,6 +70,7 @@ export default function roomReducer(state=initialState.rooms, action) {
         });
         //add more room available
     case types.ADD_ROOM_AVAILABLE:
+        console.log('IN_REDUCER:',action);
         return [action.room,...state];
 
         //admin join room succeed

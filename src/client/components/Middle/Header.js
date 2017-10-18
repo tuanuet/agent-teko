@@ -65,8 +65,8 @@ class Header extends React.Component {
     }
 
     onSaveSelectListAgent(agents){
-        let roomId = this.props.currentRoomId;
-        this.props.actions.saveSelectAgent(roomId,agents,this.closeModal);
+        let room = this.props.currentRoom;
+        this.props.actions.saveSelectAgent(room,agents,this.closeModal);
     }
 
     render() {
