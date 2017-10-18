@@ -41,8 +41,8 @@ function* saveAgents(action) {
         if(data.result) {
             yield put(chatActions.onSaveSelectAgentSucceed());
             action.closeModal();
-
-            yield put(chatActions.updateSelectListAgent(action.roomId,action.agents))
+            yield put(chatActions.updateSelectListAgent(action.roomId,action.agents));
+            yield put(chatActions.emitSelectListAgent(action.agents))
         } else {
             throw new Error(data.error)
         }
