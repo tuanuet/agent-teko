@@ -126,13 +126,22 @@ export default function roomReducer(state=initialState.rooms, action) {
 
         });
     //update room when select agents
-        case types.UPDATE_SELECT_LIST_AGENT:
-            let agentIds = _(action.agentIds).map(id => {return {agentId : id}}).value();
-            return _(state).map(room => {
-                if(room.id !== parseInt(action.roomId)) return room;
+    case types.UPDATE_SELECT_LIST_AGENT:
+        let agentIds = _(action.agentIds).map(id => {return {agentId : id}}).value();
+        return _(state).map(room => {
+            if(room.id !== parseInt(action.roomId)) return room;
 
-                return {...room,...{otherAgents : [...agentIds,...room.otherAgents]}};
-            }).value();
+            return {...room,...{otherAgents : [...agentIds,...room.otherAgents]}};
+        }).value();
+
+        //update closed rooms
+    case types.LOAD_CLOSED_ROOM_SUCCEED:
+        return [
+            ...state,
+            ...action.closedRooms
+        ];
+
+
         // default case, return current state
     default:
         return state;

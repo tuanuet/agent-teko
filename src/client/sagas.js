@@ -1,6 +1,7 @@
 import {
     fetchRoomsSaga,
-    fetchListOfTagsSaga
+    fetchListOfTagsSaga,
+    fetchClosedRoomSaga
 } from './container/LeftContainer/roomSaga';
 import {
     fetchMessagesSaga,
@@ -27,4 +28,5 @@ export default function* rootSaga() {
     yield fork(adminSendRequestJoinRoom);
     yield fork(fetchListOfTagsSaga);
     yield fork(setTagOfRoomSaga);
+    yield fork(fetchClosedRoomSaga);
 }

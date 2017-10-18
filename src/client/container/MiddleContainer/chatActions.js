@@ -3,6 +3,7 @@ import * as types from '../../constants/actionTypes';
 var firstCallOf_messagesFetchRequested = [];
 
 export function messagesFetchRequested(room) {
+    console.log(room.id, firstCallOf_messagesFetchRequested[room.id]);
     if (firstCallOf_messagesFetchRequested[room.id] == undefined) {
         firstCallOf_messagesFetchRequested[room.id] = 1;
         return {type: types.MESSAGES_FETCH_REQUESTED, room}

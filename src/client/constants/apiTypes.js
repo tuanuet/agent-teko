@@ -8,3 +8,4 @@ export const SAVE_NOTE_REQUESTED = 'http://local.chat.com/api/save-note-requeste
 export const ADMIN_JOIN_ROOM_SUCCEED = 'http://local.chat.com/api/admin-join-room-succeed';
 export const SEND_REQUEST_JOIN_ROOM = 'http://local.chat.com/api/request-join-room';
 export const SET_TAG_OF_ROOM_REQUESTED = 'http://local.chat.com/api/set-tag-of-room-requested';
+export const LOAD_CLOSED_ROOMS = 'http://local.chat.com/api/closed-rooms-fetch-requested';
