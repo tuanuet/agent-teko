@@ -70,6 +70,7 @@ export default function roomReducer(state=initialState.rooms, action) {
         });
         //add more room available
     case types.ADD_ROOM_AVAILABLE:
+        console.log('IN_REDUCER:',action);
         return [action.room,...state];
 
         //admin join room succeed
@@ -94,7 +95,6 @@ export default function roomReducer(state=initialState.rooms, action) {
     case types.ADD_MESSAGE_FOR_ROOM : {
         let currentRoom = _(state).find({id : action.roomId});
         let message = action.message;
-
         let messages = [...currentRoom.messages,message];
         let updateRoom = Object.assign(currentRoom,{messages});
         let removeState = _(state).filter(room => room.id !== action.roomId);
@@ -120,16 +120,27 @@ export default function roomReducer(state=initialState.rooms, action) {
                 // This isn't the item we care about - keep it as-is
                 return room;
             }
-            console.log("before update", room.numOfUnReadMessages);
-            console.log("after update", {
-                ...{},
-                ...room,
-                numOfUnReadMessages: room.numOfUnReadMessages + 1
-            });
+
             return Object.assign(room, {numOfUnReadMessages: room.numOfUnReadMessages + 1});
 
 
         });
+    //update room when select agents
+    case types.UPDATE_SELECT_LIST_AGENT:
+        let agentIds = _(action.agentIds).map(id => {return {agentId : id}}).value();
+        return _(state).map(room => {
+            if(room.id !== parseInt(action.roomId)) return room;
+
+            return {...room,...{otherAgents : [...agentIds,...room.otherAgents]}};
+        }).value();
+
+        //update closed rooms
+    case types.LOAD_CLOSED_ROOM_SUCCEED:
+        return [
+            ...state,
+            ...action.closedRooms
+        ];
+
 
         // default case, return current state
     default:

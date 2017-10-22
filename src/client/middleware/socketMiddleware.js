@@ -43,40 +43,22 @@ export function socketMiddleware() {
         } else if (socket && action.type === types.RESET_NUM_OF_UNREAD_MESSAGE) {
             socket.emit('reset-number-of-unread-messages', action.room.id, ack => {
             });
+        } else if (socket && action.type === types.EMIT_SELECT_LIST_AGENT){
+            let room = action.room;
+            //not tranfer message
+            room.messages = [];
+            let data = {
+                agentIds : action.agentIds,
+                room : room
+            };
+            socket.emit('agent-select-other-agents',data,ack => {
+                console.log('agent-select-other-agents',ack)
+            })
+        } else if (socket && action.type === types.SEND_REQUEST_USER_RATING) {
+            socket.emit('admin-send-action-rating', action.roomId, ack => {
+
+            });
         }
-
-                // if (socket && action.type === types.ADMIN_SEND_MESSAGE) {
-        //     socket.emit('client-send-message', action.message, function (data) {
-        //         let message = {
-        //             id: data.messageId,
-        //             senderId: data.senderId,
-        //             senderName: data.name,
-        //             message: {
-        //                 content: data.message,
-        //                 type: data.type,
-        //                 name: data.fileName
-        //             },
-        //             metaLink: false,
-        //             createdAt: data.createdAt
-        //         };
-        //         addNewMessage(message, action.message.roomId);
-        //     });
-        // } else if (socket && action.type === types.ADMIN_SEND_REQUEST_SOCKET) {
-        //     socket.emit('admin-join-room', action.room,function (ackValidation) {
-        //         if (!ackValidation) return;
-        //         Store.dispatch(roomActions.adminJoinRoomSuccess(action.room));
-        //     });
-        // } else if (socket && action.type === types.ADMIN_RE_JOIN_ROOM) {
-        //     socket.emit('admin-join-room', action.room, ackValidation => {
-        //         if (!ackValidation) return;
-        //         Store.dispatch(tabActions.createTab(action.room));
-        //         Store.dispatch(tabActions.changeTab(action.room.id));
-        //         Store.dispatch(messageActions.loadMessages(action.room.id));
-        //     });
-        // } else if (socket && action.type === types.ADMIN_SEND_RATING) {
-        //     socket.emit('admin-send-action-rating', action.room.id);
-        // }
-
         return result;
     };
 }
@@ -101,6 +83,7 @@ function getRoomFromServer(data) {
         roomType : data.roomType,
         status : data.status,
         createdAt : data.createdAt,
+        numOfUnReadMessages: 1,
         messages : [{
             id: 1,
             senderId: 1,
@@ -116,7 +99,8 @@ function getRoomFromServer(data) {
             id : data.customer.id,
             customerName : data.customer.customerName,
             customerEmail : data.customer.customerEmail,
-            customerPhone : data.customer.customerPhone
+            customerPhone : data.customer.customerPhone,
+            fbId : data.customer.fbId,
         }]
     };
 }
@@ -154,17 +138,18 @@ export default function(store) {
 
     socket.on('server-send-auto-assigned-room', data => {
         let room = getRoomFromServer(data);
+        console.log('RoomFromServerEmit:',room);
         store.dispatch(addAvailableRoom(room));
 
     });
 
     socket.on('server-send-message', (msg) => {
-        let roomId = msg.roomId;
+        let roomId = parseInt(msg.roomId);
         let message = getMessageFromServer(msg);
-        // console.log(message);
-        store.dispatch(addMessageForRoom(roomId,message));
+        store.dispatch(addMessageForRoom(roomId, message));
 
         //if current room id is different from roomId then update number of unread messages
+        console.log('server send message', store.getState().currentRoomId, roomId);
         if (store.getState().currentRoomId !== roomId) {
             store.dispatch(roomActions.updateNumberOfUnreadMessages(roomId));
         }

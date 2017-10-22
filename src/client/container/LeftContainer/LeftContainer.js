@@ -10,6 +10,7 @@ class LeftContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.adminChooseRoom = this.adminChooseRoom.bind(this);
+        this.loadClosedRoom = this.loadClosedRoom.bind(this);
     }
 
     /**
@@ -24,6 +25,10 @@ class LeftContainer extends React.Component {
         this.props.actions.resetNumOfUnReadMessages(room);
     }
 
+    loadClosedRoom() {
+        this.props.actions.loadClosedRoomRequested();
+    }
+
     /**
      * render method
      * @returns {XML}
@@ -35,6 +40,7 @@ class LeftContainer extends React.Component {
                 currentRoomId={currentRoomId}
                 adminChooseRoom={this.adminChooseRoom}
                 rooms={rooms}
+                loadClosedRoom={this.loadClosedRoom}
             />
         );
     }

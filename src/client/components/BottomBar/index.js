@@ -30,12 +30,15 @@ class BottomBar extends React.Component {
         let content = this.refs.chat.value;
         let senderId = agent.id;
         let name = agent.name;
-
+        let customers = currentRoom.customers;
+        let roomType = currentRoom.roomType;
         let msg = {
             message: {content},
             roomId,
             senderId,
             name,
+            customers,
+            roomType: roomType,
             type : 100,
             messageFrom: 0,
             createdAt:moment().format('YYYY-MM-DD hh:mm:ss')

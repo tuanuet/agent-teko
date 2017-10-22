@@ -16,6 +16,16 @@ class RoomApi {
         return axios.get(`${apiType.ADMIN_JOIN_ROOM_SUCCEED}?roomId=${room.id}`)
             .then(res => res.data);
     }
+
+    static listOfTagsFetchRequested() {
+        return axios.get(apiType.LIST_OF_TAGS_FETCH_REQUESTED)
+            .then(res => res.data);
+    }
+
+    static closedRoomsFetchRequested(){
+        return axios.get(apiType.LOAD_CLOSED_ROOMS)
+            .then(res => res.data);
+    }
 }
 
 export default RoomApi;

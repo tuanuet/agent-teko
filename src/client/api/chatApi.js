@@ -7,6 +7,39 @@ class ChatApi {
             .then(response => response.data);
     }
 
+    static agentsFetchRequested() {
+        console.log('agentsFetchRequested');
+        return axios.get(apiTypes.AGENTS_FETCH_REQUESTED)
+            .then(response => response.data);
+    }
+
+    static saveSelectListAgent(roomId,listAgent) {
+        let agents = listAgent.map(id => {
+            return {
+                agentId : id
+            }
+        });
+        let formData = new FormData();
+        let data = {
+            roomId: roomId,
+            agents: agents
+        };
+        formData.append("data", JSON.stringify(data));
+        return axios.post('http://local.chat.com/api/add-other-agents-to-room', formData)
+            .then(res => res.data);
+    }
+
+    static setTagOfRoom(roomId, tagId) {
+        let formData = new FormData();
+        let data = {
+            roomId,
+            tagId
+        };
+        formData.append("data", JSON.stringify(data));
+        return axios.post(apiTypes.SET_TAG_OF_ROOM_REQUESTED, formData)
+            .then(res => res.data);
+    }
+
     // static sendRequestJoinRoom(room) {
     //     return axios.get(`${config.SEND_REQUEST_JOIN_ROOM}?roomid=${room.id}`);
     // }

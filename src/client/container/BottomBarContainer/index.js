@@ -17,6 +17,9 @@ class BottomBarContainer extends React.Component {
 
     render() {
         const {currentRoom} = this.props;
+        if (currentRoom.status === 3) {
+            return null;
+        }
         if (currentRoom.status === 1) {
             return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom.bind(this)}/>;
         }
@@ -30,7 +33,7 @@ function mapStateToProps(state) {
     let currentRoom = state.rooms.filter(room => room.id === state.currentRoomId)[0];
     return {
         currentRoom: currentRoom,
-        agent : state.agent
+        agent : state.agent,
     };
 }
 function mapDispatchToProps(dispatch) {

@@ -16,8 +16,40 @@ function* fetchRooms() {
     }
 }
 
+function* fetchListOfTags() {
+    try {
+        const listOfTags = yield call(roomApi.listOfTagsFetchRequested);
+        yield put(roomActions.fetchListOfTagsSucceed(listOfTags));
+    } catch (e) {
+        console.log('Failed to fetch list of tags', e.message);
+        yield put({type: types.LIST_OF_TAGS_FETCH_FAILED, message: e.message});
+    }
+}
+
+function* fetchClosedRoom() {
+    try {
+        const closedRooms = yield call(roomApi.closedRoomsFetchRequested);
+        yield put(roomActions.fetchClosedRoomsSucceed(closedRooms));
+    } catch (e) {
+        console.log('Failed to closed rooms', e.message);
+        yield put({type: types.LOAD_CLOSED_ROOM_FAILED, message: e.message});
+    }
+}
+
 function* fetchRoomsSaga() {
     yield takeEvery(types.ROOMS_FETCH_REQUESTED, fetchRooms);
 }
 
-export default fetchRoomsSaga;
+function* fetchListOfTagsSaga() {
+    yield takeEvery(types.LIST_OF_TAGS_FETCH_REQUESTED, fetchListOfTags);
+}
+
+function* fetchClosedRoomSaga() {
+    yield takeEvery(types.LOAD_CLOSED_ROOM_REQUESTED, fetchClosedRoom);
+}
+
+export {
+    fetchRoomsSaga,
+    fetchListOfTagsSaga,
+    fetchClosedRoomSaga
+};
