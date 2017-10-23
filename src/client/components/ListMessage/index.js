@@ -4,8 +4,7 @@ import Notification from '../Message/Notification';
 import Default from '../Message/Default';
 import Image from '../Message/Image';
 import * as MessageTypes from '../../constants/MessageTypes';
-
-
+import Attachment from '../Message/Attachment'
 
 function getListChat(messages) {
     // console.log("messages", messages);
@@ -18,6 +17,8 @@ function getListChat(messages) {
             return <Rating key={i}/>;
         case MessageTypes.IMAGE:
             return <Image key={i} message={e}/>;
+        case MessageTypes.ATTACHMENT:
+            return <Attachment key={i} message={e}/>;
         default:
             return <Default message={e} key={i}/>;
         }
