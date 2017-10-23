@@ -14,7 +14,7 @@ const webpackConfig = require('../../webpack.config');
 let compiler = webpack(webpackConfig);
 let app = express();
 
-app.use(require("webpack-dev-middleware")(compiler, {
+app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: false, publicPath: webpackConfig.output.publicPath
 }));
 
@@ -33,5 +33,5 @@ app.listen(9005, function(err) {
     }
 
     console.log('Listening at http://localhost:9005/');
-    open(`http://localhost:9005`);
+    open('http://localhost:9005');
 });
