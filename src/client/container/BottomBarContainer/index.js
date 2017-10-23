@@ -40,8 +40,8 @@ function mapDispatchToProps(dispatch) {
     return{
         actions: bindActionCreators({...{}, ...roomActions}, dispatch),
         dispatch,
-        uploadImage : ({formData}) => {
-            dispatch(uploadImage(formData));
+        uploadImage : (formData,msg,msgToState) => {
+            dispatch(uploadImage(formData,msg,msgToState));
         },
         adminSendRequestJoinRoom: ({room}) => {
             dispatch({type: types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, room});

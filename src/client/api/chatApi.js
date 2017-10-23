@@ -40,6 +40,14 @@ class ChatApi {
             .then(res => res.data);
     }
 
+    static postImage(fileToUpload) {
+        let formData = new FormData();
+
+        formData.append("fileToUpload", fileToUpload);
+        return axios.post(apiTypes.UPLOAD_IMAGE_REQUESTED, formData)
+            .then(res => res.data);
+    }
+
     // static sendRequestJoinRoom(room) {
     //     return axios.get(`${config.SEND_REQUEST_JOIN_ROOM}?roomid=${room.id}`);
     // }

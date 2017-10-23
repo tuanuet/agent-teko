@@ -25,10 +25,12 @@ export function fetchMetadataSuccess() {
     };
 }
 
-export function uploadImage(form){
+export function uploadImage(form,msgToServer,msgToState){
     return {
         type : UPLOAD_IMAGE,
         form,
+        msgToServer,
+        msgToState
     };
 }
 export function uploadImageFailure(message){

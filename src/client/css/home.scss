@@ -162,8 +162,12 @@ header {
       img{
         max-width: 300px;
         height: auto;
-      }
 
+      }
+      .self {
+        display: flex;
+        justify-content: flex-end;
+      }
       .chat-group {
         display: flex;
         .chat {
@@ -188,6 +192,7 @@ header {
           .chat {
             background-color: $super-light-violet;
           }
+
         }
       }
 

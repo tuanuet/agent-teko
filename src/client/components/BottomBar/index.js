@@ -17,14 +17,18 @@ function getMessageFromClient(message) {
     };
 }
 class BottomBar extends React.Component {
-
+    constructor(props){
+        super(props);
+        this.state = {isShowEmojiBoard: false};
+        this.getMessageToSendServer = this.getMessageToSendServer.bind(this);
+    }
     enter(e) {
         if (e.charCode === 13) {
             this.send();
         }
     }
 
-    send() {
+    getMessageToSendServer(){
         let {currentRoom,agent} = this.props;
         let roomId = currentRoom.id;
         let content = this.refs.chat.value;
@@ -32,18 +36,24 @@ class BottomBar extends React.Component {
         let name = agent.name;
         let customers = currentRoom.customers;
         let roomType = currentRoom.roomType;
-        let msg = {
+        return {
             message: {content},
             roomId,
             senderId,
             name,
             customers,
-            roomType: roomType,
-            type : 100,
+            type: roomType,
+            messageType : 100,
             messageFrom: 0,
             createdAt:new Date().toLocaleString()
         };
-        this.props.dispatch(actions.addMessageForRoom(roomId,getMessageFromClient(msg)));
+    }
+
+    send() {
+
+        let msg = this.getMessageToSendServer();
+
+        this.props.dispatch(actions.addMessageForRoom(msg.roomId,getMessageFromClient(msg)));
 
         this.props.dispatch(actions.clientSendMessage(msg));
 
@@ -53,22 +63,17 @@ class BottomBar extends React.Component {
     }
 
     uploadImage() {
-        console.log('upload');
+        let msgToServer = this.getMessageToSendServer();
+        let msgToState = getMessageFromClient(msgToServer);
         let input = this.refs.attach;
-        let name = this.props.customer.name;
-        //todo : validate input
+        //validate input
         if (input.files && input.files[0]) {
-            let formData = new FormData();
-
-            formData.append('fileToUpload', input.files[0]);
-
-            this.props.uploadImage({formData, name});
+            this.props.uploadImage(input.files[0],msgToServer,msgToState);
             this.refs.attach.value = '';
         }
         this.refs.chat.focus();
     }
 
-    //
     // componentWillUpdate(nextProps, nextState) {
     //     if (nextProps.image.url) {
     //         let {room, customer} = this.props;
@@ -101,11 +106,6 @@ class BottomBar extends React.Component {
 
     addEmoji(emoji) {
         this.refs.chat.value = this.refs.chat.value + emoji;
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {isShowEmojiBoard: false};
     }
 
     showEmojiBoard() {
