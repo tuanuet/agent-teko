@@ -159,6 +159,10 @@ header {
       padding: 16px 0;
       overflow-y: auto;
       overflow-x: hidden;
+      img{
+        max-width: 300px;
+        height: auto;
+      }
 
       .chat-group {
         display: flex;
@@ -169,6 +173,8 @@ header {
           margin: 0 8px 16px 8px;
           max-width: 80%;
         }
+
+
 
         &.other {
           .chat {

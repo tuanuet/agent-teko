@@ -8,8 +8,8 @@ export default class Image extends React.Component {
             <li className={role}>
                 <div className="image">
                     <div className="content">
-                        <img src={this.props.content} alt=""/>
-                        <time>{message.time}</time>
+                        <img src={message.content} alt=""/>
+                        <time>{message.createdAt}</time>
                     </div>
                 </div>
             </li>
