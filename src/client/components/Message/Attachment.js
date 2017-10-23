@@ -8,11 +8,9 @@ export default class Attachment extends React.Component {
         return (
             <div>
                 <div className={`chat-group ${role}`}>
-                    <div className="chat"><img href="/images/attachment.png"/><a href={message.content}>{message.name}</a></div>
+                    <div className="chat"><img style={{width: 20}} src="/images/attachment.png"/><a href={message.content}>{message.name}</a></div>
                 </div>
             </div>
         );
     }
 }
-
-
