@@ -7,9 +7,7 @@ import * as MessageTypes from '../../constants/MessageTypes';
 import Attachment from '../Message/Attachment'
 
 function getListChat(messages) {
-    // console.log("messages", messages);
     return messages.map((e, i) => {
-            //Type message default is undefined
         switch (e.messageType) {
         case MessageTypes.NOTIFICATION:
             return <Notification content={e.message.content} key={i}/>;

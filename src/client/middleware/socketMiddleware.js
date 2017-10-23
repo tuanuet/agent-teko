@@ -77,6 +77,7 @@ let initAgent = (Store) => {
 };
 
 function getRoomFromServer(data) {
+    console.log('data',data);
     return {
         id : data.id,
         topicName : data.topicName,
@@ -84,17 +85,8 @@ function getRoomFromServer(data) {
         status : data.status,
         createdAt : data.createdAt,
         numOfUnReadMessages: 1,
-        messages : [{
-            id: 1,
-            senderId: 1,
-            messageType: 100,
-            messageFrom: 0,
-            checkedMetaLink: false,
-            senderName: 'room1',
-            content: 'hello room 1',
-            name: 'Attachment file',
-        }],
-        notes : [],
+        messages : data.messages,
+        notes : data.notes,
         customers : [{
             id : data.customer.id,
             customerName : data.customer.customerName,
