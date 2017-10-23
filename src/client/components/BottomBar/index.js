@@ -42,7 +42,7 @@ class BottomBar extends React.Component {
             senderId,
             name,
             customers,
-            type: roomType,
+            roomType,
             messageType : 100,
             messageFrom: 0,
             createdAt:new Date().toLocaleString()
