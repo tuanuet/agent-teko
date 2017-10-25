@@ -7,7 +7,7 @@ import * as MessageTypes from '../../constants/MessageTypes';
 import Attachment from '../Message/Attachment'
 
 function getListChat(messages) {
-    return messages.map((e, i) => {
+    return messages ? messages.map((e, i) => {
         switch (e.messageType) {
         case MessageTypes.NOTIFICATION:
             return <Notification content={e.message.content} key={i}/>;
@@ -20,7 +20,7 @@ function getListChat(messages) {
         default:
             return <Default message={e} key={i}/>;
         }
-    });
+    }) : false;
 }
 
 class ListMessage extends React.Component {
