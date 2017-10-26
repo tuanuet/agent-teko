@@ -11,7 +11,7 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
             <div className="customer-control">
                 <img
                     src="https://pluralsight.imgix.net/author/lg/70ada62d-cb01-4114-aa65-e3d18d0494ed.jpeg?w=200"
-                    className="avatar" alt="image"/>
+                className="avatar" alt="image"/>
             </div>
             <div className="customer-info">
                 <div className="title" >
@@ -22,7 +22,7 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
                 </div>
                 <div className="d-flex justify-content-between">
                     <div className="last-massage" >
-                        {_.last(closedRoom.messages).content}
+                        {closedRoom.messages.length > 0 && _.last(closedRoom.messages).content}
                     </div>
                     <i className="fa fa-paperclip" aria-hidden="true"></i>
                 </div>
