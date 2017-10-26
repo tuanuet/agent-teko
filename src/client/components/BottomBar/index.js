@@ -76,25 +76,6 @@ class BottomBar extends React.Component {
         this.refs.chat.focus();
     }
 
-    // componentWillUpdate(nextProps, nextState) {
-    //     if (nextProps.image.url) {
-    //         let {room, customer} = this.props;
-    //         let roomId = room.id;
-    //         let senderId = customer.customerId;
-    //         let name = customer.name;
-    //         this.props.socket.emit('client-send-message', {
-    //             message:
-    //                 {type: 103, content: nextProps.image.url},
-    //             roomId,
-    //             senderId,
-    //             name
-    //         }, (success) => {
-    //             console.log(success);
-    //         });
-    //         this.props.dispatch(setImage({url: null}));
-    //     }
-    // }
-
     removeAttach() {
         this.refs.divPreview.setAttribute('style', 'display: none');
         this.refs.preview.setAttribute('src', '');
