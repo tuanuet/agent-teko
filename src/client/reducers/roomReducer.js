@@ -127,9 +127,12 @@ export default function roomReducer(state=initialState.rooms, action) {
         });
     //update room when select agents
     case types.UPDATE_SELECT_LIST_AGENT:
+
+        console.log('RoomReducer:',action);
+
         let agentIds = _(action.agentIds).map(id => {return {agentId : id}}).value();
         return _(state).map(room => {
-            if(room.id !== parseInt(action.roomId)) return room;
+            if(room.id != action.roomId) return room;
 
             return {...room,...{otherAgents : [...agentIds,...room.otherAgents]}};
         }).value();

@@ -87,6 +87,7 @@ function getRoomFromServer(data) {
         numOfUnReadMessages: 1,
         messages : data.messages,
         notes : data.notes,
+        otherAgents : data.otherAgents,
         customers : [{
             id : data.customer.id,
             customerName : data.customer.customerName,
