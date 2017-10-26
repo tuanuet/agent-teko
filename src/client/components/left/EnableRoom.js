@@ -8,7 +8,7 @@ const EnableRoom = ({enableRoom, adminChooseRoom}) => {
                 <div className="customer-control">
                     <img
                         src="https://pluralsight.imgix.net/author/lg/70ada62d-cb01-4114-aa65-e3d18d0494ed.jpeg?w=200"
-                        className="avatar" alt="image"/>
+                    className="avatar" alt="image"/>
                 </div>
                 <div className="customer-info">
                     <div className="title">
@@ -19,7 +19,7 @@ const EnableRoom = ({enableRoom, adminChooseRoom}) => {
                     </div>
                     <div className="d-flex justify-content-between">
                         <div className="last-massage new-message">
-                            {_.last(enableRoom.messages).content}
+                            {enableRoom.messages.length > 0 && _.last(enableRoom.messages).content}
                         </div>
                         {/*<i className="fa fa-exclamation-triangle text-red" aria-hidden="true"></i>*/}
                     </div>
