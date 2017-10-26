@@ -107,7 +107,7 @@ function getMessageFromServer(message) {
         checkedMetaLink: false,
         senderName: message.name,
         content: message.message,
-        name: message.fileName,
+        fileName: message.fileName,
         createdAt : message.createdAt
     };
 }

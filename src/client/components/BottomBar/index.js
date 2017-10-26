@@ -33,7 +33,7 @@ class BottomBar extends React.Component {
         let roomId = currentRoom.id;
         let content = this.refs.chat.value;
         let senderId = agent.id;
-        let name = agent.name;
+        let name = agent.adminName;
         let customers = currentRoom.customers;
         let roomType = currentRoom.roomType;
         return {
@@ -52,6 +52,8 @@ class BottomBar extends React.Component {
     send() {
 
         let msg = this.getMessageToSendServer();
+
+        console.log('messsage send :', msg);
 
         this.props.dispatch(actions.addMessageForRoom(msg.roomId,getMessageFromClient(msg)));
 

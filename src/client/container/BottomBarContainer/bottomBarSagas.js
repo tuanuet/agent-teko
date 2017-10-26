@@ -40,7 +40,7 @@ function* handleUploadImage(action) {
                 ...action.msgToState,
                 ...{
                     messageType : result.type,
-                    name : result.name,
+                    fileName : result.name,
                     content : result.content
                 }
             };
@@ -51,7 +51,7 @@ function* handleUploadImage(action) {
                 ...action.msgToServer,
                 ...{
                     messageType : result.type,
-                    name : result.name,
+                    fileName : result.name,
                     message : {content : result.content}
                 }
             };
