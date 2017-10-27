@@ -19,7 +19,7 @@ const EnableRoom = ({enableRoom, adminChooseRoom}) => {
                     </div>
                     <div className="d-flex justify-content-between">
                         <div className="last-massage new-message">
-                            {enableRoom.messages.length > 0 && _.last(enableRoom.messages).content}
+                            {_.last(enableRoom.messages) > 0 && _.last(enableRoom.messages).content}
                         </div>
                         {/*<i className="fa fa-exclamation-triangle text-red" aria-hidden="true"></i>*/}
                     </div>

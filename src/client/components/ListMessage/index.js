@@ -15,7 +15,10 @@ function getListChat(messages) {
             return <Rating key={i}/>;
         case MessageTypes.IMAGE:
             return <Image key={i} message={e}/>;
-        case MessageTypes.ATTACHMENT:
+        case MessageTypes.ATTACHMENT_PDF:
+        case MessageTypes.ATTACHMENT_WORD:
+        case MessageTypes.ATTACHMENT_EXCEL:
+        case MessageTypes.ATTACHMENT_FILE:
             return <Attachment key={i} message={e}/>;
         default:
             return <Default message={e} key={i}/>;

@@ -9,7 +9,7 @@ const AcceptRoom = ({sendRequestJoinRoom}) => {
                 className="btn btn-primary accept-room"
                 onClick={sendRequestJoinRoom.bind(this)}
                 value="Tiếp nhận tư vấn renew"
-            >dasdas</button>
+            >Tiếp nhận tư vấn</button>
         </div>
     );
 };

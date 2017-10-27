@@ -22,7 +22,7 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
                 </div>
                 <div className="d-flex justify-content-between">
                     <div className="last-massage" >
-                        {closedRoom.messages.length > 0 && _.last(closedRoom.messages).content}
+                        {_.last(closedRoom.messages) > 0 && _.last(closedRoom.messages).content}
                     </div>
                     <i className="fa fa-paperclip" aria-hidden="true"></i>
                 </div>
