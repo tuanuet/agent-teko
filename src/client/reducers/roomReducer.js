@@ -139,11 +139,13 @@ export default function roomReducer(state=initialState.rooms, action) {
 
         //update closed rooms
         case types.LOAD_CLOSED_ROOM_SUCCEED:
-            return [
-                ...state,
-                ...action.closedRooms
-            ];
-
+            let newArray = [...action.closedRooms];
+            console.log(state);
+            state.forEach(room => {
+                const searchRoom = newArray.find(tmp => tmp.id === room.id)
+                if (!searchRoom) newArray = [...newArray, room]
+            })
+            return newArray
         //set tag of room succeed
         case types.SET_STATUS_OF_ROOM_SUCCEED:
             return state.map(room => {
@@ -153,13 +155,10 @@ export default function roomReducer(state=initialState.rooms, action) {
                 }
 
                 return {
-                    ...{},
                     ...room,
                     status: parseInt(action.status)
                 };
             });
-
-
 
             // default case, return current state
         default:
