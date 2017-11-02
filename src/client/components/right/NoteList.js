@@ -9,8 +9,4 @@ const NoteList = ({notes}) => {
     );
 };
 
-NoteList.propTypes = {
-    notes: PropTypes.array.isRequired,
-};
-
 export default NoteList;

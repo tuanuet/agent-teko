@@ -29,14 +29,14 @@ class ChatApi {
             .then(res => res.data);
     }
 
-    static setTagOfRoom(roomId, tagId) {
+    static setStatusOfRoom(roomId, status) {
         let formData = new FormData();
         let data = {
             roomId,
-            tagId
+            status
         };
         formData.append("data", JSON.stringify(data));
-        return axios.post(apiTypes.SET_TAG_OF_ROOM_REQUESTED, formData)
+        return axios.post(apiTypes.SET_STATUS_OF_ROOM_REQUESTED, formData)
             .then(res => res.data);
     }
 

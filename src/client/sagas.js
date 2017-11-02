@@ -7,7 +7,7 @@ import {
     fetchMessagesSaga,
     fetchAgentsSaga,
     saveAgentsSaga,
-    setTagOfRoomSaga
+    setStatusOfRoomSaga
 } from './container/MiddleContainer/chatSaga';
 import fetchHistoryChatSaga from './container/RightContainer/saga/historyChatSaga';
 import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
@@ -17,7 +17,6 @@ import {fork} from 'redux-saga/effects';
 
 export default function* rootSaga() {
     yield fork(uploadImageSaga);
-    // yield fork(fetchMetaLinkSaga);
     yield fork(fetchRoomsSaga);
     yield fork(saveAgentsSaga);
     yield fork(fetchAgentsSaga);
@@ -27,6 +26,6 @@ export default function* rootSaga() {
     yield fork(adminSendRequestJoinRoomToSocketSucceed);
     yield fork(adminSendRequestJoinRoom);
     yield fork(fetchListOfTagsSaga);
-    yield fork(setTagOfRoomSaga);
+    yield fork(setStatusOfRoomSaga);
     yield fork(fetchClosedRoomSaga);
 }

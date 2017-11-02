@@ -58,27 +58,26 @@ function* saveAgentsSaga() {
 }
 
 //================ SET TAG OF ROOM ==============
-function* setTagOfRoom(action) {
+function* setStatusOfRoom(action) {
     try {
-        const data = yield call(chatApi.setTagOfRoom,action.roomId,action.tagId);
+        const data = yield call(chatApi.setStatusOfRoom,action.roomId,action.status);
         if(data.result) {
-            // action.onSetTagStateOfRoom(action.tagId);
-            yield put(chatActions.setTagOfRoomSucceed(action.roomId,action.tagId));
+            yield put(chatActions.setStatusOfRoomSucceed(action.roomId,action.status));
         } else {
             throw new Error(data.error)
         }
 
     }catch (err){
-        console.log(err.message)
+        console.log("err when un follow room",err.message)
     }
 }
-function* setTagOfRoomSaga() {
-    yield takeEvery(types.SET_TAG_OF_ROOM_REQUESTED,setTagOfRoom)
+function* setStatusOfRoomSaga() {
+    yield takeEvery(types.SET_STATUS_OF_ROOM_REQUESTED,setStatusOfRoom)
 }
 
 export {
     fetchMessagesSaga,
     fetchAgentsSaga,
     saveAgentsSaga,
-    setTagOfRoomSaga
+    setStatusOfRoomSaga
 };

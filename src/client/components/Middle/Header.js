@@ -15,8 +15,8 @@ class Header extends React.Component {
         this.showTheme = this.showTheme.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onSaveSelectListAgent = this.onSaveSelectListAgent.bind(this);
-        this.onSelectTag = this.onSelectTag.bind(this);
         this.onSetTagStateOfRoom = this.onSetTagStateOfRoom.bind(this);
+        this.unFollowRoom = this.unFollowRoom.bind(this);
 
         this.state = {
             showModals: {
@@ -86,19 +86,17 @@ class Header extends React.Component {
 
 
     onSetTagStateOfRoom(tagId){
-        console.log("set tag to ", tagId);
         this.setState({
             selectedTag: tagId
         })
     }
 
-    onSelectTag(event){
-        let tagId = event.target.value;
-        console.log(tagId);
-        if (parseInt(tagId) === 3 && !confirm("Xác nhận đóng phòng chat này lại?")) {
+    unFollowRoom(){
+        let status = 3;
+        if (!confirm("Xác nhận đóng phòng chat này lại?")) {
             return;
         }
-        this.props.actions.setTagOfRoomRequested(this.props.currentRoomId, tagId, this.onSetTagStateOfRoom);
+        this.props.actions.unFollowRoom(this.props.currentRoomId, status);
     };
 
     render() {
@@ -112,7 +110,6 @@ class Header extends React.Component {
         return (
             <div className="header">
                 <div className="title">
-                    <div>CHAT HEADER</div>
                     <div className="group-button">
                         <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
                                 data-target="#exampleModal"><i
@@ -124,25 +121,15 @@ class Header extends React.Component {
                         <button className="" data-toggle="tooltip" data-placement="top" title="Push"><i
                             className="fa fa-external-link-square"/></button>
                         <button className="red" data-toggle="tooltip" data-placement="top" title="Close room"><i
-                            className="fa fa-times"/></button>
+                            className="fa fa-times" onClick={this.unFollowRoom}/></button>
 
                         {modal}
                     </div>
                 </div>
 
                 <div className="list-tag">
-                    <div>
-                        <button className="tag">Sale</button>
-                        <button className="tag">Active</button>
-                        <button className="tag red">Delay</button>
-                    </div>
                     <div className="set-tag">
                         <span>Trạng thái</span>
-                        <select disabled={this.props.currentRoom.status === 3} value={!this.state.selectedTag? this.props.currentRoom.status:this.state.selectedTag} className="selectpicker" onChange={this.onSelectTag}>
-                            {this.props.listOfTags.map(tag => {
-                                return <option value={tag.id} key={tag.id}>{tag.title}</option>
-                            })}
-                        </select>
                     </div>
 
                 </div>

@@ -50,10 +50,11 @@ export function onSaveSelectAgentSucceed() {
     return {type :types.SAVE_LIST_AGENT_JOIN_ROOM_SUCCEED}
 }
 
-export function setTagOfRoomRequested(roomId, tagId, onSetTagStateOfRoom) {
-    return {type: types.SET_TAG_OF_ROOM_REQUESTED, roomId, tagId, onSetTagStateOfRoom}
+export function unFollowRoom(roomId, status) {
+    console.log("dsadasdas", status, roomId);
+    return {type: types.SET_STATUS_OF_ROOM_REQUESTED, roomId, status}
 }
 
-export function setTagOfRoomSucceed(roomId, tagId) {
-    return {type: types.SET_TAG_OF_ROOM_SUCCEED, roomId, tagId}
+export function setStatusOfRoomSucceed(roomId, status) {
+    return {type: types.SET_STATUS_OF_ROOM_SUCCEED, roomId, status}
 }

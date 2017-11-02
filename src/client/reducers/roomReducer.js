@@ -145,7 +145,7 @@ export default function roomReducer(state=initialState.rooms, action) {
             ];
 
         //set tag of room succeed
-        case types.SET_TAG_OF_ROOM_SUCCEED:
+        case types.SET_STATUS_OF_ROOM_SUCCEED:
             return state.map(room => {
                 if (room.id !== action.roomId) {
                     // This isn't the item we care about - keep it as-is
@@ -155,7 +155,7 @@ export default function roomReducer(state=initialState.rooms, action) {
                 return {
                     ...{},
                     ...room,
-                    status: parseInt(action.tagId)
+                    status: parseInt(action.status)
                 };
             });
 
