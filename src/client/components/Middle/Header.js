@@ -102,6 +102,7 @@ class Header extends React.Component {
     };
 
     render() {
+        console.log("current status room", this.props.currentRoom);
         let modal = null;
         if (this.state.showModals.selectListAgent) {
             modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal}/>;
@@ -109,6 +110,7 @@ class Header extends React.Component {
         if (this.state.showModals.selectTheme) {
             modal = <SelectTheme {...this.props} />;
         }
+        console.log("disabledddd", this.props.currentRoom.status === 3);
         return (
             <div className="header">
                 <div className="title">

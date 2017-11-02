@@ -62,7 +62,7 @@ function* setTagOfRoom(action) {
     try {
         const data = yield call(chatApi.setTagOfRoom,action.roomId,action.tagId);
         if(data.result) {
-            action.onSetTagStateOfRoom(action.tagId);
+            // action.onSetTagStateOfRoom(action.tagId);
             yield put(chatActions.setTagOfRoomSucceed(action.roomId,action.tagId));
         } else {
             throw new Error(data.error)
