@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
@@ -34,4 +35,10 @@ module.exports = {
         ]
 
     },
+    plugins: [
+        new WebpackShellPlugin({
+            onBuildStart: [],
+            onBuildExit: ['cp ./static/main-bundle.js ../live-chat/public/js/client/']
+        })
+    ]
 };
