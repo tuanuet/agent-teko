@@ -9,4 +9,8 @@ const NoteList = ({notes}) => {
     );
 };
 
+NoteList.propTypes = {
+    notes: PropTypes.array,
+};
+
 export default NoteList;

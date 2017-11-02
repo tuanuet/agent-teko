@@ -9,7 +9,6 @@ class Scroll extends React.Component {
         this.scrollToBottom = this.scrollToBottom.bind(this);
     }
     scrollToBottom() {
-        console.log('run scroll');
         const messagesContainer = ReactDOM.findDOMNode(this.messagesContainer);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     };
