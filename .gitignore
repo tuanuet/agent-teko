@@ -56,7 +56,6 @@ uploads/
 #/src/server/ChatSocketEvent.js
 /src/client/constants/Server.js
 !/src/client/constants/Server.js
-/package-lock.json
 /static/bundle.js
 /static/report.html
 /static/main-bundle.js
