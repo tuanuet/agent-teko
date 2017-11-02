@@ -35,10 +35,10 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
 const ClosedRooms = ({closedRooms, adminChooseRoom, currentRoomId}) => {
     return (
         <div className="tab-pane" id="closedchat" role="tabpanel">
-            {closedRooms.map(closedRoom => {
-                    return <ClosedRoom
-                        key={closedRoom.id}
-                        closedRoom={closedRoom}
+            {closedRooms.map((closedRoom, index) => {
+                return <ClosedRoom
+                    key={index}
+                    closedRoom={closedRoom}
                         currentRoomId={currentRoomId}
                         adminChooseRoom={adminChooseRoom}/>
                 }

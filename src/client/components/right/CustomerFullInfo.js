@@ -1,9 +1,6 @@
 import React, {PropTypes} from 'react';
 
 const CustomerFullInfo = ({customer}) => {
-    if (customer.historyChat == undefined) {
-        customer.historyChat = [];
-    }
     return (
         <div className="customer-full-info" id="collapseExample">
 
@@ -22,7 +19,7 @@ const CustomerFullInfo = ({customer}) => {
             <div>
                 <p><i className="fa fa-history" aria-hidden="true"></i><strong>Lịch sử chat</strong></p>
                 <ol>
-                    {customer.historyChat.map(room => {
+                    {customer.historyChat && customer.historyChat.map(room => {
                         return <li key={room.id}><a href="#">Room {room.id} - {room.status == 2? "Đang hoạt động" : "Đã đóng"}</a></li>
                     })}
                 </ol>

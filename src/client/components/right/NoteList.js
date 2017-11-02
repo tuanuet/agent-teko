@@ -10,7 +10,7 @@ const NoteList = ({notes}) => {
 };
 
 NoteList.propTypes = {
-    notes: PropTypes.array.isRequired,
+    notes: PropTypes.array,
 };
 
 export default NoteList;

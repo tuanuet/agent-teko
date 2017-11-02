@@ -28,7 +28,7 @@ const NoteItem = ({note, editNote}) => {
 };
 
 NoteItem.propTypes={
-    note: PropTypes.object.isRequired,
+    note: PropTypes.object,
 };
 
 export default NoteItem;
