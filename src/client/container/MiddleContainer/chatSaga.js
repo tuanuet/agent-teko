@@ -63,6 +63,7 @@ function* setStatusOfRoom(action) {
         const data = yield call(chatApi.setStatusOfRoom,action.roomId,action.status);
         if(data.result) {
             yield put(chatActions.setStatusOfRoomSucceed(action.roomId,action.status));
+            yield put(chatActions.broadcastCloseRoomToOtherAgents(action.roomId));
         } else {
             throw new Error(data.error)
         }

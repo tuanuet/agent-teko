@@ -57,3 +57,7 @@ export function unFollowRoom(roomId, status) {
 export function setStatusOfRoomSucceed(roomId, status) {
     return {type: types.SET_STATUS_OF_ROOM_SUCCEED, roomId, status}
 }
+
+export function broadcastCloseRoomToOtherAgents(roomId) {
+    return {type: types.BROADCAST_CLOSE_ROOM_TO_OTHER_AGENT, roomId}
+}

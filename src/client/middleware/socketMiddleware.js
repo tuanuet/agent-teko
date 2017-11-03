@@ -58,6 +58,10 @@ export function socketMiddleware() {
             socket.emit('admin-send-action-rating', action.roomId, ack => {
 
             });
+        } else if (socket && action.type === types.BROADCAST_CLOSE_ROOM_TO_OTHER_AGENT) {
+            socket.emit('admin-close-room', action.roomId, ack => {
+
+            });
         }
         return result;
     };
@@ -148,6 +152,9 @@ export default function(store) {
         }
     });
 
-
+    socket.on('close-room-to-other-agents', roomId => {
+        console.log("yahhhoooo", roomId);
+        store.dispatch(chatActions.setStatusOfRoomSucceed(roomId, 3));
+    });
 
 }
