@@ -69,3 +69,12 @@ export function saveTagOfRoomRequested(roomId, tagId) {
 export function saveTagOfRoomSucceed(roomId, tagId) {
     return {type: types.SAVE_TAG_OF_ROOM_SUCCEED, roomId, tagId};
 }
+
+export function deleteTagOfRoomRequested(roomId, tagId) {
+    return {type: types.DELETE_TAG_OF_ROOM_REQUESTED, roomId, tagId};
+}
+
+export function deleteTagOfRoomSucceed(roomId, tagId) {
+    console.log("delete tag succeed", roomId, tagId);
+    return {type: types.DELETE_TAG_OF_ROOM_SUCCEED, roomId, tagId};
+}

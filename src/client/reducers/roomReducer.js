@@ -159,17 +159,32 @@ export default function roomReducer(state=initialState.rooms, action) {
                 };
             });
 
+
+            //add a new tag of room
         case types.SAVE_TAG_OF_ROOM_SUCCEED:
             return state.map(room => {
                 if (room.id !== action.roomId) {
                     // This isn't the item we care about - keep it as-is
                     return room;
                 }
-                console.log("new tag", [...room.tagsOfRoom, {id: action.tagId}]);
                 return {
                     ...{},
                     ...room,
                     tagsOfRoom: [...room.tagsOfRoom, {id: action.tagId}]
+                };
+            });
+
+        //del a tag of room
+        case types.DELETE_TAG_OF_ROOM_SUCCEED:
+            return state.map(room => {
+                if (room.id !== action.roomId) {
+                    // This isn't the item we care about - keep it as-is
+                    return room;
+                }
+                return {
+                    ...{},
+                    ...room,
+                    tagsOfRoom: room.tagsOfRoom.filter(tag => parseInt(tag.id) !== action.tagId)
                 };
             });
 

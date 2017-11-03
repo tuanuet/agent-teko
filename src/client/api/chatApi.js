@@ -62,6 +62,17 @@ class ChatApi {
         return axios.post(apiTypes.SAVE_TAG_OF_ROOM, formData)
             .then(res => res.data);
     }
+
+    static deleteTagOfRoom(roomId, tagId) {
+        let formData = new FormData();
+        let data = {
+            roomId,
+            tagId
+        };
+        formData.append("data", JSON.stringify(data));
+        return axios.post(apiTypes.DELETE_TAG_OF_ROOM, formData)
+            .then(res => res.data);
+    }
 }
 
 export default ChatApi;

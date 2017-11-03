@@ -18,6 +18,7 @@ class Header extends React.Component {
         this.onSetTagStateOfRoom = this.onSetTagStateOfRoom.bind(this);
         this.unFollowRoom = this.unFollowRoom.bind(this);
         this.onSaveTag = this.onSaveTag.bind(this);
+        this.onDeleteTag = this.onDeleteTag.bind(this);
 
         this.state = {
             showModals: {
@@ -94,15 +95,21 @@ class Header extends React.Component {
 
     unFollowRoom(){
         let status = 3;
-        if (!confirm("Xác nhận đóng phòng chat này lại?")) {
-            return;
+        if (confirm("Xác nhận đóng phòng chat này lại?")) {
+            this.props.actions.unFollowRoom(this.props.currentRoomId, status);
         }
-        this.props.actions.unFollowRoom(this.props.currentRoomId, status);
     };
 
     onSaveTag(tagId){
         const {currentRoomId} = this.props;
         this.props.actions.saveTagOfRoomRequested(currentRoomId, tagId);
+    }
+
+    onDeleteTag(tagId) {
+        const {currentRoomId} = this.props;
+        if (confirm("Bỏ tag này ?")) {
+            this.props.actions.deleteTagOfRoomRequested(currentRoomId, tagId);
+        }
     }
 
     render() {
@@ -116,9 +123,6 @@ class Header extends React.Component {
         let tagsOfRoomWithTitle = _.filter(listOfTags, item => {
             return lookup[item.id] !== undefined;
         });
-        console.log("list of tags", listOfTags);
-        console.log("tags of room", tagsOfRoom);
-        console.log("available tags", availableTags);
 
         let modal = null;
         if (this.state.showModals.selectListAgent) {
@@ -151,11 +155,11 @@ class Header extends React.Component {
                             Thêm tag
                         </button>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {availableTags.map(tag => <a key={tag.id} className="dropdown-item" href="#" value={tag.id} onClick={this.onSaveTag.bind(this, tag.id)}>{tag.title}</a>)}
+                            {availableTags.map(tag => <a key={tag.id} className="dropdown-item" href="#" onClick={this.onSaveTag.bind(this, tag.id)}>{tag.title}</a>)}
                         </div>
                     </div>
                     <div className="list-tag">
-                        {tagsOfRoomWithTitle.map(tag => <button key={tag.id} className="btn btn-success btn-sm tag" type="button" data-toggle="tooltip" data-placement="top" title="Click để hủy tag">{tag.title}</button>
+                        {tagsOfRoomWithTitle.map(tag => <button key={tag.id} onClick={this.onDeleteTag.bind(this, tag.id)} className="btn btn-success btn-sm tag" type="button" data-toggle="tooltip" data-placement="top" title="Click để hủy tag">{tag.title}</button>
                         )}
                     </div>
                 </div>
