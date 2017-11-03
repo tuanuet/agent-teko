@@ -168,10 +168,15 @@ export default function roomReducer(state=initialState.rooms, action) {
                     // This isn't the item we care about - keep it as-is
                     return room;
                 }
+                if (room.tagsOfRoom) {
+                    return {
+                        ...room,
+                        tagsOfRoom: [...room.tagsOfRoom, {id: action.tagId}]
+                    }
+                }
                 return {
-                    ...{},
                     ...room,
-                    tagsOfRoom: [...room.tagsOfRoom, {id: action.tagId}]
+                    tagsOfRoom: [{id: action.tagId}]
                 };
             });
 
@@ -183,7 +188,6 @@ export default function roomReducer(state=initialState.rooms, action) {
                     return room;
                 }
                 return {
-                    ...{},
                     ...room,
                     tagsOfRoom: room.tagsOfRoom.filter(tag => parseInt(tag.id) !== action.tagId)
                 };

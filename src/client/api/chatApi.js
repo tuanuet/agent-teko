@@ -53,24 +53,12 @@ class ChatApi {
     }
 
     static saveTagOfRoom(roomId, tagId) {
-        let formData = new FormData();
-        let data = {
-            roomId,
-            tagId
-        };
-        formData.append("data", JSON.stringify(data));
-        return axios.post(apiTypes.SAVE_TAG_OF_ROOM, formData)
+        return axios.post(apiTypes.SAVE_TAG_OF_ROOM, {roomId, tagId})
             .then(res => res.data);
     }
 
     static deleteTagOfRoom(roomId, tagId) {
-        let formData = new FormData();
-        let data = {
-            roomId,
-            tagId
-        };
-        formData.append("data", JSON.stringify(data));
-        return axios.post(apiTypes.DELETE_TAG_OF_ROOM, formData)
+        return axios.post(apiTypes.DELETE_TAG_OF_ROOM, {roomId, tagId})
             .then(res => res.data);
     }
 }

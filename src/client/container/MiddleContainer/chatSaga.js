@@ -80,10 +80,10 @@ function* setStatusOfRoomSaga() {
 function* saveTagOfRoom(action) {
     try {
         const data = yield call(chatApi.saveTagOfRoom,action.roomId,action.tagId);
-        if(data.result) {
-            yield put(chatActions.saveTagOfRoomSucceed(action.roomId,action.tagId));
+        if (data.result) {
+            yield put(chatActions.saveTagOfRoomSucceed(action.roomId, action.tagId));
         } else {
-            throw new Error(data.error)
+            throw new Error()
         }
 
     }catch (err){
@@ -91,7 +91,7 @@ function* saveTagOfRoom(action) {
     }
 }
 function* saveTagOfRoomSaga() {
-    yield takeEvery(types.SAVE_TAG_OF_ROOM_REQUESTED,saveTagOfRoom)
+    yield takeEvery(types.SAVE_TAG_OF_ROOM_REQUESTED, saveTagOfRoom)
 }
 
 //================ DELETE TAG OF ROOM ==============
@@ -101,11 +101,12 @@ function* deleteTagOfRoom(action) {
         if(data.result) {
             yield put(chatActions.deleteTagOfRoomSucceed(action.roomId,action.tagId));
         } else {
+            console.log('wolaaa');
             throw new Error(data.error)
         }
 
     }catch (err){
-        console.log("err when delete tag of room",err.message)
+        console.log("err when delete tag of room",err)
     }
 }
 function* deleteTagOfRoomSaga() {
