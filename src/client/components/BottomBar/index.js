@@ -106,7 +106,7 @@ class BottomBar extends React.Component {
             <div className="bottom">
                 <div className="chat-input">
                     <input className="form-control" ref="chat" onKeyPress={this.enter.bind(this)} type="text"
-                           placeholder="Type here"/>
+                    placeholder="Type here"/>
                 </div>
                 <div className="icon-button">
                     <i className="fa fa-smile-o" onClick={this.showEmojiBoard.bind(this)}/>
@@ -115,9 +115,9 @@ class BottomBar extends React.Component {
                         <i className="fa fa-paperclip"/>
                     </label>
                     <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true"
-                                                           onClick={this.send.bind(this)}/></a>
+                        onClick={this.send.bind(this)}/></a>
                 </div>
-                {this.state.isShowEmojiBoard ? <EmojiBoard/> : ''}
+                {this.state.isShowEmojiBoard && <EmojiBoard/>}
             </div>
         );
     }
