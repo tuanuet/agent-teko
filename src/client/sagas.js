@@ -7,7 +7,8 @@ import {
     fetchMessagesSaga,
     fetchAgentsSaga,
     saveAgentsSaga,
-    setStatusOfRoomSaga
+    setStatusOfRoomSaga,
+    saveTagOfRoomSaga
 } from './container/MiddleContainer/chatSaga';
 import fetchHistoryChatSaga from './container/RightContainer/saga/historyChatSaga';
 import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
@@ -28,4 +29,5 @@ export default function* rootSaga() {
     yield fork(fetchListOfTagsSaga);
     yield fork(setStatusOfRoomSaga);
     yield fork(fetchClosedRoomSaga);
+    yield fork(saveTagOfRoomSaga)
 }

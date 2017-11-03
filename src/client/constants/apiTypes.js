@@ -10,3 +10,4 @@ export const SEND_REQUEST_JOIN_ROOM = 'http://local.chat.com/api/request-join-ro
 export const SET_STATUS_OF_ROOM_REQUESTED = 'http://local.chat.com/api/set-status-of-room-requested';
 export const LOAD_CLOSED_ROOMS = 'http://local.chat.com/api/closed-rooms-fetch-requested';
 export const UPLOAD_IMAGE_REQUESTED = 'http://local.chat.com/api/files/upload';
+export const SAVE_TAG_OF_ROOM = 'http://local.chat.com/api/save-tag-of-room';

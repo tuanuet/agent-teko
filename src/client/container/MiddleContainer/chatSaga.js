@@ -57,7 +57,7 @@ function* saveAgentsSaga() {
     yield takeEvery(types.SAVE_LIST_AGENT_JOIN_ROOM,saveAgents)
 }
 
-//================ SET TAG OF ROOM ==============
+//================ SET STATUS OF ROOM ==============
 function* setStatusOfRoom(action) {
     try {
         const data = yield call(chatApi.setStatusOfRoom,action.roomId,action.status);
@@ -76,9 +76,28 @@ function* setStatusOfRoomSaga() {
     yield takeEvery(types.SET_STATUS_OF_ROOM_REQUESTED,setStatusOfRoom)
 }
 
+//================ SET TAG OF ROOM ==============
+function* saveTagOfRoom(action) {
+    try {
+        const data = yield call(chatApi.saveTagOfRoom,action.roomId,action.tagId);
+        if(data.result) {
+            yield put(chatActions.saveTagOfRoomSucceed(action.roomId,action.tagId));
+        } else {
+            throw new Error(data.error)
+        }
+
+    }catch (err){
+        console.log("err when save tag of room",err.message)
+    }
+}
+function* saveTagOfRoomSaga() {
+    yield takeEvery(types.SAVE_TAG_OF_ROOM_REQUESTED,saveTagOfRoom)
+}
+
 export {
     fetchMessagesSaga,
     fetchAgentsSaga,
     saveAgentsSaga,
-    setStatusOfRoomSaga
+    setStatusOfRoomSaga,
+    saveTagOfRoomSaga
 };

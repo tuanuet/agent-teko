@@ -159,6 +159,20 @@ export default function roomReducer(state=initialState.rooms, action) {
                 };
             });
 
+        case types.SAVE_TAG_OF_ROOM_SUCCEED:
+            return state.map(room => {
+                if (room.id !== action.roomId) {
+                    // This isn't the item we care about - keep it as-is
+                    return room;
+                }
+                console.log("new tag", [...room.tagsOfRoom, {id: action.tagId}]);
+                return {
+                    ...{},
+                    ...room,
+                    tagsOfRoom: [...room.tagsOfRoom, {id: action.tagId}]
+                };
+            });
+
 
 
             // default case, return current state

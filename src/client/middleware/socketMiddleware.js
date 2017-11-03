@@ -81,7 +81,7 @@ let initAgent = (Store) => {
 };
 
 function getRoomFromServer(data) {
-    console.log('data',data);
+    console.log('rooms from server data',data);
     return {
         id : data.id,
         topicName : data.topicName,
@@ -98,7 +98,8 @@ function getRoomFromServer(data) {
             customerEmail : data.customer.customerEmail,
             customerPhone : data.customer.customerPhone,
             fbId : data.customer.fbId,
-        }]
+        }],
+        tagsOfRoom: data.tagsOfRoom
     };
 }
 
@@ -153,7 +154,6 @@ export default function(store) {
     });
 
     socket.on('close-room-to-other-agents', roomId => {
-        console.log("yahhhoooo", roomId);
         store.dispatch(chatActions.setStatusOfRoomSucceed(roomId, 3));
     });
 

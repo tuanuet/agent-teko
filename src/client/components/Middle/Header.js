@@ -17,6 +17,7 @@ class Header extends React.Component {
         this.onSaveSelectListAgent = this.onSaveSelectListAgent.bind(this);
         this.onSetTagStateOfRoom = this.onSetTagStateOfRoom.bind(this);
         this.unFollowRoom = this.unFollowRoom.bind(this);
+        this.onSaveTag = this.onSaveTag.bind(this);
 
         this.state = {
             showModals: {
@@ -99,7 +100,26 @@ class Header extends React.Component {
         this.props.actions.unFollowRoom(this.props.currentRoomId, status);
     };
 
+    onSaveTag(tagId){
+        const {currentRoomId} = this.props;
+        this.props.actions.saveTagOfRoomRequested(currentRoomId, tagId);
+    }
+
     render() {
+        const {listOfTags, tagsOfRoom} = this.props;
+        //index by tag id
+        let lookup = _.keyBy(tagsOfRoom, tag => tag.id);
+        //find all available tags
+        let availableTags = _.filter(listOfTags, item => {
+            return lookup[item.id] === undefined;
+        });
+        let tagsOfRoomWithTitle = _.filter(listOfTags, item => {
+            return lookup[item.id] !== undefined;
+        });
+        console.log("list of tags", listOfTags);
+        console.log("tags of room", tagsOfRoom);
+        console.log("available tags", availableTags);
+
         let modal = null;
         if (this.state.showModals.selectListAgent) {
             modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal}/>;
@@ -118,8 +138,6 @@ class Header extends React.Component {
                             <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button>
                         <button className="" data-toggle="tooltip" data-placement="top" title="Add agent to room"><i
                             className="fa fa-plus" onClick={this.showListAgent}/></button>
-                        <button className="" data-toggle="tooltip" data-placement="top" title="Push"><i
-                            className="fa fa-external-link-square"/></button>
                         <button className="red" data-toggle="tooltip" data-placement="top" title="Close room"><i
                             className="fa fa-times" onClick={this.unFollowRoom}/></button>
 
@@ -127,12 +145,21 @@ class Header extends React.Component {
                     </div>
                 </div>
 
-                <div className="list-tag">
-                    <div className="set-tag">
-                        <span>Trạng thái</span>
+                <div className="room-tag">
+                    <div className="dropdown">
+                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Thêm tag
+                        </button>
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {availableTags.map(tag => <a key={tag.id} className="dropdown-item" href="#" value={tag.id} onClick={this.onSaveTag.bind(this, tag.id)}>{tag.title}</a>)}
+                        </div>
                     </div>
-
+                    <div className="list-tag">
+                        {tagsOfRoomWithTitle.map(tag => <button key={tag.id} className="btn btn-success btn-sm tag" type="button" data-toggle="tooltip" data-placement="top" title="Click để hủy tag">{tag.title}</button>
+                        )}
+                    </div>
                 </div>
+
 
             </div>
         );
@@ -146,6 +173,7 @@ Header.propTypes = {
 function mapStateToProps(state) {
     let currentRoom = _(state.rooms).find(room => room.id === state.currentRoomId);
     return {
+        tagsOfRoom: currentRoom.tagsOfRoom,
         listOfTags: state.listOfTags,
         currentRoomId: state.currentRoomId,
         agents: state.agents,

@@ -61,3 +61,11 @@ export function setStatusOfRoomSucceed(roomId, status) {
 export function broadcastCloseRoomToOtherAgents(roomId) {
     return {type: types.BROADCAST_CLOSE_ROOM_TO_OTHER_AGENT, roomId}
 }
+
+export function saveTagOfRoomRequested(roomId, tagId) {
+    return {type: types.SAVE_TAG_OF_ROOM_REQUESTED, roomId, tagId};
+}
+
+export function saveTagOfRoomSucceed(roomId, tagId) {
+    return {type: types.SAVE_TAG_OF_ROOM_SUCCEED, roomId, tagId};
+}
