@@ -11,7 +11,11 @@ import {
 } from './container/MiddleContainer/chatSaga';
 import fetchHistoryChatSaga from './container/RightContainer/saga/historyChatSaga';
 import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
-import {adminSendRequestJoinRoom, adminSendRequestJoinRoomToSocketSucceed} from "./container/BottomBarContainer/joinRoomSaga"
+import {
+    adminSendRequestJoinRoom,
+    adminSendRequestJoinRoomToSocketSucceed,
+    handleReopenRoom
+} from "./container/BottomBarContainer/joinRoomSaga"
 import {fetchMetaLinkSaga,uploadImageSaga} from "./container/BottomBarContainer/bottomBarSagas"
 import {fork} from 'redux-saga/effects';
 

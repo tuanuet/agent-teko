@@ -26,6 +26,12 @@ class RoomApi {
         return axios.get(apiType.LOAD_CLOSED_ROOMS)
             .then(res => res.data);
     }
+
+    static adminReopenRoom(roomId) {
+        return axios.post(apiType.REOPEN_ROOM, {
+            roomId
+        })
+    }
 }
 
 export default RoomApi;

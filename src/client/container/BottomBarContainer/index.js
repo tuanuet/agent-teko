@@ -4,6 +4,7 @@ import BottomBar from '../../components/BottomBar';
 import {uploadImage} from './actions';
 import * as types from '../../constants/actionTypes';
 import AcceptRoom from '../../components/BottomBar/AcceptRoom';
+import ReopenRoom from '../../components/BottomBar/ReopenRoom';
 import {bindActionCreators} from 'redux';
 import * as roomActions from '../LeftContainer/roomActions';
 
@@ -15,13 +16,28 @@ class BottomBarContainer extends React.Component {
         this.props.actions.sendRequestJoinRoomToPHPServer(currentRoom);
     }
 
+    sendReopenRoom = roomId => {
+        const { actions } = this.props
+
+        actions.sendReopenRoom(roomId)
+    }
+
     render() {
-        const {currentRoom} = this.props;
+        const { currentRoom } = this.props
+
+        // if (currentRoom.status === 3 && currentRoom.roomType === 'facebook') {
+        //     return <ReopenRoom
+        //         {...this.props}
+        //         sendReopenRoom={this.sendReopenRoom} />
+        // }
+        // if (currentRoom.status === 3 && currentRoom.roomType === 'default') {
+        //     return false
+        // }
         if (currentRoom.status === 3 && currentRoom.roomType !== 'facebook') {
-            return null;
+            return false
         }
         if (currentRoom.status === 1) {
-            return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom.bind(this)}/>;
+            return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom.bind(this)} />
         }
         return (
             <BottomBar {...this.props}/>
@@ -30,9 +46,9 @@ class BottomBarContainer extends React.Component {
 }
 
 function mapStateToProps(state) {
-    let currentRoom = state.rooms.filter(room => room.id === state.currentRoomId)[0];
+    const currentRoom = state.rooms.find(room => room.id === state.currentRoomId);
     return {
-        currentRoom: currentRoom,
+        currentRoom,
         agent : state.agent,
     };
 }

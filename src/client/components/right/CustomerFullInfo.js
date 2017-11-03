@@ -14,7 +14,7 @@ const CustomerFullInfo = ({customer}) => {
                 <p><i className="fa fa-home" aria-hidden="true"></i><strong>Đại học Công Nghệ - ĐHQGHN</strong></p>
             </div>
             <div>
-                <p><i className="fa fa-map-marker" aria-hidden="true"></i><a href="https://facebook.com">Facebook</a></p>
+                <p><i className="fa fa-map-marker" aria-hidden="true"></i><a href={`https://facebook.com/${customer.fbId}`}>Facebook</a></p>
             </div>
             <div>
                 <p><i className="fa fa-history" aria-hidden="true"></i><strong>Lịch sử chat</strong></p>
