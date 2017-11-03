@@ -57,12 +57,13 @@ function* saveAgentsSaga() {
     yield takeEvery(types.SAVE_LIST_AGENT_JOIN_ROOM,saveAgents)
 }
 
-//================ SET TAG OF ROOM ==============
+//================ SET STATUS OF ROOM ==============
 function* setStatusOfRoom(action) {
     try {
         const data = yield call(chatApi.setStatusOfRoom,action.roomId,action.status);
         if(data.result) {
             yield put(chatActions.setStatusOfRoomSucceed(action.roomId,action.status));
+            yield put(chatActions.broadcastCloseRoomToOtherAgents(action.roomId));
         } else {
             throw new Error(data.error)
         }
@@ -75,9 +76,48 @@ function* setStatusOfRoomSaga() {
     yield takeEvery(types.SET_STATUS_OF_ROOM_REQUESTED,setStatusOfRoom)
 }
 
+//================ SET TAG OF ROOM ==============
+function* saveTagOfRoom(action) {
+    try {
+        const data = yield call(chatApi.saveTagOfRoom,action.roomId,action.tagId);
+        if(data.result) {
+            yield put(chatActions.saveTagOfRoomSucceed(action.roomId,action.tagId));
+        } else {
+            throw new Error(data.error)
+        }
+
+    }catch (err){
+        console.log("err when save tag of room",err.message)
+    }
+}
+function* saveTagOfRoomSaga() {
+    yield takeEvery(types.SAVE_TAG_OF_ROOM_REQUESTED,saveTagOfRoom)
+}
+
+//================ DELETE TAG OF ROOM ==============
+function* deleteTagOfRoom(action) {
+    try {
+        const data = yield call(chatApi.deleteTagOfRoom,action.roomId,action.tagId);
+        if(data.result) {
+            yield put(chatActions.deleteTagOfRoomSucceed(action.roomId,action.tagId));
+        } else {
+            throw new Error(data.error)
+        }
+
+    }catch (err){
+        console.log("err when delete tag of room",err.message)
+    }
+}
+function* deleteTagOfRoomSaga() {
+    yield takeEvery(types.DELETE_TAG_OF_ROOM_REQUESTED,deleteTagOfRoom)
+}
+
+
 export {
     fetchMessagesSaga,
     fetchAgentsSaga,
     saveAgentsSaga,
-    setStatusOfRoomSaga
+    setStatusOfRoomSaga,
+    saveTagOfRoomSaga,
+    deleteTagOfRoomSaga
 };

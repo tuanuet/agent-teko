@@ -71,7 +71,7 @@ header {
 
     > .header {
       position: absolute;
-      height: 100px;
+      height: 120px;
       top: 0;
       left: 0;
       right: 0;
@@ -85,6 +85,7 @@ header {
       border-bottom: 1px solid $light-grey;
 
       > .title {
+        float: right;
         display: flex;
         justify-content: space-between;
 
@@ -116,16 +117,24 @@ header {
         }
       }
 
-      .list-tag {
+      .room-tag {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         padding-top: 10px;
         .set-tag{
-          display: flex;
-          justify-content: flex-end;
+          width: 100px;
+          &:hover{
+            cursor: pointer;
+          }
         }
         .selectpicker{
           margin-left: 3px;
+        }
+        .list-tag{
+          margin-top: 10px;
+          margin-right: 5px;
+          display: flex;
+          justify-content: flex-start;
         }
         .tag {
           border: none;
@@ -133,6 +142,10 @@ header {
           background-color: $light-grey;
           padding: 2px 16px;
           color: #555;
+          margin-right: 5px;
+          &:hover{
+            cursor: pointer;
+          }
 
           &.red {
             background-color: $pink;
@@ -152,7 +165,7 @@ header {
 
     > .body {
       position: absolute;
-      top: 100px;
+      top: 120px;
       left: 0;
       right: 0;
       bottom: 50px;
@@ -176,6 +189,11 @@ header {
           border-radius: 4px;
           margin: 0 8px 16px 8px;
           max-width: 80%;
+        }
+        .sender-name{
+          font-size: small;
+          font-style: italic;
+          color: #808080;
         }
 
 

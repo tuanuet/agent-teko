@@ -58,6 +58,10 @@ export function socketMiddleware() {
             socket.emit('admin-send-action-rating', action.roomId, ack => {
 
             });
+        } else if (socket && action.type === types.BROADCAST_CLOSE_ROOM_TO_OTHER_AGENT) {
+            socket.emit('admin-close-room', action.roomId, ack => {
+
+            });
         }
         return result;
     };
@@ -77,7 +81,7 @@ let initAgent = (Store) => {
 };
 
 function getRoomFromServer(data) {
-    console.log('data',data);
+    console.log('rooms from server data',data);
     return {
         id : data.id,
         topicName : data.topicName,
@@ -94,7 +98,8 @@ function getRoomFromServer(data) {
             customerEmail : data.customer.customerEmail,
             customerPhone : data.customer.customerPhone,
             fbId : data.customer.fbId,
-        }]
+        }],
+        tagsOfRoom: data.tagsOfRoom
     };
 }
 
@@ -148,6 +153,8 @@ export default function(store) {
         }
     });
 
-
+    socket.on('close-room-to-other-agents', roomId => {
+        store.dispatch(chatActions.setStatusOfRoomSucceed(roomId, 3));
+    });
 
 }
