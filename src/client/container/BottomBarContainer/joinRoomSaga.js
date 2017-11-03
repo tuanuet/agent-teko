@@ -2,7 +2,6 @@ import {call, put, takeEvery} from 'redux-saga/effects';
 import roomApi from '../../api/roomApi';
 import * as types from '../../constants/actionTypes';
 
-
 function* handleAdminSendRequestJoinRoom(action) {
     try {
         const response = yield call(roomApi.sendRequestJoinRoom, action.room);
@@ -36,8 +35,8 @@ function* handleAdminSendRequestJoinRoomToSocketSucceed(action) {
 function* handleReopenRoom(action)  {
     try {
         const response = yield call(roomApi.adminReopenRoom, action.roomId)
-        if (response.result) {
-            const { room } = response.result
+        if (response) {
+            const { room } = response
             yield put({type: types.REOPEN_ROOM_SUCCEED, newRoom: room, oldRoomId: action.roomId})
         } else {
             console.log(`Error while reopen room. Stack trace: ${response}`)

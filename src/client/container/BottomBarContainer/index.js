@@ -25,23 +25,18 @@ class BottomBarContainer extends React.Component {
     render() {
         const { currentRoom } = this.props
 
-        // if (currentRoom.status === 3 && currentRoom.roomType === 'facebook') {
-        //     return <ReopenRoom
-        //         {...this.props}
-        //         sendReopenRoom={this.sendReopenRoom} />
-        // }
-        // if (currentRoom.status === 3 && currentRoom.roomType === 'default') {
-        //     return false
-        // }
-        if (currentRoom.status === 3 && currentRoom.roomType !== 'facebook') {
+        if (currentRoom.status === 3 && currentRoom.roomType === 'facebook') {
+            return <ReopenRoom
+                {...this.props}
+                sendReopenRoom={this.sendReopenRoom} />
+        }
+        if (currentRoom.status === 3 && currentRoom.roomType === 'default') {
             return false
         }
         if (currentRoom.status === 1) {
             return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom.bind(this)} />
         }
-        return (
-            <BottomBar {...this.props}/>
-        );
+        return <BottomBar {...this.props} />
     }
 }
 

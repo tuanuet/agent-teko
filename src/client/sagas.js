@@ -16,7 +16,7 @@ import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
 import {
     adminSendRequestJoinRoom,
     adminSendRequestJoinRoomToSocketSucceed,
-    handleReopenRoom
+    adminReopenRoom
 } from "./container/BottomBarContainer/joinRoomSaga"
 import {fetchMetaLinkSaga,uploadImageSaga} from "./container/BottomBarContainer/bottomBarSagas"
 import {fork} from 'redux-saga/effects';
@@ -31,6 +31,7 @@ export default function* rootSaga() {
     yield fork(fetchNotesSaga);
     yield fork(adminSendRequestJoinRoomToSocketSucceed);
     yield fork(adminSendRequestJoinRoom);
+    yield fork(adminReopenRoom);
     yield fork(fetchListOfTagsSaga);
     yield fork(setStatusOfRoomSaga);
     yield fork(fetchClosedRoomSaga);

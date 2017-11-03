@@ -193,8 +193,6 @@ export default function roomReducer(state=initialState.rooms, action) {
                 };
             });
 
-
-
             // default case, return current state
         default:
             return state;

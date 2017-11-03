@@ -7,7 +7,7 @@ function getMessageFromClient(message) {
     return {
         id : null,
         senderId: message.senderId,
-        messageType: message.type,
+        messageType: message.messageType,
         messageFrom: message.messageFrom,
         checkedMetaLink: false,
         senderName: message.name,

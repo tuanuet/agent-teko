@@ -107,7 +107,7 @@ function getMessageFromServer(message) {
     return {
         id : message.id,
         senderId: message.senderId,
-        messageType: message.type,
+        messageType: message.messageType,
         messageFrom: message.messageFrom,
         checkedMetaLink: false,
         senderName: message.name,
