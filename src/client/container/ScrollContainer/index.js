@@ -26,7 +26,7 @@ class Scroll extends React.Component {
         let {theme} = this.props;
         return (
             <div className={`body ${theme}`}  ref={(el) => { this.messagesContainer = el; }}>
-                <ListMessage messages={this.props.messages}/>
+                <ListMessage {...this.props} />
                 <div style={{float: 'left', clear: 'both'}}>
                 </div>
             </div>

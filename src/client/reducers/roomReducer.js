@@ -26,7 +26,15 @@ export default function roomReducer(state=initialState.rooms, action) {
                     messages: action.messages
                 };
             });
-
+        case types.FETCH_MORE_MESSAGES_SUCCEED:
+            return state.map(room => {
+                if (room.id === action.currentRoomId) return {
+                    ...room,
+                    messages: [...action.messages, ...room.messages],
+                    nextFetchingRoom: action.nextFetchingRoom
+                }
+                return room
+            })
             //fetch history chat of customer
         case types.HISTORY_CHAT_FETCH_SUCCEED:
             return state.map(room => {

@@ -28,10 +28,20 @@ function getListChat(messages) {
 
 class ListMessage extends React.Component {
 
+    fetchMoreMessages = () => {
+        const { actions, currentRoomId, nextFetchingRoom } = this.props
+        actions.fetchMoreMessages(nextFetchingRoom, currentRoomId)
+    }
+
     render() {
         let listMsg = getListChat(this.props.messages);
+
         return (
             <ol className="chat">
+                { this.props.nextFetchingRoom !== -1 && <div className="text-center clickable"
+                    onClick={this.fetchMoreMessages}>
+                    Load more
+                </div> }
                 {listMsg}
             </ol>
         );

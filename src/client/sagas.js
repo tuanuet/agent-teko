@@ -19,6 +19,7 @@ import {
     adminReopenRoom
 } from "./container/BottomBarContainer/joinRoomSaga"
 import {fetchMetaLinkSaga,uploadImageSaga} from "./container/BottomBarContainer/bottomBarSagas"
+import {fetchMoreMessages} from './container/ChatContentContainer/saga'
 import {fork} from 'redux-saga/effects';
 
 export default function* rootSaga() {
@@ -37,4 +38,5 @@ export default function* rootSaga() {
     yield fork(fetchClosedRoomSaga);
     yield fork(saveTagOfRoomSaga);
     yield fork(deleteTagOfRoomSaga);
+    yield fork(fetchMoreMessages);
 }

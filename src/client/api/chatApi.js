@@ -61,6 +61,10 @@ class ChatApi {
         return axios.post(apiTypes.DELETE_TAG_OF_ROOM, {roomId, tagId})
             .then(res => res.data);
     }
+
+    static fetchMoreMessages(roomId) {
+        return axios.get(`${apiTypes.FETCH_MORE_MESSAGES}?roomId=${roomId}`).then(res => res.data)
+    }
 }
 
 export default ChatApi;

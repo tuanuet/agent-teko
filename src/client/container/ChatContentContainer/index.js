@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import ChatContent from '../../components/Middle/ChatContent'
+import * as messageActions from './actions'
+import { bindActionCreators } from 'redux'
 
 class ChatContentContainer extends React.Component {
     render() {
@@ -17,14 +19,16 @@ function mapStateToProps(state, ownProps) {
     if(!availableRoom) return {messages : []};
     let messages = availableRoom.messages;
     return {
-
         currentRoomId: state.currentRoomId,
+        nextFetchingRoom: availableRoom.nextFetchingRoom || state.currentRoomId,
         messages
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+        actions: bindActionCreators({...messageActions}, dispatch)
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContentContainer);

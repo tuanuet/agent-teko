@@ -13,3 +13,4 @@ export const UPLOAD_IMAGE_REQUESTED = 'http://local.chat.com/api/files/upload';
 export const REOPEN_ROOM = 'http://local.chat.com/api/reopen-room';
 export const SAVE_TAG_OF_ROOM = 'http://local.chat.com/api/save-tag-of-room';
 export const DELETE_TAG_OF_ROOM = 'http://local.chat.com/api/delete-tag-of-room';
+export const FETCH_MORE_MESSAGES = 'http://local.chat.com/api/fetch-more-messages';
