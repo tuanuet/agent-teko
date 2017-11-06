@@ -1,9 +1,7 @@
-
-
-// export const API_URL = 'https://test.fbchat.teko.vn';
-// export const BASE_URL = 'https://test.client.fbchat.teko.vn';
-export const BASE_URL = 'http://localhost:3000';
-export const API_URL = 'http://local.chat.com';
+export const API_URL = 'https://test.fbchat.teko.vn';
+export const BASE_URL = 'https://test.client.fbchat.teko.vn';
+// export const BASE_URL = 'http://localhost:3000';
+// export const API_URL = 'http://local.chat.com';
 
 export const API_CREATE_TOKEN_URL = API_URL + '/api/createToken';
 
