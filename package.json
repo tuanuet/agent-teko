@@ -7,7 +7,7 @@
     "eslint-server": "eslint ./src/server --fix",
     "start": "babel-node ./src/server/app",
     "r": "pm2 stop all && npm start && pm2 logs",
-    "build:prod": "webpack --config webpack.config.prod.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build:prod": "webpack --config webpack.config.prod.js --color -p --progress --hide-modules && cp ./static/main-bundle.js ../live-chat/public/js/client && cp ./static/node-static.js ../live-chat/public/js/client",
     "build:dev": "webpack -d --config webpack.config.dev.js",
     "watch": "webpack -d --config webpack.config.dev.js --watch"
   },
