@@ -16,10 +16,11 @@ class BottomBarContainer extends React.Component {
         this.props.actions.sendRequestJoinRoomToPHPServer(currentRoom);
     }
 
-    sendReopenRoom = roomId => {
+    sendReopenRoom = async roomId => {
         const { actions } = this.props
 
-        actions.sendReopenRoom(roomId)
+        await actions.sendReopenRoom(roomId)
+        location.reload()
     }
 
     render() {
