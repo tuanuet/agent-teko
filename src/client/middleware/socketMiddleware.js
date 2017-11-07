@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import * as types from '../constants/actionTypes';
-import { API_URL } from '../constants/apiTypes'
+import { API_URL, BASE_URL } from '../constants/Server'
 import axios from 'axios';
 import * as chatActions from '../container/MiddleContainer/chatActions';
 import * as roomActions from '../container/LeftContainer/roomActions';
@@ -121,7 +121,7 @@ function getMessageFromServer(message) {
 export default function(store) {
 
 
-    socket = io('http://localhost:3000/chat');
+    socket = io(`${BASE_URL}/chat`);
     // socket = io('https://test.client.fbchat.teko.vn/chat');
 
     initAgent(store).then((agent) => {
