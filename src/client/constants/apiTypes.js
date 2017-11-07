@@ -1,5 +1,5 @@
-// const API_URL = 'local.chat.com'
-const API_URL = 'https://test.fbchat.teko.vn'
+export const API_URL = 'http://local.chat.com'
+// const API_URL = 'https://test.fbchat.teko.vn'
 
 export const ROOMS_FETCH_REQUESTED = `${API_URL}/api/rooms-fetch-requested`;
 export const AGENTS_FETCH_REQUESTED = `${API_URL}/api/other-agents-fetch-requested`;

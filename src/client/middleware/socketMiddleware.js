@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import * as types from '../constants/actionTypes';
+import { API_URL } from '../constants/apiTypes'
 import axios from 'axios';
 import * as chatActions from '../container/MiddleContainer/chatActions';
 import * as roomActions from '../container/LeftContainer/roomActions';
@@ -71,7 +72,8 @@ export function socketMiddleware() {
 let initAgent = (Store) => {
     store = Store;
     store.dispatch(agentRequested());
-    return axios.get('http://local.chat.com/api/get-admin-info')
+    const INIT_AGENT_API = `${API_URL}/api/get-admin-info`
+    return axios.get(INIT_AGENT_API)
         .then(res => res.data)
         .then(agent => {
             store.dispatch(agentSucceed(agent));
@@ -120,6 +122,7 @@ export default function(store) {
 
 
     socket = io('http://localhost:3000/chat');
+    // socket = io('https://test.client.fbchat.teko.vn/chat');
 
     initAgent(store).then((agent) => {
         // join default room

@@ -27,7 +27,8 @@ class ChatApi {
             agents: agents
         };
         formData.append("data", JSON.stringify(data));
-        return axios.post('http://local.chat.com/api/add-other-agents-to-room', formData)
+        const API = `${apiTypes.API_URL}/api/add-other-agents-to-room`
+        return axios.post(API, formData)
             .then(res => res.data);
     }
 
