@@ -2,20 +2,17 @@ import axios from 'axios';
 import * as apiTypes from '../constants/apiTypes';
 
 class ChatApi {
-    static messagesFetchRequested(roomId)
-    {
+    static messagesFetchRequested(roomId) {
         return axios.get(`${apiTypes.MESSAGES_FETCH_REQUESTED}?roomId=${roomId}`)
             .then(response => response.data);
     }
 
-    static agentsFetchRequested()
-    {
+    static agentsFetchRequested() {
         return axios.get(apiTypes.AGENTS_FETCH_REQUESTED)
             .then(response => response.data);
     }
 
-    static saveSelectListAgent(roomId,listAgent)
-    {
+    static saveSelectListAgent(roomId,listAgent) {
         let agents = listAgent.map(id => {
             return {
                 agentId : id
@@ -32,8 +29,7 @@ class ChatApi {
             .then(res => res.data);
     }
 
-    static setStatusOfRoom(roomId, status)
-    {
+    static setStatusOfRoom(roomId, status) {
         let formData = new FormData();
         let data = {
             roomId,
@@ -44,8 +40,7 @@ class ChatApi {
             .then(res => res.data);
     }
 
-    static postImage(fileToUpload)
-    {
+    static postImage(fileToUpload) {
         let formData = new FormData();
 
         formData.append("fileToUpload", fileToUpload);

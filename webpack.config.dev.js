@@ -5,7 +5,7 @@ const WebpackShellPlugin = require('webpack-shell-plugin');
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry: [
-        './src/client/index'
+        './src/index'
     ],
     output: {
         filename: 'main-bundle.js',

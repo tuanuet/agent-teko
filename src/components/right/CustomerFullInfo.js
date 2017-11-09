@@ -5,24 +5,13 @@ const CustomerFullInfo = ({customer}) => {
         <div className="customer-full-info" id="collapseExample">
 
             <div>
-                <p><i className="fa fa-user" aria-hidden="true"></i><strong>{customer.customerName}</strong></p>
+                <p><i className="fa fa-user" aria-hidden="true"></i><strong>{customer.name}</strong></p>
             </div>
             <div>
-                <p><i className="fa fa-phone" aria-hidden="true"></i><strong>{customer.customerPhone}</strong></p>
+                <p><i className="fa fa-phone" aria-hidden="true"></i><strong>{customer.phone || 'Chưa  có'}</strong></p>
             </div>
             <div>
-                <p><i className="fa fa-home" aria-hidden="true"></i><strong>Đại học Công Nghệ - ĐHQGHN</strong></p>
-            </div>
-            <div>
-                <p><i className="fa fa-map-marker" aria-hidden="true"></i><a href={`https://facebook.com/${customer.fbId}`}>Facebook</a></p>
-            </div>
-            <div>
-                <p><i className="fa fa-history" aria-hidden="true"></i><strong>Lịch sử chat</strong></p>
-                <ol>
-                    {customer.historyChat && customer.historyChat.map(room => {
-                        return <li key={room.id}><a href="#">Room {room.id} - {room.status == 2? "Đang hoạt động" : "Đã đóng"}</a></li>
-                    })}
-                </ol>
+                <p><i className="fa fa-envelope-o" aria-hidden="true"></i><strong>{customer.email || 'Chưa  có'}</strong></p>
             </div>
         </div>
     );

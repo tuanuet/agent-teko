@@ -7,20 +7,20 @@ import ClosedRooms from './ClosedRooms';
 
 const LeftComponent = ({rooms, adminChooseRoom, currentRoomId, loadClosedRoom}) => {
     let availableRooms = rooms.filter(room => {
-        return room.status !== 1 && room.status !== 3;
+        return room.roomStatus !== 1 && room.roomStatus !== 3;
     });
 
     let enableRooms = rooms.filter(room => {
-        return room.status === 1;
+        return room.roomStatus === 1;
     });
 
     let closedRooms = rooms.filter(room => {
-        return room.status === 3;
+        return room.roomStatus === 3;
     });
 
     return(
         <div className="left">
-            <TabBar numberOfEnableRooms={enableRooms.length} loadClosedRoom={loadClosedRoom}/>
+            <TabBar numberOfEnableRooms={enableRooms.length} loadClosedRoom={loadClosedRoom} />
             <SearchBar/>
             <div className="tab-content">
                 <AvailableRooms

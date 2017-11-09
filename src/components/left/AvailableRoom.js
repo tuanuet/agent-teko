@@ -7,11 +7,11 @@ const AvailableRoom = ({availableRoom, adminChooseRoom, currentRoomId}) => {
         className += " unread";
     }
 
-    if (availableRoom.id === currentRoomId) {
+    if (availableRoom.roomId === currentRoomId) {
         className += " active";
     }
     return (
-        <div className={className} onClick={adminChooseRoom.bind(this, availableRoom.id)} >
+        <div className={className} onClick={adminChooseRoom.bind(this, availableRoom.roomId)} >
             <div className="customer-control">
                 <img
                     src="/images/teko_icon.png"
@@ -19,15 +19,15 @@ const AvailableRoom = ({availableRoom, adminChooseRoom, currentRoomId}) => {
             </div>
             <div className="customer-info">
                 <div className="title" >
-                    <div className="name" >{availableRoom.customers[0].customerName}</div>
+                    <div className="name" >{availableRoom.customer.name}</div>
                     <div className="timer" >
                         <span>{availableRoom.createdAt}</span>
                     </div>
                 </div>
                 <div className="d-flex justify-content-between">
                     <div className="last-massage" >
-                        {_.last(availableRoom.messages) && _.last(availableRoom.messages).content}
-                        </div>
+                        {availableRoom.roomInfo && availableRoom.roomInfo.latestMessage.content}
+                    </div>
                     <i className="fa fa-paperclip" aria-hidden="true"></i>
                 </div>
             </div>

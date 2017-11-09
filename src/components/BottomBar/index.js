@@ -99,7 +99,6 @@ class BottomBar extends React.Component {
         this.props.adminSendRequestJoinRoom({room: this.props.currentRoom});
     }
 
-
     render() {
 
         return (

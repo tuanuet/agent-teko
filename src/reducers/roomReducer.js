@@ -176,15 +176,15 @@ export default function roomReducer(state=initialState.rooms, action) {
                     // This isn't the item we care about - keep it as-is
                     return room;
                 }
-                if (room.tagsOfRoom) {
+                if (room.tags) {
                     return {
                         ...room,
-                        tagsOfRoom: [...room.tagsOfRoom, {id: action.tagId}]
+                        tags: [...room.tags, {id: action.tagId}]
                     }
                 }
                 return {
                     ...room,
-                    tagsOfRoom: [{id: action.tagId}]
+                    tags: [{id: action.tagId}]
                 };
             });
 
@@ -197,7 +197,7 @@ export default function roomReducer(state=initialState.rooms, action) {
                 }
                 return {
                     ...room,
-                    tagsOfRoom: room.tagsOfRoom.filter(tag => parseInt(tag.id) !== action.tagId)
+                    tags: room.tags.filter(tag => parseInt(tag.id) !== action.tagId)
                 };
             });
 

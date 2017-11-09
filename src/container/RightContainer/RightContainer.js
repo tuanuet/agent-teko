@@ -89,8 +89,8 @@ function mapStateToProps(state, ownProps) {
     let customer = {};
     let notes = [];
     if (currentRoomId) {
-        let room = state.rooms.filter(room => room.id === currentRoomId)[0];
-        customer = room.customers[0];
+        let room = state.rooms.find(room => room.roomId === currentRoomId);
+        customer = room.customer;
         notes = room.notes;
     }
     return {

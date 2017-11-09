@@ -15,7 +15,7 @@ export function adminChooseRoom(roomId) {
 }
 
 export function reJoinAllAvailableRoomsToSocketRequested(rooms) {
-    console.log("RE JOIN ALL ROOMS");
+    console.log('Re join all available room');
     return {type: types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED, rooms};
 }
 
@@ -25,10 +25,6 @@ export function reJoinRoomToSocketSucceed(room) {
 
 export function reJoinRoomToSocketFailed(room) {
     return {type: types.RE_JOIN_ROOM_TO_SOCKET_SUCCEED, room};
-}
-
-export function sendRequestJoinRoomToPHPServer(room) {
-    return {type: types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, room};
 }
 
 export function sendReopenRoom(roomId) {
@@ -50,8 +46,8 @@ export function listOfTagsFetchRequested(){
     return {type: types.LIST_OF_TAGS_FETCH_REQUESTED};
 }
 
-export function fetchListOfTagsSucceed(listOfTags) {
-    return {type: types.LIST_OF_TAGS_FETCH_SUCCEED, listOfTags};
+export function fetchListOfTagsSucceed(tags) {
+    return {type: types.LIST_OF_TAGS_FETCH_SUCCEED, tags};
 }
 
 export function loadClosedRoomRequested() {

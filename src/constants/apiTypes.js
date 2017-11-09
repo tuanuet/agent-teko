@@ -1,12 +1,12 @@
-export const API_URL = 'http://local.chat.com'
-// const API_URL = 'https://test.fbchat.teko.vn'
+import { API_URL, NODE_URL } from './Server'
 
-export const ROOMS_FETCH_REQUESTED = `${API_URL}/api/rooms-fetch-requested`;
+export const ROOMS_FETCH_REQUESTED = `${API_URL}/api/fetch-active-rooms`;
+export const LIST_OF_TAGS_FETCH_REQUESTED = `${API_URL}/api/fetch-tags`;
+export const MESSAGES_FETCH_REQUESTED = `${API_URL}/api/fetch-messages-of-room`;
+export const NOTES_FETCH_REQUESTED = `${API_URL}/api/fetch-notes`;
+
+
 export const AGENTS_FETCH_REQUESTED = `${API_URL}/api/other-agents-fetch-requested`;
-export const LIST_OF_TAGS_FETCH_REQUESTED = `${API_URL}/api/list-of-tags-fetch-requested`;
-export const MESSAGES_FETCH_REQUESTED = `${API_URL}/api/messages-fetch-requested`;
-export const HISTORY_CHAT_FETCH_REQUESTED = `${API_URL}/api/history-chat-fetch-requested`;
-export const NOTES_FETCH_REQUESTED = `${API_URL}/api/notes-fetch-requested`;
 export const SAVE_NOTE_REQUESTED = `${API_URL}/api/save-note-requested`;
 export const ADMIN_JOIN_ROOM_SUCCEED = `${API_URL}/api/admin-join-room-succeed`;
 export const SEND_REQUEST_JOIN_ROOM = `${API_URL}/api/request-join-room`;

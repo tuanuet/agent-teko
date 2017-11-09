@@ -7,8 +7,8 @@ import TakeNote from './TakeNote';
 const RightComponent = ({customer, notes, newNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteState}) => {
     return(
         <div className="right">
-            <Customer customer={customer}/>
-            <CustomerFullInfo customer={customer}/>
+            <Customer customer={customer} />
+            <CustomerFullInfo customer={customer} />
             <NoteList notes={notes} />
             <TakeNote
                 updateNoteState={updateNoteState}

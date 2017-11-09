@@ -14,8 +14,8 @@ const NoteItem = ({note, editNote}) => {
                         {note.createdAt}
                         <div className="dropdown">
                             <i className="fa fa-cog" aria-hidden="true" id="dropdownMenuButton" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false"></i>
-                           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            aria-haspopup="true" aria-expanded="false"></i>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a className="dropdown-item" href="#">Sửa</a>
                                 <a className="dropdown-item" href="#">Xóa</a>
                             </div>

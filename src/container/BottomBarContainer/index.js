@@ -12,8 +12,8 @@ import * as roomActions from '../LeftContainer/roomActions';
 class BottomBarContainer extends React.Component {
 
     sendRequestJoinRoom() {
-        const {currentRoom} = this.props;
-        this.props.actions.sendRequestJoinRoomToPHPServer(currentRoom);
+        const { currentRoom } = this.props;
+        this.props.adminSendRequestJoinRoom(currentRoom);
     }
 
     sendReopenRoom = async roomId => {
@@ -26,15 +26,15 @@ class BottomBarContainer extends React.Component {
     render() {
         const { currentRoom } = this.props
 
-        if (currentRoom.status === 3 && currentRoom.roomType === 'facebook') {
+        if (currentRoom.roomStatus === 3 && currentRoom.roomType === 'facebook') {
             return <ReopenRoom
                 {...this.props}
                 sendReopenRoom={this.sendReopenRoom} />
         }
-        if (currentRoom.status === 3 && currentRoom.roomType === 'default') {
+        if (currentRoom.roomStatus === 3 && currentRoom.roomType === 'default') {
             return false
         }
-        if (currentRoom.status === 1) {
+        if (currentRoom.roomStatus === 1) {
             return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom.bind(this)} />
         }
         return <BottomBar {...this.props} />
@@ -42,7 +42,7 @@ class BottomBarContainer extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const currentRoom = state.rooms.find(room => room.id === state.currentRoomId);
+    const currentRoom = state.rooms.find(room => room.roomId === state.currentRoomId);
     return {
         currentRoom,
         agent : state.agent,
@@ -52,11 +52,11 @@ function mapDispatchToProps(dispatch) {
     return{
         actions: bindActionCreators({...{}, ...roomActions}, dispatch),
         dispatch,
-        uploadImage : (formData,msg,msgToState) => {
+        uploadImage: (formData,msg,msgToState) => {
             dispatch(uploadImage(formData,msg,msgToState));
         },
-        adminSendRequestJoinRoom: ({room}) => {
-            dispatch({type: types.JOIN_ROOM_TO_PHP_SERVER_REQUESTED, room});
+        adminSendRequestJoinRoom: room => {
+            dispatch({type: types.JOIN_ROOM_TO_NODE_SERVER, room});
         }
     };
 }

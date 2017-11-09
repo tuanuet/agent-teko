@@ -11,10 +11,8 @@ import {
     saveTagOfRoomSaga,
     deleteTagOfRoomSaga
 } from './container/MiddleContainer/chatSaga';
-import fetchHistoryChatSaga from './container/RightContainer/saga/historyChatSaga';
 import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
 import {
-    adminSendRequestJoinRoom,
     adminSendRequestJoinRoomToSocketSucceed,
     adminReopenRoom
 } from "./container/BottomBarContainer/joinRoomSaga"
@@ -28,10 +26,8 @@ export default function* rootSaga() {
     yield fork(saveAgentsSaga);
     yield fork(fetchAgentsSaga);
     yield fork(fetchMessagesSaga);
-    yield fork(fetchHistoryChatSaga);
     yield fork(fetchNotesSaga);
     yield fork(adminSendRequestJoinRoomToSocketSucceed);
-    yield fork(adminSendRequestJoinRoom);
     yield fork(adminReopenRoom);
     yield fork(fetchListOfTagsSaga);
     yield fork(setStatusOfRoomSaga);

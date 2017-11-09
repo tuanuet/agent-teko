@@ -1,10 +1,10 @@
-import io from 'socket.io-client';
-import * as types from '../constants/actionTypes';
-import { API_URL, BASE_URL } from '../constants/Server'
-import axios from 'axios';
-import * as chatActions from '../container/MiddleContainer/chatActions';
-import * as roomActions from '../container/LeftContainer/roomActions';
-import _ from 'lodash';
+import io from 'socket.io-client'
+import * as types from '../constants/actionTypes'
+import { API_URL, NODE_URL } from '../constants/Server'
+import axios from 'axios'
+import * as chatActions from '../container/MiddleContainer/chatActions'
+import * as roomActions from '../container/LeftContainer/roomActions'
+import _ from 'lodash'
 import {
     addAvailableRoom,
     addEnableRoom,
@@ -12,97 +12,87 @@ import {
     agentRequested,
     agentSucceed,
     addMessageForRoom,
-} from '../actions/action';
+} from '../actions/action'
 
-let socket = null;
+let socket = null
 
-let store = null;
+let store = null
 
 export function socketMiddleware() {
     return next => (action) => {
-        const result = next(action);
-        if (socket && action.type === types.JOIN_ROOM_TO_PHP_SERVER_SUCCEED) {
-            socket.emit('admin-join-room', action.room, function (ackValidation) {
-                if (!ackValidation) return;
-                store.dispatch(chatActions.joinRoomToSocketSucceed(action.room));
-            });
+        const result = next(action)
+        if (socket && action.type === types.JOIN_ROOM_TO_NODE_SERVER) {
+            console.log(action);
+            socket.emit('admin-join-room', action.room, function (ack) {
+                if (!ack) return
+            })
         } else if (socket && action.type === types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED) {
-            socket.emit('admin-re-join-room', action.rooms, function (ackValidation) {
-                if (!ackValidation) {
-                    console.log('rejoin room failed');
-                    store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms));
+            socket.emit('admin-re-join-room', action.rooms, function (ack) {
+                if (!ack) {
+                    console.log('Rejoin all available socket failed')
+                    store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms))
                 }
                 else {
-                    console.log('re join room succeed');
-                        // store.dispatch(roomActions.reJoinRoomToSocketSucceed(room));
+                    console.log('Rejoin all available socket success')
                 }
-            });
+            })
         } else if (socket && action.type === types.CLIENT_SEND_MESSAGE){
             socket.emit('client-send-message',action.message,function (isReceived) {
-                console.log(`admin send message and server receive ${isReceived}`);
-            });
+                console.log(`admin send message and server receive ${isReceived}`)
+            })
         } else if (socket && action.type === types.RESET_NUM_OF_UNREAD_MESSAGE) {
-            socket.emit('reset-number-of-unread-messages', action.room.id, ack => {
-            });
-        } else if (socket && action.type === types.EMIT_SELECT_LIST_AGENT){
-            let room = action.room;
+            socket.emit('reset-number-of-unread-messages', action.room.roomId, ack => {
+            })
+        } else if (socket && action.type === types.EMIT_SELECT_LIST_AGENT) {
+            let room = action.room
             //not tranfer message
-            room.messages = [];
+            room.messages = []
             let data = {
                 agentIds : action.agentIds,
                 room : room
-            };
+            }
             socket.emit('agent-select-other-agents',data,ack => {
                 console.log('agent-select-other-agents',ack)
             })
         } else if (socket && action.type === types.SEND_REQUEST_USER_RATING) {
             socket.emit('admin-send-action-rating', action.roomId, ack => {
 
-            });
+            })
         } else if (socket && action.type === types.BROADCAST_CLOSE_ROOM_TO_OTHER_AGENT) {
             socket.emit('admin-close-room', action.roomId, ack => {
 
-            });
+            })
         }
-        return result;
-    };
+        return result
+    }
 }
 
-// no use saga
-let initAgent = (Store) => {
-    store = Store;
-    store.dispatch(agentRequested());
-    const INIT_AGENT_API = `${API_URL}/api/get-admin-info`
-    return axios.get(INIT_AGENT_API)
+const initAgent = store => {
+    store.dispatch(agentRequested())
+    return axios.get(`${API_URL}/api/fetch-admin-info`)
         .then(res => res.data)
         .then(agent => {
-            store.dispatch(agentSucceed(agent));
-            return agent;
-        })
-        .catch(err => store.dispatch(agentFailure()));
-};
+            store.dispatch(agentSucceed(agent))
+            return agent
+        }).catch(err => store.dispatch(agentFailure()))
+}
 
-function getRoomFromServer(data) {
-    console.log('rooms from server data',data);
+function getRoomFromServer(dataEmit) {
+    console.log('Rooms data from server', dataEmit)
+    const { roomId, roomStatus, roomType, roomInfo, topic, customer, agents, tags, notes, createdAt } = dataEmit
+
     return {
-        id : data.id,
-        topicName : data.topicName,
-        roomType : data.roomType,
-        status : data.status,
-        createdAt : data.createdAt,
-        numOfUnReadMessages: 1,
-        messages : data.messages,
-        notes : data.notes,
-        otherAgents : data.otherAgents,
-        customers : [{
-            id : data.customer.id,
-            customerName : data.customer.customerName,
-            customerEmail : data.customer.customerEmail,
-            customerPhone : data.customer.customerPhone,
-            fbId : data.customer.fbId,
-        }],
-        tagsOfRoom: data.tagsOfRoom
-    };
+        roomId,
+        roomStatus,
+        roomType,
+        roomInfo,
+        topic,
+        customer,
+        agents,
+        tags,
+        notes,
+        createdAt
+    }
 }
 
 function getMessageFromServer(message) {
@@ -116,48 +106,44 @@ function getMessageFromServer(message) {
         content: message.message,
         fileName: message.fileName,
         createdAt : message.createdAt
-    };
+    }
 }
-export default function(store) {
+export default store => {
 
+    socket = io(`${NODE_URL}/chat`)
 
-    socket = io(`${BASE_URL}/chat`);
-    // socket = io('https://test.client.fbchat.teko.vn/chat');
+    initAgent(store).then(agent => {
+        socket.emit('admin-join-default-room', { adminId: agent.id }, ack => {
+            console.log('Admin join room default', ack)
+        })
+    })
 
-    initAgent(store).then((agent) => {
-        // join default room
-        socket.emit('admin-join-default-room', {adminId: agent.id}, function (ack) {
-            console.log('admin join room default ', ack);
-        });
-    });
-
-    // socket.on('server-send-join-room', ({success}) => console.log(`join room ${success}`));
-    socket.on('server-send-room-enable',data => {
-        let room = getRoomFromServer(data);
-        store.dispatch(addEnableRoom(room));
-    });
+    socket.on('server-send-room-enable', data => {
+        const room = getRoomFromServer(data)
+        store.dispatch(addEnableRoom(room))
+    })
 
     socket.on('server-send-auto-assigned-room', data => {
-        let room = getRoomFromServer(data);
-        console.log('RoomFromServerEmit:',room);
-        store.dispatch(addAvailableRoom(room));
+        let room = getRoomFromServer(data)
+        console.log('RoomFromServerEmit:',room)
+        store.dispatch(addAvailableRoom(room))
 
-    });
+    })
 
     socket.on('server-send-message', (msg) => {
-        let roomId = parseInt(msg.roomId);
-        let message = getMessageFromServer(msg);
-        store.dispatch(addMessageForRoom(roomId, message));
+        let roomId = parseInt(msg.roomId)
+        let message = getMessageFromServer(msg)
+        store.dispatch(addMessageForRoom(roomId, message))
 
         //if current room id is different from roomId then update number of unread messages
-        console.log('server send message', store.getState().currentRoomId, roomId);
+        console.log('server send message', store.getState().currentRoomId, roomId)
         if (store.getState().currentRoomId !== roomId) {
-            store.dispatch(roomActions.updateNumberOfUnreadMessages(roomId));
+            store.dispatch(roomActions.updateNumberOfUnreadMessages(roomId))
         }
-    });
+    })
 
     socket.on('close-room-to-other-agents', roomId => {
-        store.dispatch(chatActions.setStatusOfRoomSucceed(roomId, 3));
-    });
+        store.dispatch(chatActions.setStatusOfRoomSucceed(roomId, 3))
+    })
 
 }

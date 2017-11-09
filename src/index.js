@@ -22,7 +22,7 @@ document.body.appendChild(root);
 
 ReactDom.render(
     <Provider store={store}>
-        <App/>
+        <App />
     </Provider>,
     document.getElementById('chat-root')
 );

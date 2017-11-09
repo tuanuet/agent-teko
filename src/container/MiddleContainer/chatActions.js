@@ -3,8 +3,8 @@ import * as types from '../../constants/actionTypes';
 var firstCallOf_messagesFetchRequested = [];
 
 export function messagesFetchRequested(room) {
-    if (firstCallOf_messagesFetchRequested[room.id] == undefined) {
-        firstCallOf_messagesFetchRequested[room.id] = 1;
+    if (firstCallOf_messagesFetchRequested[room.roomId] == undefined) {
+        firstCallOf_messagesFetchRequested[room.roomId] = 1;
         return {type: types.MESSAGES_FETCH_REQUESTED, room}
     } else {
         return {type: "NOTHING_TO_DO"};

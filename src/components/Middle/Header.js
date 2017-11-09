@@ -175,14 +175,15 @@ Header.propTypes = {
 };
 
 function mapStateToProps(state) {
-    let currentRoom = _(state.rooms).find(room => room.id === state.currentRoomId);
+    let currentRoom = state.rooms.find(room => room.roomId === state.currentRoomId);
+
     return {
-        tagsOfRoom: currentRoom.tagsOfRoom,
-        listOfTags: state.listOfTags,
         currentRoomId: state.currentRoomId,
+        currentRoom: currentRoom,
+        tagsOfRoom: currentRoom.tags,
+        listOfTags: state.tags,
         agents: state.agents,
-        otherAgents: currentRoom.otherAgents,
-        currentRoom: currentRoom
+        otherAgents: currentRoom.agents,
     };
 }
 

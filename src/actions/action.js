@@ -1,9 +1,5 @@
 import * as Types from '../constants/actionTypes';
 
-
-
-
-
 export function f5(status) {
     return {
         type: Types.F5,
