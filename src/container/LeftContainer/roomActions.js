@@ -15,7 +15,6 @@ export function adminChooseRoom(roomId) {
 }
 
 export function reJoinAllAvailableRoomsToSocketRequested(rooms) {
-    console.log('Re join all available room');
     return {type: types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED, rooms};
 }
 

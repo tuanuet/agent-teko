@@ -7,7 +7,7 @@ class ChatContent extends React.Component {
 
     render(){
         return(
-           <Scroll {...this.props}/>
+           <Scroll {...this.props} />
         );
     }
 

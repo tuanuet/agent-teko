@@ -8,7 +8,7 @@ function* fetchRooms() {
     try {
         const rooms = yield call(roomApi.roomsFetchRequested);
         yield put(roomActions.fetchRoomsSucceed(rooms));
-        let availableRooms = rooms.filter(room => room.status === 2);
+        let availableRooms = rooms.filter(room => room.roomStatus === 2);
         yield put(roomActions.reJoinAllAvailableRoomsToSocketRequested(availableRooms));
     } catch (e) {
         console.log('Failed', e.message);

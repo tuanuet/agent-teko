@@ -5,7 +5,7 @@ const TakeNote = ({newNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteSt
         <div className="take-note d-flex">
             <textarea
                 className="form-control"
-                id="exampleTextarea" rows="8"
+                id="exampleTextarea" rows="5"
                 placeholder="Add a note..."
                 onChange={updateNoteState}
                 value={newNote}

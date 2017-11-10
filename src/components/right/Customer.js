@@ -6,11 +6,6 @@ const Customer = ({customer}) => {
         aria-controls="collapseExample">
 
             <div className="row">
-                <div className="col-md-2">
-                    <img className="rounded-circle "
-                    src="https://i1.wp.com/fimo.edu.vn/wp-content/uploads/2017/02/UET-logo-txt.png"/>
-
-                </div>
                 <div className="col-md-10 customer-short-info">
                     <p>{customer.name}</p>
                     <p>{customer.phone}</p>

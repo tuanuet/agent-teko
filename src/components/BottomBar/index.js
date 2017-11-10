@@ -1,102 +1,95 @@
+import React from 'react'
+import EmojiBoard from '../EmojiBoard/index'
+import * as actions from '../../actions/action'
+import moment from 'moment'
 
-import React from 'react';
-import EmojiBoard from '../EmojiBoard/index';
-import * as actions from '../../actions/action';
-
-function getMessageFromClient(message) {
+const getMessageFromClient = message => {
+    const { senderId, senderName, messageType, messageFrom, content, fileName, createdAt } = message
     return {
-        id : null,
-        senderId: message.senderId,
-        messageType: message.messageType,
-        messageFrom: message.messageFrom,
-        checkedMetaLink: false,
-        senderName: message.name,
-        content: message.message.content,
-        name: message.fileName,
-        createdAt : message.createdAt
-    };
+        senderId,
+        senderName,
+        messageType,
+        messageFrom,
+        content,
+        fileName,
+        createdAt
+    }
 }
 class BottomBar extends React.Component {
     constructor(props){
-        super(props);
-        this.state = {isShowEmojiBoard: false};
-        this.getMessageToSendServer = this.getMessageToSendServer.bind(this);
+        super(props)
+        this.state = {isShowEmojiBoard: false}
     }
     enter(e) {
         if (e.charCode === 13) {
-            this.send();
+            this.send()
         }
     }
 
-    getMessageToSendServer(){
-        let {currentRoom,agent} = this.props;
-        let roomId = currentRoom.id;
-        let content = this.refs.chat.value;
-        let senderId = agent.id;
-        let name = agent.adminName;
-        let customers = currentRoom.customers;
-        let roomType = currentRoom.roomType;
+    getMessageToSendServer = () => {
+        const { currentRoom, agent } = this.props
         return {
-            message: {content},
-            roomId,
-            senderId,
-            name,
-            customers,
-            roomType,
-            messageType : 100,
+            roomId: currentRoom.roomId,
+            roomType: currentRoom.roomType,
+            senderId: agent.id,
+            senderName: agent.name,
+            messageType: 100,
             messageFrom: 0,
-            createdAt:new Date().toLocaleString()
-        };
+            content: this.refs.chat.value,
+            fileName: null,
+            customer: currentRoom.customer,
+            createdAt: moment().format('YYYY-MM-DD HH:mm:ss')
+        }
     }
 
     send() {
 
-        let msg = this.getMessageToSendServer();
+        const msg = this.getMessageToSendServer()
 
-        console.log('messsage send :', msg);
+        console.log('Message send:', msg)
 
-        this.props.dispatch(actions.addMessageForRoom(msg.roomId,getMessageFromClient(msg)));
+        this.props.dispatch(actions.addMessageForRoom(msg.roomId, getMessageFromClient(msg)))
 
-        this.props.dispatch(actions.clientSendMessage(msg));
+        this.props.dispatch(actions.clientSendMessage(msg))
 
-        this.refs.chat.value = '';
+        this.refs.chat.value = ''
 
-        this.setState({isShowEmojiBoard: false});
+        this.setState({isShowEmojiBoard: false})
     }
 
     uploadImage() {
-        let msgToServer = this.getMessageToSendServer();
-        let msgToState = getMessageFromClient(msgToServer);
-        let input = this.refs.attach;
+        let msgToServer = this.getMessageToSendServer()
+        let msgToState = getMessageFromClient(msgToServer)
+        let input = this.refs.attach
         //validate input
         if (input.files && input.files[0]) {
-            this.props.uploadImage(input.files[0],msgToServer,msgToState);
-            this.refs.attach.value = '';
+            this.props.uploadImage(input.files[0],msgToServer,msgToState)
+            this.refs.attach.value = ''
         }
-        this.refs.chat.focus();
+        this.refs.chat.focus()
     }
 
     removeAttach() {
-        this.refs.divPreview.setAttribute('style', 'display: none');
-        this.refs.preview.setAttribute('src', '');
-        this.refs.attach.files[0] = null;
+        this.refs.divPreview.setAttribute('style', 'display: none')
+        this.refs.preview.setAttribute('src', '')
+        this.refs.attach.files[0] = null
     }
 
 
     componentDidMount() {
-        this.refs.chat.focus();
+        this.refs.chat.focus()
     }
 
     addEmoji(emoji) {
-        this.refs.chat.value = this.refs.chat.value + emoji;
+        this.refs.chat.value = this.refs.chat.value + emoji
     }
 
     showEmojiBoard() {
-        this.setState({isShowEmojiBoard: !this.state.isShowEmojiBoard});
+        this.setState({isShowEmojiBoard: !this.state.isShowEmojiBoard})
     }
 
     sendRequestJoinRoom() {
-        this.props.adminSendRequestJoinRoom({room: this.props.currentRoom});
+        this.props.adminSendRequestJoinRoom({room: this.props.currentRoom})
     }
 
     render() {
@@ -118,9 +111,9 @@ class BottomBar extends React.Component {
                 </div>
                 {this.state.isShowEmojiBoard && <EmojiBoard/>}
             </div>
-        );
+        )
     }
 
 }
 
-export default BottomBar;
+export default BottomBar

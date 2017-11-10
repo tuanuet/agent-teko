@@ -15,30 +15,29 @@ import {
 } from '../actions/action'
 
 let socket = null
-
-let store = null
+import store from '../store/store'
 
 export function socketMiddleware() {
     return next => (action) => {
         const result = next(action)
         if (socket && action.type === types.JOIN_ROOM_TO_NODE_SERVER) {
-            console.log(action);
-            socket.emit('admin-join-room', action.room, function (ack) {
+            socket.emit('admin-join-room', action.room.roomId, (ack, newRoom) => {
+                // TODO: handle error notify
                 if (!ack) return
+                store.dispatch({type: types.JOIN_ROOM_SUCCEED, room: newRoom})
             })
         } else if (socket && action.type === types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED) {
-            socket.emit('admin-re-join-room', action.rooms, function (ack) {
+            socket.emit('admin-re-join-room', action.rooms, ack => {
                 if (!ack) {
                     console.log('Rejoin all available socket failed')
                     store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms))
-                }
-                else {
+                } else {
                     console.log('Rejoin all available socket success')
                 }
             })
         } else if (socket && action.type === types.CLIENT_SEND_MESSAGE){
-            socket.emit('client-send-message',action.message,function (isReceived) {
-                console.log(`admin send message and server receive ${isReceived}`)
+            socket.emit('client-send-message', action.message, function (isReceived) {
+                console.log(`Admin send message and server receive ${isReceived}`)
             })
         } else if (socket && action.type === types.RESET_NUM_OF_UNREAD_MESSAGE) {
             socket.emit('reset-number-of-unread-messages', action.room.roomId, ack => {
@@ -96,19 +95,18 @@ function getRoomFromServer(dataEmit) {
 }
 
 function getMessageFromServer(message) {
+    const { senderId, senderName, messageType, messageFrom, content, fileName, createdAt } = message
     return {
-        id : message.id,
-        senderId: message.senderId,
-        messageType: message.messageType,
-        messageFrom: message.messageFrom,
-        checkedMetaLink: false,
-        senderName: message.name,
-        content: message.message,
-        fileName: message.fileName,
-        createdAt : message.createdAt
+        senderId,
+        senderName,
+        messageType,
+        messageFrom,
+        content,
+        fileName,
+        createdAt
     }
 }
-export default store => {
+export default () => {
 
     socket = io(`${NODE_URL}/chat`)
 
@@ -119,30 +117,30 @@ export default store => {
     })
 
     socket.on('server-send-room-enable', data => {
+        console.log('Server send room enable');
         const room = getRoomFromServer(data)
         store.dispatch(addEnableRoom(room))
     })
 
     socket.on('server-send-auto-assigned-room', data => {
+        console.log('Server send auto assigned room');
         let room = getRoomFromServer(data)
-        console.log('RoomFromServerEmit:',room)
         store.dispatch(addAvailableRoom(room))
 
     })
 
-    socket.on('server-send-message', (msg) => {
+    socket.on('server-send-message', msg => {
         let roomId = parseInt(msg.roomId)
         let message = getMessageFromServer(msg)
         store.dispatch(addMessageForRoom(roomId, message))
 
-        //if current room id is different from roomId then update number of unread messages
-        console.log('server send message', store.getState().currentRoomId, roomId)
         if (store.getState().currentRoomId !== roomId) {
             store.dispatch(roomActions.updateNumberOfUnreadMessages(roomId))
         }
     })
 
     socket.on('close-room-to-other-agents', roomId => {
+        console.log('Server send close room to other agents')
         store.dispatch(chatActions.setStatusOfRoomSucceed(roomId, 3))
     })
 

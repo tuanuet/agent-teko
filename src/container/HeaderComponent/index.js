@@ -6,7 +6,6 @@ class HeaderContainer extends React.Component {
     render() {
         return (
             <header>
-                <i className="fa fa-chevron-left" aria-hidden="true"></i>
             </header>
         );
     }

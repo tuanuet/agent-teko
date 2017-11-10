@@ -14,8 +14,6 @@ class MiddleContainer extends React.Component {
         this.state = {theme: color ? color : 'blue'};
     }
 
-
-
     changeTheme(e) {
         const localStorage = window.localStorage;
         const color = e.target.className;
@@ -25,11 +23,10 @@ class MiddleContainer extends React.Component {
 
     render() {
 
-        const {currentRoomId} = this.props;
+        const { currentRoomId } = this.props;
         if (!currentRoomId) {
-            return <div>WELCOME</div>;
+            return false
         } else {
-            $('#test').tooltip();
             return (
 
               <div className="middle">
@@ -50,7 +47,7 @@ class MiddleContainer extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        currentRoomId: state.currentRoomId,
+        currentRoomId: state.currentRoomId
     };
 }
 

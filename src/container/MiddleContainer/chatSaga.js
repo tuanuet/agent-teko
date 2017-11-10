@@ -76,29 +76,29 @@ function* setStatusOfRoomSaga() {
 }
 
 //================ SET TAG OF ROOM ==============
-function* saveTagOfRoom(action) {
+function* saveTagOfCustomer(action) {
     try {
-        const data = yield call(chatApi.saveTagOfRoom,action.roomId,action.tagId);
+        const data = yield call(chatApi.saveTagOfCustomer,action.customerId, action.tagId)
         if (data.result) {
-            yield put(chatActions.saveTagOfRoomSucceed(action.roomId, action.tagId));
+            yield put(chatActions.saveTagOfCustomerSucceed(action.customerId, action.tagId))
         } else {
             throw new Error()
         }
 
-    }catch (err){
+    }catch (err) {
         console.log("err when save tag of room",err.message)
     }
 }
-function* saveTagOfRoomSaga() {
-    yield takeEvery(types.SAVE_TAG_OF_ROOM_REQUESTED, saveTagOfRoom)
+function* saveTagOfCustomerSaga() {
+    yield takeEvery(types.SAVE_TAG_OF_CUSTOMER_REQUESTED, saveTagOfCustomer)
 }
 
 //================ DELETE TAG OF ROOM ==============
-function* deleteTagOfRoom(action) {
+function* deleteTagOfCustomer(action) {
     try {
-        const data = yield call(chatApi.deleteTagOfRoom,action.roomId,action.tagId);
+        const data = yield call(chatApi.deleteTagOfCustomer,action.roomId,action.tagId);
         if(data.result) {
-            yield put(chatActions.deleteTagOfRoomSucceed(action.roomId,action.tagId));
+            yield put(chatActions.deleteTagOfCustomerSucceed(action.roomId,action.tagId));
         } else {
             console.log('wolaaa');
             throw new Error(data.error)
@@ -108,8 +108,8 @@ function* deleteTagOfRoom(action) {
         console.log("err when delete tag of room",err)
     }
 }
-function* deleteTagOfRoomSaga() {
-    yield takeEvery(types.DELETE_TAG_OF_ROOM_REQUESTED,deleteTagOfRoom)
+function* deleteTagOfCustomerSaga() {
+    yield takeEvery(types.DELETE_TAG_OF_CUSTOMER_REQUESTED,deleteTagOfCustomer)
 }
 
 
@@ -118,6 +118,6 @@ export {
     fetchAgentsSaga,
     saveAgentsSaga,
     setStatusOfRoomSaga,
-    saveTagOfRoomSaga,
-    deleteTagOfRoomSaga
+    saveTagOfCustomerSaga,
+    deleteTagOfCustomerSaga
 };

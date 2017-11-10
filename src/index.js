@@ -8,7 +8,7 @@ import {roomsFetchRequested, listOfTagsFetchRequested} from './container/LeftCon
 require('babel-core/register');
 require('babel-polyfill');
 
-startConnection(store);
+startConnection();
 store.dispatch(roomsFetchRequested());
 store.dispatch(listOfTagsFetchRequested());
 /**

@@ -9,8 +9,8 @@ export default {
 const exampleState = {
     rooms: [{
         roomId: 1,
-        roomStatus: 'default',
-        roomType: 2,
+        roomStatus: 2,
+        roomType: 'default',
         roomInfo: {
             latestMessage: {
 

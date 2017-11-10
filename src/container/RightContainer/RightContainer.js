@@ -20,7 +20,6 @@ class RightContainer extends React.Component {
 
     //update when input a note
     updateNoteState(event) {
-        console.log("on change");
         const note = event.target.value;
         this.setState({
             newNote: note
@@ -28,8 +27,8 @@ class RightContainer extends React.Component {
     }
 
     //handle on key up take note
-    handleOnKeyUpTakeNote(event){
-        if (event.keyCode === 13) {
+    handleOnKeyUpTakeNote(event) {
+        if (event.keyCode === 13 && !event.shiftKey) {
             this.saveNote(this.state.newNote.trim());
         } else {
             this.setState({
@@ -48,15 +47,15 @@ class RightContainer extends React.Component {
         if (content === "") return;
         let note = {
             content: content,
-            roomId: this.props.currentRoomId
+            customerId: this.props.customer.id
         };
-        console.log('new note', note);
+
         this.props.actions.saveNote(note)
             .then(() => this.setState({
                 newNote: ""
             }))
             .catch(error => {
-                console.log("error while saving note", error);
+                console.log("Error while saving note", error);
             });
     }
 
@@ -67,9 +66,7 @@ class RightContainer extends React.Component {
         const {notes} = this.props;
         const {currentRoomId} = this.props;
         if (!currentRoomId) {
-            return (
-                <div>WELCOME</div>
-            );
+            return false
         }
         return (
             <RightComponent

@@ -139,9 +139,9 @@ header {
         .tag {
           border: none;
           border-radius: 20px;
-          background-color: $light-grey;
+          background-color: $primary;
           padding: 2px 16px;
-          color: #555;
+          color: white;
           margin-right: 5px;
           &:hover{
             cursor: pointer;
@@ -152,10 +152,10 @@ header {
             color: white;
           }
 
-          &:first-child {
-            background-color: $primary;
-            color: white;
-          }
+        //   &:first-child {
+        //     background-color: $primary;
+        //     color: white;
+        //   }
 
           @include button-effect-white(#555);
         }

@@ -14,6 +14,8 @@ class BottomBarContainer extends React.Component {
     sendRequestJoinRoom() {
         const { currentRoom } = this.props;
         this.props.adminSendRequestJoinRoom(currentRoom);
+        const $ = window.jQuery = window.$
+        $('.nav-tabs a[href="#chat"]').tab('show')
     }
 
     sendReopenRoom = async roomId => {

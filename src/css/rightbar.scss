@@ -67,7 +67,7 @@
       color: black;
       justify-content: space-around;
       .ps-type-ellipsis {
-        //white-space: nowrap;
+        white-space: pre-line;
         overflow: hidden;
         text-overflow: ellipsis;
       }

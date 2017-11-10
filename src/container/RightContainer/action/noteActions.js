@@ -18,18 +18,17 @@ export function updateNoteSucceed(note) {
 }
 
 export function createNoteSucceed(note) {
-    console.log(note);
-    return {type: types.CREATE_NOTE_SUCCEED, note, roomId: note.roomId}
+    return {type: types.CREATE_NOTE_SUCCEED, note, customerId: note.customerId}
 }
 
 export function saveNote(note) {
     return dispatch => {
         return noteApi.saveNote(note)
             .then(response => {
-                let savedNote = response.data.savedNote;
-                console.log("saved note", savedNote);
-                note.id ? dispatch(updateNoteSucceed(savedNote)):
-                    dispatch(createNoteSucceed(savedNote));
+                const newNote = response.data.note;
+
+                note.id ? dispatch(updateNoteSucceed(newNote)):
+                    dispatch(createNoteSucceed(newNote));
             }).catch(e => {
                 console.log(e);
                 throw(e);

@@ -62,19 +62,18 @@ export function broadcastCloseRoomToOtherAgents(roomId) {
     return {type: types.BROADCAST_CLOSE_ROOM_TO_OTHER_AGENT, roomId}
 }
 
-export function saveTagOfRoomRequested(roomId, tagId) {
-    return {type: types.SAVE_TAG_OF_ROOM_REQUESTED, roomId, tagId};
+export function saveTagOfCustomerRequested(customerId, tagId) {
+    return {type: types.SAVE_TAG_OF_CUSTOMER_REQUESTED, customerId, tagId};
 }
 
-export function saveTagOfRoomSucceed(roomId, tagId) {
-    return {type: types.SAVE_TAG_OF_ROOM_SUCCEED, roomId, tagId};
+export function saveTagOfCustomerSucceed(roomId, tagId) {
+    return {type: types.SAVE_TAG_OF_CUSTOMER_SUCCEED, roomId, tagId};
 }
 
-export function deleteTagOfRoomRequested(roomId, tagId) {
-    return {type: types.DELETE_TAG_OF_ROOM_REQUESTED, roomId, tagId};
+export function deleteTagOfCustomerRequested(roomId, tagId) {
+    return {type: types.DELETE_TAG_OF_CUSTOMER_REQUESTED, roomId, tagId};
 }
 
-export function deleteTagOfRoomSucceed(roomId, tagId) {
-    console.log("delete tag succeed", roomId, tagId);
-    return {type: types.DELETE_TAG_OF_ROOM_SUCCEED, roomId, tagId};
+export function deleteTagOfCustomerSucceed(roomId, tagId) {
+    return {type: types.DELETE_TAG_OF_CUSTOMER_SUCCEED, roomId, tagId};
 }

@@ -48,13 +48,13 @@ class ChatApi {
             .then(res => res.data);
     }
 
-    static saveTagOfRoom(roomId, tagId) {
-        return axios.post(apiTypes.SAVE_TAG_OF_ROOM, {roomId, tagId})
+    static saveTagOfCustomer(customerId, tagId) {
+        return axios.post(apiTypes.SAVE_TAG_OF_CUSTOMER, {customerId, tagId})
             .then(res => res.data);
     }
 
-    static deleteTagOfRoom(roomId, tagId) {
-        return axios.post(apiTypes.DELETE_TAG_OF_ROOM, {roomId, tagId})
+    static deleteTagOfCustomer(customerId, tagId) {
+        return axios.post(apiTypes.DELETE_TAG_OF_CUSTOMER, {customerId, tagId})
             .then(res => res.data);
     }
 

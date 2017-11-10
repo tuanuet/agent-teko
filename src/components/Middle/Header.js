@@ -1,24 +1,24 @@
-import {connect} from 'react-redux';
-import React, {PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import * as chatActions from '../../container/MiddleContainer/chatActions';
-import SelectAgent from "../Modal/SelectAgent";
-import SelectTheme from "../Modal/SelectTheme";
-import _ from 'lodash';
+import {connect} from 'react-redux'
+import React, {PropTypes} from 'react'
+import {bindActionCreators} from 'redux'
+import * as chatActions from '../../container/MiddleContainer/chatActions'
+import SelectAgent from "../Modal/SelectAgent"
+import SelectTheme from "../Modal/SelectTheme"
+import _ from 'lodash'
 
 
 class Header extends React.Component {
     constructor(props, context) {
-        super(props, context);
+        super(props, context)
 
-        this.showListAgent = this.showListAgent.bind(this);
-        this.showTheme = this.showTheme.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.onSaveSelectListAgent = this.onSaveSelectListAgent.bind(this);
-        this.onSetTagStateOfRoom = this.onSetTagStateOfRoom.bind(this);
-        this.unFollowRoom = this.unFollowRoom.bind(this);
-        this.onSaveTag = this.onSaveTag.bind(this);
-        this.onDeleteTag = this.onDeleteTag.bind(this);
+        this.showListAgent = this.showListAgent.bind(this)
+        this.showTheme = this.showTheme.bind(this)
+        this.closeModal = this.closeModal.bind(this)
+        this.onSaveSelectListAgent = this.onSaveSelectListAgent.bind(this)
+        this.onSetTagStateOfRoom = this.onSetTagStateOfRoom.bind(this)
+        this.unFollowRoom = this.unFollowRoom.bind(this)
+        this.onSaveTag = this.onSaveTag.bind(this)
+        this.onDeleteTag = this.onDeleteTag.bind(this)
 
         this.state = {
             showModals: {
@@ -26,8 +26,8 @@ class Header extends React.Component {
                 selectListAgent: false
             },
             selectedTag: null
-        };
-        this.sendRequestUserRating = this.sendRequestUserRating.bind(this);
+        }
+        this.sendRequestUserRating = this.sendRequestUserRating.bind(this)
 
     }
 
@@ -41,7 +41,7 @@ class Header extends React.Component {
     }
 
     showListAgent() {
-        this.props.actions.agentsFetchRequested();
+        this.props.actions.agentsFetchRequested()
         this.setState({
             showModals: {
                 selectTheme: false,
@@ -51,7 +51,7 @@ class Header extends React.Component {
     }
 
     sendRequestUserRating() {
-        this.props.actions.sendRequestUserRating(this.props.currentRoomId);
+        this.props.actions.sendRequestUserRating(this.props.currentRoomId)
     }
 
     componentDidMount() {
@@ -63,8 +63,8 @@ class Header extends React.Component {
                             selectTheme: false,
                             selectListAgent: false
                         }
-                });
-                this.closeModal();
+                })
+                this.closeModal()
             }
         })
     }
@@ -82,8 +82,8 @@ class Header extends React.Component {
 
 
     onSaveSelectListAgent(agents) {
-        let room = this.props.currentRoom;
-        this.props.actions.saveSelectAgent(room, agents, this.closeModal);
+        let room = this.props.currentRoom
+        this.props.actions.saveSelectAgent(room, agents, this.closeModal)
     }
 
 
@@ -94,49 +94,49 @@ class Header extends React.Component {
     }
 
     unFollowRoom(){
-        let status = 3;
+        let status = 3
         if (confirm("Xác nhận đóng phòng chat này lại?")) {
-            this.props.actions.unFollowRoom(this.props.currentRoomId, status);
+            this.props.actions.unFollowRoom(this.props.currentRoomId, status)
         }
-    };
+    }
 
-    onSaveTag(tagId){
-        const {currentRoomId} = this.props;
-        this.props.actions.saveTagOfRoomRequested(currentRoomId, tagId);
+    onSaveTag(tagId) {
+        const { currentRoom } = this.props
+        this.props.actions.saveTagOfCustomerRequested(currentRoom.customer.id, tagId)
     }
 
     onDeleteTag(tagId) {
-        const {currentRoomId} = this.props;
+        const { currentRoom } = this.props
         if (confirm("Bỏ tag này ?")) {
-            this.props.actions.deleteTagOfRoomRequested(currentRoomId, tagId);
+            this.props.actions.deleteTagOfCustomerRequested(currentRoom.customer.id, tagId)
         }
     }
 
     render() {
-        const {listOfTags, tagsOfRoom} = this.props;
+        const {listOfTags, tagsOfRoom} = this.props
         //index by tag id
-        let lookup = _.keyBy(tagsOfRoom, tag => tag.id);
+        let lookup = _.keyBy(tagsOfRoom, tag => tag.id)
         //find all available tags
         let availableTags = _.filter(listOfTags, item => {
-            return lookup[item.id] === undefined;
-        });
+            return lookup[item.id] === undefined
+        })
         let tagsOfRoomWithTitle = _.filter(listOfTags, item => {
-            return lookup[item.id] !== undefined;
-        });
+            return lookup[item.id] !== undefined
+        })
 
-        let modal = null;
+        let modal = null
         if (this.state.showModals.selectListAgent) {
-            modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal}/>;
+            modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal}/>
         }
         if (this.state.showModals.selectTheme) {
-            modal = <SelectTheme {...this.props} />;
+            modal = <SelectTheme {...this.props} />
         }
         return (
             <div className="header">
                 <div className="title">
                     <div className="group-button">
                         <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
-                                data-target="#exampleModal"><i
+                        data-target="#exampleModal"><i
                             className="fa fa-wrench" onClick={this.showTheme}/></button>
                         <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
                             <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button>
@@ -155,7 +155,7 @@ class Header extends React.Component {
                             Thêm tag
                         </button>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {availableTags.map(tag => <a key={tag.id} className="dropdown-item" href="#" onClick={this.onSaveTag.bind(this, tag.id)}>{tag.title}</a>)}
+                            {availableTags.map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag.id)}>{tag.title}</a>)}
                         </div>
                     </div>
                     <div className="list-tag">
@@ -166,16 +166,16 @@ class Header extends React.Component {
 
 
             </div>
-        );
+        )
     }
-};
+}
 
 Header.propTypes = {
     changeTheme: PropTypes.func.isRequired,
-};
+}
 
 function mapStateToProps(state) {
-    let currentRoom = state.rooms.find(room => room.roomId === state.currentRoomId);
+    let currentRoom = state.rooms.find(room => room.roomId === state.currentRoomId)
 
     return {
         currentRoomId: state.currentRoomId,
@@ -184,7 +184,7 @@ function mapStateToProps(state) {
         listOfTags: state.tags,
         agents: state.agents,
         otherAgents: currentRoom.agents,
-    };
+    }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -193,4 +193,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

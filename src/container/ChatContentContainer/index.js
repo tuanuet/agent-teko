@@ -14,13 +14,13 @@ class ChatContentContainer extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    let availableRoomId = state.currentRoomId;
-    let availableRoom = state.rooms.filter(room => room.id === availableRoomId)[0];
-    if(!availableRoom) return {messages : []};
-    let messages = availableRoom.messages;
+    const { currentRoomId } = state;
+    let currentRoom = state.rooms.find(room => room.roomId === currentRoomId);
+    if (!currentRoom) return {messages : []};
+    const messages = currentRoom.messages;
     return {
-        currentRoomId: state.currentRoomId,
-        nextFetchingRoom: availableRoom.nextFetchingRoom || state.currentRoomId,
+        currentRoomId,
+        nextFetchingRoom: currentRoom.nextFetchingRoom || state.currentRoomId,
         messages
     };
 }
