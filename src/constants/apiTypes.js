@@ -7,9 +7,9 @@ export const NOTES_FETCH_REQUESTED = `${API_URL}/api/fetch-notes`
 export const SAVE_TAG_OF_CUSTOMER = `${API_URL}/api/create-tag-of-customer`
 export const SAVE_NOTE_REQUESTED = `${API_URL}/api/create-note-of-customer`
 export const DELETE_TAG_OF_CUSTOMER = `${API_URL}/api/delete-tag-of-customer`
+export const AGENTS_FETCH_REQUESTED = `${API_URL}/api/fetch-other-agents`
 
 
-export const AGENTS_FETCH_REQUESTED = `${API_URL}/api/other-agents-fetch-requested`
 export const ADMIN_JOIN_ROOM_SUCCEED = `${API_URL}/api/admin-join-room-succeed`
 export const SEND_REQUEST_JOIN_ROOM = `${API_URL}/api/request-join-room`
 export const SET_STATUS_OF_ROOM_REQUESTED = `${API_URL}/api/set-status-of-room-requested`

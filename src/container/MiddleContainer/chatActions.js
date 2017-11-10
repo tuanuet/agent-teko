@@ -35,14 +35,14 @@ export function updateSelectListAgent(roomId, agentIds) {
     return {type : types.UPDATE_SELECT_LIST_AGENT,roomId,agentIds}
 }
 
-export function emitSelectListAgent(agentIds,room) {
+export function emitSelectListAgent(agentIds, roomId) {
     return {
-        type : types.EMIT_SELECT_LIST_AGENT,agentIds,room
+        type : types.EMIT_SELECT_LIST_AGENT, agentIds, roomId
     }
 }
 
-export function saveSelectAgent(room,agents,closeModal) {
-    return {type :types.SAVE_LIST_AGENT_JOIN_ROOM,room,agents,closeModal}
+export function saveSelectAgent(roomId, agents, closeModal) {
+    return {type :types.SAVE_LIST_AGENT_JOIN_ROOM, roomId, agents, closeModal}
 }
 
 export function onSaveSelectAgentSucceed() {

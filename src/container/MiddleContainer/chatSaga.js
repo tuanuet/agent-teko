@@ -36,24 +36,14 @@ function* fetchAgentsSaga() {
 //================POST LIST AGENT JOIN ROOM ==============
 function* saveAgents(action) {
     try {
-        console.log('saveAgents:',action);
-        const data = yield call(chatApi.saveSelectListAgent,action.room.id,action.agents);
-        console.log('saveAgentsData:',data);
-        if(data.result) {
-            yield put(chatActions.onSaveSelectAgentSucceed());
-            yield action.closeModal();
-            yield put(chatActions.updateSelectListAgent(action.room.id,action.agents));
-            yield put(chatActions.emitSelectListAgent(action.agents,action.room))
-        } else {
-            throw new Error(data.error)
-        }
-
-    }catch (err){
+        yield put(chatActions.emitSelectListAgent(action.agents, action.roomId))
+        action.closeModal()
+    } catch (err) {
         console.log(err.message)
     }
 }
 function* saveAgentsSaga() {
-    yield takeEvery(types.SAVE_LIST_AGENT_JOIN_ROOM,saveAgents)
+    yield takeEvery(types.SAVE_LIST_AGENT_JOIN_ROOM, saveAgents)
 }
 
 //================ SET STATUS OF ROOM ==============

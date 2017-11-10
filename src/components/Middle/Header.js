@@ -83,7 +83,7 @@ class Header extends React.Component {
 
     onSaveSelectListAgent(agents) {
         let room = this.props.currentRoom
-        this.props.actions.saveSelectAgent(room, agents, this.closeModal)
+        this.props.actions.saveSelectAgent(room.roomId, agents, this.closeModal)
     }
 
 
@@ -183,7 +183,7 @@ function mapStateToProps(state) {
         tagsOfRoom: currentRoom.tags,
         listOfTags: state.tags,
         agents: state.agents,
-        otherAgents: currentRoom.agents,
+        roomAgents: currentRoom.agents,
     }
 }
 

@@ -6,42 +6,39 @@ class ListAgent extends React.Component {
     constructor(props){
         super(props);
         this.toggleCheckbox = this.toggleCheckbox.bind(this);
-    }
-
-    componentWillMount() {
-        this.elderSelectAgents = _(this.props.otherAgents).map(agent => agent.agentId).value();
-        console.log('otherAgentDefault:',this.elderSelectAgents);
-        // this.selectAgents = [...this.elderSelectAgents];
-        this.selectAgents = [];
+        this.selectAgents = []
     }
 
     toggleCheckbox(agentId) {
-        if (_(this.selectAgents).some(agentId)) {
-            _(this.selectAgents).remove(agentId);
+        if (this.selectAgents.includes(agentId)) {
+            const index = this.selectAgents.indexOf(agentId)
+            this.selectAgents.splice(index, 1)
         } else {
             this.selectAgents.push(agentId);
         }
-        this.props.getSelectAgents(this.selectAgents)
+        this.props.setSelectAgents(this.selectAgents)
     }
 
-    getAgent(agents,otherAgents) {
+    getAgent(agents, roomAgents) {
+
         return agents.map((agent,key) => {
-            let exist = _(otherAgents).some(item => agent.id === item.agentId);
-            let Input = exist ?  <input className="form-check-input" checked type="checkbox" label={agent.id} id={`checkbox${agent.id}`} onChange={this.toggleCheckbox.bind(this, agent.id)}/> :
+            const exist = roomAgents.find(ra => ra.id === agent.id)
+            const Input = exist ? <input className="form-check-input" checked disabled type="checkbox" label={agent.id} id={`checkbox${agent.id}`} onChange={this.toggleCheckbox.bind(this, agent.id)} /> :
                 <input className="form-check-input" type="checkbox" label={agent.id} id={`checkbox${agent.id}`} onChange={this.toggleCheckbox.bind(this, agent.id)}/>
             return (
                 <div className="form-check" key={key} >
                     {Input}
                     <label className="form-check-label" htmlFor={`checkbox${agent.id}`}>
-                        {agent.agentName}
+                        {agent.name}
                     </label>
                 </div>
             )
         })
     }
     render() {
-        let {agents,otherAgents} = this.props;
-        let Agents = this.getAgent(agents,otherAgents);
+        const { agents, roomAgents } = this.props;
+
+        const Agents = this.getAgent(agents, roomAgents);
         return (
             <ol className="list-agents">
                 {Agents}

@@ -43,15 +43,12 @@ export function socketMiddleware() {
             socket.emit('reset-number-of-unread-messages', action.room.roomId, ack => {
             })
         } else if (socket && action.type === types.EMIT_SELECT_LIST_AGENT) {
-            let room = action.room
-            //not tranfer message
-            room.messages = []
-            let data = {
+            const data = {
                 agentIds : action.agentIds,
-                room : room
+                roomId: action.roomId
             }
-            socket.emit('agent-select-other-agents',data,ack => {
-                console.log('agent-select-other-agents',ack)
+            socket.emit('agent-select-other-agents', data, ack => {
+                console.log('Agent finish request other agents to join rooms', ack)
             })
         } else if (socket && action.type === types.SEND_REQUEST_USER_RATING) {
             socket.emit('admin-send-action-rating', action.roomId, ack => {
@@ -124,14 +121,15 @@ export default () => {
 
     socket.on('server-send-auto-assigned-room', data => {
         console.log('Server send auto assigned room');
-        let room = getRoomFromServer(data)
+        const room = getRoomFromServer(data)
         store.dispatch(addAvailableRoom(room))
 
     })
 
     socket.on('server-send-message', msg => {
-        let roomId = parseInt(msg.roomId)
-        let message = getMessageFromServer(msg)
+        const { roomId } = msg
+        const message = getMessageFromServer(msg)
+
         store.dispatch(addMessageForRoom(roomId, message))
 
         if (store.getState().currentRoomId !== roomId) {

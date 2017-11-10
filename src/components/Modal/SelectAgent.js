@@ -1,13 +1,15 @@
-import ListAgent from '../ListAgent';
 import React from 'react'
+import ListAgent from '../ListAgent';
+
 export default class SelectAgent extends React.Component {
     constructor(props){
         super(props);
-        this.getSelectAgents = this.getSelectAgents.bind(this);
-        this.state = {agents :[]};
+        this.state = {agents: []};
     }
-    getSelectAgents(agents){
-        this.setState({agents});
+    setSelectAgents = agents => {
+        this.setState({
+            agents
+        });
     }
     render(){
         return (
@@ -16,7 +18,7 @@ export default class SelectAgent extends React.Component {
                     <div className="title">Select your agent</div>
                     <hr/>
                     <div role="form" className="list-theme">
-                        <ListAgent agents={this.props.agents} getSelectAgents={this.getSelectAgents} otherAgents={this.props.otherAgents}/>
+                        <ListAgent agents={this.props.agents} setSelectAgents={this.setSelectAgents} roomAgents={this.props.roomAgents}/>
                     </div>
                     <hr/>
                     <div className="control">

@@ -96,6 +96,7 @@ export default function roomReducer(state=initialState.rooms, action) {
                 if (room.roomId !== action.roomId) return room
                 return {
                     ...room,
+                    roomInfo: {...room.roomInfo, latestMessage: action.message},
                     messages: [...room.messages, action.message]
                 }
             })
