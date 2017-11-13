@@ -35,3 +35,24 @@ export function saveNote(note) {
             });
     };
 }
+
+export function deleteNoteSucceed(noteId) {
+    return {
+        type: types.DELETE_NOTE_SUCCEED,
+        noteId
+    }
+}
+
+export function deleteNote(noteId) {
+    return dispatch => {
+        return noteApi.deleteNote(noteId).then(res => res.data).then(res => {
+            if (res.result) {
+                dispatch(deleteNoteSucceed(noteId))
+            } else {
+                alert(`Có lỗi xảy ra khi xóa Note. Vui lòng thử lại sau`)
+            }
+        }).catch(e => {
+            console.log(e)
+        })
+    }
+}

@@ -59,7 +59,9 @@ class RightContainer extends React.Component {
             });
     }
 
-
+    deleteNote = noteId => {
+        this.props.actions.deleteNote(noteId)
+    }
 
     render() {
         const {customer} = this.props;
@@ -73,6 +75,7 @@ class RightContainer extends React.Component {
                 customer={customer}
                 notes={notes}
                 newNote={this.state.newNote}
+                deleteNote={this.deleteNote}
                 updateNoteState={this.updateNoteState}
                 onClickSaveNote={this.onClickSaveNote}
                 handleOnKeyUpTakeNote={this.handleOnKeyUpTakeNote}

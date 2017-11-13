@@ -148,7 +148,13 @@ export default function roomReducer(state=initialState.rooms, action) {
                 }
             })
 
-            // default case, return current state
+        case types.DELETE_NOTE_SUCCEED:
+            return state.map(room => {
+                return {
+                    ...room,
+                    notes: room.notes.filter(note => note.id !== action.noteId)
+                }
+            })
         default:
             return state
         }
