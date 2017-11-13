@@ -68,12 +68,10 @@ export default function roomReducer(state=initialState.rooms, action) {
                     notes: [...room.notes, action.note]
                 }
             })
-            //add more room available
+
         case types.ADD_ROOM_AVAILABLE:
-            console.log('IN_REDUCER:',action)
             return [action.room,...state]
 
-            //admin join room succeed
         case types.JOIN_ROOM_SUCCEED:
             return state.map(room => {
                 if (room.roomId !== action.room.roomId) {
@@ -87,7 +85,6 @@ export default function roomReducer(state=initialState.rooms, action) {
                 }
             })
 
-            //add more room enable
         case types.ADD_ROOM_ENABLE:
             return [action.room,...state]
 

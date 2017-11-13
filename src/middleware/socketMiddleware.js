@@ -120,7 +120,7 @@ export default () => {
     })
 
     socket.on('server-send-auto-assigned-room', data => {
-        console.log('Server send auto assigned room');
+        console.log('Server send auto assigned room', data);
         const room = getRoomFromServer(data)
         store.dispatch(addAvailableRoom(room))
 
