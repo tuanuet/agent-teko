@@ -59,4 +59,5 @@ uploads/
 /static/bundle.js
 /static/report.html
 /static/main-bundle.js
+/static/main-bundle.js.map
 /static/node-static.js
