@@ -41,6 +41,8 @@ export function socketMiddleware() {
             })
         } else if (socket && action.type === types.RESET_NUM_OF_UNREAD_MESSAGE) {
             socket.emit('reset-number-of-unread-messages', action.room.roomId, ack => {
+                if (!ack) return false
+                store.dispatch({type: types.RESET_NUM_OF_UNREAD_MESSAGE_SUCCEED, roomId: action.room.roomId})
             })
         } else if (socket && action.type === types.EMIT_SELECT_LIST_AGENT) {
             const data = {
@@ -57,6 +59,16 @@ export function socketMiddleware() {
         } else if (socket && action.type === types.BROADCAST_CLOSE_ROOM_TO_OTHER_AGENT) {
             socket.emit('admin-close-room', action.roomId, ack => {
 
+            })
+        } else if (socket && action.type === types.REOPEN_ROOM) {
+            console.log('Come to here');
+            console.log(action);
+            socket.emit('admin-reopen-room', action.roomId, (ack, dataEmit) => {
+                if (!ack) {
+                    alert(`Có lỗi xảy ra khi mở lại hội thoại. Vui lòng thử lại sau.`)
+                } else {
+                    store.dispatch({type: types.REOPEN_ROOM_SUCCEED, room: dataEmit})
+                }
             })
         }
         return result

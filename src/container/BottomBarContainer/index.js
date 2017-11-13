@@ -22,7 +22,8 @@ class BottomBarContainer extends React.Component {
         const { actions } = this.props
 
         await actions.sendReopenRoom(roomId)
-        location.reload()
+        const $ = window.jQuery = window.$
+        $('.nav-tabs a[href="#chat"]').tab('show')
     }
 
     render() {

@@ -14,7 +14,7 @@ const EnableRoom = ({enableRoom, adminChooseRoom}) => {
                     <div className="title">
                         <div className="name">{enableRoom.customer.name}</div>
                         <div className="timer">
-                            <span>{enableRoom.createdAt}</span>
+                            <span>{enableRoom.roomInfo && enableRoom.roomInfo.latestMessage.createdAt}</span>
                         </div>
                     </div>
                     <div className="d-flex justify-content-between">

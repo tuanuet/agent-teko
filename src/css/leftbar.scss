@@ -76,6 +76,8 @@
       border-radius: 5px;
       display: flex;
       transition: opacity .2s ease-in-out 50ms;
+      cursor: pointer;
+
       &:hover {
         background-color: #bababa;
       }

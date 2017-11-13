@@ -24,35 +24,17 @@ export default function roomReducer(state=initialState.rooms, action) {
             })
         case types.FETCH_MORE_MESSAGES_SUCCEED:
             return state.map(room => {
-                if (room.id === action.currentRoomId) return {
+                if (room.roomId === action.currentRoomId) return {
                     ...room,
                     messages: [...action.messages, ...room.messages],
                     nextFetchingRoom: action.nextFetchingRoom
                 }
                 return room
             })
-            //fetch history chat of customer
-        case types.HISTORY_CHAT_FETCH_SUCCEED:
-            return state.map(room => {
-                if (room.id !== action.roomId) {
-                        // This isn't the item we care about - keep it as-is
-                    return room
-                }
 
-                return {
-                    ...room,
-                    customers: action.customers
-                }
-            })
-
-            //fetch history chat of customer
         case types.NOTES_FETCH_SUCCEED:
             return state.map(room => {
-                if (room.id !== action.roomId) {
-                        // This isn't the item we care about - keep it as-is
-                    return room
-                }
-
+                if (room.roomId !== action.roomId) return room
                 return {
                     ...room,
                     notes: action.notes
@@ -71,7 +53,8 @@ export default function roomReducer(state=initialState.rooms, action) {
 
         case types.ADD_ROOM_AVAILABLE:
             return [action.room,...state]
-
+        case types.REOPEN_ROOM_SUCCEED:
+            return [ action.room, ...state ]
         case types.JOIN_ROOM_SUCCEED:
             return state.map(room => {
                 if (room.roomId !== action.room.roomId) {
@@ -99,30 +82,24 @@ export default function roomReducer(state=initialState.rooms, action) {
             })
         }
 
-        //reset number of unread messages to 0
         case types.RESET_NUM_OF_UNREAD_MESSAGE:
             return state.map(room => {
-                if (room.id !== action.room.id) {
-                    // This isn't the item we care about - keep it as-is
-                    return room
+                if (room.roomId !== action.room.roomId) return room
+                return {
+                    ...room,
+                    roomInfo: {...room.roomInfo, numOfUnReadMessages: 0}
                 }
-
-                return Object.assign(room, {numOfUnReadMessages: 0})
             })
 
-        //update number of unread messages
         case types.UPDATE_NUM_OF_UNREAD_MESSAGE:
             return state.map(room => {
-                if (room.id !== action.roomId) {
-                    // This isn't the item we care about - keep it as-is
-                    return room
+                if (room.roomId !== action.roomId) return room
+                return {
+                    ...room,
+                    roomInfo: {...room.roomInfo, numOfUnReadMessages: room.roomInfo.numOfUnReadMessages + 1},
                 }
-
-                return Object.assign(room, {numOfUnReadMessages: room.numOfUnReadMessages + 1})
-
-
             })
-        //update room when select agents
+
         case types.UPDATE_SELECT_LIST_AGENT:
 
             console.log('RoomReducer:',action)
@@ -134,32 +111,27 @@ export default function roomReducer(state=initialState.rooms, action) {
                 return {...room,...{otherAgents : [...agentIds,...room.otherAgents]}}
             }).value()
 
-        //update closed rooms
         case types.LOAD_CLOSED_ROOM_SUCCEED:
             let newArray = [...action.closedRooms]
-            console.log(state)
             state.forEach(room => {
                 const searchRoom = newArray.find(tmp => tmp.id === room.id)
                 if (!searchRoom) newArray = [...newArray, room]
             })
             return newArray
-        //set tag of room succeed
+
         case types.SET_STATUS_OF_ROOM_SUCCEED:
             return state.map(room => {
-                if (room.id !== action.roomId) {
-                    // This isn't the item we care about - keep it as-is
-                    return room
-                }
+                if (room.roomId !== action.roomId) return room
 
                 return {
                     ...room,
-                    status: parseInt(action.status)
+                    roomStatus: action.status
                 }
             })
 
         case types.SAVE_TAG_OF_CUSTOMER_SUCCEED:
             return state.map(room => {
-                if (room.roomId !== action.roomId) return room
+                if (room.customer.id !== action.customerId) return room
 
                 return {
                     ...room,
@@ -169,10 +141,10 @@ export default function roomReducer(state=initialState.rooms, action) {
 
         case types.DELETE_TAG_OF_CUSTOMER_SUCCEED:
             return state.map(room => {
-                if (room.id !== action.roomId) return room
+                if (room.customer.id !== action.customerId) return room
                 return {
                     ...room,
-                    tags: room.tags.filter(tag => parseInt(tag.id) !== action.tagId)
+                    tags: room.tags.filter(tag => tag.id !== action.tagId)
                 }
             })
 

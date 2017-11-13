@@ -14,7 +14,6 @@ import {
 import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
 import {
     adminSendRequestJoinRoomToSocketSucceed,
-    adminReopenRoom
 } from "./container/BottomBarContainer/joinRoomSaga"
 import {fetchMetaLinkSaga,uploadImageSaga} from "./container/BottomBarContainer/bottomBarSagas"
 import {fetchMoreMessages} from './container/ChatContentContainer/saga'
@@ -28,7 +27,6 @@ export default function* rootSaga() {
     yield fork(fetchMessagesSaga);
     yield fork(fetchNotesSaga);
     yield fork(adminSendRequestJoinRoomToSocketSucceed);
-    yield fork(adminReopenRoom);
     yield fork(fetchListOfTagsSaga);
     yield fork(setStatusOfRoomSaga);
     yield fork(fetchClosedRoomSaga);

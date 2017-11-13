@@ -1,37 +1,37 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
-import chatApi from '../../api/chatApi';
-import * as types from '../../constants/actionTypes';
-import * as chatActions from './chatActions';
-import * as customerActions from '../RightContainer/action/customerActions';
-import * as noteActions from '../RightContainer/action/noteActions';
+import {call, put, takeEvery} from 'redux-saga/effects'
+import chatApi from '../../api/chatApi'
+import * as types from '../../constants/actionTypes'
+import * as chatActions from './chatActions'
+import * as customerActions from '../RightContainer/action/customerActions'
+import * as noteActions from '../RightContainer/action/noteActions'
 
 function* fetchMessages(action) {
     try {
-        const messages = yield call(chatApi.messagesFetchRequested, action.room.roomId);
-        yield put(chatActions.messagesFetchSucceed(action.room.roomId, messages));
-        yield put(noteActions.notesFetchRequested(action.room.roomId));
+        const messages = yield call(chatApi.messagesFetchRequested, action.room.roomId)
+        yield put(chatActions.messagesFetchSucceed(action.room.roomId, messages))
+        yield put(noteActions.notesFetchRequested(action.room.roomId))
     } catch (e) {
-        yield put({type: types.MESSAGES_FETCH_FAILED, message: e.message});
+        yield put({type: types.MESSAGES_FETCH_FAILED, message: e.message})
     }
 }
 
 function* fetchMessagesSaga() {
-    yield takeEvery(types.MESSAGES_FETCH_REQUESTED, fetchMessages);
+    yield takeEvery(types.MESSAGES_FETCH_REQUESTED, fetchMessages)
 }
 
 //=================FETCH AGENTS=====================
 
 function* fetchAgents(action) {
     try {
-        const agents = yield call(chatApi.agentsFetchRequested);
-        yield put(chatActions.agentsFetchSucceed(agents));
+        const agents = yield call(chatApi.agentsFetchRequested)
+        yield put(chatActions.agentsFetchSucceed(agents))
     } catch (e) {
-        yield put({type: types.AGENTS_FETCH_FAILED, message: e.message});
+        yield put({type: types.AGENTS_FETCH_FAILED, message: e.message})
     }
 }
 
 function* fetchAgentsSaga() {
-    yield takeEvery(types.AGENTS_FETCH_REQUESTED, fetchAgents);
+    yield takeEvery(types.AGENTS_FETCH_REQUESTED, fetchAgents)
 }
 //================POST LIST AGENT JOIN ROOM ==============
 function* saveAgents(action) {
@@ -49,26 +49,26 @@ function* saveAgentsSaga() {
 //================ SET STATUS OF ROOM ==============
 function* setStatusOfRoom(action) {
     try {
-        const data = yield call(chatApi.setStatusOfRoom,action.roomId,action.status);
-        if(data.result) {
-            yield put(chatActions.setStatusOfRoomSucceed(action.roomId,action.status));
-            yield put(chatActions.broadcastCloseRoomToOtherAgents(action.roomId));
+        const data = yield call(chatApi.setStatusOfRoom, action.roomId, action.status)
+        if (data.result) {
+            yield put(chatActions.setStatusOfRoomSucceed(action.roomId, action.status))
+            yield put(chatActions.broadcastCloseRoomToOtherAgents(action.roomId))
         } else {
             throw new Error(data.error)
         }
 
-    }catch (err){
-        console.log("err when un follow room",err.message)
+    } catch (err) {
+        console.log("Err when unfollow room", err.message)
     }
 }
 function* setStatusOfRoomSaga() {
-    yield takeEvery(types.SET_STATUS_OF_ROOM_REQUESTED,setStatusOfRoom)
+    yield takeEvery(types.SET_STATUS_OF_ROOM_REQUESTED, setStatusOfRoom)
 }
 
 //================ SET TAG OF ROOM ==============
 function* saveTagOfCustomer(action) {
     try {
-        const data = yield call(chatApi.saveTagOfCustomer,action.customerId, action.tagId)
+        const data = yield call(chatApi.saveTagOfCustomer, action.customerId, action.tagId)
         if (data.result) {
             yield put(chatActions.saveTagOfCustomerSucceed(action.customerId, action.tagId))
         } else {
@@ -86,11 +86,11 @@ function* saveTagOfCustomerSaga() {
 //================ DELETE TAG OF ROOM ==============
 function* deleteTagOfCustomer(action) {
     try {
-        const data = yield call(chatApi.deleteTagOfCustomer,action.roomId,action.tagId);
-        if(data.result) {
-            yield put(chatActions.deleteTagOfCustomerSucceed(action.roomId,action.tagId));
+        const data = yield call(chatApi.deleteTagOfCustomer, action.customerId, action.tagId)
+        if (data.result) {
+            yield put(chatActions.deleteTagOfCustomerSucceed(action.customerId, action.tagId))
         } else {
-            console.log('wolaaa');
+            console.log('wolaaa')
             throw new Error(data.error)
         }
 
@@ -99,7 +99,7 @@ function* deleteTagOfCustomer(action) {
     }
 }
 function* deleteTagOfCustomerSaga() {
-    yield takeEvery(types.DELETE_TAG_OF_CUSTOMER_REQUESTED,deleteTagOfCustomer)
+    yield takeEvery(types.DELETE_TAG_OF_CUSTOMER_REQUESTED, deleteTagOfCustomer)
 }
 
 
@@ -110,4 +110,4 @@ export {
     setStatusOfRoomSaga,
     saveTagOfCustomerSaga,
     deleteTagOfCustomerSaga
-};
+}

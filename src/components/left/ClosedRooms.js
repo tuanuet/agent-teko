@@ -14,16 +14,13 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
                 className="avatar" alt="image"/>
             </div>
             <div className="customer-info">
-                <div className="title" >
-                    <div className="name" >{closedRoom.customer.name}</div>
-                    <div className="timer" >
-                        <span>{closedRoom.createdAt}</span>
+                <div className="title">
+                    <div className="name">{closedRoom.customer.name}</div>
+                    <div className="timer">
+                        <span>{closedRoom.closedAt}</span>
                     </div>
                 </div>
                 <div className="d-flex justify-content-between">
-                    <div className="last-massage">
-                        {closedRoom.roomInfo && closedRoom.roomInfo.latestMessage.contents}
-                    </div>
                     <i className="fa fa-paperclip" aria-hidden="true"></i>
                 </div>
             </div>

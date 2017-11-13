@@ -138,8 +138,8 @@ class Header extends React.Component {
                         <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
                         data-target="#exampleModal"><i
                             className="fa fa-wrench" onClick={this.showTheme}/></button>
-                        <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
-                            <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button>
+                        {/* <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
+                        <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button> */}
                         <button className="" data-toggle="tooltip" data-placement="top" title="Add agent to room"><i
                             className="fa fa-plus" onClick={this.showListAgent}/></button>
                         <button className="red" data-toggle="tooltip" data-placement="top" title="Close room"><i

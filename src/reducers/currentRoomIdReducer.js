@@ -7,7 +7,8 @@ export default function currentRoomIdReducer(state=initialState.currentRoomId, a
         //TODO: case of choosing a room
         case types.ADMIN_CHOOSE_ROOM:
             return action.roomId;
-
+        case types.REOPEN_ROOM_SUCCEED:
+            return action.room.roomId;
         //TODO: default case, return current state
         default:
             return state;

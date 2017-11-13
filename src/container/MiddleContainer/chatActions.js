@@ -50,7 +50,6 @@ export function onSaveSelectAgentSucceed() {
 }
 
 export function unFollowRoom(roomId, status) {
-    console.log("dsadasdas", status, roomId);
     return {type: types.SET_STATUS_OF_ROOM_REQUESTED, roomId, status}
 }
 
@@ -66,14 +65,14 @@ export function saveTagOfCustomerRequested(customerId, tagId) {
     return {type: types.SAVE_TAG_OF_CUSTOMER_REQUESTED, customerId, tagId};
 }
 
-export function saveTagOfCustomerSucceed(roomId, tagId) {
-    return {type: types.SAVE_TAG_OF_CUSTOMER_SUCCEED, roomId, tagId};
+export function saveTagOfCustomerSucceed(customerId, tagId) {
+    return {type: types.SAVE_TAG_OF_CUSTOMER_SUCCEED, customerId, tagId};
 }
 
-export function deleteTagOfCustomerRequested(roomId, tagId) {
-    return {type: types.DELETE_TAG_OF_CUSTOMER_REQUESTED, roomId, tagId};
+export function deleteTagOfCustomerRequested(customerId, tagId) {
+    return {type: types.DELETE_TAG_OF_CUSTOMER_REQUESTED, customerId, tagId};
 }
 
-export function deleteTagOfCustomerSucceed(roomId, tagId) {
-    return {type: types.DELETE_TAG_OF_CUSTOMER_SUCCEED, roomId, tagId};
+export function deleteTagOfCustomerSucceed(customerId, tagId) {
+    return {type: types.DELETE_TAG_OF_CUSTOMER_SUCCEED, customerId, tagId};
 }

@@ -17,26 +17,6 @@ function* handleAdminSendRequestJoinRoomToSocketSucceed(action) {
     }
 }
 
-function* handleReopenRoom(action)  {
-    try {
-        const response = yield call(roomApi.adminReopenRoom, action.roomId)
-        if (response) {
-            const { room } = response
-            yield put({type: types.REOPEN_ROOM_SUCCEED, newRoom: room, oldRoomId: action.roomId})
-        } else {
-            console.log(`Error while reopen room. Stack trace: ${response}`)
-            alert(`Error while reopen room. Please try again later.`)
-        }
-    } catch (e) {
-        console.log(`Error while reopen room. Stack trace: ${e.message}`)
-        alert(`Error while reopen room. Please try again later.`)
-    }
-}
-
 export function* adminSendRequestJoinRoomToSocketSucceed() {
     yield takeEvery(types.JOIN_ROOM_TO_SOCKET_SUCCEED, handleAdminSendRequestJoinRoomToSocketSucceed);
-}
-
-export function* adminReopenRoom() {
-    yield takeEvery(types.REOPEN_ROOM, handleReopenRoom)
 }

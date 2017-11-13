@@ -57,6 +57,5 @@ export function loadClosedRoomRequested() {
 }
 
 export function fetchClosedRoomsSucceed(closedRooms) {
-    console.log("closed rooms", closedRooms);
     return {type: types.LOAD_CLOSED_ROOM_SUCCEED, closedRooms};
 }

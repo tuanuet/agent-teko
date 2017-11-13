@@ -30,13 +30,7 @@ class ChatApi {
     }
 
     static setStatusOfRoom(roomId, status) {
-        let formData = new FormData();
-        let data = {
-            roomId,
-            status
-        };
-        formData.append("data", JSON.stringify(data));
-        return axios.post(apiTypes.SET_STATUS_OF_ROOM_REQUESTED, formData)
+        return axios.post(apiTypes.SET_STATUS_OF_ROOM_REQUESTED, { roomId, status })
             .then(res => res.data);
     }
 

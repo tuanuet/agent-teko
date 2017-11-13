@@ -5,7 +5,7 @@ class ReopenRoom extends Component {
         const { currentRoom, sendReopenRoom } = this.props
         return <div className="bottom">
             <button className="btn btn-primary accept-room"
-                onClick={e => sendReopenRoom(currentRoom.id)}>
+                onClick={e => sendReopenRoom(currentRoom.roomId)}>
                 Mở lại hội thoại
             </button>
         </div>

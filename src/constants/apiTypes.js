@@ -8,12 +8,11 @@ export const SAVE_TAG_OF_CUSTOMER = `${API_URL}/api/create-tag-of-customer`
 export const SAVE_NOTE_REQUESTED = `${API_URL}/api/create-note-of-customer`
 export const DELETE_TAG_OF_CUSTOMER = `${API_URL}/api/delete-tag-of-customer`
 export const AGENTS_FETCH_REQUESTED = `${API_URL}/api/fetch-other-agents`
+export const SET_STATUS_OF_ROOM_REQUESTED = `${API_URL}/api/update-room-status`
+export const LOAD_CLOSED_ROOMS = `${API_URL}/api/fetch-closed-rooms`
+export const FETCH_MORE_MESSAGES = `${API_URL}/api/fetch-more-messages`
 
 
 export const ADMIN_JOIN_ROOM_SUCCEED = `${API_URL}/api/admin-join-room-succeed`
 export const SEND_REQUEST_JOIN_ROOM = `${API_URL}/api/request-join-room`
-export const SET_STATUS_OF_ROOM_REQUESTED = `${API_URL}/api/set-status-of-room-requested`
-export const LOAD_CLOSED_ROOMS = `${API_URL}/api/closed-rooms-fetch-requested`
 export const UPLOAD_IMAGE_REQUESTED = `${API_URL}/api/files/upload`
-export const REOPEN_ROOM = `${API_URL}/api/reopen-room`
-export const FETCH_MORE_MESSAGES = `${API_URL}/api/fetch-more-messages`
