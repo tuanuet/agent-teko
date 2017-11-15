@@ -8,6 +8,9 @@ import {roomsFetchRequested, listOfTagsFetchRequested} from './container/LeftCon
 require('babel-core/register');
 require('babel-polyfill');
 
+import moment from 'moment'
+moment.locale('vi')
+
 startConnection();
 store.dispatch(roomsFetchRequested());
 store.dispatch(listOfTagsFetchRequested());

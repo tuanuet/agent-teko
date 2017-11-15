@@ -11,8 +11,16 @@ class NoteApi {
         return axios.post(apiType.SAVE_NOTE_REQUESTED, note);
     }
 
+    static updateNote(noteId, content) {
+        return axios.put(apiType.UPDATE_NOTE_REQUESTED, {
+            noteId, content
+        });
+    }
+
     static deleteNote(noteId) {
-        return axios.delete(apiType.DELETE_NOTE_REQUESTED, noteId);
+        return axios.delete(apiType.DELETE_NOTE_REQUESTED, {
+            params: { noteId }
+        });
     }
 }
 

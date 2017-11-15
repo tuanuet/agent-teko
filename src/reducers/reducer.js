@@ -11,7 +11,7 @@ let reducer = combineReducers({
     agent,
     agents,
     tags,
-    currentRoomId,
+    currentRoomId
 });
 
 export default reducer;

@@ -47,7 +47,7 @@ class RightContainer extends React.Component {
         if (content === "") return;
         let note = {
             content: content,
-            customerId: this.props.customer.id
+            customerId: this.props.customer.id,
         };
 
         this.props.actions.saveNote(note)
@@ -59,22 +59,30 @@ class RightContainer extends React.Component {
             });
     }
 
+    updateNote = ({noteId, content}, callback) => {
+        this.props.actions.updateNote(noteId, content).then(() => {
+            if (typeof callback === 'function') callback()
+        })
+    }
+
     deleteNote = noteId => {
-        this.props.actions.deleteNote(noteId)
+        if (confirm(`Bạn có muốn xóa note này?`)) {
+            this.props.actions.deleteNote(noteId)
+        }
     }
 
     render() {
-        const {customer} = this.props;
-        const {notes} = this.props;
-        const {currentRoomId} = this.props;
+        const {customer, notes, currentAgent, currentRoomId} = this.props;
         if (!currentRoomId) {
             return false
         }
         return (
             <RightComponent
                 customer={customer}
+                currentAgent={currentAgent}
                 notes={notes}
                 newNote={this.state.newNote}
+                updateNote={this.updateNote}
                 deleteNote={this.deleteNote}
                 updateNoteState={this.updateNoteState}
                 onClickSaveNote={this.onClickSaveNote}
@@ -95,6 +103,7 @@ function mapStateToProps(state, ownProps) {
     }
     return {
         customer: customer,
+        currentAgent: state.agent,
         notes: notes,
         currentRoomId: state.currentRoomId
     };

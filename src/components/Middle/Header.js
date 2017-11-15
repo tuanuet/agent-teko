@@ -100,33 +100,30 @@ class Header extends React.Component {
         }
     }
 
-    onSaveTag(tagId) {
+    onSaveTag(tag) {
         const { currentRoom } = this.props
-        this.props.actions.saveTagOfCustomerRequested(currentRoom.customer.id, tagId)
+        this.props.actions.saveTagOfCustomerRequested(currentRoom.customer.id, tag)
     }
 
     onDeleteTag(tagId) {
         const { currentRoom } = this.props
-        if (confirm("Bỏ tag này ?")) {
+        if (confirm('Bạn có muốn bỏ tag này?')) {
             this.props.actions.deleteTagOfCustomerRequested(currentRoom.customer.id, tagId)
         }
     }
 
     render() {
-        const {listOfTags, tagsOfRoom} = this.props
+        const {listOfTags, tagsOfRoom, agents} = this.props
         //index by tag id
         let lookup = _.keyBy(tagsOfRoom, tag => tag.id)
         //find all available tags
         let availableTags = _.filter(listOfTags, item => {
             return lookup[item.id] === undefined
         })
-        let tagsOfRoomWithTitle = _.filter(listOfTags, item => {
-            return lookup[item.id] !== undefined
-        })
 
         let modal = null
         if (this.state.showModals.selectListAgent) {
-            modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal}/>
+            modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal} agents={agents} />
         }
         if (this.state.showModals.selectTheme) {
             modal = <SelectTheme {...this.props} />
@@ -135,9 +132,9 @@ class Header extends React.Component {
             <div className="header">
                 <div className="title">
                     <div className="group-button">
-                        <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
+                        {/* <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
                         data-target="#exampleModal"><i
-                            className="fa fa-wrench" onClick={this.showTheme}/></button>
+                            className="fa fa-wrench" onClick={this.showTheme}/></button> */}
                         {/* <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
                         <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button> */}
                         <button className="" data-toggle="tooltip" data-placement="top" title="Add agent to room"><i
@@ -155,13 +152,17 @@ class Header extends React.Component {
                             Thêm tag
                         </button>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {availableTags.map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag.id)}>
-                                <p style={{ color: `${tag.color}`}}>{tag.title}</p>
+                            {availableTags.map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag)}>
+                                <p style={{ color: `${tag.color}`}}>
+                                    {tag.title}
+                                </p>
                             </a>)}
                         </div>
                     </div>
                     <div className="list-tag">
-                        {tagsOfRoomWithTitle.map(tag => <button key={tag.id} onClick={this.onDeleteTag.bind(this, tag.id)} className="btn btn-success btn-sm tag" type="button" data-toggle="tooltip" data-placement="top" title="Click để hủy tag" style={{ backgroundColor: `${tag.color}` }}>{tag.title}</button>
+                        {tagsOfRoom.map(tag => <button key={tag.id} onClick={this.onDeleteTag.bind(this, tag.id)} className="btn btn-success btn-sm tag" type="button" data-toggle="tooltip" data-placement="top" title="Click để hủy tag" style={{ backgroundColor: `${tag.color}` }}>
+                            {`${tag.title}  `} <i className="fa fa-times-circle"></i>
+                        </button>
                         )}
                     </div>
                 </div>

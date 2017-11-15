@@ -143,6 +143,7 @@ export default () => {
     })
 
     socket.on('server-send-message', msg => {
+        console.log('Server send message');
         const { roomId } = msg
         const message = getMessageFromServer(msg)
 

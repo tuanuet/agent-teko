@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
 import NoteItem from './NoteItem';
 
-const NoteList = ({notes, deleteNote}) => {
+const NoteList = ({notes, updateNote, deleteNote}) => {
     return (
         <div className="notes-list">
-            {notes && notes.map(note => <NoteItem key={note.id} note={note} deleteNote={deleteNote} />)}
+            {notes && notes.map(note => <NoteItem key={note.id} note={note} updateNote={updateNote} deleteNote={deleteNote} />)}
         </div>
     );
 };

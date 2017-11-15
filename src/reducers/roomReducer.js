@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import initialState from './initialState'
 import * as types from '../constants/actionTypes'
+import * as helper from '../helper'
 
 export default function roomReducer(state=initialState.rooms, action) {
     switch (action.type) {
@@ -101,9 +102,6 @@ export default function roomReducer(state=initialState.rooms, action) {
             })
 
         case types.UPDATE_SELECT_LIST_AGENT:
-
-            console.log('RoomReducer:',action)
-
             let agentIds = _(action.agentIds).map(id => {return {agentId : id}}).value()
             return _(state).map(room => {
                 if(room.id != action.roomId) return room
@@ -112,12 +110,7 @@ export default function roomReducer(state=initialState.rooms, action) {
             }).value()
 
         case types.LOAD_CLOSED_ROOM_SUCCEED:
-            let newArray = [...action.closedRooms]
-            state.forEach(room => {
-                const searchRoom = newArray.find(tmp => tmp.id === room.id)
-                if (!searchRoom) newArray = [...newArray, room]
-            })
-            return newArray
+            return [...state, ...action.closedRooms]
 
         case types.SET_STATUS_OF_ROOM_SUCCEED:
             return state.map(room => {
@@ -135,7 +128,7 @@ export default function roomReducer(state=initialState.rooms, action) {
 
                 return {
                     ...room,
-                    tags: [...room.tags, { id: action.tagId }]
+                    tags: [...room.tags, action.tag]
                 }
             })
 
@@ -156,8 +149,29 @@ export default function roomReducer(state=initialState.rooms, action) {
                 }
             })
         case types.REMOVE_ROOM:
-            console.log('come to remove room');
             return state.filter(room => room.roomId !== action.roomId)
+        case types.UPDATE_NOTE_SUCCEED:
+            return state.map(room => {
+                return {
+                    ...room,
+                    notes: room.notes.map(note => {
+                        if (note.id !== action.noteId) return note
+                        return {
+                            ...note,
+                            content: action.content,
+                            updatedAt: helper.now()
+                        }
+                    })
+                }
+            })
+        case types.SAVE_LIST_AGENT_JOIN_ROOM:
+            return state.map(room => {
+                if (room.roomId !== action.roomId) return room
+                return {
+                    ...room,
+                    agents: [...room.agents, ...action.agents]
+                }
+            })
         default:
             return state
         }

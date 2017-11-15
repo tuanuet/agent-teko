@@ -36,7 +36,7 @@ function* fetchAgentsSaga() {
 //================POST LIST AGENT JOIN ROOM ==============
 function* saveAgents(action) {
     try {
-        yield put(chatActions.emitSelectListAgent(action.agents, action.roomId))
+        yield put(chatActions.emitSelectListAgent(action.agents.map(agent => agent.id), action.roomId))
         action.closeModal()
     } catch (err) {
         console.log(err.message)
@@ -68,9 +68,9 @@ function* setStatusOfRoomSaga() {
 //================ SET TAG OF ROOM ==============
 function* saveTagOfCustomer(action) {
     try {
-        const data = yield call(chatApi.saveTagOfCustomer, action.customerId, action.tagId)
+        const data = yield call(chatApi.saveTagOfCustomer, action.customerId, action.tag)
         if (data.result) {
-            yield put(chatActions.saveTagOfCustomerSucceed(action.customerId, action.tagId))
+            yield put(chatActions.saveTagOfCustomerSucceed(action.customerId, action.tag))
         } else {
             throw new Error()
         }

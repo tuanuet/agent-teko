@@ -46,8 +46,8 @@
 .notes-list{
   border: 1px solid rgba(0, 0, 0, .10);
   background-color: #F6F6F6;
-  overflow-y: auto;
   flex-grow: 1;
+  overflow-y: auto;
   overflow-x: hidden;
 
   .note-item{
@@ -72,18 +72,24 @@
         text-overflow: ellipsis;
       }
       .pr-sm {
-        width: 80%;
-        padding-right: .75rem !important;
+        // width: 80%;
+        // padding-right: .75rem !important;
       }
-      .note-item-timestamp{
+      .note-item-timestamp {
         flex-flow: column wrap;
         align-items: center;
+        color: #90949c;
+        font-size: 12px;
+
+        p {
+            display: inline-block;
+            margin: 0;
+        }
       }
     }
   }
   .note-item:hover {
     background-color: #fff;
-    cursor: pointer;
   }
 }
 .take-note{
@@ -92,6 +98,9 @@
   align-items: center;
   height: 200px;
   bottom: 0;
+  #exampleTextarea {
+    overflow-y: hidden;
+  }
   .save-note{
     margin-top: 10px;
     width: 100%;

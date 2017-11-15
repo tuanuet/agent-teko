@@ -23,7 +23,7 @@ export default class SelectAgent extends React.Component {
                     <hr/>
                     <div className="control">
                         <button type="button" className="btn btn-primary save" onClick={e => {
-                            this.props.onSave(this.state.agents)
+                            this.props.onSave(this.state.agents.map(agentId => this.props.agents.find(tmp => tmp.id === agentId)))
                         }}>Save</button>
                         <button type="button" className="btn cancel" onClick={this.props.onClose}>Cancel</button>
                     </div>

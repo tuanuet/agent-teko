@@ -2,8 +2,8 @@ import React, {PropTypes} from 'react';
 
 const Customer = ({customer}) => {
     return (
-        <div className="customer" data-toggle="collapse" data-target="#collapseExample" aria-expanded="true"
-        aria-controls="collapseExample">
+        <div className="customer" data-toggle="collapse" data-target="#collapseCustomerInfo" aria-expanded="false"
+        aria-controls="collapseCustomerInfo">
 
             <div className="row">
                 <div className="col-md-10 customer-short-info">

@@ -61,12 +61,12 @@ export function broadcastCloseRoomToOtherAgents(roomId) {
     return {type: types.BROADCAST_CLOSE_ROOM_TO_OTHER_AGENT, roomId}
 }
 
-export function saveTagOfCustomerRequested(customerId, tagId) {
-    return {type: types.SAVE_TAG_OF_CUSTOMER_REQUESTED, customerId, tagId};
+export function saveTagOfCustomerRequested(customerId, tag) {
+    return {type: types.SAVE_TAG_OF_CUSTOMER_REQUESTED, customerId, tag};
 }
 
-export function saveTagOfCustomerSucceed(customerId, tagId) {
-    return {type: types.SAVE_TAG_OF_CUSTOMER_SUCCEED, customerId, tagId};
+export function saveTagOfCustomerSucceed(customerId, tag) {
+    return {type: types.SAVE_TAG_OF_CUSTOMER_SUCCEED, customerId, tag};
 }
 
 export function deleteTagOfCustomerRequested(customerId, tagId) {

@@ -34,12 +34,13 @@ class LeftContainer extends React.Component {
      * @returns {XML}
      */
     render() {
-        const {rooms, currentRoomId} = this.props;
+        const {rooms, currentRoomId, tags} = this.props;
         return (
             <LeftComponent
+                tags={tags}
+                rooms={rooms}
                 currentRoomId={currentRoomId}
                 adminChooseRoom={this.adminChooseRoom}
-                rooms={rooms}
                 loadClosedRoom={this.loadClosedRoom}
             />
         );
@@ -50,6 +51,7 @@ function mapStateToProps(state, ownProps) {
     return {
         rooms: state.rooms,
         currentRoomId: state.currentRoomId,
+        tags: state.tags,
     };
 }
 

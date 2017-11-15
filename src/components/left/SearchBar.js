@@ -2,8 +2,6 @@ import React, {PropTypes} from 'react';
 
 const SearchBar = () => {
     return (
-
-
         <div className="search-bar">
             <div className="input-group">
                 <i className="fa fa-search" aria-hidden="true"></i>

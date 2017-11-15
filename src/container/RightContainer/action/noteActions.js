@@ -13,8 +13,8 @@ export function notesFetchFailed(roomId) {
     return {type: types.NOTES_FETCH_FAILED, roomId}
 }
 
-export function updateNoteSucceed(note) {
-    return {type: types.UPDATE_NOTE_SUCCEED, note}
+export function updateNoteSucceed(noteId, content) {
+    return {type: types.UPDATE_NOTE_SUCCEED, noteId, content}
 }
 
 export function createNoteSucceed(note) {
@@ -26,14 +26,27 @@ export function saveNote(note) {
         return noteApi.saveNote(note)
             .then(response => {
                 const newNote = response.data.note;
-
-                note.id ? dispatch(updateNoteSucceed(newNote)):
-                    dispatch(createNoteSucceed(newNote));
+                dispatch(createNoteSucceed(newNote));
             }).catch(e => {
                 console.log(e);
                 throw(e);
             });
     };
+}
+
+export const updateNote = (noteId, content) => {
+    return dispatch => {
+        return noteApi.updateNote(noteId, content).then(res => {
+            if (res.data.result) {
+                dispatch(updateNoteSucceed(noteId, content))
+            } else {
+                alert(`Có lỗi xảy ra khi cập nhật ghi chú. Vui lòng thử lại sau`)
+            }
+        }).catch(e => {
+            console.log(e);
+            alert(`Có lỗi xảy ra khi cập nhật ghi chú. Vui lòng thử lại sau`)
+        })
+    }
 }
 
 export function deleteNoteSucceed(noteId) {

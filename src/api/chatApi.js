@@ -42,8 +42,8 @@ class ChatApi {
             .then(res => res.data);
     }
 
-    static saveTagOfCustomer(customerId, tagId) {
-        return axios.post(apiTypes.SAVE_TAG_OF_CUSTOMER, {customerId, tagId})
+    static saveTagOfCustomer(customerId, tag) {
+        return axios.post(apiTypes.SAVE_TAG_OF_CUSTOMER, {customerId, tagId: tag.id})
             .then(res => res.data);
     }
 

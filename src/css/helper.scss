@@ -56,3 +56,7 @@
 .clickable {
   cursor: pointer;
 }
+
+.capitalize-first:first-letter {
+    text-transform: uppercase;
+}

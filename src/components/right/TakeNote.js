@@ -6,7 +6,7 @@ const TakeNote = ({newNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteSt
             <textarea
                 className="form-control"
                 id="exampleTextarea" rows="5"
-                placeholder="Add a note..."
+                placeholder="Thêm ghi chú"
                 onChange={updateNoteState}
                 value={newNote}
                 onKeyUp={handleOnKeyUpTakeNote.bind(this)}
@@ -14,7 +14,7 @@ const TakeNote = ({newNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteSt
             <input
                 className="btn btn-primary save-note"
                 type="button"
-                value="Save"
+                value="Lưu"
                 onClick={onClickSaveNote.bind(this)}
             />
         </div>

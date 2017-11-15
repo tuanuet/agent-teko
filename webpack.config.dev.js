@@ -43,13 +43,13 @@ module.exports = {
                 'cp ./static/main-bundle.js.map ../live-chat/public/js/client/'
             ]
         }),
-        new UglifyJSPlugin({
-            sourceMap: true
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production')
-            }
-        })
+        // new UglifyJSPlugin({
+        //     sourceMap: true
+        // }),
+        // new webpack.DefinePlugin({
+        //     'process.env': {
+        //         'NODE_ENV': JSON.stringify('production')
+        //     }
+        // })
     ]
 };
