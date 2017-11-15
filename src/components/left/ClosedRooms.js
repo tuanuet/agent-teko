@@ -10,7 +10,7 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
         <div className={className} onClick={adminChooseRoom.bind(this, closedRoom.roomId)} >
             <div className="customer-control">
                 <img
-                    src="/images/teko_icon.png"
+                    src={closedRoom.customer.avatarUrl}
                 className="avatar" alt="image"/>
             </div>
             <div className="customer-info">

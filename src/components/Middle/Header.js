@@ -155,11 +155,13 @@ class Header extends React.Component {
                             Thêm tag
                         </button>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {availableTags.map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag.id)}>{tag.title}</a>)}
+                            {availableTags.map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag.id)}>
+                                <p style={{ color: `${tag.color}`}}>{tag.title}</p>
+                            </a>)}
                         </div>
                     </div>
                     <div className="list-tag">
-                        {tagsOfRoomWithTitle.map(tag => <button key={tag.id} onClick={this.onDeleteTag.bind(this, tag.id)} className="btn btn-success btn-sm tag" type="button" data-toggle="tooltip" data-placement="top" title="Click để hủy tag">{tag.title}</button>
+                        {tagsOfRoomWithTitle.map(tag => <button key={tag.id} onClick={this.onDeleteTag.bind(this, tag.id)} className="btn btn-success btn-sm tag" type="button" data-toggle="tooltip" data-placement="top" title="Click để hủy tag" style={{ backgroundColor: `${tag.color}` }}>{tag.title}</button>
                         )}
                     </div>
                 </div>

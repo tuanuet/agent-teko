@@ -61,8 +61,6 @@ export function socketMiddleware() {
 
             })
         } else if (socket && action.type === types.REOPEN_ROOM) {
-            console.log('Come to here');
-            console.log(action);
             socket.emit('admin-reopen-room', action.roomId, (ack, dataEmit) => {
                 if (!ack) {
                     alert(`Có lỗi xảy ra khi mở lại hội thoại. Vui lòng thử lại sau.`)
@@ -125,6 +123,12 @@ export default () => {
         })
     })
 
+    socket.on('server-send-admin-join-room-succeed', data => {
+        const { agentId, roomId } = data
+        if (store.getState().agent.id === agentId) return
+        store.dispatch({type: types.REMOVE_ROOM, roomId})
+    })
+
     socket.on('server-send-room-enable', data => {
         console.log('Server send room enable');
         const room = getRoomFromServer(data)
@@ -152,6 +156,20 @@ export default () => {
     socket.on('close-room-to-other-agents', roomId => {
         console.log('Server send close room to other agents')
         store.dispatch(chatActions.setStatusOfRoomSucceed(roomId, 3))
+    })
+
+    socket.on('reconnect', () => {
+        socket.emit('admin-join-default-room', { adminId: store.getState().agent.id }, ack => {
+            console.log('Admin join room default', ack)
+        })
+        socket.emit('admin-re-join-room', store.getState().rooms, ack => {
+            if (!ack) {
+                console.log('Rejoin all available socket failed')
+                store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms))
+            } else {
+                console.log('Rejoin all available socket success')
+            }
+        })
     })
 
 }

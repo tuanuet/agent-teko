@@ -155,6 +155,9 @@ export default function roomReducer(state=initialState.rooms, action) {
                     notes: room.notes.filter(note => note.id !== action.noteId)
                 }
             })
+        case types.REMOVE_ROOM:
+            console.log('come to remove room');
+            return state.filter(room => room.roomId !== action.roomId)
         default:
             return state
         }

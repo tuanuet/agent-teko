@@ -7,7 +7,7 @@ const EnableRoom = ({enableRoom, adminChooseRoom}) => {
             <div className="room-item">
                 <div className="customer-control">
                     <img
-                        src="/images/teko_icon.png"
+                        src={enableRoom.customer.avatarUrl}
                     className="avatar" alt="image"/>
                 </div>
                 <div className="customer-info">

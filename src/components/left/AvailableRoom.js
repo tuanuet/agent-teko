@@ -14,7 +14,7 @@ const AvailableRoom = ({availableRoom, adminChooseRoom, currentRoomId}) => {
         <div className={className} onClick={adminChooseRoom.bind(this, availableRoom.roomId)} >
             <div className="customer-control">
                 <img
-                    src="/images/teko_icon.png"
+                    src={availableRoom.customer.avatarUrl}
                 className="avatar" alt="image"/>
             </div>
             <div className="customer-info">
@@ -28,7 +28,7 @@ const AvailableRoom = ({availableRoom, adminChooseRoom, currentRoomId}) => {
                     <div className="last-massage">
                         {availableRoom.roomInfo && availableRoom.roomInfo.latestMessage && availableRoom.roomInfo.latestMessage.content}
                     </div>
-                    <i className="fa fa-paperclip" aria-hidden="true"></i>
+                    {/* <i className="fa fa-paperclip" aria-hidden="true"></i> */}
                 </div>
             </div>
         </div>
