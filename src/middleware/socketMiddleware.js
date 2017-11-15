@@ -35,7 +35,7 @@ export function socketMiddleware() {
                     console.log('Rejoin all available socket success')
                 }
             })
-        } else if (socket && action.type === types.CLIENT_SEND_MESSAGE){
+        } else if (socket && action.type === types.CLIENT_SEND_MESSAGE) {
             socket.emit('client-send-message', action.message, function (isReceived) {
                 console.log(`Admin send message and server receive ${isReceived}`)
             })
@@ -148,10 +148,6 @@ export default () => {
         const message = getMessageFromServer(msg)
 
         store.dispatch(addMessageForRoom(roomId, message))
-
-        if (store.getState().currentRoomId !== roomId) {
-            store.dispatch(roomActions.updateNumberOfUnreadMessages(roomId))
-        }
     })
 
     socket.on('close-room-to-other-agents', roomId => {

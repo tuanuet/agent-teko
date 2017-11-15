@@ -21,7 +21,13 @@ const EnableRoom = ({enableRoom, adminChooseRoom}) => {
                         <div className="last-massage new-message">
                             {enableRoom.roomInfo && enableRoom.roomInfo.latestMessage.content}
                         </div>
+                        { enableRoom.roomInfo && enableRoom.roomInfo.numOfUnReadMessages > 0 && <div className="numUnread">{enableRoom.roomInfo.numOfUnReadMessages}</div> }
                     </div>
+                    { enableRoom.tags && <div className="tags-of-room">
+                        { enableRoom.tags.map(tag => <span key={tag.id} className="tag" style={{ backgroundColor: `${tag.color}`}}>
+                            { tag.title }
+                        </span> ) }
+                    </div> }
                 </div>
             </div>
         </div>

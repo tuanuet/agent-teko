@@ -25,7 +25,7 @@ export function fetchMetadataSuccess() {
     };
 }
 
-export function uploadImage(form,msgToServer,msgToState){
+export function uploadImage(form,msgToServer,msgToState) {
     return {
         type : UPLOAD_IMAGE,
         form,

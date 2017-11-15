@@ -63,7 +63,7 @@ class BottomBar extends React.Component {
         let input = this.refs.attach
         //validate input
         if (input.files && input.files[0]) {
-            this.props.uploadImage(input.files[0],msgToServer,msgToState)
+            this.props.uploadImage(input.files[0], msgToServer, msgToState)
             this.refs.attach.value = ''
         }
         this.refs.chat.focus()

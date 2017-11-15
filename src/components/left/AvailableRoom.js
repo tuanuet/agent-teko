@@ -31,7 +31,6 @@ const AvailableRoom = ({availableRoom, adminChooseRoom, currentRoomId}) => {
                         {availableRoom.roomInfo && availableRoom.roomInfo.latestMessage && availableRoom.roomInfo.latestMessage.content}
                     </div>
                     { availableRoom.roomInfo && availableRoom.roomInfo.numOfUnReadMessages > 0 && <div className="numUnread">{availableRoom.roomInfo.numOfUnReadMessages}</div> }
-                    {/* <i className="fa fa-paperclip" aria-hidden="true"></i> */}
                 </div>
                 { availableRoom.tags && <div className="tags-of-room">
                     { availableRoom.tags.map(tag => <span key={tag.id} className="tag" style={{ backgroundColor: `${tag.color}`}}>

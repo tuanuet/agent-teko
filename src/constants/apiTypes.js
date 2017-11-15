@@ -13,7 +13,7 @@ export const LOAD_CLOSED_ROOMS = `${API_URL}/api/fetch-closed-rooms`
 export const FETCH_MORE_MESSAGES = `${API_URL}/api/fetch-more-messages`
 export const DELETE_NOTE_REQUESTED = `${API_URL}/api/delete-note-of-customer`
 export const UPDATE_NOTE_REQUESTED = `${API_URL}/api/update-note-of-customer`
+export const UPLOAD_IMAGE_REQUESTED = `${API_URL}/api/files/upload`
 
 export const ADMIN_JOIN_ROOM_SUCCEED = `${API_URL}/api/admin-join-room-succeed`
 export const SEND_REQUEST_JOIN_ROOM = `${API_URL}/api/request-join-room`
-export const UPLOAD_IMAGE_REQUESTED = `${API_URL}/api/files/upload`
