@@ -5,4 +5,6 @@ export const IMAGE = 103;
 export const ATTACHMENT_PDF = 104;
 export const ATTACHMENT_WORD = 105;
 export const ATTACHMENT_EXCEL = 106;
-export const ATTACHMENT_FILE = 107;
+export const FILE = 107;
+export const VIDEO = 108
+export const AUDIO = 109

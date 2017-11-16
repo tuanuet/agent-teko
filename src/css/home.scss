@@ -172,10 +172,11 @@ header {
       padding: 16px 0;
       overflow-y: auto;
       overflow-x: hidden;
-      img{
+      .content > img {
         max-width: 300px;
         height: auto;
-
+        margin: 0 8px 10px 8px;
+        border-radius: 16px;
       }
       .self {
         display: flex;
@@ -185,9 +186,9 @@ header {
         display: flex;
         .chat {
           background: white;
-          padding: 16px 16px;
+          padding: 8px 16px;
           border-radius: 4px;
-          margin: 0 8px 16px 8px;
+          margin: 0 8px 10px 8px;
           max-width: 80%;
         }
         .sender-name{
@@ -202,6 +203,13 @@ header {
           .chat {
             background: $pink;
             color: white;
+
+            > div > a {
+                color: white;
+                &:hover {
+                    color: white;
+                }
+            }
           }
         }
 
@@ -353,4 +361,16 @@ header {
     @import "rightbar";
   }
 
+}
+
+.message-margin {
+    margin: 0 8px 10px 8px;
+}
+
+.message-video {
+    border-radius: 16px;
+}
+
+.message-audio {
+    border-radius: 16px;
 }

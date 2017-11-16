@@ -3,6 +3,8 @@ import Rating from '../Message/Rating';
 import Notification from '../Message/Notification';
 import Default from '../Message/Default';
 import Image from '../Message/Image';
+import Audio from '../Message/Audio'
+import Video from '../Message/Video'
 import * as MessageTypes from '../../constants/MessageTypes';
 import Attachment from '../Message/Attachment'
 
@@ -18,8 +20,12 @@ function getListChat(messages) {
         case MessageTypes.ATTACHMENT_PDF:
         case MessageTypes.ATTACHMENT_WORD:
         case MessageTypes.ATTACHMENT_EXCEL:
-        case MessageTypes.ATTACHMENT_FILE:
+        case MessageTypes.FILE:
             return <Attachment key={i} message={e}/>;
+        case MessageTypes.AUDIO:
+            return <Audio key={i} message={e} />
+        case MessageTypes.VIDEO:
+            return <Video key={i} message={e} />
         default:
             return <Default message={e} key={i}/>;
         }
