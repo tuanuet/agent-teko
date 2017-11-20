@@ -38,7 +38,7 @@ class MiddleContainer extends React.Component {
                     theme={this.state.theme}
                   />
 
-                  <BottomBarContainer/>
+                  <BottomBarContainer />
               </div>
             );
         }

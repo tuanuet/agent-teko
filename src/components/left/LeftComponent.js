@@ -1,9 +1,10 @@
-import React, {PropTypes} from 'react';
-import SearchBar from './SearchBar';
-import TabBar from './TabBar';
-import AvailableRooms from './AvailableRooms';
-import EnableRooms from './EnableRooms';
-import ClosedRooms from './ClosedRooms';
+import React, {PropTypes} from 'react'
+import SearchBar from './SearchBar'
+import TabBar from './TabBar'
+import AvailableRooms from './AvailableRooms'
+import EnableRooms from './EnableRooms'
+import ClosedRooms from './ClosedRooms'
+import * as config from '../../constants/config'
 
 class LeftComponent extends React.Component {
     constructor(props) {
@@ -33,23 +34,22 @@ class LeftComponent extends React.Component {
             if (room.customer.name.toLowerCase().includes(searchValue.toLowerCase())) return true
             return room.tags.some(tag => tag.title.toLowerCase().includes(searchValue.toLowerCase()))
         }
-        let availableRooms = rooms.filter(room => room.roomStatus === 2)
-        let enableRooms = rooms.filter(room => room.roomStatus === 1)
-        let closedRooms = rooms.filter(room => room.roomStatus === 3)
 
-        if (searchValue) {
-            if (currentTab === 'available') {
-                availableRooms = availableRooms.filter(filterCondition)
-            } else if (currentTab === 'enable') {
-                enableRooms = enableRooms.filter(filterCondition)
-            } else if (currentTab === 'closed') {
-                // TODO: search in server
-                closedRooms = closedRooms.filter(filterCondition)
-            }
+        const availableRooms = rooms.filter(room => room.roomStatus === 2).filter(filterCondition)
+        const enableRooms = rooms.filter(room => room.roomStatus === 1).filter(filterCondition)
+        const closedRooms = rooms.filter(room => room.roomStatus === 3).filter(filterCondition)
+
+        const numOfUnReadRoom = rooms.filter(room => room.roomInfo && room.roomInfo.numOfUnReadMessages).length
+
+        if (numOfUnReadRoom === 0) {
+            document.title = config.DEFAULT_TITLE
+        } else {
+            document.title = `(${numOfUnReadRoom}) ${config.DEFAULT_TITLE}`
         }
 
         return <div className="left">
             <TabBar
+                currentTab={currentTab}
                 loadClosedRoom={loadClosedRoom}
                 numberOfEnableRooms={enableRooms.length}
                 changeCurrentTab={this.changeCurrentTab} />
@@ -58,15 +58,18 @@ class LeftComponent extends React.Component {
                 changeSearchValue={this.changeSearchValue} />
             <div className="tab-content">
                 <AvailableRooms
+                    currentTab={currentTab}
                     currentRoomId={currentRoomId}
                     availableRooms={availableRooms}
                     adminChooseRoom={adminChooseRoom}
                 />
                 <EnableRooms
+                    currentTab={currentTab}
                     enableRooms={enableRooms}
                     adminChooseRoom={adminChooseRoom}
                 />
                 <ClosedRooms
+                    currentTab={currentTab}
                     closedRooms={closedRooms}
                     currentRoomId={currentRoomId}
                     adminChooseRoom={adminChooseRoom}

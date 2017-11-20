@@ -84,7 +84,6 @@ const initAgent = store => {
 }
 
 function getRoomFromServer(dataEmit) {
-    console.log('Rooms data from server', dataEmit)
     const { roomId, roomStatus, roomType, roomInfo, topic, customer, agents, tags, notes, createdAt } = dataEmit
 
     return {
@@ -139,7 +138,9 @@ export default () => {
         console.log('Server send auto assigned room', data);
         const room = getRoomFromServer(data)
         store.dispatch(addAvailableRoom(room))
-
+        if (store.getState().rooms.find(r => r.customer.id === room.customer.id)) {
+            store.dispatch({ type: types.ADMIN_CHOOSE_ROOM, roomId: room.roomId })
+        }
     })
 
     socket.on('server-send-message', msg => {

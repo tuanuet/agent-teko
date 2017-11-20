@@ -6,22 +6,20 @@ import { bindActionCreators } from 'redux'
 
 class ChatContentContainer extends React.Component {
     render() {
-      return (
-        <ChatContent {...this.props}/>
-      )
-
+        return <ChatContent {...this.props} />
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    const { currentRoomId } = state;
+    const { currentRoomId, isLoadingMessages } = state;
     let currentRoom = state.rooms.find(room => room.roomId === currentRoomId);
     if (!currentRoom) return {messages : []};
     const messages = currentRoom.messages;
     return {
         currentRoomId,
         nextFetchingRoom: currentRoom.nextFetchingRoom || state.currentRoomId,
-        messages
+        messages,
+        isLoadingMessages
     };
 }
 

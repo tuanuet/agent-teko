@@ -7,5 +7,9 @@ export const now = () => {
 export const formatDatetime = datetime => {
     const now = moment()
     const value = moment(datetime)
-    return value.calendar()
+    return capitalizeFirstLetter(value.calendar())
+}
+
+const capitalizeFirstLetter = string => {
+    return string.charAt(0).toUpperCase() + string.slice(1)
 }

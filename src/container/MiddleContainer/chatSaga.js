@@ -90,7 +90,6 @@ function* deleteTagOfCustomer(action) {
         if (data.result) {
             yield put(chatActions.deleteTagOfCustomerSucceed(action.customerId, action.tagId))
         } else {
-            console.log('wolaaa')
             throw new Error(data.error)
         }
 

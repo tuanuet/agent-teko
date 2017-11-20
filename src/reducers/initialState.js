@@ -4,6 +4,7 @@ export default {
     agents: [],
     tags: [],
     currentRoomId: null,
+    isLoadingMessage: false
 };
 
 const exampleState = {

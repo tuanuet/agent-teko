@@ -1,9 +1,7 @@
 import React, {PropTypes} from 'react';
-import Scroll from '../../container/ScrollContainer'
-
+import Scroll from '../Scroll'
 
 class ChatContent extends React.Component {
-
 
     render(){
         return(

@@ -11,9 +11,17 @@ class CustomerFullInfo extends React.Component {
             <div>
                 <p><i className="fa fa-phone" aria-hidden="true"></i><strong>{customer.phone || 'Chưa  có'}</strong></p>
             </div>
-            <div>
+            {/* <div>
                 <p><i className="fa fa-envelope-o" aria-hidden="true"></i><strong>{customer.email || 'Chưa  có'}</strong></p>
-            </div>
+            </div> */}
+            { customer.fbId && <div>
+                <p>
+                    <i className="fa fa-facebook-official" aria-hidden="true"></i>
+                    <a href={`https://www.facebook.com/${customer.email.slice(0, -('@facebook.com'.length))}`} target="_blank">
+                        Timeline của khách hàng
+                    </a>
+                </p>
+            </div> }
         </div>
     }
 

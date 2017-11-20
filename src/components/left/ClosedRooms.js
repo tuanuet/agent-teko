@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import * as helper from '../../helper'
 
 const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
     let className = "room-item";
@@ -17,27 +18,31 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
                 <div className="title">
                     <div className="name">{closedRoom.customer.name}</div>
                     <div className="timer">
-                        <span>{closedRoom.closedAt}</span>
+                        <span>{helper.formatDatetime(closedRoom.closedAt)}</span>
                     </div>
                 </div>
                 <div className="d-flex justify-content-between">
-                    <i className="fa fa-paperclip" aria-hidden="true"></i>
                 </div>
+                { closedRoom.tags && <div className="tags-of-room">
+                    { closedRoom.tags.map(tag => <span key={tag.id} className="tag" style={{ backgroundColor: `${tag.color}`}}>
+                        { tag.title }
+                    </span> ) }
+                </div> }
             </div>
         </div>
     );
 };
 
 
-const ClosedRooms = ({closedRooms, adminChooseRoom, currentRoomId}) => {
+const ClosedRooms = ({currentTab, closedRooms, adminChooseRoom, currentRoomId}) => {
     return (
-        <div className="tab-pane" id="closedchat" role="tabpanel">
+        <div className={`tab-pane ${currentTab === 'closed' && 'active'}`} id="closedchat" role="tabpanel">
             {closedRooms.map((closedRoom, index) => {
                 return <ClosedRoom
-                    key={index}
+                    key={closedRoom.roomId}
                     closedRoom={closedRoom}
-                        currentRoomId={currentRoomId}
-                        adminChooseRoom={adminChooseRoom}/>
+                    currentRoomId={currentRoomId}
+                    adminChooseRoom={adminChooseRoom} />
                 }
             )}
 

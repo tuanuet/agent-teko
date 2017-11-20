@@ -6,6 +6,7 @@ import Image from '../Message/Image';
 import Audio from '../Message/Audio'
 import Video from '../Message/Video'
 import * as MessageTypes from '../../constants/MessageTypes';
+import * as config from '../../constants/config'
 import Attachment from '../Message/Attachment'
 
 function getListChat(messages) {
@@ -34,19 +35,41 @@ function getListChat(messages) {
 
 class ListMessage extends React.Component {
 
+    componentWillReceiveProps = (nextProps) => {
+        const { actions, currentRoomId } = this.props
+
+        if (currentRoomId !== nextProps.currentRoomId) {
+            if (nextProps.messages.length < config.MESSAGE_PAGING_VALUE && nextProps.nextFetchingRoom !== -1) {
+                actions.fetchMoreMessages(nextProps.nextFetchingRoom, nextProps.currentRoomId)
+            }
+        }
+    }
+
+    componentDidMount = () => {
+        const { messages, nextFetchingRoom } = this.props
+        if (messages.length < config.MESSAGE_PAGING_VALUE && nextFetchingRoom !== -1) {
+            this.fetchMoreMessages()
+        }
+    }
+
     fetchMoreMessages = () => {
         const { actions, currentRoomId, nextFetchingRoom } = this.props
         actions.fetchMoreMessages(nextFetchingRoom, currentRoomId)
     }
 
     render() {
-        let listMsg = getListChat(this.props.messages);
+        const { messages, nextFetchingRoom, isLoadingMessages } = this.props
+        let listMsg = getListChat(messages);
 
         return (
             <ol className="chat">
-                { this.props.nextFetchingRoom !== -1 && <div className="text-center clickable"
-                    onClick={this.fetchMoreMessages}>
-                    Load more
+                { nextFetchingRoom !== -1 && !isLoadingMessages && <div className="text-center clickable"
+                    onClick={e => { this.fetchMoreMessages(); this.props.calculateScroll() }} style={{ color: '#2b7ec9' }}>
+                    Tải thêm
+                </div> }
+                { isLoadingMessages && <div className="text-center">
+                    <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
+                    <span className="sr-only">Loading...</span>
                 </div> }
                 {listMsg}
             </ol>

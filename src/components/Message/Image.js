@@ -8,7 +8,9 @@ export default class Image extends React.Component {
             <div className={role}>
                 <div className="image">
                     <div className="content">
-                        <img src={message.content} alt=""/>
+                        <img src={message.content}
+                            alt={message.fileName}
+                            width={message.fileName.includes(`sticker`) && '120'} />
                     </div>
                 </div>
             </div>

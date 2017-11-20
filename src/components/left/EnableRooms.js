@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
 import EnableRoom from './EnableRoom';
 
-const EnableRooms = ({enableRooms, adminChooseRoom}) => {
+const EnableRooms = ({currentTab, enableRooms, adminChooseRoom}) => {
     return (
-        <div className="tab-pane" id="unchat" role="tabpanel">
+        <div className={`tab-pane ${currentTab === 'enable' && 'active'}`} id="unchat" role="tabpanel">
             { enableRooms.map(enableRoom => {
                 return <EnableRoom
                     key={enableRoom.roomId}

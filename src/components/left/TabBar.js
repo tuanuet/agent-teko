@@ -1,22 +1,19 @@
 import React, {PropTypes} from 'react';
 
-const Tab = ({numberOfEnableRooms, loadClosedRoom, changeCurrentTab}) => {
+const Tab = ({currentTab, numberOfEnableRooms, loadClosedRoom, changeCurrentTab}) => {
     return (
         <div>
             <ul className="nav nav-tabs" role="tablist">
                 <li className="nav-item" onClick={e => changeCurrentTab('available')}>
-                    <a className="nav-link active" data-toggle="tab" href="#chat" role="tab"
-                    aria-controls="available">Đang hoạt động</a>
+                    <a className={`nav-link ${currentTab === 'available' && 'active'}`} data-toggle="tab" href="#chat" role="tab">Đang hoạt động</a>
                 </li>
                 <li className="nav-item" onClick={e => changeCurrentTab('enable')}>
-                    <a className="nav-link" data-toggle="tab" href="#unchat" role="tab"
-                    aria-controls="enable">Đang chờ
+                    <a className={`nav-link ${currentTab === 'enable' && 'active'}`} data-toggle="tab" href="#unchat" role="tab">Đang chờ
                         <span className="badge badge-danger">{numberOfEnableRooms}</span>
                     </a>
                 </li>
-                <li className="nav-item" onClick={e => { loadClosedRoom(); changeCurrentTab('closed')}}>
-                    <a className="nav-link" data-toggle="tab" href="#closedchat" role="tab"
-                    aria-controls="available">Lịch sử chat</a>
+                <li className="nav-item" onClick={e => { changeCurrentTab('closed'); loadClosedRoom(); }}>
+                    <a className={`nav-link ${currentTab === 'closed' && 'active'}`} data-toggle="tab" href="#closedchat" role="tab">Lịch sử chat</a>
                 </li>
             </ul>
         </div>

@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import AvailableRoom from './AvailableRoom';
 
-const AvailableRooms = ({availableRooms, adminChooseRoom, currentRoomId}) => {
-    return <div className="tab-pane active" id="chat" role="tabpanel">
+const AvailableRooms = ({currentTab, availableRooms, adminChooseRoom, currentRoomId}) => {
+    return <div className={`tab-pane ${currentTab === 'available' && 'active'}`} id="chat" role="tabpanel">
         { availableRooms.sort((a, b) => {
             if (!a.roomInfo || !a.roomInfo.latestMessage) return 1
             if (!b.roomInfo || !b.roomInfo.latestMessage) return -1
