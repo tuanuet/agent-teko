@@ -26,7 +26,8 @@ class Scroll extends React.Component {
 
         if (currentRoomId !== nextCurrentRoomId) {
             this.activeScroll = true
-        } else if (JSON.stringify(messages.slice(-1).pop()) !== JSON.stringify(nextMessages.slice(-1).pop())) {
+        } else if (JSON.stringify(messages ? messages.slice(-1).pop() : {})
+            !== JSON.stringify(nextMessages ? nextMessages.slice(-1).pop() : {})) {
             this.activeScroll = true
         }
     }

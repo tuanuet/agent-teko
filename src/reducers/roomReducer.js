@@ -76,10 +76,16 @@ export default function roomReducer(state=initialState.rooms, action) {
             return state.map(room => {
                 if (room.roomId !== action.roomId) return room
                 const unReadMessages = action.message.messageFrom === 0 ? 0 : room.roomInfo.numOfUnReadMessages + 1
-                return {
+                if (room.messages) {
+                    return {
+                        ...room,
+                        roomInfo: {...room.roomInfo, latestMessage: action.message, numOfUnReadMessages: unReadMessages },
+                        messages: [...room.messages, action.message]
+                    }
+                } else return {
                     ...room,
                     roomInfo: {...room.roomInfo, latestMessage: action.message, numOfUnReadMessages: unReadMessages },
-                    messages: [...room.messages, action.message]
+                    messages: [action.message]
                 }
             })
         }

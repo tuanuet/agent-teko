@@ -16,7 +16,6 @@ class Header extends React.Component {
         this.closeModal = this.closeModal.bind(this)
         this.onSaveSelectListAgent = this.onSaveSelectListAgent.bind(this)
         this.onSetTagStateOfRoom = this.onSetTagStateOfRoom.bind(this)
-        this.unFollowRoom = this.unFollowRoom.bind(this)
         this.onSaveTag = this.onSaveTag.bind(this)
         this.onDeleteTag = this.onDeleteTag.bind(this)
 
@@ -58,11 +57,10 @@ class Header extends React.Component {
         $(document).keyup(e => {
             if (e.keyCode === 27) {
                 this.setState({
-                    showModals:
-                        {
-                            selectTheme: false,
-                            selectListAgent: false
-                        }
+                    showModals: {
+                        selectTheme: false,
+                        selectListAgent: false
+                    }
                 })
                 this.closeModal()
             }
@@ -71,12 +69,10 @@ class Header extends React.Component {
 
     closeModal() {
         this.setState({
-            showModals:
-                {
-                    selectTheme: false,
-                    selectListAgent: false
-                }
-
+            showModals: {
+                selectTheme: false,
+                selectListAgent: false
+            }
         })
     }
 
@@ -93,10 +89,9 @@ class Header extends React.Component {
         })
     }
 
-    unFollowRoom(){
-        let status = 3
-        if (confirm("Xác nhận đóng phòng chat này lại?")) {
-            this.props.actions.unFollowRoom(this.props.currentRoomId, status)
+    unFollowRoom = () => {
+        if (confirm('Xác nhận đóng phòng chat này lại?')) {
+            this.props.actions.unFollowRoom(this.props.currentRoomId, 3)
         }
     }
 
@@ -114,9 +109,7 @@ class Header extends React.Component {
 
     render() {
         const {listOfTags, tagsOfRoom, agents} = this.props
-        //index by tag id
         let lookup = _.keyBy(tagsOfRoom, tag => tag.id)
-        //find all available tags
         let availableTags = _.filter(listOfTags, item => {
             return lookup[item.id] === undefined
         })
@@ -128,6 +121,7 @@ class Header extends React.Component {
         if (this.state.showModals.selectTheme) {
             modal = <SelectTheme {...this.props} />
         }
+
         return (
             <div className="header">
                 <div className="title">
@@ -137,12 +131,10 @@ class Header extends React.Component {
                             className="fa fa-wrench" onClick={this.showTheme}/></button> */}
                         {/* <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
                         <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button> */}
-                        <button className="" data-toggle="tooltip" data-placement="top" title="Add agent to room"><i
-                            className="fa fa-plus" onClick={this.showListAgent}/></button>
-                        <button className="red" data-toggle="tooltip" data-placement="top" title="Close room"><i
-                            className="fa fa-times" onClick={this.unFollowRoom}/></button>
-
-                        {modal}
+                        <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thêm admin vào phòng chat"><i className="fa fa-user-plus" onClick={this.showListAgent}/></button>
+                        {/* <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></button> */}
+                        <button className="red clickable" data-toggle="tooltip" data-placement="top" title="Đóng phòng chat"><i className="fa fa-times" onClick={this.unFollowRoom}/></button>
+                        { modal }
                     </div>
                 </div>
 
@@ -160,13 +152,12 @@ class Header extends React.Component {
                         </div>
                     </div>
                     <div className="list-tag">
-                        {tagsOfRoom.map(tag => <button key={tag.id} onClick={this.onDeleteTag.bind(this, tag.id)} className="btn btn-success btn-sm tag" type="button" data-toggle="tooltip" data-placement="top" title="Click để hủy tag" style={{ backgroundColor: `${tag.color}` }}>
+                        {tagsOfRoom.map(tag => <button key={tag.id} onClick={this.onDeleteTag.bind(this, tag.id)} className="btn btn-success btn-sm tag" type="button" style={{ backgroundColor: `${tag.color}` }}>
                             {`${tag.title}  `} <i className="fa fa-times-circle"></i>
                         </button>
                         )}
                     </div>
                 </div>
-
 
             </div>
         )
@@ -186,6 +177,7 @@ function mapStateToProps(state) {
         tagsOfRoom: currentRoom.tags,
         listOfTags: state.tags,
         agents: state.agents,
+        currentAgent: state.agent,
         roomAgents: currentRoom.agents,
     }
 }
