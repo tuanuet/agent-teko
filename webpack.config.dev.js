@@ -42,14 +42,15 @@ module.exports = {
                 'cp ./static/main-bundle.js ../live-chat/public/js/client/',
                 'cp ./static/main-bundle.js.map ../live-chat/public/js/client/'
             ]
+        })
+    ].concat(isProduction ? [
+        new UglifyJSPlugin({
+            sourceMap: true
         }),
-        // new UglifyJSPlugin({
-        //     sourceMap: true
-        // }),
-        // new webpack.DefinePlugin({
-        //     'process.env': {
-        //         'NODE_ENV': JSON.stringify('production')
-        //     }
-        // })
-    ]
-};
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        })
+    ] : [])
+}
