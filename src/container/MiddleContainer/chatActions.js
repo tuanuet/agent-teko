@@ -17,8 +17,8 @@ export function sendRequestUserRating(roomId) {
     return {type: types.SEND_REQUEST_USER_RATING, roomId}
 }
 
-export function messagesFetchSucceed(roomId, messages) {
-    return {type: types.MESSAGES_FETCH_SUCCEED, roomId, messages}
+export function messagesFetchSucceed(roomId, messages, nextFetchingRoom) {
+    return {type: types.MESSAGES_FETCH_SUCCEED, roomId, messages, nextFetchingRoom}
 }
 
 export function joinRoomToSocketSucceed(room) {

@@ -6,7 +6,6 @@ import * as helper from '../helper'
 export default function roomReducer(state=initialState.rooms, action) {
     switch (action.type) {
 
-        //fetch rooms
         case types.ROOMS_FETCH_SUCCEED:
             return [
                 ...state,
@@ -20,7 +19,8 @@ export default function roomReducer(state=initialState.rooms, action) {
 
                 return {
                     ...room,
-                    messages: action.messages
+                    messages: action.messages,
+                    nextFetchingRoom: action.nextFetchingRoom
                 }
             })
         case types.FETCH_MORE_MESSAGES_SUCCEED:

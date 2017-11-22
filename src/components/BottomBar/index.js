@@ -57,39 +57,27 @@ class BottomBar extends React.Component {
         this.setState({isShowEmojiBoard: false})
     }
 
-    uploadImage = () => {
-        let msgToServer = this.getMessageToSendServer()
-        let msgToState = getMessageFromClient(msgToServer)
-        let input = this.refs.attach
-        //validate input
+    uploadImage = e => {
+        const { uploadFile } = this.props
+        const input = this.refs.attach
+
         if (input.files && input.files[0]) {
-            this.props.uploadImage(input.files[0], msgToServer, msgToState)
+            uploadFile({
+                data: input.files[0],
+                type: input.files[0].type,
+                name: input.files[0].name
+            })
             this.refs.attach.value = ''
         }
         this.refs.chat.focus()
     }
 
-    removeAttach() {
-        this.refs.divPreview.setAttribute('style', 'display: none')
-        this.refs.preview.setAttribute('src', '')
-        this.refs.attach.files[0] = null
-    }
-
-
     componentDidMount() {
         this.refs.chat.focus()
     }
 
-    addEmoji(emoji) {
-        this.refs.chat.value = this.refs.chat.value + emoji
-    }
-
     showEmojiBoard = () => {
         this.setState({isShowEmojiBoard: !this.state.isShowEmojiBoard})
-    }
-
-    sendRequestJoinRoom() {
-        this.props.adminSendRequestJoinRoom({room: this.props.currentRoom})
     }
 
     render() {
@@ -103,7 +91,7 @@ class BottomBar extends React.Component {
                 <div className="icon-button">
                     {/* <i className="fa fa-smile-o" onClick={this.showEmojiBoard}/> */}
                     <label>
-                        <input type="file" accept="image/*" ref="attach" onChange={this.uploadImage}/>
+                        <input type="file" ref="attach" onChange={this.uploadImage} />
                         <i className="fa fa-paperclip"/>
                     </label>
                     {/* <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true"

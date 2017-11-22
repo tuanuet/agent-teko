@@ -15,12 +15,10 @@ import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
 import {
     adminSendRequestJoinRoomToSocketSucceed,
 } from "./container/BottomBarContainer/joinRoomSaga"
-import {fetchMetaLinkSaga,uploadImageSaga} from "./container/BottomBarContainer/bottomBarSagas"
 import {fetchMoreMessages} from './container/ChatContentContainer/saga'
 import {fork} from 'redux-saga/effects';
 
 export default function* rootSaga() {
-    yield fork(uploadImageSaga);
     yield fork(fetchRoomsSaga);
     yield fork(saveAgentsSaga);
     yield fork(fetchAgentsSaga);

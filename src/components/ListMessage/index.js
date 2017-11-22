@@ -34,6 +34,16 @@ function getListChat(messages) {
 }
 
 class ListMessage extends React.Component {
+    componentWillReceiveProps(nextProps) {
+        const { currentRoomId, messages, actions, nextFetchingRoom, isLoadingMessages } = this.props
+        const { currentRoomId: nextRoomId, messages: nextMessages} = nextProps
+
+        if (currentRoomId !== nextRoomId) return false
+
+        if (messages.length === 0 && nextMessages.length < config.MESSAGE_PAGING_VALUE && isLoadingMessages === false) {
+            actions.fetchMoreMessages(nextFetchingRoom, currentRoomId)
+        }
+    }
 
     fetchMoreMessages = () => {
         const { actions, currentRoomId, nextFetchingRoom } = this.props
@@ -54,7 +64,9 @@ class ListMessage extends React.Component {
                     <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
                     <span className="sr-only">Loading...</span>
                 </div> }
-                {listMsg}
+                <div style={ !isLoadingMessages ? { marginTop: '20px' } : {}}>
+                    {listMsg}
+                </div>
             </ol>
         );
     }

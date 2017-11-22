@@ -2,10 +2,10 @@ import {
     FETCH_META,
     FETCH_META_SUCCESS,
     FETCH_META_FAILURE,
-    UPLOAD_IMAGE,
-    UPLOAD_IMAGE_FAILURE,
-    UPLOAD_IMAGE_SUCCESS
-} from './constants';
+    UPLOAD_FILE,
+    UPLOAD_FILE_FAILURE,
+    UPLOAD_FILE_SUCCESS
+} from '../../constants/actionTypes';
 
 export function getMetaLink(link,content){
     return {
@@ -25,24 +25,21 @@ export function fetchMetadataSuccess() {
     };
 }
 
-export function uploadImage(form,msgToServer,msgToState) {
+export function uploadFile(data) {
     return {
-        type : UPLOAD_IMAGE,
-        form,
-        msgToServer,
-        msgToState
-    };
+        type: UPLOAD_FILE,
+        data
+    }
 }
-export function uploadImageFailure(message){
+export function uploadFileFailure(message) {
     return {
-        type : UPLOAD_IMAGE_FAILURE,
+        type: UPLOAD_FILE_FAILURE,
         message
-
-    };
+    }
 }
-export function uploadImageSuccess(message){
+export function uploadFileSuccess(message) {
     return {
-        type : UPLOAD_IMAGE_SUCCESS,
+        type: UPLOAD_FILE_SUCCESS,
         message
-    };
+    }
 }

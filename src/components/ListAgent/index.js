@@ -20,12 +20,12 @@ class ListAgent extends React.Component {
 
     getAgent(agents, roomAgents) {
 
-        return agents.map((agent,key) => {
+        return agents.map(agent => {
             const exist = roomAgents.find(ra => ra.id === agent.id)
             const Input = exist ? <input className="form-check-input" checked disabled type="checkbox" label={agent.id} id={`checkbox${agent.id}`} onChange={e => this.toggleCheckbox(agent.id)} /> :
                 <input className="form-check-input" type="checkbox" label={agent.id} id={`checkbox${agent.id}`} onChange={this.toggleCheckbox.bind(this, agent.id)}/>
             return (
-                <div className="form-check" key={key} >
+                <div className="form-check" key={agent.id} >
                     {Input}
                     <label className="form-check-label" htmlFor={`checkbox${agent.id}`}>
                         {agent.name}

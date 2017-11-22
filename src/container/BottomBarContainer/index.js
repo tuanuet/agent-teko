@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import BottomBar from '../../components/BottomBar';
-import {uploadImage} from './actions';
+import {uploadFile} from './actions';
 import * as types from '../../constants/actionTypes';
 import AcceptRoom from '../../components/BottomBar/AcceptRoom';
 import ReopenRoom from '../../components/BottomBar/ReopenRoom';
@@ -52,11 +52,11 @@ function mapStateToProps(state) {
     };
 }
 function mapDispatchToProps(dispatch) {
-    return{
+    return {
         actions: bindActionCreators({...{}, ...roomActions}, dispatch),
         dispatch,
-        uploadImage: (formData,msg,msgToState) => {
-            dispatch(uploadImage(formData,msg,msgToState));
+        uploadFile: data => {
+            dispatch(uploadFile(data))
         },
         adminSendRequestJoinRoom: room => {
             dispatch({type: types.JOIN_ROOM_TO_NODE_SERVER, room});

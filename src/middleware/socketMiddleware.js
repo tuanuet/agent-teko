@@ -67,6 +67,10 @@ export function socketMiddleware() {
                     store.dispatch({type: types.REOPEN_ROOM_SUCCEED, room: dataEmit})
                 }
             })
+        } else if (socket && action.type === types.UPLOAD_FILE) {
+            socket.emit('client-send-attachment', action.data, ack => {
+
+            })
         }
         return result
     }
@@ -76,9 +80,9 @@ const initAgent = store => {
     store.dispatch(agentRequested())
     return axios.get(`${API_URL}/api/fetch-admin-info`)
         .then(res => res.data)
-        .then(agent => {
-            store.dispatch(agentSucceed(agent))
-            return agent
+        .then(data => {
+            store.dispatch(agentSucceed(data.agent))
+            return data
         }).catch(err => store.dispatch(agentFailure()))
 }
 
@@ -111,61 +115,67 @@ function getMessageFromServer(message) {
         createdAt
     }
 }
-export default () => {
+export default async () => {
 
-    socket = io(`${NODE_URL}/chat`)
+    const { agent, token } = await initAgent(store)
+    socket = io.connect(`${NODE_URL}/chat`)
 
-    initAgent(store).then(agent => {
+    socket.emit('handshake', token, (ack, msg) => {
+        if (!ack) {
+            alert(msg)
+            return false
+        }
+
         socket.emit('admin-join-default-room', { adminId: agent.id }, ack => {
             console.log('Admin join room default', ack)
         })
-    })
 
-    socket.on('server-send-admin-join-room-succeed', data => {
-        const { agentId, roomId } = data
-        if (store.getState().agent.id === agentId) return
-        store.dispatch({type: types.REMOVE_ROOM, roomId})
-    })
-
-    socket.on('server-send-room-enable', data => {
-        console.log('Server send room enable');
-        const room = getRoomFromServer(data)
-        store.dispatch(addEnableRoom(room))
-    })
-
-    socket.on('server-send-auto-assigned-room', data => {
-        console.log('Server send auto assigned room', data);
-        const room = getRoomFromServer(data)
-        store.dispatch(addAvailableRoom(room))
-        if (store.getState().rooms.find(r => r.customer.id === room.customer.id)) {
-            store.dispatch({ type: types.ADMIN_CHOOSE_ROOM, roomId: room.roomId })
-        }
-    })
-
-    socket.on('server-send-message', msg => {
-        console.log('Server send message');
-        const { roomId } = msg
-        const message = getMessageFromServer(msg)
-
-        store.dispatch(addMessageForRoom(roomId, message))
-    })
-
-    socket.on('close-room-to-other-agents', roomId => {
-        console.log('Server send close room to other agents')
-        store.dispatch(chatActions.setStatusOfRoomSucceed(roomId, 3))
-    })
-
-    socket.on('reconnect', () => {
-        socket.emit('admin-join-default-room', { adminId: store.getState().agent.id }, ack => {
-            console.log('Admin join room default', ack)
+        socket.on('server-send-admin-join-room-succeed', data => {
+            const { agentId, roomId } = data
+            if (store.getState().agent.id === agentId) return
+            store.dispatch({type: types.REMOVE_ROOM, roomId})
         })
-        socket.emit('admin-re-join-room', store.getState().rooms, ack => {
-            if (!ack) {
-                console.log('Rejoin all available socket failed')
-                store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms))
-            } else {
-                console.log('Rejoin all available socket success')
+
+        socket.on('server-send-room-enable', data => {
+            console.log('Server send room enable');
+            const room = getRoomFromServer(data)
+            store.dispatch(addEnableRoom(room))
+        })
+
+        socket.on('server-send-auto-assigned-room', data => {
+            console.log('Server send auto assigned room', data);
+            const room = getRoomFromServer(data)
+            store.dispatch(addAvailableRoom(room))
+            if (store.getState().rooms.find(r => r.customer.id === room.customer.id)) {
+                store.dispatch({ type: types.ADMIN_CHOOSE_ROOM, roomId: room.roomId })
             }
+        })
+
+        socket.on('server-send-message', msg => {
+            console.log('Server send message');
+            const { roomId } = msg
+            const message = getMessageFromServer(msg)
+
+            store.dispatch(addMessageForRoom(roomId, message))
+        })
+
+        socket.on('close-room-to-other-agents', roomId => {
+            console.log('Server send close room to other agents')
+            store.dispatch(chatActions.setStatusOfRoomSucceed(roomId, 3))
+        })
+
+        socket.on('reconnect', () => {
+            socket.emit('admin-join-default-room', { adminId: store.getState().agent.id }, ack => {
+                console.log('Admin join room default', ack)
+            })
+            socket.emit('admin-re-join-room', store.getState().rooms, ack => {
+                if (!ack) {
+                    console.log('Rejoin all available socket failed')
+                    store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms))
+                } else {
+                    console.log('Rejoin all available socket success')
+                }
+            })
         })
     })
 

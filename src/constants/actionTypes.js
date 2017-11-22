@@ -86,3 +86,11 @@ export const FETCH_MORE_MESSAGES_FAILED = 'FETCH_MORE_MESSAGES_FAILED';
 
 export const REMOVE_ROOM = 'REMOVE_ROOM'
 export const AGENT_HANDLE_ALL_ROOM = 'AGENT_HANDLE_ALL_ROOM'
+
+export const FETCH_META = 'app/BottomBarContainer/FETCH_META';
+export const FETCH_META_SUCCESS = 'app/BottomBarContainer/FETCH_META_SUCCESS';
+export const FETCH_META_FAILURE = 'app/BottomBarContainer/FETCH_META_FAILURE';
+
+export const UPLOAD_FILE ='app/BottomBarContainer/UPLOAD_FILE';
+export const UPLOAD_FILE_SUCCESS ='app/BottomBarContainer/UPLOAD_FILE_SUCCESS';
+export const UPLOAD_FILE_FAILURE ='app/BottomBarContainer/UPLOAD_FILE_FAILURE';
