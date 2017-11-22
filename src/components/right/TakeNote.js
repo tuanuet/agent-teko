@@ -9,13 +9,13 @@ const TakeNote = ({newNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteSt
                 placeholder="Thêm ghi chú"
                 onChange={updateNoteState}
                 value={newNote}
-                onKeyUp={handleOnKeyUpTakeNote.bind(this)}
+                onKeyUp={handleOnKeyUpTakeNote}
             />
             <input
                 className="btn btn-primary save-note"
                 type="button"
                 value="Lưu"
-                onClick={onClickSaveNote.bind(this)}
+                onClick={onClickSaveNote}
             />
         </div>
     );

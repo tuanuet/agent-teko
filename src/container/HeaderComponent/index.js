@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from './actions'
+import { API_URL } from '../../constants/Server'
 
 class HeaderContainer extends React.Component {
 
@@ -25,6 +26,9 @@ class HeaderContainer extends React.Component {
         const { currentAgent } = this.props
         return <header className="clearfix">
             <div className="float-left">
+                <a href={API_URL} className="clickable" style={{ marginRight: '15px', color: 'white' }}>
+                    <i className="fa fa-chevron-left" aria-hidden="true"></i>
+                </a>
                 Xin chào, {currentAgent.name}
             </div>
             <div className="float-right" style={{ marginRight: '50px'}}>

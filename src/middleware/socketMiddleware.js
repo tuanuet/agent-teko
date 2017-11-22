@@ -22,7 +22,6 @@ export function socketMiddleware() {
         const result = next(action)
         if (socket && action.type === types.JOIN_ROOM_TO_NODE_SERVER) {
             socket.emit('admin-join-room', action.room.roomId, (ack, newRoom) => {
-                // TODO: handle error notify
                 if (!ack) return
                 store.dispatch({type: types.JOIN_ROOM_SUCCEED, room: newRoom})
             })

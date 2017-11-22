@@ -5,11 +5,10 @@ class ListAgent extends React.Component {
 
     constructor(props){
         super(props);
-        this.toggleCheckbox = this.toggleCheckbox.bind(this);
         this.selectAgents = []
     }
 
-    toggleCheckbox(agentId) {
+    toggleCheckbox = agentId => {
         if (this.selectAgents.includes(agentId)) {
             const index = this.selectAgents.indexOf(agentId)
             this.selectAgents.splice(index, 1)
@@ -23,7 +22,7 @@ class ListAgent extends React.Component {
 
         return agents.map((agent,key) => {
             const exist = roomAgents.find(ra => ra.id === agent.id)
-            const Input = exist ? <input className="form-check-input" checked disabled type="checkbox" label={agent.id} id={`checkbox${agent.id}`} onChange={this.toggleCheckbox.bind(this, agent.id)} /> :
+            const Input = exist ? <input className="form-check-input" checked disabled type="checkbox" label={agent.id} id={`checkbox${agent.id}`} onChange={e => this.toggleCheckbox(agent.id)} /> :
                 <input className="form-check-input" type="checkbox" label={agent.id} id={`checkbox${agent.id}`} onChange={this.toggleCheckbox.bind(this, agent.id)}/>
             return (
                 <div className="form-check" key={key} >

@@ -7,6 +7,8 @@ export default function currentRoomIdReducer(state=initialState.currentRoomId, a
             return action.roomId;
         case types.REOPEN_ROOM_SUCCEED:
             return action.room.roomId;
+        case types.REMOVE_ROOM:
+            return state === action.roomId ? null : state
         default:
             return state;
     }

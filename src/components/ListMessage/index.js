@@ -35,23 +35,6 @@ function getListChat(messages) {
 
 class ListMessage extends React.Component {
 
-    componentWillReceiveProps = (nextProps) => {
-        const { actions, currentRoomId } = this.props
-
-        if (currentRoomId !== nextProps.currentRoomId) {
-            if (nextProps.messages.length < config.MESSAGE_PAGING_VALUE && nextProps.nextFetchingRoom !== -1) {
-                actions.fetchMoreMessages(nextProps.nextFetchingRoom, nextProps.currentRoomId)
-            }
-        }
-    }
-
-    componentDidMount = () => {
-        const { messages, nextFetchingRoom } = this.props
-        if (messages.length < config.MESSAGE_PAGING_VALUE && nextFetchingRoom !== -1) {
-            this.fetchMoreMessages()
-        }
-    }
-
     fetchMoreMessages = () => {
         const { actions, currentRoomId, nextFetchingRoom } = this.props
         actions.fetchMoreMessages(nextFetchingRoom, currentRoomId)

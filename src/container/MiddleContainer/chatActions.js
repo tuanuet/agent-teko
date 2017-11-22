@@ -1,10 +1,12 @@
 import * as types from '../../constants/actionTypes';
 
-var firstCallOf_messagesFetchRequested = [];
+let firstCallOf_messagesFetchRequested = []
+
+export { firstCallOf_messagesFetchRequested }
 
 export function messagesFetchRequested(room) {
     if (firstCallOf_messagesFetchRequested[room.roomId] == undefined) {
-        firstCallOf_messagesFetchRequested[room.roomId] = 1;
+        firstCallOf_messagesFetchRequested[room.roomId] = true;
         return {type: types.MESSAGES_FETCH_REQUESTED, room}
     } else {
         return {type: "NOTHING_TO_DO"};

@@ -11,7 +11,7 @@ import * as roomActions from '../LeftContainer/roomActions';
 
 class BottomBarContainer extends React.Component {
 
-    sendRequestJoinRoom() {
+    sendRequestJoinRoom = () => {
         const { currentRoom } = this.props;
         this.props.adminSendRequestJoinRoom(currentRoom);
         const $ = window.jQuery = window.$
@@ -38,7 +38,7 @@ class BottomBarContainer extends React.Component {
             return false
         }
         if (currentRoom.roomStatus === 1) {
-            return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom.bind(this)} />
+            return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom} />
         }
         return <BottomBar {...this.props} />
     }

@@ -20,7 +20,7 @@ class BottomBar extends React.Component {
         super(props)
         this.state = {isShowEmojiBoard: false}
     }
-    enter(e) {
+    enter = e => {
         if (e.charCode === 13) {
             this.send()
         }
@@ -42,8 +42,8 @@ class BottomBar extends React.Component {
         }
     }
 
-    send() {
-
+    send = () => {
+        if (this.refs.chat.value == '') return false
         const msg = this.getMessageToSendServer()
 
         console.log('Message send:', msg)
@@ -57,7 +57,7 @@ class BottomBar extends React.Component {
         this.setState({isShowEmojiBoard: false})
     }
 
-    uploadImage() {
+    uploadImage = () => {
         let msgToServer = this.getMessageToSendServer()
         let msgToState = getMessageFromClient(msgToServer)
         let input = this.refs.attach
@@ -84,7 +84,7 @@ class BottomBar extends React.Component {
         this.refs.chat.value = this.refs.chat.value + emoji
     }
 
-    showEmojiBoard() {
+    showEmojiBoard = () => {
         this.setState({isShowEmojiBoard: !this.state.isShowEmojiBoard})
     }
 
@@ -97,17 +97,17 @@ class BottomBar extends React.Component {
         return (
             <div className="bottom">
                 <div className="chat-input">
-                    <input className="form-control" ref="chat" onKeyPress={this.enter.bind(this)} type="text"
+                    <input className="form-control" ref="chat" onKeyPress={this.enter} type="text"
                     placeholder="Type here"/>
                 </div>
                 <div className="icon-button">
-                    {/* <i className="fa fa-smile-o" onClick={this.showEmojiBoard.bind(this)}/> */}
+                    {/* <i className="fa fa-smile-o" onClick={this.showEmojiBoard}/> */}
                     <label>
-                        <input type="file" accept="image/*" ref="attach" onChange={this.uploadImage.bind(this)}/>
+                        <input type="file" accept="image/*" ref="attach" onChange={this.uploadImage}/>
                         <i className="fa fa-paperclip"/>
                     </label>
                     {/* <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true"
-                    onClick={this.send.bind(this)}/></a> */}
+                    onClick={this.send}/></a> */}
                 </div>
                 {this.state.isShowEmojiBoard && <EmojiBoard/>}
             </div>
