@@ -1,12 +1,8 @@
 {
-  "name": "socket.io",
+  "name": "client-app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "eslint-client": "eslint ./src/client --fix",
-    "eslint-server": "eslint ./src/server --fix",
-    "start": "babel-node ./src/server/app",
-    "r": "pm2 stop all && npm start && pm2 logs",
     "build": "webpack -p --config webpack.config.dev.js",
     "watch": "webpack -d --config webpack.config.dev.js --watch"
   },

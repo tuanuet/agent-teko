@@ -9,34 +9,42 @@ import * as MessageTypes from '../../constants/MessageTypes';
 import * as config from '../../constants/config'
 import Attachment from '../Message/Attachment'
 
-function getListChat(messages) {
-    return messages ? messages.map((e, i) => {
+const getListChat = messages => {
+    return messages ? messages.map(e => {
         switch (e.messageType) {
-        case MessageTypes.NOTIFICATION:
-            return <Notification content={e.message.content} key={i}/>;
-        case MessageTypes.RATING:
-            return <Rating key={i}/>;
         case MessageTypes.IMAGE:
-            return <Image key={i} message={e}/>;
-        case MessageTypes.ATTACHMENT_PDF:
-        case MessageTypes.ATTACHMENT_WORD:
-        case MessageTypes.ATTACHMENT_EXCEL:
+            return <Image
+                key={`${e.messageId}_${e.fileName}`}
+                message={e}
+            />
         case MessageTypes.FILE:
-            return <Attachment key={i} message={e}/>;
+            return <Attachment
+                key={`${e.messageId}_${e.fileName}`}
+                message={e}
+            />
         case MessageTypes.AUDIO:
-            return <Audio key={i} message={e} />
+            return <Audio
+                key={`${e.messageId}_${e.fileName}`}
+                message={e}
+            />
         case MessageTypes.VIDEO:
-            return <Video key={i} message={e} />
+            return <Video
+                key={`${e.messageId}_${e.fileName}`}
+                message={e}
+            />
         default:
-            return <Default message={e} key={i}/>;
+            return <Default
+                message={e}
+                key={`${e.messageId}_${e.fileName}`}
+            />
         }
-    }) : false;
+    }) : false
 }
 
 class ListMessage extends React.Component {
     componentWillReceiveProps(nextProps) {
-        const { currentRoomId, messages, actions, nextFetchingRoom, isLoadingMessages } = this.props
-        const { currentRoomId: nextRoomId, messages: nextMessages} = nextProps
+        const { currentRoomId, messages, actions, nextFetchingRoom } = this.props
+        const { currentRoomId: nextRoomId, messages: nextMessages, isLoadingMessages} = nextProps
 
         if (currentRoomId !== nextRoomId) return false
 
@@ -52,7 +60,7 @@ class ListMessage extends React.Component {
 
     render() {
         const { messages, nextFetchingRoom, isLoadingMessages } = this.props
-        let listMsg = getListChat(messages);
+        const listMsg = getListChat(messages)
 
         return (
             <ol className="chat">
@@ -65,7 +73,7 @@ class ListMessage extends React.Component {
                     <span className="sr-only">Loading...</span>
                 </div> }
                 <div style={ !isLoadingMessages ? { marginTop: '20px' } : {}}>
-                    {listMsg}
+                    { listMsg }
                 </div>
             </ol>
         );

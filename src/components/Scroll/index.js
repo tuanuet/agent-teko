@@ -53,7 +53,10 @@ class Scroll extends React.Component {
         const { theme } = this.props
         return (
             <div className={`body ${theme}`}  ref={(el) => { this.messagesContainer = el }}>
-                <ListMessage {...this.props} calculateScroll={this.calculateScroll} />
+                <ListMessage
+                    {...this.props}
+                    calculateScroll={this.calculateScroll}
+                />
                 <div style={{float: 'left', clear: 'both'}}>
                 </div>
             </div>

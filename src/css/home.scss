@@ -170,7 +170,7 @@ header {
       overflow-y: auto;
       overflow-x: hidden;
       .content > img {
-        max-width: 300px;
+        max-width: 400px;
         height: auto;
         margin: 0 8px 10px 8px;
         border-radius: 16px;
@@ -371,4 +371,18 @@ header {
 
 .message-audio {
     border-radius: 16px;
+}
+
+.loading-attachment {
+    width: 128px;
+    height: 128px;
+    display: inline-flex;
+    background-color: #f4f4f4;
+    border: 1px solid #777777;
+    border-radius: 16px;
+
+    > .spinner {
+        margin: auto;
+        align-self: center;
+    }
 }

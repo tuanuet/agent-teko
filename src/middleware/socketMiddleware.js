@@ -104,8 +104,9 @@ function getRoomFromServer(dataEmit) {
 }
 
 function getMessageFromServer(message) {
-    const { senderId, senderName, messageType, messageFrom, content, fileName, createdAt } = message
+    const { messageId, senderId, senderName, messageType, messageFrom, content, fileName, createdAt } = message
     return {
+        messageId,
         senderId,
         senderName,
         messageType,
