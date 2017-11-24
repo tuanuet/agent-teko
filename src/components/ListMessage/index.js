@@ -49,7 +49,9 @@ class ListMessage extends React.Component {
         if (currentRoomId !== nextRoomId) return false
 
         if (messages.length === 0 && nextMessages.length < config.MESSAGE_PAGING_VALUE && isLoadingMessages === false) {
-            actions.fetchMoreMessages(nextFetchingRoom, currentRoomId)
+            if (nextProps.nextFetchingRoom !== -1) {
+                actions.fetchMoreMessages(nextProps.nextFetchingRoom, currentRoomId)
+            }
         }
     }
 

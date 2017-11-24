@@ -13,6 +13,7 @@ import {
     agentSucceed,
     addMessageForRoom,
 } from '../actions/action'
+import { firstCallOf_messagesFetchRequested } from '../container/MiddleContainer/chatActions'
 
 let socket = null
 import store from '../store/store'
@@ -64,12 +65,13 @@ export function socketMiddleware() {
                 if (!ack) {
                     alert(`Có lỗi xảy ra khi mở lại hội thoại. Vui lòng thử lại sau.`)
                 } else {
+                    firstCallOf_messagesFetchRequested[dataEmit.roomId] = true
                     store.dispatch({type: types.REOPEN_ROOM_SUCCEED, room: dataEmit})
                 }
             })
         } else if (socket && action.type === types.UPLOAD_FILE) {
-            socket.emit('client-send-attachment', action.data, ack => {
-
+            socket.emit('client-send-attachment', action.data, (ack, msg) => {
+                if (!ack) alert(`Có lỗi xảy ra. Vui lòng thử lại sau.\n\nChi tiết lỗi: ${msg}`)
             })
         }
         return result
@@ -126,7 +128,6 @@ export default async () => {
             alert(msg)
             return false
         }
-
         socket.emit('admin-join-default-room', { adminId: agent.id }, ack => {
             console.log('Admin join room default', ack)
         })
@@ -147,13 +148,13 @@ export default async () => {
             console.log('Server send auto assigned room', data);
             const room = getRoomFromServer(data)
             store.dispatch(addAvailableRoom(room))
-            if (store.getState().rooms.find(r => r.customer.id === room.customer.id)) {
-                store.dispatch({ type: types.ADMIN_CHOOSE_ROOM, roomId: room.roomId })
-            }
+            // if (store.getState().rooms.find(r => r.customer.id === room.customer.id)) {
+            //     store.dispatch({ type: types.ADMIN_CHOOSE_ROOM, roomId: room.roomId })
+            // }
         })
 
         socket.on('server-send-message', msg => {
-            console.log('Server send message');
+            console.log('Server send message', msg);
             const { roomId } = msg
             const message = getMessageFromServer(msg)
 

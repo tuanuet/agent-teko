@@ -23,7 +23,7 @@ class HeaderContainer extends React.Component {
     }
 
     render() {
-        const { currentAgent, currentRoom } = this.props
+        const { currentAgent } = this.props
         return <header className="clearfix">
             <div className="float-left">
                 <a href={API_URL} className="clickable" style={{ marginRight: '15px', color: 'white' }} title="Quay lại trang Dashboard">
@@ -31,7 +31,7 @@ class HeaderContainer extends React.Component {
                 </a>
                 Xin chào, {currentAgent.name}
             </div>
-            { currentRoom && currentRoom.roomStatus !== 3 && <div className="float-right" style={{ marginRight: '50px'}}>
+            <div className="float-right" style={{ marginRight: '50px'}}>
                 { currentAgent.isBroadcast == 0 && <span
                     className="clickable"
                     data-toggle="tooltip"
@@ -50,7 +50,7 @@ class HeaderContainer extends React.Component {
                     <i className="fa fa-volume-control-phone" style={{marginRight: '5px'}}></i>
                     Đang trực
                 </span> }
-            </div> }
+            </div>
         </header>
     }
 }

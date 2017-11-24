@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { ACCESS_TOKEN } from '../../constants/config'
+import { ACCESS_TOKEN } from '../../constants/Server'
 
 export default class Image extends React.Component {
     constructor(props) {

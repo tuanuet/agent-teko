@@ -6,6 +6,7 @@ import moment from 'moment'
 const getMessageFromClient = message => {
     const { senderId, senderName, messageType, messageFrom, content, fileName, createdAt } = message
     return {
+        messageId: moment().format('x'),
         senderId,
         senderName,
         messageType,
@@ -46,8 +47,6 @@ class BottomBar extends React.Component {
         if (this.refs.chat.value == '') return false
         const msg = this.getMessageToSendServer()
 
-        console.log('Message send:', msg)
-
         this.props.dispatch(actions.addMessageForRoom(msg.roomId, getMessageFromClient(msg)))
 
         this.props.dispatch(actions.clientSendMessage(msg))
@@ -58,14 +57,22 @@ class BottomBar extends React.Component {
     }
 
     uploadImage = e => {
-        const { uploadFile } = this.props
+        const { currentRoom, agent, uploadFile } = this.props
         const input = this.refs.attach
 
         if (input.files && input.files[0]) {
             uploadFile({
                 data: input.files[0],
                 type: input.files[0].type,
-                name: input.files[0].name
+                name: input.files[0].name,
+                room: {
+                    roomId: currentRoom.roomId,
+                    roomType: currentRoom.roomType,
+                    senderId: agent.id,
+                    senderName: agent.name,
+                    messageFrom: 0,
+                    customer: currentRoom.customer,
+                }
             })
             this.refs.attach.value = ''
         }

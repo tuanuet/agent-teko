@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { ACCESS_TOKEN } from '../../constants/config'
+import { ACCESS_TOKEN } from '../../constants/Server'
 
 class Video extends Component {
     constructor(props) {
@@ -36,7 +36,7 @@ class Video extends Component {
         const { isLoading, content } = this.state
         const role = message.messageFrom === 0 ? 'self' : 'other'
 
-        return <div className="message-margin">
+        return <div className={`message-margin ${role}`}>
             { isLoading ? <div className="loading-attachment">
                 <i className="spinner fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
             </div> : <video onError={this.handleErrorContent} className="message-video" width="480" controls>

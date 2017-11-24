@@ -55,7 +55,14 @@ export default function roomReducer(state=initialState.rooms, action) {
         case types.ADD_ROOM_AVAILABLE:
             return [ action.room, ...state.filter(room => room.customer.id !== action.room.customer.id) ]
         case types.REOPEN_ROOM_SUCCEED:
-            return [ action.room, ...state.filter(room => room.customer.id !== action.room.customer.id) ]
+            const oldRoom = state.find(room => room.customer.id === action.room.customer.id)
+            return [
+                {...action.room,
+                    messages: oldRoom.messages,
+                    nextFetchingRoom: oldRoom.nextFetchingRoom
+                },
+                ...state.filter(room => room.customer.id !== action.room.customer.id)
+            ]
         case types.JOIN_ROOM_SUCCEED:
             return state.map(room => {
                 if (room.roomId !== action.room.roomId) {
