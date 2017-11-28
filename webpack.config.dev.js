@@ -4,9 +4,9 @@ const WebpackShellPlugin = require('webpack-shell-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 const isProduction = process.env.NODE_ENV == 'production'
-// 'cheap-module-eval-source-map'
+
 module.exports = {
-    devtool: isProduction ? 'source-map' : 'eval',
+    devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
     entry: [
         './src/index'
     ],
@@ -39,7 +39,8 @@ module.exports = {
         new WebpackShellPlugin({
             onBuildStart: [],
             onBuildExit: [
-                'cp ./static/main-bundle.js ../live-chat/public/js/client/'
+                'cp ./static/main-bundle.js ../live-chat/public/js/client/',
+                'cp ./static/main-bundle.js.map ../live-chat/public/js/client/'
             ]
         })
     ].concat(isProduction ? [
