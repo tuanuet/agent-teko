@@ -11,8 +11,13 @@ class LeftComponent extends React.Component {
         super(props)
         this.state = {
             currentTab: 'available',
-            searchValue: ''
+            searchValue: '',
+            now: Date.now()
         }
+    }
+
+    componentDidMount() {
+        this.updateInterval = setInterval(() => this.setState({ now: Date.now() }), 1000 * 60)
     }
 
     changeCurrentTab = value => {
@@ -25,6 +30,10 @@ class LeftComponent extends React.Component {
         this.setState({
             searchValue: e.target.value
         })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.updateInterval)
     }
 
     render() {
