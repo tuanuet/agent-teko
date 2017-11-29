@@ -26,9 +26,9 @@ function* fetchListOfTags() {
     }
 }
 
-function* fetchClosedRoom() {
+function* fetchClosedRoom(action) {
     try {
-        const closedRooms = yield call(roomApi.closedRoomsFetchRequested);
+        const closedRooms = yield call(roomApi.closedRoomsFetchRequested, action.offset, action.limit);
         yield put(roomActions.fetchClosedRoomsSucceed(closedRooms));
     } catch (e) {
         console.log('Failed to closed rooms', e.message);

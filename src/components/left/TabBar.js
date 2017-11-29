@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { firstCallOf_closedRoomsRequested } from '../../container/LeftContainer/roomActions'
 
 const Tab = ({currentTab, numberOfEnableRooms, loadClosedRoom, changeCurrentTab}) => {
     return (
@@ -12,7 +13,7 @@ const Tab = ({currentTab, numberOfEnableRooms, loadClosedRoom, changeCurrentTab}
                         <span className="badge badge-danger">{numberOfEnableRooms}</span>
                     </a>
                 </li>
-                <li className="nav-item" onClick={e => { changeCurrentTab('closed'); loadClosedRoom(); }}>
+                <li className="nav-item" onClick={e => { changeCurrentTab('closed'); if (!firstCallOf_closedRoomsRequested) loadClosedRoom(); }}>
                     <a className={`nav-link ${currentTab === 'closed' && 'active'}`} data-toggle="tab" href="#closedchat" role="tab">Lịch sử chat</a>
                 </li>
             </ul>

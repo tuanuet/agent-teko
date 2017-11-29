@@ -124,22 +124,22 @@ header {
             cursor: pointer;
           }
         }
-        .selectpicker{
+        .selectpicker {
           margin-left: 3px;
         }
-        .list-tag{
+        .list-tag {
           margin-top: 10px;
           margin-right: 5px;
-          display: flex;
-          justify-content: flex-start;
+          display: inline-block;
         }
         .tag {
           border: none;
           border-radius: 20px;
           background-color: $primary;
-          padding: 2px 16px;
+          padding: 3px 16px;
           color: white;
           margin-right: 5px;
+          margin-bottom: 5px;
           &:hover{
             cursor: pointer;
           }

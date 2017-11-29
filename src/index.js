@@ -9,7 +9,8 @@ require('babel-core/register');
 require('babel-polyfill');
 
 import moment from 'moment'
-moment.locale('vi')
+import vietnamLocation from 'moment/locale/vi'
+moment.locale('vi', vietnamLocation)
 
 startConnection();
 store.dispatch(roomsFetchRequested());

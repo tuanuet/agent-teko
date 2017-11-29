@@ -34,7 +34,7 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
 };
 
 
-const ClosedRooms = ({currentTab, closedRooms, adminChooseRoom, currentRoomId}) => {
+const ClosedRooms = ({currentTab, closedRooms, adminChooseRoom, currentRoomId, loadMoreClosedRoom}) => {
     return (
         <div className={`tab-pane ${currentTab === 'closed' && 'active'}`} id="closedchat" role="tabpanel">
             {closedRooms.map((closedRoom, index) => {
@@ -45,7 +45,9 @@ const ClosedRooms = ({currentTab, closedRooms, adminChooseRoom, currentRoomId}) 
                     adminChooseRoom={adminChooseRoom} />
                 }
             )}
-
+            <div className="text-center clickable" onClick={loadMoreClosedRoom} style={{ color: '#2b7ec9' }}>
+                Tải thêm
+            </div>
         </div>
     );
 };

@@ -12,9 +12,12 @@ class RoomApi {
             .then(res => res.data);
     }
 
-    static closedRoomsFetchRequested(){
-        return axios.get(apiType.LOAD_CLOSED_ROOMS)
-            .then(res => res.data);
+    static closedRoomsFetchRequested(offset, limit) {
+        return axios.get(apiType.LOAD_CLOSED_ROOMS,{
+            params: {
+                offset, limit
+            }
+        }).then(res => res.data);
     }
 
 }

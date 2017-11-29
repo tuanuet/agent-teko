@@ -12,7 +12,8 @@ class LeftComponent extends React.Component {
         this.state = {
             currentTab: 'available',
             searchValue: '',
-            now: Date.now()
+            now: Date.now(),
+            loadingMoreClosedRoom: false
         }
     }
 
@@ -30,6 +31,15 @@ class LeftComponent extends React.Component {
         this.setState({
             searchValue: e.target.value
         })
+    }
+
+    loadMoreClosedRoom = () => {
+        this.setState({
+            loadingMoreClosedRoom: true
+        }, () => {
+            this.props.loadClosedRoom()
+        })
+
     }
 
     componentWillUnmount() {
@@ -82,6 +92,7 @@ class LeftComponent extends React.Component {
                     closedRooms={closedRooms}
                     currentRoomId={currentRoomId}
                     adminChooseRoom={adminChooseRoom}
+                    loadMoreClosedRoom={this.loadMoreClosedRoom}
                 />
             </div>
         </div>

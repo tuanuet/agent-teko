@@ -26,7 +26,8 @@ class LeftContainer extends React.Component {
     }
 
     loadClosedRoom() {
-        this.props.actions.loadClosedRoomRequested();
+        const numberOfClosedRoom = this.props.rooms.filter(room => room.roomStatus === 3).length
+        this.props.actions.loadClosedRoomRequested(numberOfClosedRoom, 30);
     }
 
     /**
