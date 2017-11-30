@@ -108,7 +108,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const {listOfTags, tagsOfRoom, agents} = this.props
+        const { currentRoom, listOfTags, tagsOfRoom, agents } = this.props
         let lookup = _.keyBy(tagsOfRoom, tag => tag.id)
         let availableTags = _.filter(listOfTags, item => {
             return lookup[item.id] === undefined
@@ -125,7 +125,7 @@ class Header extends React.Component {
         return (
             <div className="header">
                 <div className="title">
-                    <div className="group-button">
+                    { currentRoom.roomStatus !== 1 && <div className="group-button">
                         {/* <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
                         data-target="#exampleModal"><i
                             className="fa fa-wrench" onClick={this.showTheme}/></button> */}
@@ -135,7 +135,7 @@ class Header extends React.Component {
                         {/* <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></button> */}
                         <button className="red clickable" data-toggle="tooltip" data-placement="top" title="Đóng phòng chat"><i className="fa fa-times" onClick={this.unFollowRoom}/></button>
                         { modal }
-                    </div>
+                    </div> }
                 </div>
 
                 <div className="room-tag">

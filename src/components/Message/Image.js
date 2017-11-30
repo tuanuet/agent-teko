@@ -30,7 +30,7 @@ export default class Image extends React.Component {
                     isLoading: false,
                     content: url
                 })
-            }).catch(err => console.log(err))
+            }).catch(err => console.log(`Sticker err`, err))
         } else {
             axios.request({
                 method: 'get',
@@ -45,7 +45,7 @@ export default class Image extends React.Component {
                     isLoading: false,
                     content: link
                 })
-            }).catch(err => console.log(err))
+            }).catch(err => console.log(`Image err`, err))
         }
     }
     render() {

@@ -8,12 +8,11 @@ class Scroll extends React.Component {
         super(props)
         this.activeScroll = false
         this.currentChatHeight = 0
-        this.scrollToBottom = this.scrollToBottom.bind(this)
     }
 
-    scrollToBottom() {
-        const messagesContainer = ReactDOM.findDOMNode(this.messagesContainer)
-        messagesContainer.scrollTop = messagesContainer.scrollHeight
+    scrollToBottom = () => {
+        const chatNode = ReactDOM.findDOMNode(this.messagesContainer)
+        chatNode.scrollIntoView(false)
     }
 
     componentDidMount() {
@@ -32,19 +31,14 @@ class Scroll extends React.Component {
         }
     }
 
-    calculateScroll = () => {
-        this.activeScroll = false
-    }
-
     componentDidUpdate = () => {
         const chatNode = ReactDOM.findDOMNode(this.messagesContainer)
-
         if (this.activeScroll) {
             this.scrollToBottom()
             this.activeScroll = false
             this.currentChatHeight = chatNode.scrollHeight
         } else if (this.currentChatHeight !== chatNode.scrollHeight) {
-            chatNode.scrollTop = chatNode.scrollHeight - this.currentChatHeight
+            chatNode.parentNode.scrollTop = chatNode.scrollHeight - this.currentChatHeight
             this.currentChatHeight = chatNode.scrollHeight
         }
     }
@@ -52,10 +46,11 @@ class Scroll extends React.Component {
     render() {
         const { theme } = this.props
         return (
-            <div className={`body ${theme}`}  ref={(el) => { this.messagesContainer = el }}>
+            <div className={`body ${theme}`} >
                 <ListMessage
+                    ref={el => { this.messagesContainer = el }}
                     {...this.props}
-                    calculateScroll={this.calculateScroll}
+                    scrollToBottom={this.scrollToBottom}
                 />
                 <div style={{float: 'left', clear: 'both'}}>
                 </div>

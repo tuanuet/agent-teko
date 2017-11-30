@@ -12,6 +12,7 @@ function* handleFetchMoreMessages(action) {
                 messages: response.messages,
                 nextFetchingRoom: response.nextFetchingRoom
             });
+            if (typeof (action.payload.callback) === 'function') action.payload.callback()
         } else {
             console.log('Error while fetching more messages');
             put({type: types.FETCH_MORE_MESSAGES_FAILED});

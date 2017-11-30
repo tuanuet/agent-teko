@@ -29,7 +29,7 @@ class Video extends Component {
                 isLoading: false,
                 content: url
             })
-        }).catch(err => console.log(err))
+        }).catch(err => console.log(`Video err`, err))
     }
     render() {
         const { message } = this.props
