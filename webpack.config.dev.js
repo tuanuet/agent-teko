@@ -45,7 +45,10 @@ module.exports = {
         })
     ].concat(isProduction ? [
         new UglifyJSPlugin({
-            sourceMap: true
+            sourceMap: false,
+            compress: {
+                drop_console: isProduction
+            }
         }),
         new webpack.DefinePlugin({
             'process.env': {
