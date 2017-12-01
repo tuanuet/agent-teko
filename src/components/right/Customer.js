@@ -7,8 +7,8 @@ const Customer = ({customer}) => {
 
             <div className="row">
                 <div className="col-md-10 customer-short-info">
-                    <p>{customer.name} {customer.fbId && `(FB user)`}</p>
-                    <p>{customer.phone}</p>
+                    <p>{customer.name}</p>
+                    <p>{customer.fbId ? `Khách hàng nhắn tin từ Facebook` : `Khách hàng nhắn tin từ Livechat`}</p>
                 </div>
 
             </div>

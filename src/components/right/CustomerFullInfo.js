@@ -1,19 +1,79 @@
-import React, {PropTypes} from 'react';
+import React, {PropTypes} from 'react'
 
 class CustomerFullInfo extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isEditPhone: false,
+            isSavingPhone: false,
+            currentPhoneNumber: props.customer.phone
+        }
+    }
+
+    handlePhoneChange = e => {
+        if (e.keyCode === 13) {
+            this.submitPhoneNumber()
+        } else this.setState({
+            currentPhoneNumber: e.target.value
+        })
+    }
+
+    togglePhoneNumber = () => {
+        const { customer: { phone } } = this.props
+
+        this.setState(prevState => ({
+            isEditPhone: !prevState.isEditPhone,
+            isSavingPhone: false,
+            currentPhoneNumber: phone
+        }))
+    }
+
+    submitPhoneNumber = () => {
+        const { actions, customer } = this.props
+        const { currentPhoneNumber } = this.state
+        this.setState({
+            isSavingPhone: true
+        })
+        actions.updatePhoneNumber(customer.id, currentPhoneNumber).then(res => {
+            this.setState({
+                isSavingPhone: false,
+                isEditPhone: false,
+            })
+        })
+    }
+
     render() {
         const { customer } = this.props
+        const { isEditPhone, isSavingPhone, currentPhoneNumber } = this.state
+
+        const inputStyle = {
+            marginLeft: '0.5em',
+            paddingLeft: '0.5em',
+        }
 
         return <div className="customer-full-info" id="collapseCustomerInfo">
             <div>
                 <p><i className="fa fa-user" aria-hidden="true"></i><strong>{customer.name}</strong></p>
             </div>
             <div>
-                <p><i className="fa fa-phone" aria-hidden="true"></i><strong>{customer.phone || 'Chưa  có'}</strong></p>
+                <p>
+                    <span>
+                        <i className="fa fa-phone" aria-hidden="true"></i>
+                        { isEditPhone
+                            ? <input value={currentPhoneNumber} onChange={this.handlePhoneChange} style={inputStyle} />
+                            : <strong>{customer.phone || 'Chưa  có'}</strong> }
+                    </span>
+                    { isEditPhone
+                        ? <span className="pull-right">
+                            { isSavingPhone
+                                ? <i className="fa fa-spin fa-circle-o-notch" aria-hidden="true" style={{marginRight: '0.5em'}}></i>
+                                : <i className="fa fa-check clickable" onClick={this.submitPhoneNumber} style={{marginRight: '0.5em'}}></i> }
+                            <i className="fa fa-times clickable" onClick={this.togglePhoneNumber}></i>
+                        </span>
+                        : <i className="fa fa-pencil clickable pull-right" aria-hidden="true" onClick={this.togglePhoneNumber}></i> }
+
+                </p>
             </div>
-            {/* <div>
-                <p><i className="fa fa-envelope-o" aria-hidden="true"></i><strong>{customer.email || 'Chưa  có'}</strong></p>
-            </div> */}
             { customer.fbId && <div>
                 <p>
                     <i className="fa fa-facebook-official" aria-hidden="true"></i>

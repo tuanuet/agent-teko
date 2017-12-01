@@ -93,7 +93,7 @@ class BottomBar extends React.Component {
             <div className="bottom">
                 <div className="chat-input">
                     <input className="form-control" ref="chat" onKeyPress={this.enter} type="text"
-                    placeholder="Type here"/>
+                    placeholder="Nhập tin nhắn"/>
                 </div>
                 <div className="icon-button">
                     {/* <i className="fa fa-smile-o" onClick={this.showEmojiBoard}/> */}

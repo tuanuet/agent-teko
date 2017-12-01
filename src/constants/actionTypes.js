@@ -94,3 +94,5 @@ export const FETCH_META_FAILURE = 'app/BottomBarContainer/FETCH_META_FAILURE';
 export const UPLOAD_FILE ='app/BottomBarContainer/UPLOAD_FILE';
 export const UPLOAD_FILE_SUCCESS ='app/BottomBarContainer/UPLOAD_FILE_SUCCESS';
 export const UPLOAD_FILE_FAILURE ='app/BottomBarContainer/UPLOAD_FILE_FAILURE';
+
+export const UPDATE_CUSTOMER_INFO_SUCCEED = 'UPDATE_CUSTOMER_INFO_SUCCEED'

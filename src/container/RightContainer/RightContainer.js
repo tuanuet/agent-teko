@@ -72,12 +72,13 @@ class RightContainer extends React.Component {
     }
 
     render() {
-        const {customer, notes, currentAgent, currentRoomId} = this.props;
+        const {customer, notes, currentAgent, currentRoomId, actions} = this.props;
         if (!currentRoomId) {
             return false
         }
         return (
             <RightComponent
+                actions={actions}
                 customer={customer}
                 currentAgent={currentAgent}
                 notes={notes}

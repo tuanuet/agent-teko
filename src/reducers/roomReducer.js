@@ -51,7 +51,18 @@ export default function roomReducer(state=initialState.rooms, action) {
                     notes: [...room.notes, action.note]
                 }
             })
+        case types.UPDATE_CUSTOMER_INFO_SUCCEED:
+            return state.map(room => {
+                if (room.customer.id !== action.customerId) return room
 
+                return {
+                    ...room,
+                    customer: {
+                        ...room.customer,
+                        phone: action.newPhoneNumber
+                    }
+                }
+            })
         case types.ADD_ROOM_AVAILABLE:
             return [ action.room, ...state.filter(room => room.customer.id !== action.room.customer.id) ]
         case types.REOPEN_ROOM_SUCCEED:
