@@ -128,6 +128,8 @@ export default async () => {
             alert(msg)
             return false
         }
+        console.log('Finish handshaking!');
+
         socket.emit('admin-join-default-room', { adminId: agent.id }, ack => {
             console.log('Admin join room default', ack)
         })
@@ -170,7 +172,7 @@ export default async () => {
             socket.emit('admin-join-default-room', { adminId: store.getState().agent.id }, ack => {
                 console.log('Admin join room default', ack)
             })
-            socket.emit('admin-re-join-room', store.getState().rooms, ack => {
+            socket.emit('admin-re-join-room', store.getState().rooms.filter(room => room.roomStatus !== 3).map(room => ({roomId: room.roomId})), ack => {
                 if (!ack) {
                     console.log('Rejoin all available socket failed')
                     store.dispatch(roomActions.reJoinRoomToSocketFailed(action.rooms))

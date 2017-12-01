@@ -29,7 +29,7 @@ class HeaderContainer extends React.Component {
                 <a href={API_URL} className="clickable" style={{ marginRight: '15px', color: 'white' }} title="Quay lại trang Dashboard">
                     <i className="fa fa-chevron-left" aria-hidden="true"></i>
                 </a>
-                Xin chào, {currentAgent.name}
+                <span title={currentAgent.role && currentAgent.role.name}>Xin chào, {currentAgent.name}</span>
             </div>
             <div className="float-right" style={{ marginRight: '50px'}}>
                 { currentAgent.isBroadcast == 0 && <span

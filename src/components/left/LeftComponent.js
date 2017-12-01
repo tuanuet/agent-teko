@@ -5,6 +5,7 @@ import AvailableRooms from './AvailableRooms'
 import EnableRooms from './EnableRooms'
 import ClosedRooms from './ClosedRooms'
 import * as config from '../../constants/config'
+import { CLOSED_ROOM_PAGING_VALUE } from '../../constants/config'
 
 class LeftComponent extends React.Component {
     constructor(props) {
@@ -12,8 +13,7 @@ class LeftComponent extends React.Component {
         this.state = {
             currentTab: 'available',
             searchValue: '',
-            now: Date.now(),
-            loadingMoreClosedRoom: false
+            now: Date.now()
         }
     }
 
@@ -33,22 +33,13 @@ class LeftComponent extends React.Component {
         })
     }
 
-    loadMoreClosedRoom = () => {
-        this.setState({
-            loadingMoreClosedRoom: true
-        }, () => {
-            this.props.loadClosedRoom()
-        })
-
-    }
-
     componentWillUnmount() {
         clearInterval(this.updateInterval)
     }
 
     render() {
         const { currentTab, searchValue } = this.state
-        const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom } = this.props
+        const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingMoreRooms } = this.props
         const filterCondition = room => {
             if (room.customer.name.toLowerCase().includes(searchValue.toLowerCase())) return true
             return room.tags.some(tag => tag.title.toLowerCase().includes(searchValue.toLowerCase()))
@@ -92,7 +83,9 @@ class LeftComponent extends React.Component {
                     closedRooms={closedRooms}
                     currentRoomId={currentRoomId}
                     adminChooseRoom={adminChooseRoom}
-                    loadMoreClosedRoom={this.loadMoreClosedRoom}
+                    isHavingMoreClosed={isHavingMoreClosed}
+                    isLoadingMoreRooms={isLoadingMoreRooms}
+                    loadClosedRoom={loadClosedRoom}
                 />
             </div>
         </div>

@@ -1,4 +1,6 @@
-import * as types from '../../constants/actionTypes';
+import * as types from '../../constants/actionTypes'
+import * as apiType from '../../constants/apiTypes'
+import axios from 'axios'
 
 export let firstCallOf_closedRoomsRequested = false;
 
@@ -50,12 +52,26 @@ export function fetchListOfTagsSucceed(tags) {
 }
 
 export function loadClosedRoomRequested(offset, limit) {
-    if (!firstCallOf_closedRoomsRequested) {
-        firstCallOf_closedRoomsRequested = true;
-    }
-    return {type: types.LOAD_CLOSED_ROOM_REQUESTED, offset, limit};
-}
+    return dispatch => {
+        if (!firstCallOf_closedRoomsRequested) {
+            firstCallOf_closedRoomsRequested = true;
+        }
+        dispatch({type: types.LOAD_CLOSED_ROOM_REQUESTED, offset, limit})
 
-export function fetchClosedRoomsSucceed(closedRooms) {
-    return {type: types.LOAD_CLOSED_ROOM_SUCCEED, closedRooms};
+        return axios.get(apiType.LOAD_CLOSED_ROOMS, {
+            params: {
+                offset, limit
+            }
+        }).then(res => res.data)
+        .then(res => {
+            dispatch({type: types.LOAD_CLOSED_ROOM_SUCCEED, closedRooms: res})
+            return res
+        })
+        .catch(err => {
+            dispatch({type: types.LOAD_CLOSED_ROOM_FAILED, message: err.message})
+            return err
+        })
+    }
+
+    return {type: types.LOAD_CLOSED_ROOM_REQUESTED, offset, limit};
 }
