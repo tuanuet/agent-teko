@@ -51,7 +51,7 @@ export function fetchListOfTagsSucceed(tags) {
     return {type: types.LIST_OF_TAGS_FETCH_SUCCEED, tags};
 }
 
-export function loadClosedRoomRequested(offset, limit) {
+export function loadClosedRoomRequested(offset, limit, search) {
     return dispatch => {
         if (!firstCallOf_closedRoomsRequested) {
             firstCallOf_closedRoomsRequested = true;
@@ -60,7 +60,7 @@ export function loadClosedRoomRequested(offset, limit) {
 
         return axios.get(apiType.LOAD_CLOSED_ROOMS, {
             params: {
-                offset, limit
+                offset, limit, search
             }
         }).then(res => res.data)
         .then(res => {
@@ -74,4 +74,10 @@ export function loadClosedRoomRequested(offset, limit) {
     }
 
     return {type: types.LOAD_CLOSED_ROOM_REQUESTED, offset, limit};
+}
+
+export const removeAllClosedRooms = () => {
+    return dispatch => {
+        dispatch({ type: types.REMOVE_ALL_CLOSED_ROOMS })
+    }
 }

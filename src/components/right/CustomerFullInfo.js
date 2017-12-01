@@ -10,10 +10,14 @@ class CustomerFullInfo extends React.Component {
         }
     }
 
-    handlePhoneChange = e => {
+    checkSubmit = e => {
         if (e.keyCode === 13) {
             this.submitPhoneNumber()
-        } else this.setState({
+        }
+    }
+
+    handlePhoneChange = e => {
+        this.setState({
             currentPhoneNumber: e.target.value
         })
     }
@@ -60,7 +64,7 @@ class CustomerFullInfo extends React.Component {
                     <span>
                         <i className="fa fa-phone" aria-hidden="true"></i>
                         { isEditPhone
-                            ? <input value={currentPhoneNumber} onChange={this.handlePhoneChange} style={inputStyle} />
+                            ? <input value={currentPhoneNumber} onChange={this.handlePhoneChange} onKeyUp={this.checkSubmit} style={inputStyle} autoFocus />
                             : <strong>{customer.phone || 'Chưa  có'}</strong> }
                     </span>
                     { isEditPhone

@@ -34,7 +34,7 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
 };
 
 
-const ClosedRooms = ({currentTab, closedRooms, adminChooseRoom, currentRoomId, isHavingMoreClosed, isLoadingMoreRooms, loadClosedRoom}) => {
+const ClosedRooms = ({currentTab, closedRooms, currentClosedRoomSearchValue, adminChooseRoom, currentRoomId, isHavingMoreClosed, isLoadingMoreRooms, loadClosedRoom}) => {
     return (
         <div className={`tab-pane ${currentTab === 'closed' && 'active'}`} id="closedchat" role="tabpanel">
             {closedRooms.map((closedRoom, index) => {
@@ -48,7 +48,7 @@ const ClosedRooms = ({currentTab, closedRooms, adminChooseRoom, currentRoomId, i
             { isHavingMoreClosed && (isLoadingMoreRooms ? <div className="text-center">
                 <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
                 <span className="sr-only">Loading...</span>
-            </div> : <div className="text-center clickable" onClick={loadClosedRoom} style={{ color: '#2b7ec9' }}>
+            </div> : <div className="text-center clickable" onClick={e => loadClosedRoom(currentClosedRoomSearchValue)} style={{ color: '#2b7ec9' }}> {/* Better pass function */}
                 Tải thêm
             </div>) }
         </div>

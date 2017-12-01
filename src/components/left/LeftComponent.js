@@ -13,6 +13,7 @@ class LeftComponent extends React.Component {
         this.state = {
             currentTab: 'available',
             searchValue: '',
+            currentClosedRoomSearchValue: '',
             now: Date.now()
         }
     }
@@ -21,9 +22,16 @@ class LeftComponent extends React.Component {
         this.updateInterval = setInterval(() => this.setState({ now: Date.now() }), 1000 * 60)
     }
 
+    checkSubmitSearch = e => {
+        if (e.keyCode === 13) {
+            this.searchClosedRooms()
+        }
+    }
+
     changeCurrentTab = value => {
         this.setState({
-            currentTab: value
+            currentTab: value,
+            searchValue: ''
         })
     }
 
@@ -33,12 +41,22 @@ class LeftComponent extends React.Component {
         })
     }
 
+    searchClosedRooms = () => {
+        const { loadClosedRoom, actions } = this.props
+        const { searchValue } = this.state
+        this.setState({
+            currentClosedRoomSearchValue: searchValue
+        })
+        actions.removeAllClosedRooms()
+        loadClosedRoom(searchValue)
+    }
+
     componentWillUnmount() {
         clearInterval(this.updateInterval)
     }
 
     render() {
-        const { currentTab, searchValue } = this.state
+        const { currentTab, searchValue, currentClosedRoomSearchValue } = this.state
         const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingMoreRooms } = this.props
         const filterCondition = room => {
             if (room.customer.name.toLowerCase().includes(searchValue.toLowerCase())) return true
@@ -47,7 +65,7 @@ class LeftComponent extends React.Component {
 
         const availableRooms = rooms.filter(room => room.roomStatus === 2).filter(filterCondition)
         const enableRooms = rooms.filter(room => room.roomStatus === 1).filter(filterCondition)
-        const closedRooms = rooms.filter(room => room.roomStatus === 3).filter(filterCondition)
+        const closedRooms = rooms.filter(room => room.roomStatus === 3)
 
         const numOfUnReadRoom = rooms.filter(room => room.roomInfo && room.roomInfo.numOfUnReadMessages).length
 
@@ -64,8 +82,12 @@ class LeftComponent extends React.Component {
                 numberOfEnableRooms={enableRooms.length}
                 changeCurrentTab={this.changeCurrentTab} />
             <SearchBar
+                currentTab={currentTab}
                 searchValue={searchValue}
-                changeSearchValue={this.changeSearchValue} />
+                currentClosedRoomSearchValue={currentClosedRoomSearchValue}
+                changeSearchValue={this.changeSearchValue}
+                searchClosedRooms={this.searchClosedRooms}
+                checkSubmitSearch={this.checkSubmitSearch} />
             <div className="tab-content">
                 <AvailableRooms
                     currentTab={currentTab}
@@ -82,6 +104,7 @@ class LeftComponent extends React.Component {
                     currentTab={currentTab}
                     closedRooms={closedRooms}
                     currentRoomId={currentRoomId}
+                    currentClosedRoomSearchValue={currentClosedRoomSearchValue}
                     adminChooseRoom={adminChooseRoom}
                     isHavingMoreClosed={isHavingMoreClosed}
                     isLoadingMoreRooms={isLoadingMoreRooms}

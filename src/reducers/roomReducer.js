@@ -197,6 +197,8 @@ export default function roomReducer(state=initialState.rooms, action) {
                     agents: [...room.agents, ...action.agents]
                 }
             })
+        case types.REMOVE_ALL_CLOSED_ROOMS:
+            return state.filter(room => room.roomStatus !== 3)
         default:
             return state
         }

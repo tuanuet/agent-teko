@@ -28,6 +28,7 @@ class RightContainer extends React.Component {
 
     //handle on key up take note
     handleOnKeyUpTakeNote(event) {
+        console.log(event.keyCode);
         if (event.keyCode === 13 && !event.shiftKey) {
             this.saveNote(this.state.newNote.trim());
         } else {

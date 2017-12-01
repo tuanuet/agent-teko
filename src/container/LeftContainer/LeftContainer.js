@@ -31,12 +31,12 @@ class LeftContainer extends React.Component {
         this.props.actions.resetNumOfUnReadMessages(room);
     }
 
-    loadClosedRoom() {
+    loadClosedRoom = search => {
         this.setState({
             isLoadingMoreRooms: true
         }, () => {
             const numberOfClosedRoom = this.props.rooms.filter(room => room.roomStatus === 3).length
-            this.props.actions.loadClosedRoomRequested(numberOfClosedRoom, CLOSED_ROOM_PAGING_VALUE).then(res => {
+            this.props.actions.loadClosedRoomRequested(numberOfClosedRoom, CLOSED_ROOM_PAGING_VALUE, search).then(res => {
                 const isLoadMore = res.length !== 0
                 this.setState({
                     isLoadingMoreRooms: false,

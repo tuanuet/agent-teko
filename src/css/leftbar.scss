@@ -40,18 +40,16 @@
   margin: 8px;
 
   .input-group {
-    background-color: $light-violet;
+    background-color: #dedede;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-left: 10px;
     border-radius: 10px;
-    color: white;
   }
   .input-group input {
-    background-color: $light-violet;
+    background-color: #dedede;
     border: none;
-    color: white;
     border-radius: 10px;
   }
 }
@@ -191,4 +189,12 @@
     border: 1px solid #3b6c8f;
     border-radius: 2px;
     background-color: white;
+}
+.search-rooms-button {
+    font-size: 12px;
+    margin-right: 10px;
+    border-radius: 6px;
+    color: white;
+    background-color: #5d9cec;
+    border: none;
 }
