@@ -83,7 +83,7 @@ const initAgent = store => {
     return axios.get(`${API_URL}/api/fetch-admin-info`)
         .then(res => res.data)
         .then(data => {
-            store.dispatch(agentSucceed(data.agent))
+            store.dispatch(agentSucceed(data.agent, data.subscriptions))
             return data
         }).catch(err => store.dispatch(agentFailure()))
 }
@@ -150,9 +150,10 @@ export default async () => {
             console.log('Server send auto assigned room', data);
             const room = getRoomFromServer(data)
             store.dispatch(addAvailableRoom(room))
-            // if (store.getState().rooms.find(r => r.customer.id === room.customer.id)) {
-            //     store.dispatch({ type: types.ADMIN_CHOOSE_ROOM, roomId: room.roomId })
-            // }
+        })
+
+        socket.on('server-send-subscription', newSub => {
+            store.dispatch({ type: types.ADD_NEW_SUBSCRIPTION, newSub})
         })
 
         socket.on('server-send-message', msg => {

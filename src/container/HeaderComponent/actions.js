@@ -1,3 +1,4 @@
+import * as types from '../../constants/actionTypes'
 import * as apiType from '../../constants/apiTypes'
 import axios from 'axios'
 
@@ -30,5 +31,12 @@ export const handleUnbroadcastRoom = agentId => {
                 }
             })
 
+    }
+}
+
+export const readSubscriptions = () => {
+    return dispatch => {
+        dispatch({ type: types.MARK_SUBSCRIPTIONS_AS_READ })
+        return axios.post(apiType.MARK_SUBSCRIPTIONS_AS_READ)
     }
 }

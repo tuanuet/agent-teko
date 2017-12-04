@@ -4,7 +4,8 @@ export default {
     agents: [],
     tags: [],
     currentRoomId: null,
-    isLoadingMessage: false
+    isLoadingMessage: false, // TODO: Should remove
+    subscriptions: []
 };
 
 const exampleState = {
@@ -47,5 +48,7 @@ const exampleState = {
     agent: {},
     agents: [{}],
     tags: [{}],
-    currentRoomId: 1
+    currentRoomId: 1,
+    isLoadingMessage: false,
+    subscriptions: []
 }

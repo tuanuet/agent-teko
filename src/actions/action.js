@@ -34,10 +34,10 @@ export function agentRequested() {
         type: Types.AGENT_INFO_FETCH_REQUESTED
     };
 }
-export function agentSucceed(agent) {
+export function agentSucceed(agent, subscriptions) {
     return {
         type: Types.AGENT_INFO_FETCH_SUCCEED,
-        agent
+        agent, subscriptions
     };
 }
 export function agentFailure() {

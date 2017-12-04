@@ -397,3 +397,33 @@ header {
     font-size: 12px;
     color: #cd2621;
 }
+
+#subscription-dropdown-menu {
+    .dropdown-subscription {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .count-subscription {
+        font-size: 10px;
+        position: absolute;
+        background-color: $red;
+        padding: 0px 4px;
+        border-radius: 4px;
+    }
+
+    .unread-subscription {
+        background-color: #edf2fa;
+    }
+
+    .title-text {
+        font-size: 15px;
+        font-weight: bold;
+        color: #6f6f6f;
+    }
+
+    .body-text {
+        font-size: 13px;
+        color: #606060;
+    }
+}

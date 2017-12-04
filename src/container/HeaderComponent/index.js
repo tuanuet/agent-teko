@@ -3,8 +3,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from './actions'
 import { API_URL } from '../../constants/Server'
+import { formatDatetime } from '../../helper'
 
 class HeaderContainer extends React.Component {
+
+    readSubscriptions = () => {
+        this.props.actions.readSubscriptions()
+    }
 
     handleBroadcast = () => {
         if (confirm(`Xác nhận trực phòng chat?\n\nTrong thời gian trực phòng chat, admin có thể nhận tin nhắn của tất cả các khách hàng gửi tới fanpage.`)) {
@@ -23,13 +28,30 @@ class HeaderContainer extends React.Component {
     }
 
     render() {
-        const { currentAgent } = this.props
+        const { currentAgent, subscriptions } = this.props
+        const countSubscription = subscriptions.filter(sub => !sub.markAsRead).length
+
         return <header className="clearfix">
             <div className="float-left">
                 <a href={API_URL} className="clickable" style={{ marginRight: '15px', color: 'white' }} title="Quay lại trang Dashboard">
                     <i className="fa fa-chevron-left" aria-hidden="true"></i>
                 </a>
-                <span title={currentAgent.role && currentAgent.role.name}>Xin chào, {currentAgent.name}</span>
+                <span title={currentAgent.role && currentAgent.role.name} className="mr-3">Xin chào, {currentAgent.name}</span>
+                <span id="subscription-dropdown-menu" className="dropdown" onClick={countSubscription > 0 && this.readSubscriptions}>
+                    <span id="sub-dropdown" className="clickable" data-toggle="dropdown" aria-expanded="false">
+                        <i className="fa fa-bell-o"></i>
+                        { countSubscription > 0 && <span className="count-subscription">{countSubscription}</span> }
+                    </span>
+                    <div className="dropdown-menu dropdown-subscription">
+                        { subscriptions.map((sub, idx, { length }) => <span key={sub.id}>
+                            <span className={`dropdown-item clickable ${!sub.markAsRead && `unread-subscription`}`} title={formatDatetime(sub.createdAt)}>
+                                <div className="title-text">{sub.title}</div>
+                                <div className="body-text">{sub.body}</div>
+                            </span>
+                            { idx !== length - 1 && <div className="dropdown-divider"></div> }
+                        </span>) }
+                    </div>
+                </span>
             </div>
             <div className="float-right" style={{ marginRight: '50px'}}>
                 { currentAgent.isBroadcast == 0 && <span
@@ -59,7 +81,8 @@ const mapStateToProps = state => {
     const currentRoom = state.rooms.find(room => room.roomId === state.currentRoomId)
     return {
         currentAgent: state.agent,
-        currentRoom
+        currentRoom,
+        subscriptions: state.subscriptions
     }
 }
 
