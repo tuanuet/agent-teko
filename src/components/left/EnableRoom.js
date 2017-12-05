@@ -15,12 +15,12 @@ const EnableRoom = ({enableRoom, adminChooseRoom}) => {
                     <div className="title">
                         <div className="name">{enableRoom.customer.name}</div>
                         <div className="timer">
-                            <span>{enableRoom.roomInfo && enableRoom.roomInfo.latestMessage.createdAt}</span>
+                            <span>{enableRoom.roomInfo && helper.formatDatetime(enableRoom.roomInfo.latestMessage.createdAt)}</span>
                         </div>
                     </div>
                     <div className="d-flex justify-content-between">
                         <div className="last-massage new-message">
-                            { nableRoom.roomInfo && helper.formatLatestMessage(enableRoom.roomInfo.latestMessage) }
+                            { enableRoom.roomInfo && helper.formatLatestMessage(enableRoom.roomInfo.latestMessage) }
                         </div>
                         { enableRoom.roomInfo && enableRoom.roomInfo.numOfUnReadMessages > 0 && <div className="numUnread">{enableRoom.roomInfo.numOfUnReadMessages}</div> }
                     </div>
