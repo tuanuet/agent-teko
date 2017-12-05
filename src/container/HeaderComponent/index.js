@@ -47,6 +47,7 @@ class HeaderContainer extends React.Component {
                             <span className={`dropdown-item clickable ${!sub.markAsRead && `unread-subscription`}`} title={formatDatetime(sub.createdAt)}>
                                 <div className="title-text">{sub.title}</div>
                                 <div className="body-text">{sub.body}</div>
+                                <div className="body-text">{sub.createdAt}</div>
                             </span>
                             { idx !== length - 1 && <div className="dropdown-divider"></div> }
                         </span>) }

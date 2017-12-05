@@ -55,7 +55,7 @@ class CustomerFullInfo extends React.Component {
             paddingLeft: '0.5em',
         }
 
-        return <div className="customer-full-info" id="collapseCustomerInfo">
+        return <div id="customer-info" className="customer-full-info">
             <div>
                 <p><i className="fa fa-user" aria-hidden="true"></i><strong>{customer.name}</strong></p>
             </div>

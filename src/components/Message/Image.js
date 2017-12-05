@@ -63,7 +63,6 @@ export default class Image extends React.Component {
                             alt={message.fileName}
                             onError={this.handleErrorContent}
                             width={message.fileName.includes(`sticker`) && '120'} /> }
-
                     </div>
                 </div>
             </div>

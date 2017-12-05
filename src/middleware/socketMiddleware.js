@@ -80,6 +80,7 @@ export function socketMiddleware() {
 
 const initAgent = store => {
     store.dispatch(agentRequested())
+    store.dispatch(chatActions.agentsFetchRequested())
     return axios.get(`${API_URL}/api/fetch-admin-info`)
         .then(res => res.data)
         .then(data => {
@@ -89,13 +90,14 @@ const initAgent = store => {
 }
 
 function getRoomFromServer(dataEmit) {
-    const { roomId, roomStatus, roomType, roomInfo, topic, customer, agents, tags, notes, createdAt } = dataEmit
+    const { roomId, roomStatus, roomType, roomInfo, messages, topic, customer, agents, tags, notes, createdAt } = dataEmit
 
     return {
         roomId,
         roomStatus,
         roomType,
         roomInfo,
+        messages,
         topic,
         customer,
         agents,

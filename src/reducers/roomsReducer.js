@@ -64,7 +64,12 @@ export default function roomReducer(state=initialState.rooms, action) {
                 }
             })
         case types.ADD_ROOM_AVAILABLE:
-            return [ action.room, ...state.filter(room => room.customer.id !== action.room.customer.id) ]
+            if (state.find(room => room.customer.id === action.room.customer.id)) {
+                return state.map(room => {
+                    if (room.customer.id !== action.room.customer.id) return room
+                    return action.room
+                })
+            } else return [ action.room, ...state ]
         case types.REOPEN_ROOM_SUCCEED:
             const oldRoom = state.find(room => room.customer.id === action.room.customer.id)
             return [
@@ -88,7 +93,12 @@ export default function roomReducer(state=initialState.rooms, action) {
             })
 
         case types.ADD_ROOM_ENABLE:
-            return [action.room,...state]
+            if (state.find(room => room.customer.id === action.room.customer.id)) {
+                return state.map(room => {
+                    if (room.customer.id !== action.room.customer.id) return room
+                    return action.room
+                })
+            } else return [ action.room, ...state ]
 
         case types.ADD_MESSAGE_FOR_ROOM: {
             return state.map(room => {

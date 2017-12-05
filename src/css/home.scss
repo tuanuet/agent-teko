@@ -399,9 +399,14 @@ header {
 }
 
 #subscription-dropdown-menu {
+    .dropdown-item {
+        white-space: normal;
+    }
     .dropdown-subscription {
         max-height: 300px;
+        width: 460px;
         overflow-y: auto;
+        overflow-x: hidden;
     }
 
     .count-subscription {

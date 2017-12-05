@@ -44,6 +44,7 @@ class Audio extends Component {
                 className="message-audio"
                 src={content}
                 controls
+                style={{width: 400}}
             /> }
         </div>
     }

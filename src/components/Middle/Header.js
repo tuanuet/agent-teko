@@ -40,7 +40,6 @@ class Header extends React.Component {
     }
 
     showListAgent() {
-        this.props.actions.agentsFetchRequested()
         this.setState({
             showModals: {
                 selectTheme: false,

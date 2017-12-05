@@ -15,14 +15,14 @@
     //}
 
     a.nav-link {
-      background: #78a3cc;
+      background: #7aa3da;
       padding: 12px 8px;
 
       border: none;
       text-align: center;
       font-size: 16px;
       border-radius:0;
-      color: #ddd;
+      color: white;
 
       span.badge {
         margin-left: 8px;
@@ -30,7 +30,7 @@
       }
 
       &.active {
-        color: white;
+        background: #476480;
       }
     }
   }

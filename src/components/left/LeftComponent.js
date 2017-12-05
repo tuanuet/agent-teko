@@ -67,7 +67,7 @@ class LeftComponent extends React.Component {
         const enableRooms = rooms.filter(room => room.roomStatus === 1).filter(filterCondition)
         const closedRooms = rooms.filter(room => room.roomStatus === 3)
 
-        const numOfUnReadRoom = rooms.filter(room => room.roomInfo && room.roomInfo.numOfUnReadMessages).length
+        const numOfUnReadRoom = rooms.filter(room => room.roomStatus === 2 && room.roomInfo && room.roomInfo.numOfUnReadMessages).length
 
         if (numOfUnReadRoom === 0) {
             document.title = config.DEFAULT_TITLE

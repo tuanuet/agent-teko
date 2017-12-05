@@ -65,7 +65,7 @@ class AvailableRoom extends React.Component {
                     </div>
                     <div className="d-flex justify-content-between">
                         <div className="last-massage">
-                            {availableRoom.roomInfo && availableRoom.roomInfo.latestMessage && availableRoom.roomInfo.latestMessage.content}
+                            {availableRoom.roomInfo && availableRoom.roomInfo.latestMessage && helper.formatLatestMessage(availableRoom.roomInfo.latestMessage)}
                         </div>
                         { availableRoom.roomInfo && availableRoom.roomInfo.numOfUnReadMessages > 0 && <div className="numUnread">{availableRoom.roomInfo.numOfUnReadMessages}</div> }
                     </div>

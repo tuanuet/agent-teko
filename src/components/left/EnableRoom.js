@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import _ from 'lodash';
+import * as helper from '../../helper'
 
 const EnableRoom = ({enableRoom, adminChooseRoom}) => {
     return (
@@ -19,7 +20,7 @@ const EnableRoom = ({enableRoom, adminChooseRoom}) => {
                     </div>
                     <div className="d-flex justify-content-between">
                         <div className="last-massage new-message">
-                            {enableRoom.roomInfo && enableRoom.roomInfo.latestMessage.content}
+                            { nableRoom.roomInfo && helper.formatLatestMessage(enableRoom.roomInfo.latestMessage) }
                         </div>
                         { enableRoom.roomInfo && enableRoom.roomInfo.numOfUnReadMessages > 0 && <div className="numUnread">{enableRoom.roomInfo.numOfUnReadMessages}</div> }
                     </div>
