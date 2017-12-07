@@ -142,7 +142,7 @@ class Header extends React.Component {
                         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Thêm tag
                         </button>
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{maxHeight: 440, overflowY: 'auto'}}>
                             {availableTags.map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag)}>
                                 <p style={{ color: `${tag.color}`}}>
                                     {tag.title}

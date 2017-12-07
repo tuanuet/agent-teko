@@ -35,6 +35,13 @@ class CustomerFullInfo extends React.Component {
     submitPhoneNumber = () => {
         const { actions, customer } = this.props
         const { currentPhoneNumber } = this.state
+
+        if (!currentPhoneNumber) {
+            this.setState({
+                isEditPhone: false,
+                currentPhoneNumber: customer.phone
+            })
+        }
         this.setState({
             isSavingPhone: true
         })
@@ -56,9 +63,9 @@ class CustomerFullInfo extends React.Component {
         }
 
         return <div id="customer-info" className="customer-full-info">
-            <div>
+            {/* <div>
                 <p><i className="fa fa-user" aria-hidden="true"></i><strong>{customer.name}</strong></p>
-            </div>
+            </div> */}
             <div>
                 <p>
                     <span>

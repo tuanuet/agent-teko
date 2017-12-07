@@ -432,3 +432,13 @@ header {
         color: #606060;
     }
 }
+
+.notification {
+    box-shadow: none !important;
+    .title {
+        font-size: 18px !important;
+    }
+    .message {
+        font-size: 14px !important;
+    }
+}

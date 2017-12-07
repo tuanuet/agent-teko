@@ -1,6 +1,6 @@
 .customer, .customer-full-info {
   border: 1px solid rgba(0, 0, 0, .10);
-  padding: 15px;
+  padding: 10px 15px;
 }
 .take-note {
   padding: 15px;
@@ -22,10 +22,18 @@
     margin-bottom: 0;
   }
 
-  p:nth-child(2) {
+  span.customer-more-info {
     font-size: 0.7em;
     opacity: 0.8;
+    padding-bottom: 4px;
   }
+
+  p:not(:first-child) {
+    font-size: 0.7em;
+    opacity: 0.8;
+    margin-bottom: 0;
+  }
+
 }
 .customer:hover{
   cursor: pointer;
@@ -168,4 +176,15 @@
   .btn-toggle.active {
     background-color: #29b5a8;
   }
+}
+
+.involve-agent {
+    border: 1px solid black;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-left: 10px;
+    color: white;
+    background: #5387df;
+    margin-bottom: 0;
 }

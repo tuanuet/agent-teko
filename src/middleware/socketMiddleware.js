@@ -14,6 +14,7 @@ import {
     addMessageForRoom,
 } from '../actions/action'
 import { firstCallOf_messagesFetchRequested } from '../container/MiddleContainer/chatActions'
+import { NotificationManager } from 'react-notifications'
 
 let socket = null
 import store from '../store/store'
@@ -155,6 +156,7 @@ export default async () => {
         })
 
         socket.on('server-send-subscription', newSub => {
+            NotificationManager.info(newSub.body, newSub.title, 5000, null, true)
             store.dispatch({ type: types.ADD_NEW_SUBSCRIPTION, newSub})
         })
 
@@ -164,6 +166,10 @@ export default async () => {
             const message = getMessageFromServer(msg)
 
             store.dispatch(addMessageForRoom(roomId, message))
+        })
+
+        socket.on('server-send-involve-admins', ({ customer, newInvolveAdmins }) => {
+            store.dispatch({ type: types.UPDATE_INVOLVE_ADMINS, customer, newInvolveAdmins })
         })
 
         socket.on('close-room-to-other-agents', roomId => {

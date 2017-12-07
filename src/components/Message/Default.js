@@ -14,7 +14,7 @@ export default class Default extends React.Component {
                         <div className="sender-name">{message.senderName}</div>
                         { message.content.startsWith(`https://`) || message.content.startsWith(`http://`)
                             ? <a href={message.content} target="_blank">{message.content}</a>
-                            : message.content }
+                            : (message.content || '') }
                     </div>
                 </div>
             </div>

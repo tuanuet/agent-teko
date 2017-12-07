@@ -73,7 +73,7 @@ class RightContainer extends React.Component {
     }
 
     render() {
-        const {customer, notes, currentAgent, currentRoomId, actions} = this.props;
+        const {customer, notes, currentAgent, currentRoomId, actions, agents} = this.props;
         if (!currentRoomId) {
             return false
         }
@@ -81,6 +81,7 @@ class RightContainer extends React.Component {
             <RightComponent
                 actions={actions}
                 customer={customer}
+                agents={agents}
                 currentAgent={currentAgent}
                 notes={notes}
                 newNote={this.state.newNote}
@@ -106,6 +107,7 @@ function mapStateToProps(state, ownProps) {
     return {
         customer: customer,
         currentAgent: state.agent,
+        agents: state.agents,
         notes: notes,
         currentRoomId: state.currentRoomId
     };

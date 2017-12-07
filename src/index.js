@@ -12,6 +12,8 @@ import moment from 'moment'
 import vietnamLocation from 'moment/locale/vi'
 moment.locale('vi', vietnamLocation)
 
+import 'react-notifications/lib/notifications.css'
+
 startConnection();
 store.dispatch(roomsFetchRequested());
 store.dispatch(listOfTagsFetchRequested());

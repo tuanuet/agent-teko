@@ -209,6 +209,17 @@ export default function roomReducer(state=initialState.rooms, action) {
             })
         case types.REMOVE_ALL_CLOSED_ROOMS:
             return state.filter(room => room.roomStatus !== 3)
+        case types.UPDATE_INVOLVE_ADMINS:
+            return state.map(room => {
+                if (room.customer.id !== action.customer.id) return room
+                return {
+                    ...room,
+                    customer: {
+                        ...room.customer,
+                        involveAdmins: action.newInvolveAdmins
+                    }
+                }
+            })
         default:
             return state
         }

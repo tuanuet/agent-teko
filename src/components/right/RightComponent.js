@@ -4,10 +4,10 @@ import CustomerFullInfo from './CustomerFullInfo';
 import NoteList from './NoteList';
 import TakeNote from './TakeNote';
 
-const RightComponent = ({actions, customer, notes, newNote, updateNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteState, deleteNote}) => {
+const RightComponent = ({actions, agents, customer, notes, newNote, updateNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteState, deleteNote}) => {
     return(
         <div className="right">
-            <Customer customer={customer} />
+            <Customer customer={customer} agents={agents} />
             <CustomerFullInfo customer={customer} actions={actions} />
             <NoteList notes={notes} updateNote={updateNote} deleteNote={deleteNote} />
             <TakeNote

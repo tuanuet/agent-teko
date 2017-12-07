@@ -59,6 +59,7 @@ class LeftComponent extends React.Component {
         const { currentTab, searchValue, currentClosedRoomSearchValue } = this.state
         const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingMoreRooms } = this.props
         const filterCondition = room => {
+            if (currentTab === 'closed') return true
             if (room.customer.name.toLowerCase().includes(searchValue.toLowerCase())) return true
             return room.tags.some(tag => tag.title.toLowerCase().includes(searchValue.toLowerCase()))
         }
