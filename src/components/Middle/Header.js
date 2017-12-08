@@ -124,7 +124,7 @@ class Header extends React.Component {
         return (
             <div className="header">
                 <div className="title">
-                    { currentRoom.roomStatus !== 1 && <div className="group-button">
+                    { currentRoom.roomStatus !== 1 && currentRoom.roomStatus !== 3 && <div className="group-button">
                         {/* <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
                         data-target="#exampleModal"><i
                             className="fa fa-wrench" onClick={this.showTheme}/></button> */}
