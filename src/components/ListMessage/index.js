@@ -9,14 +9,15 @@ import * as MessageTypes from '../../constants/MessageTypes';
 import * as config from '../../constants/config'
 import Attachment from '../Message/Attachment'
 
-const getListChat = (messages, scrollToBottom) => {
+const getListChat = (messages, scrollToBottom, openZooming) => {
     return messages ? messages.map(e => {
         switch (e.messageType) {
         case MessageTypes.IMAGE:
             return <Image
                 key={`${e.messageId}_${e.fileName}`}
-                scrollToBottom={scrollToBottom}
                 message={e}
+                openZooming={openZooming}
+                scrollToBottom={scrollToBottom}
             />
         case MessageTypes.FILE:
             return <Attachment
@@ -44,6 +45,18 @@ const getListChat = (messages, scrollToBottom) => {
 }
 
 class ListMessage extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isZooming: false,
+            content: ''
+        }
+    }
+
+    componentWillMount = () => {
+        window.addEventListener('keydown', this.handleKeyEvent)
+    }
+
     componentWillReceiveProps(nextProps) {
         const { currentRoomId, messages, actions, nextFetchingRoom, scrollToBottom } = this.props
         const { currentRoomId: nextRoomId, messages: nextMessages, isLoadingMessages} = nextProps
@@ -62,9 +75,38 @@ class ListMessage extends React.Component {
         actions.fetchMoreMessages(nextFetchingRoom, currentRoomId)
     }
 
+    openZooming = (fileName, content) => {
+        if (fileName.includes(`sticker`)) return false
+
+        this.setState({
+            isZooming: true,
+            content
+        })
+    }
+    handleKeyEvent = e => {
+        if (e.keyCode === 27) {
+            this.setState({
+                isZooming: false,
+            })
+        }
+    }
+    closeZooming = e => {
+        e.preventDefault()
+        if (e.target !== e.currentTarget) return false
+
+        this.setState({
+            isZooming: false,
+        })
+    }
+
+    componentWillUnMount = () => {
+        window.removeEventListener('keydown', this.handleKeyEvent)
+    }
+
     render() {
+        const { isZooming, content } = this.state
         const { messages, nextFetchingRoom, isLoadingMessages, scrollToBottom } = this.props
-        const listMsg = getListChat(messages, scrollToBottom)
+        const listMsg = getListChat(messages, scrollToBottom, this.openZooming)
 
         return (
             <ol className="chat">
@@ -79,6 +121,12 @@ class ListMessage extends React.Component {
                 <div style={ !isLoadingMessages ? { marginTop: '20px' } : {}}>
                     { listMsg }
                 </div>
+                { isZooming && <div className="image-overlay" onClick={this.closeZooming}>
+                    <span>
+                        <img className="overlay-content" src={content} />
+                        <div className="close-button" onClick={this.closeZooming} title="Ấn ESC để thoát">&times;</div>
+                    </span>
+                </div> }
             </ol>
         );
     }

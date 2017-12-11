@@ -10,6 +10,11 @@ export default class Image extends React.Component {
             content: props.message.content
         }
     }
+    openZooming = () => {
+        const { content } = this.state
+        const { openZooming, message: { fileName } } = this.props
+        openZooming(fileName, content)
+    }
     handleErrorContent = () => {
         const { message } = this.props
         this.setState({
@@ -61,6 +66,8 @@ export default class Image extends React.Component {
                             <i className="spinner fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
                         </div> : <img src={content}
                             alt={message.fileName}
+                            className="clickable"
+                            onClick={this.openZooming}
                             onError={this.handleErrorContent}
                             width={message.fileName.includes(`sticker`) && '120'} /> }
                     </div>

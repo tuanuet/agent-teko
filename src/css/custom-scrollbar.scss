@@ -24,3 +24,38 @@
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: rgba(#6e6e6e, 0.2);
 }
+
+.image-overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    background-color: #000000;
+    background-color: rgba(#000000, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+    text-align: center;
+
+    &:before {
+        content: ' ';
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+    }
+
+    .overlay-content {
+        max-height: 90%;
+        vertical-align: middle;
+    }
+
+    .close-button {
+        position: absolute;
+        cursor: pointer;
+        top: 20px;
+        right: 50px;
+        font-size: 32px;
+        color: white;
+    }
+}

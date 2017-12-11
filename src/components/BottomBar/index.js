@@ -104,7 +104,7 @@ class BottomBar extends React.Component {
                     {/* <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true"
                     onClick={this.send}/></a> */}
                 </div>
-                {this.state.isShowEmojiBoard && <EmojiBoard/>}
+                {this.state.isShowEmojiBoard && <EmojiBoard/> }
             </div>
         )
     }

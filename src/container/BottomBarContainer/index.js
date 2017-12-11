@@ -27,9 +27,12 @@ class BottomBarContainer extends React.Component {
     }
 
     render() {
-        const { currentRoom } = this.props
+        const { currentRoom, agent } = this.props
+        if (!agent) return false
 
+        const { role: { slug } } = agent
         if (currentRoom.roomStatus === 3 && currentRoom.roomType === 'facebook') {
+            if (slug !== 'agent') return false
             return <ReopenRoom
                 {...this.props}
                 sendReopenRoom={this.sendReopenRoom} />
@@ -38,6 +41,7 @@ class BottomBarContainer extends React.Component {
             return false
         }
         if (currentRoom.roomStatus === 1) {
+            if (slug !== 'agent') return false
             return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom} />
         }
         return <BottomBar {...this.props} />
@@ -48,7 +52,7 @@ function mapStateToProps(state) {
     const currentRoom = state.rooms.find(room => room.roomId === state.currentRoomId);
     return {
         currentRoom,
-        agent : state.agent,
+        agent : state.agent
     };
 }
 function mapDispatchToProps(dispatch) {
