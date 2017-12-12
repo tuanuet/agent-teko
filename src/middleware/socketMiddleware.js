@@ -41,9 +41,9 @@ export function socketMiddleware() {
                 console.log(`Admin send message and server receive ${isReceived}`)
             })
         } else if (socket && action.type === types.RESET_NUM_OF_UNREAD_MESSAGE) {
-            socket.emit('reset-number-of-unread-messages', action.room.roomId, ack => {
+            socket.emit('reset-number-of-unread-messages', action.roomId, ack => {
                 if (!ack) return false
-                store.dispatch({type: types.RESET_NUM_OF_UNREAD_MESSAGE_SUCCEED, roomId: action.room.roomId})
+                store.dispatch({type: types.RESET_NUM_OF_UNREAD_MESSAGE_SUCCEED, roomId: action.roomId})
             })
         } else if (socket && action.type === types.EMIT_SELECT_LIST_AGENT) {
             const data = {
@@ -87,7 +87,10 @@ const initAgent = store => {
         .then(data => {
             store.dispatch(agentSucceed(data.agent, data.subscriptions))
             return data
-        }).catch(err => store.dispatch(agentFailure()))
+        }).catch(err => {
+            console.log(err);
+            store.dispatch(agentFailure())
+        })
 }
 
 function getRoomFromServer(dataEmit) {

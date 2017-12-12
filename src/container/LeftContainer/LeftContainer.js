@@ -24,11 +24,9 @@ class LeftContainer extends React.Component {
      * @param event
      */
     adminChooseRoom(roomId) {
-        const {rooms} = this.props;
-        let room = rooms.find(room => roomId === room.roomId);
         this.props.actions.adminChooseRoom(roomId);
-        this.props.actions.messagesFetchRequested(room);
-        this.props.actions.resetNumOfUnReadMessages(room);
+        this.props.actions.messagesFetchRequested(roomId);
+        this.props.actions.resetNumOfUnReadMessages(roomId);
     }
 
     loadClosedRoom = search => {

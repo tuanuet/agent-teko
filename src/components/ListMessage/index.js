@@ -10,35 +10,35 @@ import * as config from '../../constants/config'
 import Attachment from '../Message/Attachment'
 
 const getListChat = (messages, scrollToBottom, openZooming) => {
-    return messages ? messages.map(e => {
+    return messages ? messages.map((e, idx) => {
         switch (e.messageType) {
         case MessageTypes.IMAGE:
             return <Image
-                key={`${e.messageId}_${e.fileName}`}
+                key={`${e.messageId}_${e.fileName}_${idx}`}
                 message={e}
                 openZooming={openZooming}
                 scrollToBottom={scrollToBottom}
             />
         case MessageTypes.FILE:
             return <Attachment
-                key={`${e.messageId}_${e.fileName}`}
+                key={`${e.messageId}_${e.fileName}_${idx}`}
                 message={e}
             />
         case MessageTypes.AUDIO:
             return <Audio
-                key={`${e.messageId}_${e.fileName}`}
+                key={`${e.messageId}_${e.fileName}_${idx}`}
                 message={e}
             />
         case MessageTypes.VIDEO:
             return <Video
-                key={`${e.messageId}_${e.fileName}`}
+                key={`${e.messageId}_${e.fileName}_${idx}`}
                 scrollToBottom={scrollToBottom}
                 message={e}
             />
         default:
             return <Default
                 message={e}
-                key={`${e.messageId}_${e.fileName}`}
+                key={`${e.messageId}_${e.fileName}_${idx}`}
             />
         }
     }) : false

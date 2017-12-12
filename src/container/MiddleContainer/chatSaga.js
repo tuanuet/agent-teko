@@ -7,9 +7,9 @@ import * as noteActions from '../RightContainer/action/noteActions'
 
 function* fetchMessages(action) {
     try {
-        const { messages, nextFetchingRoom } = yield call(chatApi.messagesFetchRequested, action.room.roomId)
-        yield put(chatActions.messagesFetchSucceed(action.room.roomId, messages, nextFetchingRoom))
-        yield put(noteActions.notesFetchRequested(action.room.roomId))
+        const { messages, nextFetchingRoom } = yield call(chatApi.messagesFetchRequested, action.roomId)
+        yield put(chatActions.messagesFetchSucceed(action.roomId, messages, nextFetchingRoom))
+        yield put(noteActions.notesFetchRequested(action.roomId))
     } catch (e) {
         yield put({type: types.MESSAGES_FETCH_FAILED, message: e.message})
     }

@@ -35,8 +35,8 @@ export function sendReopenRoom(roomId) {
     }
 }
 
-export function resetNumOfUnReadMessages(room) {
-    return {type: types.RESET_NUM_OF_UNREAD_MESSAGE, room};
+export function resetNumOfUnReadMessages(roomId) {
+    return {type: types.RESET_NUM_OF_UNREAD_MESSAGE, roomId};
 }
 
 export function updateNumberOfUnreadMessages(roomId) {

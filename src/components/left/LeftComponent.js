@@ -98,6 +98,7 @@ class LeftComponent extends React.Component {
                 />
                 <EnableRooms
                     currentTab={currentTab}
+                    currentRoomId={currentRoomId}
                     enableRooms={enableRooms}
                     adminChooseRoom={adminChooseRoom}
                 />

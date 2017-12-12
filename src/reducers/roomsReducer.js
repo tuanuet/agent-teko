@@ -120,7 +120,7 @@ export default function roomReducer(state=initialState.rooms, action) {
 
         case types.RESET_NUM_OF_UNREAD_MESSAGE:
             return state.map(room => {
-                if (room.roomId !== action.room.roomId) return room
+                if (room.roomId !== action.roomId) return room
                 return {
                     ...room,
                     roomInfo: {...room.roomInfo, numOfUnReadMessages: 0}

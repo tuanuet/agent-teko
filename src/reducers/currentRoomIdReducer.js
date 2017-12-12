@@ -11,6 +11,8 @@ export default function currentRoomIdReducer(state=initialState.currentRoomId, a
             return state === action.roomId ? null : state
         case types.SET_STATUS_OF_ROOM_SUCCEED:
             return null
+        case types.CLICK_SUBSCRIPTION:
+            return action.roomId
         default:
             return state;
     }

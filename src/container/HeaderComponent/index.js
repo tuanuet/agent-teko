@@ -2,8 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from './actions'
+import { messagesFetchRequested } from '../MiddleContainer/chatActions'
+import { adminChooseRoom, resetNumOfUnReadMessages } from '../LeftContainer/roomActions'
 import { API_URL } from '../../constants/Server'
 import { formatDatetime } from '../../helper'
+import Subscription from '../../components/Middle/Subscription'
 
 class HeaderContainer extends React.Component {
 
@@ -27,6 +30,14 @@ class HeaderContainer extends React.Component {
         }
     }
 
+    clickSubscription = roomId => {
+        if (!roomId) return false
+        const { actions } = this.props
+        actions.adminChooseRoom(roomId)
+        actions.messagesFetchRequested(roomId)
+        actions.resetNumOfUnReadMessages(roomId)
+    }
+
     render() {
         const { currentAgent, subscriptions } = this.props
         const countSubscription = subscriptions.filter(sub => !sub.markAsRead).length
@@ -43,14 +54,13 @@ class HeaderContainer extends React.Component {
                         { countSubscription > 0 && <span className="count-subscription">{countSubscription}</span> }
                     </span>
                     <div className="dropdown-menu dropdown-subscription">
-                        { subscriptions.map((sub, idx, { length }) => <span key={sub.id}>
-                            <span className={`dropdown-item clickable ${!sub.markAsRead && `unread-subscription`}`} title={formatDatetime(sub.createdAt)}>
-                                <div className="title-text">{sub.title}</div>
-                                <div className="body-text">{sub.body}</div>
-                                <div className="body-text">{sub.createdAt}</div>
-                            </span>
-                            { idx !== length - 1 && <div className="dropdown-divider"></div> }
-                        </span>) }
+                        { subscriptions.map((sub, idx, { length }) => <Subscription
+                            key={sub.id}
+                            sub={sub}
+                            idx={idx}
+                            clickSubscription={this.clickSubscription}
+                            length={length}
+                        /> ) }
                     </div>
                 </span>
             </div>
@@ -89,7 +99,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        actions: bindActionCreators({...actions}, dispatch)
+        actions: bindActionCreators({...actions, adminChooseRoom, messagesFetchRequested, resetNumOfUnReadMessages}, dispatch)
     }
 }
 
