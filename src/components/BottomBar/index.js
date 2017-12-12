@@ -19,15 +19,20 @@ const getMessageFromClient = message => {
 class BottomBar extends React.Component {
     constructor(props){
         super(props)
-        this.state = {isShowEmojiBoard: false}
+        this.state = {
+            chatValue: '',
+            isShowEmojiBoard: false
+        }
     }
     enter = e => {
-        if (e.charCode === 13) {
+        if (e.charCode === 13 && !e.shiftKey) {
+            e.preventDefault()
             this.send()
         }
     }
 
     getMessageToSendServer = () => {
+        const { chatValue } = this.state
         const { currentRoom, agent } = this.props
         return {
             roomId: currentRoom.roomId,
@@ -36,7 +41,7 @@ class BottomBar extends React.Component {
             senderName: agent.name,
             messageType: 100,
             messageFrom: 0,
-            content: this.refs.chat.value,
+            content: chatValue,
             fileName: null,
             customer: currentRoom.customer,
             createdAt: moment().format('YYYY-MM-DD HH:mm:ss')
@@ -44,21 +49,21 @@ class BottomBar extends React.Component {
     }
 
     send = () => {
-        if (this.refs.chat.value == '') return false
+        const { chatValue } = this.state
+        if (chatValue === '') return false
+
         const msg = this.getMessageToSendServer()
-
         this.props.dispatch(actions.addMessageForRoom(msg.roomId, getMessageFromClient(msg)))
-
         this.props.dispatch(actions.clientSendMessage(msg))
 
-        this.refs.chat.value = ''
-
-        this.setState({isShowEmojiBoard: false})
+        this.setState({
+            chatValue: ''
+        })
     }
 
     uploadImage = e => {
         const { currentRoom, agent, uploadFile } = this.props
-        const input = this.refs.attach
+        const input = this.attachInput
 
         if (input.files && input.files[0]) {
             uploadFile({
@@ -74,35 +79,39 @@ class BottomBar extends React.Component {
                     customer: currentRoom.customer,
                 }
             })
-            this.refs.attach.value = ''
         }
-        this.refs.chat.focus()
+
+        this.setState({
+            chatValue: ''
+        })
     }
 
     componentDidMount() {
-        this.refs.chat.focus()
+        this.chatInput.focus()
     }
 
-    showEmojiBoard = () => {
-        this.setState({isShowEmojiBoard: !this.state.isShowEmojiBoard})
+    componentDidUpdate() {
+        this.chatInput.focus()
+    }
+
+    handleChatChange = e => {
+        this.setState({
+            chatValue: e.target.value
+        })
     }
 
     render() {
-
+        const { chatValue } = this.state
         return (
             <div className="bottom">
                 <div className="chat-input">
-                    <input className="form-control" ref="chat" onKeyPress={this.enter} type="text"
-                    placeholder="Nhập tin nhắn"/>
+                    <textarea className="form-control" ref={input => this.chatInput = input} onChange={this.handleChatChange} onKeyPress={this.enter} type="text" placeholder="Nhập tin nhắn" rows={2} autoFocus value={chatValue} />
                 </div>
                 <div className="icon-button">
-                    {/* <i className="fa fa-smile-o" onClick={this.showEmojiBoard}/> */}
                     <label>
-                        <input type="file" ref="attach" onChange={this.uploadImage} />
+                        <input type="file" ref={input => this.attachInput = input} onChange={this.uploadImage} />
                         <i className="fa fa-paperclip"/>
                     </label>
-                    {/* <a className="button send" href="#"><i className="fa fa-paper-plane" aria-hidden="true"
-                    onClick={this.send}/></a> */}
                 </div>
                 {this.state.isShowEmojiBoard && <EmojiBoard/> }
             </div>

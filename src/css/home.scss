@@ -329,6 +329,15 @@ header {
           border: none;
           background: transparent;
         }
+
+        textarea {
+            border: none;
+            background: transparent;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            height: 40px;
+            resize: none;
+        }
       }
 
       .group-button {
