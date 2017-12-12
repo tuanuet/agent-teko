@@ -38,7 +38,14 @@ export function socketMiddleware() {
             })
         } else if (socket && action.type === types.CLIENT_SEND_MESSAGE) {
             socket.emit('client-send-message', action.message, function (isReceived) {
-                console.log(`Admin send message and server receive ${isReceived}`)
+                if (isReceived === false) {
+                    const { roomId, content } = action.message
+                    store.dispatch({
+                        type: types.CLIENT_SEND_MESSAGE_FAILED,
+                        roomId,
+                        content
+                    })
+                }
             })
         } else if (socket && action.type === types.RESET_NUM_OF_UNREAD_MESSAGE) {
             socket.emit('reset-number-of-unread-messages', action.roomId, ack => {
@@ -164,6 +171,14 @@ export default async () => {
         })
 
         socket.on('server-send-message', msg => {
+            console.log('Server send message', msg);
+            const { roomId } = msg
+            const message = getMessageFromServer(msg)
+
+            store.dispatch(addMessageForRoom(roomId, message))
+        })
+
+        socket.on('server-send-message-failed', msg => {
             console.log('Server send message', msg);
             const { roomId } = msg
             const message = getMessageFromServer(msg)

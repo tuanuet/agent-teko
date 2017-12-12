@@ -117,7 +117,20 @@ export default function roomReducer(state=initialState.rooms, action) {
                 }
             })
         }
-
+        case types.CLIENT_SEND_MESSAGE_FAILED:
+            return state.map(room => {
+                if (room.roomId !== action.roomId) return room
+                return {
+                    ...room,
+                    messages: room.messages.map(msg => {
+                        if (msg.content !== action.content) return msg
+                        return {
+                            ...msg,
+                            isError: true
+                        }
+                    })
+                }
+            })
         case types.RESET_NUM_OF_UNREAD_MESSAGE:
             return state.map(room => {
                 if (room.roomId !== action.roomId) return room
