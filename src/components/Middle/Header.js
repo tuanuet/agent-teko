@@ -106,16 +106,31 @@ class Header extends React.Component {
         }
     }
 
+    agentExitRoom = () => {
+        const { currentRoom, actions, currentAgent } = this.props
+        const onlyOneAdmin = currentRoom.agents.length === 1
+        const confirmMessage = `Bạn có muốn thoát khỏi phòng chat này?\n\nSau khi thoát, phòng chat này sẽ không hiển thị trong tab Đang hoạt động của bạn.\n\nSau khi thoát, nếu không còn admin nào quản lý khách hàng này, khách hàng sẽ được chuyển về tab Đang chờ.${onlyOneAdmin ? `\n\nLưu ý: Hiện tại, bạn là admin duy nhất quản lý khách hàng này.` : ``}`
+
+        if (confirm(confirmMessage)) {
+            actions.adminExitRoom(currentRoom.roomId)
+            if (!currentAgent.isBroadcast) {
+                actions.removeRoom(currentRoom.roomId)
+            }
+        }
+    }
+
     render() {
-        const { currentRoom, listOfTags, tagsOfRoom, agents } = this.props
+        const { currentRoom, listOfTags, tagsOfRoom, agents, currentAgent } = this.props
         let lookup = _.keyBy(tagsOfRoom, tag => tag.id)
         let availableTags = _.filter(listOfTags, item => {
             return lookup[item.id] === undefined
         })
 
+        const currentAgentServeThisRoom = currentRoom.agents.find(agent => agent.id === currentAgent.id)
+
         let modal = null
         if (this.state.showModals.selectListAgent) {
-            modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal} agents={agents} />
+            modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal} agents={agents} currentAgent={currentAgent} />
         }
         if (this.state.showModals.selectTheme) {
             modal = <SelectTheme {...this.props} />
@@ -126,12 +141,11 @@ class Header extends React.Component {
                 <div className="title">
                     { currentRoom.roomStatus !== 1 && currentRoom.roomStatus !== 3 && <div className="group-button">
                         {/* <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
-                        data-target="#exampleModal"><i
-                            className="fa fa-wrench" onClick={this.showTheme}/></button> */}
+                        data-target="#exampleModal"><i className="fa fa-wrench" onClick={this.showTheme}/></button> */}
                         {/* <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
                         <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button> */}
                         <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thêm admin vào phòng chat"><i className="fa fa-user-plus" onClick={this.showListAgent}/></button>
-                        {/* <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></button> */}
+                        { currentAgentServeThisRoom && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></button> }
                         <button className="red clickable" data-toggle="tooltip" data-placement="top" title="Đóng phòng chat"><i className="fa fa-times" onClick={this.unFollowRoom}/></button>
                         { modal }
                     </div> }
@@ -173,6 +187,7 @@ function mapStateToProps(state) {
     return {
         currentRoomId: state.currentRoomId,
         currentRoom: currentRoom,
+        currentAgent: state.agent,
         tagsOfRoom: currentRoom.tags,
         listOfTags: state.tags,
         agents: state.agents,

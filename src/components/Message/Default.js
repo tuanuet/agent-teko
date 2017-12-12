@@ -20,7 +20,7 @@ export default class Default extends React.Component {
                             }
                         }) : '' }
                         { message.isError && <div className="error-message">
-                            <i class="fa fa-exclamation" aria-hidden="true"></i>
+                            <i className="fa fa-exclamation" aria-hidden="true"></i>
                             Có lỗi xảy ra: FB không cho phép tin nhắn này tới khách hàng
                         </div> }
                     </div>

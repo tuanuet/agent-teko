@@ -81,6 +81,10 @@ export function socketMiddleware() {
             socket.emit('client-send-attachment', action.data, (ack, msg) => {
                 if (!ack) alert(`Có lỗi xảy ra. Vui lòng thử lại sau.\n\nChi tiết lỗi: ${msg}`)
             })
+        } else if (socket && action.type === types.ADMIN_EXIT_ROOM) {
+            socket.emit('admin-exit-room', action.roomId, (ack, msg) => {
+                if (!ack) alert(`Không thoát được khỏi phòng chat.\n\nChi tiết lỗi: ${msg}`)
+            })
         }
         return result
     }
@@ -188,6 +192,13 @@ export default async () => {
 
         socket.on('server-send-involve-admins', ({ customer, newInvolveAdmins }) => {
             store.dispatch({ type: types.UPDATE_INVOLVE_ADMINS, customer, newInvolveAdmins })
+        })
+
+        socket.on('remove-agent-in-room', room => {
+            console.log('getremove-agent-in-room  event');
+            console.log(room);
+            const { agent } = store.getState()
+            store.dispatch({ type: types.REMOVE_ADMIN_IN_ROOM, room })
         })
 
         socket.on('close-room-to-other-agents', roomId => {

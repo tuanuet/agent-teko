@@ -78,3 +78,11 @@ export function deleteTagOfCustomerRequested(customerId, tagId) {
 export function deleteTagOfCustomerSucceed(customerId, tagId) {
     return {type: types.DELETE_TAG_OF_CUSTOMER_SUCCEED, customerId, tagId};
 }
+
+export function adminExitRoom(roomId) {
+    return { type: types.ADMIN_EXIT_ROOM, roomId }
+}
+
+export function removeRoom(roomId) {
+    return { type: types.REMOVE_ROOM, roomId }
+}

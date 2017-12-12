@@ -39,7 +39,7 @@ class HeaderContainer extends React.Component {
     }
 
     render() {
-        const { currentAgent, subscriptions } = this.props
+        const { currentAgent, rooms, subscriptions } = this.props
         const countSubscription = subscriptions.filter(sub => !sub.markAsRead).length
 
         return <header className="clearfix">
@@ -58,6 +58,7 @@ class HeaderContainer extends React.Component {
                             key={sub.id}
                             sub={sub}
                             idx={idx}
+                            rooms={rooms}
                             clickSubscription={this.clickSubscription}
                             length={length}
                         /> ) }
@@ -93,6 +94,7 @@ const mapStateToProps = state => {
     return {
         currentAgent: state.agent,
         currentRoom,
+        rooms: state.rooms,
         subscriptions: state.subscriptions
     }
 }

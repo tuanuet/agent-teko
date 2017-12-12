@@ -4,8 +4,10 @@ import { formatDatetime } from '../../helper'
 
 class Subscription extends Component {
     clickSubscription = () => {
-        const { sub } = this.props
-        this.props.clickSubscription(sub.roomId)
+        const { sub, rooms } = this.props
+        if (!rooms.find(room => room.roomId === sub.roomId)) {
+            alert(`Bạn đã không còn quản lý khách hàng này.`)
+        } else this.props.clickSubscription(sub.roomId)
     }
     render() {
         const { sub, idx, length } = this.props

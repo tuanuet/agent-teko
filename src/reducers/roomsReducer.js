@@ -16,7 +16,6 @@ export default function roomReducer(state=initialState.rooms, action) {
                 if (room.roomId !== action.roomId) {
                     return room
                 }
-
                 return {
                     ...room,
                     messages: action.messages,
@@ -131,6 +130,20 @@ export default function roomReducer(state=initialState.rooms, action) {
                     })
                 }
             })
+        case types.REMOVE_ADMIN_IN_ROOM:
+            if (state.find(room => room.roomId == action.room.roomId)) {
+                return state.map(room => {
+                    if (room.roomId !== action.room.roomId) return room
+                    return {
+                        ...room,
+                        agents: action.room.agents,
+                        roomStatus: action.room.roomStatus
+                    }
+                })
+            } else if (action.room.roomStatus === 1) {
+                return [...state, action.room]
+            } else return state
+
         case types.RESET_NUM_OF_UNREAD_MESSAGE:
             return state.map(room => {
                 if (room.roomId !== action.roomId) return room
