@@ -24,7 +24,8 @@ class Header extends React.Component {
                 selectTheme: false,
                 selectListAgent: false
             },
-            selectedTag: null
+            selectedTag: null,
+            filterTag: ''
         }
         this.sendRequestUserRating = this.sendRequestUserRating.bind(this)
 
@@ -96,6 +97,9 @@ class Header extends React.Component {
 
     onSaveTag(tag) {
         const { currentRoom } = this.props
+        this.setState({
+            filterTag: ''
+        })
         this.props.actions.saveTagOfCustomerRequested(currentRoom.customer.id, tag)
     }
 
@@ -119,7 +123,18 @@ class Header extends React.Component {
         }
     }
 
+    changeFilterTag = e => {
+        this.setState({
+            filterTag: e.target.value
+        })
+    }
+
+    autoFocusFilter = () => {
+        this.filterTagInput.focus()
+    }
+
     render() {
+        const { filterTag } = this.state
         const { currentRoom, listOfTags, tagsOfRoom, agents, currentAgent } = this.props
         let lookup = _.keyBy(tagsOfRoom, tag => tag.id)
         let availableTags = _.filter(listOfTags, item => {
@@ -153,11 +168,14 @@ class Header extends React.Component {
 
                 <div className="room-tag">
                     <div className="dropdown">
-                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={this.autoFocusFilter}>
                             Thêm tag
                         </button>
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{maxHeight: 440, overflowY: 'auto'}}>
-                            {availableTags.map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag)}>
+                        <div id="dropdown-tag" className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{maxHeight: 440, overflowY: 'auto'}}>
+                            <div className="dropdown-item">
+                                <input className="form-control" ref={input => this.filterTagInput = input} value={filterTag} onChange={this.changeFilterTag} />
+                            </div>
+                            {availableTags.filter(tag => tag.title.toLowerCase().includes(filterTag.toLowerCase())).map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag)}>
                                 <p style={{ color: `${tag.color}`}}>
                                     {tag.title}
                                 </p>

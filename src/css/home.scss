@@ -434,7 +434,7 @@ header {
         white-space: normal;
 
         &:active {
-            background-color: #cccccc;
+            background-color: #cccccc#f6f6f6;
         }
     }
     .dropdown-subscription {
@@ -481,4 +481,14 @@ header {
     width: 95%;
     text-align: center;
     font-size: 11px;
+}
+
+#dropdown-tag {
+    .dropdown-item {
+        white-space: normal;
+
+        &:active {
+            background-color: #f6f6f6;
+        }
+    }
 }
