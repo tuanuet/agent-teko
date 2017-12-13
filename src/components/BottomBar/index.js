@@ -62,6 +62,32 @@ class BottomBar extends React.Component {
         })
     }
 
+    sendSeenMessage = () => {
+        const { dispatch, currentRoom, agent } = this.props
+        const { roomId, roomType, customer } = currentRoom
+        const { id: agentId, name: agentName } = agent
+
+        const message = {
+            roomId,
+            roomType,
+            senderId: agentId,
+            senderName: agentName,
+            messageType: 110,
+            messageFrom: 0,
+            content: `${agentName} đánh dấu đã đọc tin nhắn`,
+            fileName: null,
+            customer: customer,
+            createdAt: moment().format('YYYY-MM-DD HH:mm:ss')
+        }
+
+        dispatch(actions.addMessageForRoom(roomId, getMessageFromClient(message)))
+        dispatch(actions.clientSendMessage(message))
+
+        this.setState({
+            chatValue: ''
+        })
+    }
+
     uploadImage = e => {
         const { currentRoom, agent, uploadFile } = this.props
         const input = this.attachInput
@@ -177,6 +203,11 @@ class BottomBar extends React.Component {
 
     render() {
         const { chatValue, isDragOver } = this.state
+        const { currentRoom } = this.props
+        const showSeenIcon = currentRoom.roomInfo
+            && currentRoom.roomInfo.latestMessage
+            && currentRoom.roomInfo.latestMessage.messageFrom === 1
+
         return (
             <div className={`bottom`}>
                 <div className={`chat-input ${isDragOver ? `dragover` : ``}`}>
@@ -194,12 +225,13 @@ class BottomBar extends React.Component {
                         autoFocus />
                 </div>
                 <div className="icon-button">
+                    { showSeenIcon && <i className="fa fa-eye clickable" aria-hidden="true" onClick={this.sendSeenMessage}></i> }
                     <label>
                         <input type="file" ref={input => this.attachInput = input} onChange={this.uploadImage} />
-                        <i className="fa fa-paperclip"/>
+                        <i className="fa fa-paperclip clickable" aria-hidden="true"></i>
                     </label>
                 </div>
-                {this.state.isShowEmojiBoard && <EmojiBoard/> }
+                { this.state.isShowEmojiBoard && <EmojiBoard /> }
             </div>
         )
     }

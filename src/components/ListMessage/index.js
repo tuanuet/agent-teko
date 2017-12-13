@@ -5,6 +5,7 @@ import Default from '../Message/Default';
 import Image from '../Message/Image';
 import Audio from '../Message/Audio'
 import Video from '../Message/Video'
+import Info from '../Message/Info'
 import * as MessageTypes from '../../constants/MessageTypes';
 import * as config from '../../constants/config'
 import Attachment from '../Message/Attachment'
@@ -33,6 +34,11 @@ const getListChat = (messages, scrollToBottom, openZooming) => {
             return <Video
                 key={`${e.messageId}_${e.fileName}_${idx}`}
                 scrollToBottom={scrollToBottom}
+                message={e}
+            />
+        case MessageTypes.INFO:
+            return <Info
+                key={`${e.messageId}_${e.fileName}_${idx}`}
                 message={e}
             />
         default:

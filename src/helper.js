@@ -5,6 +5,7 @@ import {
     FILE,
     VIDEO,
     AUDIO,
+    INFO
 } from './constants/MessageTypes'
 export const now = () => {
     return moment().format('YYYY-MM-DD HH:mm:ss')
@@ -23,6 +24,7 @@ export const formatLatestMessage = message => {
     else if (messageType === VIDEO) return `${subject} đã gửi một video`
     else if (messageType === AUDIO) return `${subject} đã gửi một audio`
     else if (messageType === FILE) return `${subject} đã gửi một tệp`
+    else if (messageType === INFO) return `${subject} đánh dấu đã đọc`
     else return `${messageFrom === 0 ? `Bạn: ` : ``}${content}`
 }
 
