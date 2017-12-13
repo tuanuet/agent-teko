@@ -41,7 +41,7 @@ class BottomBarContainer extends React.Component {
             return false
         }
         if (currentRoom.roomStatus === 1) {
-            if (slug !== 'agent' && slug !== 'developer') return false
+            if (slug !== 'agent' && slug !== 'operator' && slug !== 'developer') return false
             return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom} />
         }
         return <BottomBar {...this.props} />
