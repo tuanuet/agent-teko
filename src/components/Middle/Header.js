@@ -133,6 +133,18 @@ class Header extends React.Component {
         this.filterTagInput.focus()
     }
 
+    handleEnterTag = e => {
+        if (e.keyCode === 13) {
+            const { filterTag } = this.state
+            const { listOfTags, tagsOfRoom } = this.props
+            const availableTags = listOfTags.filter(tag => !tagsOfRoom.find(tor => tor.id === tag.id))
+            const filteredTag = availableTags.filter(tag => tag.title.toLowerCase().includes(filterTag.toLowerCase()))
+            if (filteredTag.length === 1) {
+                this.onSaveTag(filteredTag[0])
+            }
+        }
+    }
+
     render() {
         const { filterTag } = this.state
         const { currentRoom, listOfTags, tagsOfRoom, agents, currentAgent } = this.props
@@ -173,7 +185,7 @@ class Header extends React.Component {
                         </button>
                         <div id="dropdown-tag" className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{maxHeight: 440, overflowY: 'auto'}}>
                             <div className="dropdown-item">
-                                <input className="form-control" ref={input => this.filterTagInput = input} value={filterTag} onChange={this.changeFilterTag} />
+                                <input className="form-control" ref={input => this.filterTagInput = input} value={filterTag} onChange={this.changeFilterTag} onKeyDown={this.handleEnterTag} />
                             </div>
                             {availableTags.filter(tag => tag.title.toLowerCase().includes(filterTag.toLowerCase())).map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag)}>
                                 <p style={{ color: `${tag.color}`}}>
