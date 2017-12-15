@@ -13,6 +13,7 @@ class LeftComponent extends React.Component {
         this.state = {
             currentTab: 'available',
             searchValue: '',
+            filterBy: 'all',
             currentClosedRoomSearchValue: '',
             now: Date.now()
         }
@@ -51,15 +52,33 @@ class LeftComponent extends React.Component {
         loadClosedRoom(searchValue)
     }
 
+    changeFilterBy = value => {
+        this.setState({
+            filterBy: value
+        })
+    }
+
     componentWillUnmount() {
         clearInterval(this.updateInterval)
     }
 
     render() {
-        const { currentTab, searchValue, currentClosedRoomSearchValue } = this.state
+        const { currentTab, searchValue, currentClosedRoomSearchValue, filterBy } = this.state
         const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingMoreRooms } = this.props
         const filterCondition = room => {
             if (currentTab === 'closed') return true
+            if (currentTab === 'available') {
+                if (filterBy === 'unread') {
+                    if (!room.roomInfo) return false
+                    if (room.roomInfo.numOfUnReadMessages === 0) return false
+                } else if (filterBy === 'misschat') {
+                    if (!room.messages || room.messages.length === 0) {
+                        if (!room.roomInfo) return false
+                        if (!room.roomInfo.latestMessage) return false
+                        if (room.roomInfo.latestMessage.messageFrom === 0) return false
+                    }
+                }
+            }
             if (room.customer.name.toLowerCase().includes(searchValue.toLowerCase())) return true
             return room.tags.some(tag => tag.title.toLowerCase().includes(searchValue.toLowerCase()))
         }
@@ -85,10 +104,12 @@ class LeftComponent extends React.Component {
             <SearchBar
                 currentTab={currentTab}
                 searchValue={searchValue}
+                filterBy={filterBy}
                 currentClosedRoomSearchValue={currentClosedRoomSearchValue}
                 changeSearchValue={this.changeSearchValue}
                 searchClosedRooms={this.searchClosedRooms}
-                checkSubmitSearch={this.checkSubmitSearch} />
+                checkSubmitSearch={this.checkSubmitSearch}
+                changeFilterBy={this.changeFilterBy} />
             <div className="tab-content">
                 <AvailableRooms
                     currentTab={currentTab}
