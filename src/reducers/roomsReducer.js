@@ -2,6 +2,7 @@ import _ from 'lodash'
 import initialState from './initialState'
 import * as types from '../constants/actionTypes'
 import * as helper from '../helper'
+import { firstCallOf_messagesFetchRequested } from '../container/MiddleContainer/chatActions'
 
 export default function roomReducer(state=initialState.rooms, action) {
     switch (action.type) {
@@ -141,6 +142,7 @@ export default function roomReducer(state=initialState.rooms, action) {
                     }
                 })
             } else if (action.room.roomStatus === 1) {
+                firstCallOf_messagesFetchRequested[action.room.roomId] = null
                 return [...state, action.room]
             } else return state
 

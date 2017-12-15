@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import ContentEditable from 'react-contenteditable';
 import * as helper from '../../helper'
 
 class NoteItem extends React.Component {

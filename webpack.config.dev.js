@@ -1,19 +1,34 @@
-const path = require('path');
-const webpack = require('webpack');
-const WebpackShellPlugin = require('webpack-shell-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 const isProduction = process.env.NODE_ENV == 'production'
 
 module.exports = {
     devtool: isProduction ? false : 'cheap-module-eval-source-map',
-    entry: [
-        './src/index'
-    ],
+    entry: {
+        main: './src/index',
+        vendor: [
+            'react',
+            'react-dom',
+            'react-redux',
+            'react-notifications',
+            'redux',
+            'redux-thunk',
+            'redux-saga',
+            'moment',
+            'socket.io-client',
+            'axios',
+            'emojis-list',
+            'lodash'
+        ]
+    },
     output: {
-        filename: 'main-bundle.js',
-        path: path.resolve(__dirname, 'static'),
-        publicPath: '/'
+        filename: '[name].[chunkhash].js',
+        path: path.resolve(__dirname, '../live-chat/public/js/dist'),
+        publicPath: 'js/dist'
     },
     module: {
         loaders: [
@@ -36,11 +51,19 @@ module.exports = {
 
     },
     plugins: [
-        new WebpackShellPlugin({
-            onBuildStart: [],
-            onBuildExit: [
-                'cp ./static/main-bundle.js ../live-chat/public/js/client/'
-            ]
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor'
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest'
+        }),
+        new CleanWebpackPlugin(path.resolve(__dirname, '../live-chat/public/js/dist'), {
+            allowExternal: true
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Teko Admin Chat',
+            filename: '../../../resources/views/index.blade.php',
+            template: 'index.html'
         })
     ].concat(isProduction ? [
         new UglifyJSPlugin({
@@ -50,6 +73,9 @@ module.exports = {
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
             }
-        })
-    ] : [])
+        }),
+        new webpack.HashedModuleIdsPlugin(),
+    ] : [
+        new webpack.NamedModulesPlugin(),
+    ])
 }

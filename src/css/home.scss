@@ -430,13 +430,6 @@ header {
 }
 
 #subscription-dropdown-menu {
-    .dropdown-item {
-        white-space: normal;
-
-        &:active {
-            background-color: #cccccc#f6f6f6;
-        }
-    }
     .dropdown-subscription {
         max-height: 300px;
         width: 460px;
@@ -483,6 +476,7 @@ header {
     font-size: 11px;
 }
 
+#subscription-dropdown-menu,
 #dropdown-tag,
 #dropdown-filter {
     .dropdown-item {

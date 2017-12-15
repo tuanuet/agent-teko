@@ -30,12 +30,12 @@ export default class Image extends React.Component {
                     access_token: ACCESS_TOKEN
                 }
             }).then(res => res.data).then(res => {
-                const { image_data: { url } } = res.data.find(attachment => attachment.name === message.fileName)
+                const { image_data: { url } } = res.data[0] // TODO: Should find the first image
                 this.setState({
                     isLoading: false,
                     content: url
                 })
-            }).catch(err => console.log(`Sticker err`, err))
+            }).catch(err => console.log(`Image err`, err))
         } else {
             axios.request({
                 method: 'get',
@@ -45,12 +45,12 @@ export default class Image extends React.Component {
                     access_token: ACCESS_TOKEN
                 }
             }).then(res => res.data).then(res => {
-                const { link } = res.data.find(share => `sticker_${share.id}` === message.fileName)
+                const { link } = res.data[0] // TODO: should find the first image
                 this.setState({
                     isLoading: false,
                     content: link
                 })
-            }).catch(err => console.log(`Image err`, err))
+            }).catch(err => console.log(`Sticker err`, err))
         }
     }
     render() {

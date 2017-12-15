@@ -195,8 +195,6 @@ export default async () => {
         })
 
         socket.on('remove-agent-in-room', room => {
-            console.log('getremove-agent-in-room  event');
-            console.log(room);
             const { agent } = store.getState()
             store.dispatch({ type: types.REMOVE_ADMIN_IN_ROOM, room })
         })

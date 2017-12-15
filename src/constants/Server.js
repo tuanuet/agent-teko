@@ -4,7 +4,7 @@
 
 export const API_URL = 'https://chat.teko.vn'
 export const NODE_URL = 'https://chat-node.teko.vn'
-export const ACCESS_TOKEN = 'EAALAKLl1RqkBAOB4ztZAVxJCa6kzua24HdFFj23Pq2ZAcbK8e1KCecrr0zd2en2wC5ZACwyRQzmAM2jtxOFyHHZB1qL4T1nnIDYkSFfxCvBxJZAP0FzpKBox0zf1dMIAMaC4LUWcvDfhRyaH6RETcpl66Ma7PjiotRU6KK6ecHgZDZD'
+export const ACCESS_TOKEN = 'EAAYscHRTvCMBABS51bsSyAIVJ96MQm4Ii0ZBxyN4RUdz9alvphJfIaIxhEAoX4I4ucm49rAvyQf47JZCuHjgqmsHQjJjHMF4mMYIBxj4UosGGu0YyaZC4yZAaRSGqz8RXJv2i5JZAFGza2nloZC0KQq7iXonYtqAPFZAZAUZAIKWntgZDZD'
 
 export const API_CREATE_TOKEN_URL = API_URL + '/api/createToken'
 
