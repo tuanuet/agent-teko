@@ -6,6 +6,7 @@ import agents from './agentsReducer';
 import currentRoomId from './currentRoomIdReducer';
 import tags from './tagsReducer';
 import isLoadingMessages from './loadingMessagesReducer'
+import isLoadingRooms from './loadingRoomsReducer'
 import subscriptions from './subscriptionsReducer'
 
 let reducer = combineReducers({
@@ -15,6 +16,7 @@ let reducer = combineReducers({
     tags,
     currentRoomId,
     isLoadingMessages,
+    isLoadingRooms,
     subscriptions
 });
 

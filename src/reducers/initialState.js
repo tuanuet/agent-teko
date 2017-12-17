@@ -4,6 +4,7 @@ export default {
     agents: [],
     tags: [],
     currentRoomId: null,
+    isLoadingRooms: false,
     isLoadingMessage: false, // TODO: Should remove
     subscriptions: []
 };

@@ -50,7 +50,7 @@ class LeftContainer extends React.Component {
      */
     render() {
         const { isLoadingMoreRooms, isHavingMoreClosed } = this.state
-        const { rooms, currentRoomId, tags, actions } = this.props
+        const { rooms, currentRoomId, tags, actions, isLoadingRooms } = this.props
         return (
             <LeftComponent
                 tags={tags}
@@ -59,6 +59,7 @@ class LeftContainer extends React.Component {
                 currentRoomId={currentRoomId}
                 adminChooseRoom={this.adminChooseRoom}
                 isHavingMoreClosed={isHavingMoreClosed}
+                isLoadingRooms={isLoadingRooms}
                 isLoadingMoreRooms={isLoadingMoreRooms}
                 loadClosedRoom={this.loadClosedRoom}
             />
@@ -70,6 +71,7 @@ function mapStateToProps(state, ownProps) {
     return {
         rooms: state.rooms,
         currentRoomId: state.currentRoomId,
+        isLoadingRooms: state.isLoadingRooms,
         tags: state.tags,
     };
 }

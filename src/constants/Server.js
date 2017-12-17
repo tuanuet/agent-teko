@@ -1,6 +1,6 @@
 // export const API_URL = 'http://local.chat.com'
 // export const NODE_URL = 'http://localhost:3000'
-// export const ACCESS_TOKEN = 'EAALE5e31DY4BADQ3Xpi7Liefm1rSYA9gfCpZCC3n3DAEVgmRVsi2YrIhUiloNmZC5GC0ZBknURJ4oWaZBrlwitD8HtbM3qlDcFTchMnv58M39q8NmgkTE54b4TzQuZAkYafdGt7ZCTyhA6aduqEL04M28LpcAgvz9uBbPZCqOOwZCgZDZD'
+// export const ACCESS_TOKEN = 'EAALE5e31DY4BAJX5ZAxZAVqTEZBcpc7Nc7K55HaOtlPL2BrebiTLV2Y9ymWursymBvqQiDnG5UJwhq84E7wBSirDcL8OsZAIAYMia5MSgktPloJLEeaCGDuRnZBoAzpWZAZCTk35g9AsSxsl3shsn4iJqDLcaHQJ3YK3jLU64Bp3wZDZD'
 
 export const API_URL = 'https://chat.teko.vn'
 export const NODE_URL = 'https://chat-node.teko.vn'

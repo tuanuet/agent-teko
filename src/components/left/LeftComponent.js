@@ -64,7 +64,7 @@ class LeftComponent extends React.Component {
 
     render() {
         const { currentTab, searchValue, currentClosedRoomSearchValue, filterBy } = this.state
-        const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingMoreRooms } = this.props
+        const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingRooms, isLoadingMoreRooms } = this.props
         const filterCondition = room => {
             if (currentTab === 'closed') return true
             if (currentTab === 'available') {
@@ -110,7 +110,7 @@ class LeftComponent extends React.Component {
                 searchClosedRooms={this.searchClosedRooms}
                 checkSubmitSearch={this.checkSubmitSearch}
                 changeFilterBy={this.changeFilterBy} />
-            <div className="tab-content">
+            { !isLoadingRooms ? <div className="tab-content">
                 <AvailableRooms
                     currentTab={currentTab}
                     currentRoomId={currentRoomId}
@@ -133,7 +133,10 @@ class LeftComponent extends React.Component {
                     isLoadingMoreRooms={isLoadingMoreRooms}
                     loadClosedRoom={loadClosedRoom}
                 />
-            </div>
+            </div> : <div className="text-center">
+                <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
+                <span className="sr-only">Loading...</span>
+            </div> }
         </div>
     }
 
