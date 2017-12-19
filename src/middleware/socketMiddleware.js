@@ -24,7 +24,10 @@ export function socketMiddleware() {
         const result = next(action)
         if (socket && action.type === types.JOIN_ROOM_TO_NODE_SERVER) {
             socket.emit('admin-join-room', action.room.roomId, (ack, newRoom) => {
-                if (!ack) return
+                if (!ack) {
+                    alert(newRoom)
+                    return false
+                }
                 store.dispatch({type: types.JOIN_ROOM_SUCCEED, room: newRoom})
             })
         } else if (socket && action.type === types.RE_JOIN_ALL_AVAILABLE_ROOM_TO_SOCKET_REQUESTED) {
