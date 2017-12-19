@@ -1,10 +1,10 @@
-export const API_URL = 'http://local.chat.com'
-export const NODE_URL = 'http://localhost:3000'
-export const ACCESS_TOKEN = 'EAALE5e31DY4BAJX5ZAxZAVqTEZBcpc7Nc7K55HaOtlPL2BrebiTLV2Y9ymWursymBvqQiDnG5UJwhq84E7wBSirDcL8OsZAIAYMia5MSgktPloJLEeaCGDuRnZBoAzpWZAZCTk35g9AsSxsl3shsn4iJqDLcaHQJ3YK3jLU64Bp3wZDZD'
+// export const API_URL = 'http://local.chat.com'
+// export const NODE_URL = 'http://localhost:3000'
+// export const ACCESS_TOKEN = 'EAALE5e31DY4BAJX5ZAxZAVqTEZBcpc7Nc7K55HaOtlPL2BrebiTLV2Y9ymWursymBvqQiDnG5UJwhq84E7wBSirDcL8OsZAIAYMia5MSgktPloJLEeaCGDuRnZBoAzpWZAZCTk35g9AsSxsl3shsn4iJqDLcaHQJ3YK3jLU64Bp3wZDZD'
 
-// export const API_URL = 'https://chat.teko.vn'
-// export const NODE_URL = 'https://chat-node.teko.vn'
-// export const ACCESS_TOKEN = 'EAAYscHRTvCMBABS51bsSyAIVJ96MQm4Ii0ZBxyN4RUdz9alvphJfIaIxhEAoX4I4ucm49rAvyQf47JZCuHjgqmsHQjJjHMF4mMYIBxj4UosGGu0YyaZC4yZAaRSGqz8RXJv2i5JZAFGza2nloZC0KQq7iXonYtqAPFZAZAUZAIKWntgZDZD'
+export const API_URL = 'https://chat.teko.vn'
+export const NODE_URL = 'https://chat-node.teko.vn'
+export const ACCESS_TOKEN = 'EAAYscHRTvCMBABS51bsSyAIVJ96MQm4Ii0ZBxyN4RUdz9alvphJfIaIxhEAoX4I4ucm49rAvyQf47JZCuHjgqmsHQjJjHMF4mMYIBxj4UosGGu0YyaZC4yZAaRSGqz8RXJv2i5JZAFGza2nloZC0KQq7iXonYtqAPFZAZAUZAIKWntgZDZD'
 
 export const API_CREATE_TOKEN_URL = API_URL + '/api/createToken'
 
