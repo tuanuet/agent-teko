@@ -3,7 +3,9 @@ import AvailableRoom from './AvailableRoom';
 
 const AvailableRooms = ({currentTab, availableRooms, adminChooseRoom, currentRoomId}) => {
     return <div className={`tab-pane ${currentTab === 'available' && 'active'}`} id="chat" role="tabpanel">
-        { availableRooms.sort((a, b) => {
+        { availableRooms.length === 0 ? <div className="text-center" style={{fontSize: '16px'}}>
+            Danh sách rỗng
+        </div> : availableRooms.sort((a, b) => {
             if (!a.roomInfo || !a.roomInfo.latestMessage) return 1
             if (!b.roomInfo || !b.roomInfo.latestMessage) return -1
             const aDate = new Date(a.roomInfo.latestMessage.createdAt)

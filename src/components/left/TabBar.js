@@ -1,12 +1,14 @@
 import React, {PropTypes} from 'react';
 import { firstCallOf_closedRoomsRequested } from '../../container/LeftContainer/roomActions'
 
-const Tab = ({currentTab, numberOfEnableRooms, loadClosedRoom, changeCurrentTab}) => {
+const Tab = ({currentTab, numberOfEnableRooms, numberOfActiveRooms, loadClosedRoom, changeCurrentTab}) => {
     return (
         <div>
             <ul className="nav nav-tabs" role="tablist">
                 <li className="nav-item" onClick={e => changeCurrentTab('available')}>
-                    <a className={`nav-link ${currentTab === 'available' && 'active'}`} data-toggle="tab" href="#chat" role="tab">Đang hoạt động</a>
+                    <a className={`nav-link ${currentTab === 'available' && 'active'}`} data-toggle="tab" href="#chat" role="tab">Hoạt động
+                        <span className="badge badge-danger">{numberOfActiveRooms}</span>
+                    </a>
                 </li>
                 <li className="nav-item" onClick={e => changeCurrentTab('enable')}>
                     <a className={`nav-link ${currentTab === 'enable' && 'active'}`} data-toggle="tab" href="#unchat" role="tab">Đang chờ

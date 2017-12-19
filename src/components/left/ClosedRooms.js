@@ -37,14 +37,14 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
 const ClosedRooms = ({currentTab, closedRooms, currentClosedRoomSearchValue, adminChooseRoom, currentRoomId, isHavingMoreClosed, isLoadingMoreRooms, loadClosedRoom}) => {
     return (
         <div className={`tab-pane ${currentTab === 'closed' && 'active'}`} id="closedchat" role="tabpanel">
-            {closedRooms.map((closedRoom, index) => {
-                return <ClosedRoom
-                    key={closedRoom.roomId}
-                    closedRoom={closedRoom}
-                    currentRoomId={currentRoomId}
-                    adminChooseRoom={adminChooseRoom} />
-                }
-            )}
+            { !isLoadingMoreRooms && closedRooms.length === 0 ? <div className="text-center" style={{fontSize: '16px'}}>
+                Danh sách rỗng
+            </div> : closedRooms.map((closedRoom, index) => <ClosedRoom
+                key={closedRoom.roomId}
+                closedRoom={closedRoom}
+                currentRoomId={currentRoomId}
+                adminChooseRoom={adminChooseRoom} />) }
+
             { isHavingMoreClosed && (isLoadingMoreRooms ? <div className="text-center">
                 <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
                 <span className="sr-only">Loading...</span>

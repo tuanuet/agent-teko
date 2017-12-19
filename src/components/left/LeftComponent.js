@@ -67,7 +67,7 @@ class LeftComponent extends React.Component {
         const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingRooms, isLoadingMoreRooms } = this.props
         const filterCondition = room => {
             if (currentTab === 'closed') return true
-            if (currentTab === 'available') {
+            if (currentTab === 'available' && room.roomStatus === 2) {
                 if (filterBy === 'unread') {
                     if (!room.roomInfo) return false
                     if (room.roomInfo.numOfUnReadMessages === 0) return false
@@ -100,6 +100,7 @@ class LeftComponent extends React.Component {
                 currentTab={currentTab}
                 loadClosedRoom={loadClosedRoom}
                 numberOfEnableRooms={enableRooms.length}
+                numberOfActiveRooms={availableRooms.length}
                 changeCurrentTab={this.changeCurrentTab} />
             <SearchBar
                 currentTab={currentTab}
