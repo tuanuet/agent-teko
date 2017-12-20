@@ -18,7 +18,7 @@ class Audio extends Component {
 
         axios.request({
             method: 'get',
-            url: `${message.messageId}/attachments`,
+            url: `${message.messageId.startsWith(`m_`) ? message.messageId : `m_${message.messageId}`}/attachments`,
             baseURL: 'https://graph.facebook.com/v2.11/',
             params: {
                 access_token: ACCESS_TOKEN
@@ -29,7 +29,7 @@ class Audio extends Component {
                 isLoading: false,
                 content: file_url
             })
-        }).catch(err => console.log(err))
+        }).catch(err => console.log('Audio err', err))
     }
     render() {
         const { message } = this.props

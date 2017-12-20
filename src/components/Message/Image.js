@@ -24,7 +24,7 @@ export default class Image extends React.Component {
         if (!message.fileName.includes(`sticker`)) {
             axios.request({
                 method: 'get',
-                url: `${message.messageId}/attachments`,
+                url: `${message.messageId.startsWith(`m_`) ? message.messageId : `m_${message.messageId}`}/attachments`,
                 baseURL: 'https://graph.facebook.com/v2.11/',
                 params: {
                     access_token: ACCESS_TOKEN
@@ -39,7 +39,7 @@ export default class Image extends React.Component {
         } else {
             axios.request({
                 method: 'get',
-                url: `${message.messageId}/shares?fields=link`,
+                url: `${message.messageId.startsWith(`m_`) ? message.messageId : `m_${message.messageId}`}/shares?fields=link`,
                 baseURL: 'https://graph.facebook.com/v2.11/',
                 params: {
                     access_token: ACCESS_TOKEN

@@ -18,7 +18,7 @@ class Video extends Component {
 
         axios.request({
             method: 'get',
-            url: `${message.messageId}/attachments`,
+            url: `${message.messageId.startsWith(`m_`) ? message.messageId : `m_${message.messageId}`}/attachments`,
             baseURL: 'https://graph.facebook.com/v2.11/',
             params: {
                 access_token: ACCESS_TOKEN
