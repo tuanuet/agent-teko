@@ -5,17 +5,11 @@ const TakeNote = ({newNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteSt
         <div className="take-note d-flex">
             <textarea
                 className="form-control"
-                id="exampleTextarea" rows="5"
+                id="exampleTextarea" rows="3"
                 placeholder="Thêm ghi chú"
                 onChange={updateNoteState}
                 value={newNote}
                 onKeyUp={handleOnKeyUpTakeNote}
-            />
-            <input
-                className="btn btn-primary save-note"
-                type="button"
-                value="Lưu"
-                onClick={onClickSaveNote}
             />
         </div>
     );

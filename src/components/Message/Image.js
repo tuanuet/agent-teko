@@ -54,9 +54,16 @@ export default class Image extends React.Component {
         }
     }
     render() {
-        const { message } = this.props
+        const { message, isCustomerBlock } = this.props
         const { isLoading, content } = this.state
         const role = message.messageFrom === 0 ? 'self' : 'other'
+
+        if (isCustomerBlock)
+            return <img className="col-6 gutters clickable"
+                src={content}
+                alt={message.fileName}
+                onClick={this.openZooming}
+                onError={this.handleErrorContent} />
 
         return (
             <div className={role}>

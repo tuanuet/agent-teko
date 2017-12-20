@@ -3,8 +3,9 @@ import Customer from './Customer';
 import CustomerFullInfo from './CustomerFullInfo';
 import NoteList from './NoteList';
 import TakeNote from './TakeNote';
+import Photos from './Photos'
 
-const RightComponent = ({actions, agents, customer, notes, newNote, updateNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteState, deleteNote}) => {
+const RightComponent = ({actions, agents, customer, notes, photos, currentRoomId, nextFetchingRoom, isLoadingMessages, newNote, updateNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteState, deleteNote}) => {
     return(
         <div className="right">
             <Customer customer={customer} agents={agents} />
@@ -16,6 +17,13 @@ const RightComponent = ({actions, agents, customer, notes, newNote, updateNote, 
                 handleOnKeyUpTakeNote={handleOnKeyUpTakeNote}
                 onClickSaveNote={onClickSaveNote}
             />
+            <Photos
+                actions={actions}
+                photos={photos}
+                currentRoomId={currentRoomId}
+                nextFetchingRoom={nextFetchingRoom}
+                isLoadingMessages={isLoadingMessages}
+             />
         </div>
     );
 };

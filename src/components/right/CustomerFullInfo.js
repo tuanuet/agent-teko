@@ -45,7 +45,7 @@ class CustomerFullInfo extends React.Component {
 
     componentWillMount = () => {
         const { customer: { fbId } } = this.props
-        this.loadingFacebookInfo(fbId)
+        // this.loadingFacebookInfo(fbId)
     }
 
     componentWillReceiveProps = nextProps => {
@@ -53,8 +53,7 @@ class CustomerFullInfo extends React.Component {
         const { customer: { fbId: nextFbId }} = nextProps
 
         if (currentFbId !== nextFbId) {
-            console.log('Info change', nextFbId);
-            this.loadingFacebookInfo(nextFbId)
+            // this.loadingFacebookInfo(nextFbId)
         }
     }
 
@@ -119,7 +118,7 @@ class CustomerFullInfo extends React.Component {
                         <i className="fa fa-phone" aria-hidden="true"></i>
                         { isEditPhone
                             ? <input value={currentPhoneNumber} onChange={this.handlePhoneChange} onKeyUp={this.checkSubmit} style={inputStyle} autoFocus />
-                            : <strong>{customer.phone || 'Chưa  có'}</strong> }
+                            : <span className="info-text">{customer.phone || 'Chưa  có'}</span> }
                     </span>
                     { isEditPhone
                         ? <span className="pull-right">
@@ -135,7 +134,7 @@ class CustomerFullInfo extends React.Component {
             { !isLoadingCusInfo ? <div>
                 <p>
                     <i className="fa fa-facebook-official" aria-hidden="true"></i>
-                    <a href={cusLink} target="_blank">
+                    <a href={customer.email} target="_blank">
                         Timeline của khách hàng
                     </a>
                 </p>

@@ -385,13 +385,13 @@ header {
     }
 
     .right {
-        width: 25%;
+        width: 20%;
         min-width: 300px;
-        display: flex;
         margin: 16px;
         margin-left: 0;
         background: white;
         flex-direction: column;
+        overflow-y: scroll;
         @import "rightbar";
     }
 

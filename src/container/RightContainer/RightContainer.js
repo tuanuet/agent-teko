@@ -6,6 +6,8 @@ import * as chatActions from '../MiddleContainer/chatActions';
 import * as roomActions from '../LeftContainer/roomActions';
 import * as customerActions from './action/customerActions';
 import * as noteActions from './action/noteActions';
+import { fetchMoreMessages } from '../ChatContentContainer/actions'
+import { IMAGE } from '../../constants/MessageTypes'
 
 class RightContainer extends React.Component {
     constructor(props, context) {
@@ -76,7 +78,7 @@ class RightContainer extends React.Component {
     }
 
     render() {
-        const {customer, notes, currentAgent, currentRoomId, actions, agents} = this.props;
+        const {customer, notes, photos, currentAgent, currentRoomId, actions, agents, isLoadingMessages, nextFetchingRoom} = this.props;
         if (!currentRoomId) {
             return false
         }
@@ -87,6 +89,10 @@ class RightContainer extends React.Component {
                 agents={agents}
                 currentAgent={currentAgent}
                 notes={notes}
+                photos={photos}
+                currentRoomId={currentRoomId}
+                nextFetchingRoom={nextFetchingRoom}
+                isLoadingMessages={isLoadingMessages}
                 newNote={this.state.newNote}
                 updateNote={this.updateNote}
                 deleteNote={this.deleteNote}
@@ -100,19 +106,31 @@ class RightContainer extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     let currentRoomId = state.currentRoomId;
-    let customer = {};
-    let notes = [];
+    let currentRoom = {}
+    let customer = {}
+    let notes = []
+    let photos = []
     if (currentRoomId) {
-        let room = state.rooms.find(room => room.roomId === currentRoomId);
-        customer = room.customer;
-        notes = room.notes;
+        currentRoom = state.rooms.find(room => room.roomId === currentRoomId)
+        customer = currentRoom.customer;
+        notes = currentRoom.notes;
+        photos = currentRoom.messages.filter(msg => msg.messageType === IMAGE && !msg.fileName.startsWith(`sticker`)).sort((a, b) => {
+            if (!a.createdAt) return 0
+            if (!b.createdAt) return 0
+            if (a.createdAt > b.createdAt) return -1
+            if (a.createdAt < b.createdAt) return 1
+            return 0
+        })
     }
     return {
         customer: customer,
         currentAgent: state.agent,
         agents: state.agents,
         notes: notes,
-        currentRoomId: state.currentRoomId
+        photos: photos,
+        currentRoomId: state.currentRoomId,
+        nextFetchingRoom: currentRoom.nextFetchingRoom || state.currentRoomId,
+        isLoadingMessages: state.isLoadingMessages
     };
 }
 
@@ -123,7 +141,8 @@ function mapDispatchToProps(dispatch) {
             ...roomActions,
             ...chatActions ,
             ...customerActions,
-            ...noteActions
+            ...noteActions,
+            fetchMoreMessages
         }, dispatch)
     };
 }

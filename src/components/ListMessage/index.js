@@ -77,7 +77,7 @@ class ListMessage extends React.Component {
     }
 
     fetchMoreMessages = () => {
-        const { actions, currentRoomId, nextFetchingRoom, scrollToBottom } = this.props
+        const { actions, currentRoomId, nextFetchingRoom } = this.props
         actions.fetchMoreMessages(nextFetchingRoom, currentRoomId)
     }
 

@@ -1,6 +1,9 @@
 .customer, .customer-full-info {
-  border: 1px solid rgba(0, 0, 0, .10);
   padding: 10px 15px;
+}
+#customer-info {
+    font-size: .7em;
+    padding-top: 0px;
 }
 .take-note {
   padding: 15px;
@@ -43,18 +46,16 @@
   i {
     font-size: 0.9em;
   }
-  strong, a{
-    padding-left: 0.5em;
+  .info-text, a{
+    padding-left: 0.7em;
   }
   li a{
     font-size: 0.8em;
-    padding-left: 0.5em;
+    padding-left: 0.7em;
   }
 }
 .notes-list{
-  border: 1px solid rgba(0, 0, 0, .10);
-  background-color: #F6F6F6;
-  flex-grow: 1;
+  border-top: 1px solid rgba(0, 0, 0, .10);
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -65,10 +66,10 @@
     transition-timing-function: initial;
     transition-delay: initial;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(0, 0, 0, .10);
+    // border-bottom: 1px solid rgba(0, 0, 0, .10);
 
-    padding: 15px;
-    line-height: 1.5em;
+    padding: 10px 15px;
+    line-height: 1.4em;
 
     .note-item-content {
       font-size: .95rem;
@@ -104,7 +105,6 @@
   font-size: 0.8em;
   flex-flow: column;
   align-items: center;
-  height: 200px;
   bottom: 0;
   #exampleTextarea {
     overflow-y: hidden;
@@ -187,4 +187,21 @@
     color: white;
     background: #5387df;
     margin-bottom: 0;
+}
+.customer-photos {
+    border-top: 1px solid rgba(0, 0, 0, .10);
+    padding: 10px 15px;
+
+    img.gutters {
+        object-fit: cover;
+        width: 180px;
+        height: 180px;
+    }
+    .gutters {
+        padding-bottom: 5px;
+
+        &:nth-child(odd) {
+            padding-right: 5px;
+        }
+    }
 }
