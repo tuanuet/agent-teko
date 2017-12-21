@@ -5,6 +5,7 @@ import { ACCESS_TOKEN } from '../../constants/Server'
 class Audio extends Component {
     constructor(props) {
         super(props)
+        this.mounted = false
         this.state = {
             isLoading: false,
             content: props.message.content
@@ -24,12 +25,19 @@ class Audio extends Component {
                 access_token: ACCESS_TOKEN
             }
         }).then(res => res.data).then(res => {
+            if (!this.mounted) return false
             const { file_url } = res.data.find(attachment => attachment.name === message.fileName)
             this.setState({
                 isLoading: false,
                 content: file_url
             })
         }).catch(err => console.log('Audio err', err))
+    }
+    componentDidMount = () => {
+        this.mounted = true
+    }
+    componentWillUnmount = () => {
+        this.mounted = false
     }
     render() {
         const { message } = this.props

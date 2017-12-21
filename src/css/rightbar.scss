@@ -203,5 +203,19 @@
         &:nth-child(odd) {
             padding-right: 5px;
         }
+
+        .loading-attachment {
+            width: 165px;
+            height: 170px;
+            display: inline-flex;
+            background-color: #f4f4f4;
+            border: 1px solid #777777;
+            border-radius: 2px;
+
+            > .spinner {
+                margin: auto;
+                align-self: center;
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const Customer = ({customer, agents }) => {
+const Customer = ({customer, agents}) => {
     return (
         <div className="customer" data-toggle="collapse" href="#customer-info" aria-expanded={false}>
 

@@ -3,11 +3,18 @@ const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
 
 const isProduction = process.env.NODE_ENV == 'production'
+console.log(`Building in ${isProduction ? 'production' : 'development'} environment`)
 
 module.exports = {
     devtool: isProduction ? false : 'cheap-module-eval-source-map',
+    devServer: {
+        contentBase: path.resolve(__dirname, '../live-chat/public'),
+        allowedHosts: ['local.chat.com'],
+        compress: true
+    },
     entry: {
         main: './src/index',
         vendor: [
@@ -59,13 +66,13 @@ module.exports = {
         }),
         new CleanWebpackPlugin(path.resolve(__dirname, '../live-chat/public/js/dist'), {
             allowExternal: true
-        }),
+        })
+    ].concat(isProduction ? [
         new HtmlWebpackPlugin({
             title: 'Teko Admin Chat',
             filename: '../../../resources/views/index.blade.php',
             template: 'index.html'
-        })
-    ].concat(isProduction ? [
+        }),
         new UglifyJSPlugin({
             sourceMap: false
         }),
@@ -76,6 +83,13 @@ module.exports = {
         }),
         new webpack.HashedModuleIdsPlugin(),
     ] : [
+        new HtmlWebpackPlugin({
+            alwaysWriteToDisk: true,
+            title: 'Teko Admin Chat',
+            filename: '../../index.html',
+            template: 'index.html',
+        }),
+        new HtmlWebpackHarddiskPlugin(),
         new webpack.NamedModulesPlugin(),
     ])
 }
