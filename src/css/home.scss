@@ -391,7 +391,7 @@ header {
         margin-left: 0;
         background: white;
         flex-direction: column;
-        overflow-y: scroll;
+        overflow-y: auto;
         @import "rightbar";
     }
 
@@ -486,4 +486,16 @@ header {
             background-color: #f6f6f6;
         }
     }
+}
+
+.emoji-board {
+    position: absolute;
+    width: 275px;
+    height: 385px;
+    border-radius: 4px;
+    border: 1px solid;
+    bottom: 60px;
+    right: 60px;
+    overflow-y: auto;
+    background-color: #ffffff;
 }

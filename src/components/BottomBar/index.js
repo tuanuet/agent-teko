@@ -1,5 +1,5 @@
 import React from 'react'
-import EmojiBoard from '../EmojiBoard/index'
+import EmojiBoard from '../EmojiBoard'
 import * as actions from '../../actions/action'
 import moment from 'moment'
 
@@ -31,7 +31,6 @@ class BottomBar extends React.Component {
             this.send()
         }
     }
-
     getMessageToSendServer = () => {
         const { chatValue } = this.state
         const { currentRoom, agent } = this.props
@@ -48,7 +47,6 @@ class BottomBar extends React.Component {
             createdAt: moment().format('YYYY-MM-DD HH:mm:ss')
         }
     }
-
     send = () => {
         const { chatValue } = this.state
         if (chatValue === '') return false
@@ -61,7 +59,6 @@ class BottomBar extends React.Component {
             chatValue: ''
         })
     }
-
     sendSeenMessage = () => {
         const { dispatch, currentRoom, agent } = this.props
         const { roomId, roomType, customer } = currentRoom
@@ -87,7 +84,6 @@ class BottomBar extends React.Component {
             chatValue: ''
         })
     }
-
     uploadImage = e => {
         const { currentRoom, agent, uploadFile } = this.props
         const input = this.attachInput
@@ -112,7 +108,6 @@ class BottomBar extends React.Component {
             chatValue: ''
         })
     }
-
     handlePasteEvent = e => {
         const { currentRoom, agent, uploadFile } = this.props
         const { items } = e.clipboardData
@@ -137,26 +132,21 @@ class BottomBar extends React.Component {
             chatValue: ''
         })
     }
-
     componentDidMount() {
         this.chatInput.focus()
         window.addEventListener('paste', this.handlePasteEvent)
     }
-
     componentDidUpdate() {
         this.chatInput.focus()
     }
-
     componentWillUnmount() {
         window.removeEventListener('paste', this.handlePasteEvent)
     }
-
     handleChatChange = e => {
         this.setState({
             chatValue: e.target.value
         })
     }
-
     handleDrop = e => {
         e.preventDefault()
         const { uploadFile, currentRoom, agent } = this.props
@@ -186,23 +176,30 @@ class BottomBar extends React.Component {
             isDragOver: false
         })
     }
-
     handleDragEnter = e => {
         e.preventDefault()
         this.setState({
             isDragOver: true
         })
     }
-
     handleDragLeave = e => {
         e.preventDefault()
         this.setState({
             isDragOver: false
         })
     }
-
+    toggleEmojiBoard = e => {
+        this.setState(prevState => ({
+            isShowEmojiBoard: !prevState.isShowEmojiBoard
+        }))
+    }
+    insertEmoji = char => {
+        this.setState(prev => ({
+            chatValue: prev.chatValue + char
+        }))
+    }
     render() {
-        const { chatValue, isDragOver } = this.state
+        const { chatValue, isDragOver, isShowEmojiBoard } = this.state
         const { currentRoom } = this.props
         const showSeenIcon = currentRoom.roomInfo
             && currentRoom.roomInfo.latestMessage
@@ -225,13 +222,16 @@ class BottomBar extends React.Component {
                         autoFocus />
                 </div>
                 <div className="icon-button">
+                    <i className="fa fa-smile-o clickable" aria-hidden="true" onClick={this.toggleEmojiBoard}></i>
                     { showSeenIcon && <i className="fa fa-eye clickable" aria-hidden="true" onClick={this.sendSeenMessage}></i> }
                     <label>
                         <input type="file" ref={input => this.attachInput = input} onChange={this.uploadImage} />
                         <i className="fa fa-paperclip clickable" aria-hidden="true"></i>
                     </label>
+                    { isShowEmojiBoard && <EmojiBoard
+                        insertEmoji={this.insertEmoji}
+                        toggleEmojiBoard={this.toggleEmojiBoard} /> }
                 </div>
-                { this.state.isShowEmojiBoard && <EmojiBoard /> }
             </div>
         )
     }

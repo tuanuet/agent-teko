@@ -28,7 +28,8 @@ module.exports = {
             'moment',
             'socket.io-client',
             'axios',
-            'emojis-list',
+            'emoji-datasource-messenger',
+            'grapheme-splitter',
             'lodash'
         ]
     },
