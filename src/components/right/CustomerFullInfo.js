@@ -45,7 +45,7 @@ class CustomerFullInfo extends React.Component {
 
     componentWillMount = () => {
         const { customer: { fbId } } = this.props
-        // this.loadingFacebookInfo(fbId)
+        this.loadingFacebookInfo(fbId)
     }
 
     componentWillReceiveProps = nextProps => {
@@ -53,7 +53,7 @@ class CustomerFullInfo extends React.Component {
         const { customer: { fbId: nextFbId }} = nextProps
 
         if (currentFbId !== nextFbId) {
-            // this.loadingFacebookInfo(nextFbId)
+            this.loadingFacebookInfo(nextFbId)
         }
     }
 
@@ -134,7 +134,7 @@ class CustomerFullInfo extends React.Component {
             { !isLoadingCusInfo ? <div>
                 <p>
                     <i className="fa fa-facebook-official" aria-hidden="true"></i>
-                    <a href={customer.email} target="_blank">
+                    <a href={cusLink} target="_blank">
                         Timeline của khách hàng
                     </a>
                 </p>

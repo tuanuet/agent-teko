@@ -12,7 +12,6 @@ import {
 
 let emojiArray = []
 emos.forEach(emo => {
-    if (emo.text) emojiArray.push(emo.text)
     if (emo.texts) emojiArray = [...emojiArray, ...emo.texts]
 })
 
@@ -21,17 +20,17 @@ export const isEmoji = word => {
 }
 
 export const findEmoji = word => {
-    if (emojiArray.includes(word)) return [emos.filter(({text, texts}) => {
-        if (text === word) return true
+    if (emojiArray.includes(word)) return [emos.find(emo => {
+        const { text, texts } = emo
         if (texts && texts.includes(word)) return true
         return false
-    }).sort((a, b) => a.sort_order - b.sort_order)[0]]
+    })]
 
     const splitter = new GraphemeSplitter()
 
     return splitter.splitGraphemes(word).map(value => {
         return emos.find(emo => {
-            const { text, unified, texts } = emo
+            const { unified } = emo
             const codePoints = unified.split('-').map(u => `0x${u}`)
             const emoji = String.fromCodePoint(...codePoints)
             return emoji === value
