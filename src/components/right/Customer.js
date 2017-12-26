@@ -5,7 +5,7 @@ const Customer = ({customer, agents}) => {
         <div className="customer" data-toggle="collapse" href="#customer-info" aria-expanded={false}>
 
             <div className="row">
-                <div className="col-md-10 customer-short-info">
+                <div className="col-md-12 customer-short-info">
                     <p>{customer.name}</p>
                     <p className="customer-more-info">{customer.fbId ? `Nhắn tin từ Facebook` : `Nhắn tin từ Livechat`}</p>
                     { customer.involveAdmins !== '[]' && <p>

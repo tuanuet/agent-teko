@@ -60,6 +60,7 @@ class MiddleContainer extends React.Component {
     goSearching = async () => {
         const { searchMessage } = this.state
         const { actions, currentRoom } = this.props
+        if (!searchMessage) return false
         let countResult = 0
 
         while (this.props.nextFetchingRoom !== -1) {
@@ -67,8 +68,9 @@ class MiddleContainer extends React.Component {
         }
 
         this.props.currentRoom.messages.forEach(msg => {
-            const { content } = msg
+            const { messageType, content } = msg
             if (!content) return false
+            if (messageType !== 100) return false
             if (content.toLowerCase().includes(searchMessage.toLowerCase())) countResult++
         })
         this.setState({

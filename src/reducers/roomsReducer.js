@@ -107,12 +107,12 @@ export default function roomReducer(state=initialState.rooms, action) {
                 if (room.messages) {
                     return {
                         ...room,
-                        roomInfo: {...room.roomInfo, latestMessage: action.message, numOfUnReadMessages: unReadMessages },
+                        roomInfo: action.message.messageType === 111 ? {...room.roomInfo} : {...room.roomInfo, latestMessage: action.message, numOfUnReadMessages: unReadMessages },
                         messages: [...room.messages, action.message]
                     }
                 } else return {
                     ...room,
-                    roomInfo: {...room.roomInfo, latestMessage: action.message, numOfUnReadMessages: unReadMessages },
+                    roomInfo: action.message.messageType === 111 ? {...room.roomInfo} : {...room.roomInfo, latestMessage: action.message, numOfUnReadMessages: unReadMessages },
                     messages: [action.message]
                 }
             })
@@ -245,6 +245,17 @@ export default function roomReducer(state=initialState.rooms, action) {
                     customer: {
                         ...room.customer,
                         involveAdmins: action.newInvolveAdmins
+                    }
+                }
+            })
+        case types.BROADCAST_MARK_UNREAD:
+            return state.map(room => {
+                if (room.roomId !== action.roomId) return room
+                return {
+                    ...room,
+                    roomInfo: {
+                        ...room.roomInfo,
+                        numOfUnReadMessages: 1
                     }
                 }
             })

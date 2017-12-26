@@ -123,6 +123,11 @@ class Header extends React.Component {
         }
     }
 
+    markAsUnread = () => {
+        const { actions, currentRoomId } = this.props
+        actions.markAsUnread(currentRoomId)
+    }
+
     changeFilterTag = e => {
         this.setState({
             filterTag: e.target.value
@@ -169,6 +174,7 @@ class Header extends React.Component {
                         data-target="#exampleModal"><i className="fa fa-wrench" onClick={this.showTheme}/></button> */}
                         {/* <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
                         <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button> */}
+                        { currentRoom.roomInfo && currentRoom.roomInfo.numOfUnReadMessages === 0 && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Đánh dấu chưa đọc"><i className="fa fa-envelope-o" onClick={this.markAsUnread}/></button> }
                         <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thêm admin vào phòng chat"><i className="fa fa-user-plus" onClick={this.showListAgent}/></button>
                         { currentAgentServeThisRoom && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></button> }
                         <button className="red clickable" data-toggle="tooltip" data-placement="top" title="Đóng phòng chat"><i className="fa fa-times" onClick={this.unFollowRoom}/></button>

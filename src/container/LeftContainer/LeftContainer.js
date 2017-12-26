@@ -19,14 +19,12 @@ class LeftContainer extends React.Component {
         }
     }
 
-    /**
-     * handle event when admin choose a room to chat
-     * @param event
-     */
     adminChooseRoom(roomId) {
-        this.props.actions.adminChooseRoom(roomId);
-        this.props.actions.messagesFetchRequested(roomId);
-        this.props.actions.resetNumOfUnReadMessages(roomId);
+        const { actions } = this.props
+        actions.adminChooseRoom(roomId)
+        actions.messagesFetchRequested(roomId)
+        actions.resetNumOfUnReadMessages(roomId)
+
     }
 
     loadClosedRoom = search => {
@@ -78,7 +76,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({...{}, ...roomActions, ...chatActions}, dispatch)
+        actions: bindActionCreators({...roomActions, ...chatActions}, dispatch)
     };
 }
 

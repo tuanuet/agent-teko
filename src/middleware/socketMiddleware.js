@@ -88,6 +88,8 @@ export function socketMiddleware() {
             socket.emit('admin-exit-room', action.roomId, (ack, msg) => {
                 if (!ack) alert(`Không thoát được khỏi phòng chat.\n\nChi tiết lỗi: ${msg}`)
             })
+        } else if (socket && action.type === types.MARK_AS_UNREAD) {
+            socket.emit('admin-mark-unread', action.roomId)
         }
         return result
     }
@@ -203,8 +205,11 @@ export default async () => {
         })
 
         socket.on('close-room-to-other-agents', roomId => {
-            console.log('Server send close room to other agents')
             store.dispatch(chatActions.setStatusOfRoomSucceed(roomId, 3))
+        })
+
+        socket.on('broadcast-mark-unread', roomId => {
+            store.dispatch({ type: types.BROADCAST_MARK_UNREAD, roomId })
         })
 
         socket.on('reconnect', () => {

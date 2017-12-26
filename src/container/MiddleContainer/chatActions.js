@@ -86,3 +86,7 @@ export function adminExitRoom(roomId) {
 export function removeRoom(roomId) {
     return { type: types.REMOVE_ROOM, roomId }
 }
+
+export function markAsUnread(roomId) {
+    return { type: types.MARK_AS_UNREAD, roomId }
+}

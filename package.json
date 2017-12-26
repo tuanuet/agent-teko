@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.dev.js --open",
+    "watch": "webpack -d --config webpack.config.dev.js --watch",
     "build": "NODE_ENV=production webpack -p --config webpack.config.dev.js"
   },
   "dependencies": {

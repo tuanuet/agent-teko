@@ -72,11 +72,9 @@ class LeftComponent extends React.Component {
                     if (!room.roomInfo) return false
                     if (room.roomInfo.numOfUnReadMessages === 0) return false
                 } else if (filterBy === 'misschat') {
-                    if (!room.messages || room.messages.length === 0) {
-                        if (!room.roomInfo) return false
-                        if (!room.roomInfo.latestMessage) return false
-                        if (room.roomInfo.latestMessage.messageFrom === 0) return false
-                    }
+                    if (!room.roomInfo) return false
+                    if (!room.roomInfo.latestMessage) return false
+                    if (room.roomInfo.latestMessage.messageFrom === 0) return false
                 }
             }
             if (room.customer.name.toLowerCase().includes(searchValue.toLowerCase())) return true

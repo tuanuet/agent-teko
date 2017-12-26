@@ -85,6 +85,11 @@ module.exports = {
         new webpack.HashedModuleIdsPlugin(),
     ] : [
         new HtmlWebpackPlugin({
+            title: 'Teko Admin Chat',
+            filename: '../../../resources/views/index.blade.php',
+            template: 'index.html'
+        }),
+        new HtmlWebpackPlugin({
             alwaysWriteToDisk: true,
             title: 'Teko Admin Chat',
             filename: '../../index.html',
