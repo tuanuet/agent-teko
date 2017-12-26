@@ -1,7 +1,6 @@
 import React from 'react'
 import ListMessage from '../ListMessage'
-import * as ReactDOM from "react-dom"
-
+import ReactDOM from 'react-dom'
 
 class Scroll extends React.Component {
     constructor(props) {
@@ -20,20 +19,30 @@ class Scroll extends React.Component {
     }
 
     componentWillReceiveProps = nextProps => {
-        const { messages, currentRoomId } = this.props
-        const { messages: nextMessages, currentRoomId: nextCurrentRoomId } = nextProps
+        const { messages, currentRoomId, currentRoom } = this.props
+        const { currentRoom: nextRoom, currentRoomId: nextCurrentRoomId, isSearching } = nextProps
 
         if (currentRoomId !== nextCurrentRoomId) {
             this.activeScroll = true
-        } else if (JSON.stringify(messages ? messages.slice(-1).pop() : {})
-            !== JSON.stringify(nextMessages ? nextMessages.slice(-1).pop() : {})) {
+        } else if (JSON.stringify(currentRoom.messages ? currentRoom.messages.slice(-1).pop() : {})
+            !== JSON.stringify(nextRoom.messages ? nextRoom.messages.slice(-1).pop() : {})) {
             this.activeScroll = true
         }
     }
 
     componentDidUpdate = () => {
         const chatNode = ReactDOM.findDOMNode(this.messagesContainer)
-        if (this.activeScroll) {
+        const { isLoadingMessages, isSearching, currentIndex, searchMessage } = this.props
+        if (isLoadingMessages) {
+            this.scrollToBottom()
+        } else if (isSearching) {
+            const matchingItems = document.querySelectorAll('[class^="search-matching-item"]')
+            if (matchingItems.length === 0) return false
+            matchingItems.forEach(item => item.removeAttribute('style'))
+            const matchingItem = matchingItems[matchingItems.length - currentIndex - 1]
+            chatNode.parentNode.scrollTop = matchingItem.offsetTop - 200
+            matchingItem.style.background = '#fffd4a'
+        } else if (this.activeScroll) {
             this.scrollToBottom()
             this.activeScroll = false
             this.currentChatHeight = chatNode.scrollHeight

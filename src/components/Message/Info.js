@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-class Info extends Component {
+class Info extends PureComponent {
     render() {
         const { message } = this.props
         const { content } = message

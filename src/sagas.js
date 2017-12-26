@@ -14,7 +14,6 @@ import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
 import {
     adminSendRequestJoinRoomToSocketSucceed,
 } from "./container/BottomBarContainer/joinRoomSaga"
-import {fetchMoreMessages} from './container/ChatContentContainer/saga'
 import {fork} from 'redux-saga/effects';
 
 export default function* rootSaga() {
@@ -28,5 +27,4 @@ export default function* rootSaga() {
     yield fork(setStatusOfRoomSaga);
     yield fork(saveTagOfCustomerSaga);
     yield fork(deleteTagOfCustomerSaga);
-    yield fork(fetchMoreMessages);
 }

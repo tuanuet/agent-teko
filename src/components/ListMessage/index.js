@@ -10,7 +10,7 @@ import * as MessageTypes from '../../constants/MessageTypes';
 import * as config from '../../constants/config'
 import Attachment from '../Message/Attachment'
 
-const getListChat = (messages, scrollToBottom, openZooming) => {
+const getListChat = (messages, scrollToBottom, openZooming, isSearching, searchMessage) => {
     return messages ? messages.map((e, idx) => {
         switch (e.messageType) {
         case MessageTypes.IMAGE:
@@ -43,8 +43,9 @@ const getListChat = (messages, scrollToBottom, openZooming) => {
             />
         default:
             return <Default
-                message={e}
                 key={`${e.messageId}_${e.fileName}_${idx}`}
+                message={e}
+                searchMessage={isSearching && searchMessage}
             />
         }
     }) : false
@@ -64,12 +65,14 @@ class ListMessage extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { currentRoomId, messages, actions, nextFetchingRoom, scrollToBottom } = this.props
-        const { currentRoomId: nextRoomId, messages: nextMessages, isLoadingMessages} = nextProps
+        const { currentRoomId, currentRoom, actions, nextFetchingRoom, scrollToBottom } = this.props
+        const { currentRoomId: nextRoomId, currentRoom: nextRoom, isLoadingMessages} = nextProps
 
         if (currentRoomId !== nextRoomId) return false
+        if (!currentRoom) return false
+        if (!nextRoom) return false
 
-        if (messages.length < config.MESSAGE_PAGING_VALUE && nextMessages.length < config.MESSAGE_PAGING_VALUE && isLoadingMessages === false) {
+        if (currentRoom.messages.length < config.MESSAGE_PAGING_VALUE && nextRoom.messages.length < config.MESSAGE_PAGING_VALUE && isLoadingMessages === false) {
             if (nextProps.nextFetchingRoom !== -1) {
                 actions.fetchMoreMessages(nextProps.nextFetchingRoom, currentRoomId, scrollToBottom)
             }
@@ -111,8 +114,9 @@ class ListMessage extends React.Component {
 
     render() {
         const { isZooming, content } = this.state
-        const { messages, nextFetchingRoom, isLoadingMessages, scrollToBottom } = this.props
-        const listMsg = getListChat(messages, scrollToBottom, this.openZooming)
+        const { nextFetchingRoom, isLoadingMessages, currentRoom, scrollToBottom } = this.props
+        const { searchMessage, isSearching } = this.props
+        const listMsg = getListChat(currentRoom ? currentRoom.messages : [], scrollToBottom, this.openZooming, isSearching, searchMessage)
 
         return (
             <ol className="chat">

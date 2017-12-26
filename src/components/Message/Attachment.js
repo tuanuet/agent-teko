@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Attachment extends React.Component {
+export default class Attachment extends React.PureComponent {
     // TODO: Renew link if file URL is out of date
     constructor(props) {
         super(props)

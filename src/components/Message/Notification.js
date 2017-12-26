@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Notification extends React.Component {
+export default class Notification extends React.PureComponent {
     render() {
         return (
             <div className="notification">
@@ -9,5 +9,3 @@ export default class Notification extends React.Component {
         );
     }
 }
-
-

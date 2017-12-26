@@ -499,3 +499,43 @@ header {
     overflow-y: auto;
     background-color: #ffffff;
 }
+
+.search-messages {
+    display: inline-block;
+    margin-left: 60px;
+    width: 65%;
+    font-weight: normal;
+    font-size: 14px;
+    user-select: none;
+
+    input {
+        display: inline-block;
+        width: 40%;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        transition: 0.3s;
+
+        &:focus {
+            width: 90%;
+        }
+    }
+
+    .move-search {
+        i {
+            font-size: 20px;
+            width: 30px;
+
+            &.disabled {
+                opacity: 0.2;
+            }
+        }
+
+    }
+}
+
+.search-right-message {
+    background-color: #ffb76b;
+    border-radius: 8px;
+}

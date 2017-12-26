@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import axios from 'axios'
 import { ACCESS_TOKEN } from '../../constants/Server'
 
-class Video extends Component {
+class Video extends PureComponent {
     constructor(props) {
         super(props)
         this.mounted = false

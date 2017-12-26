@@ -1,58 +1,155 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import ChatContentContainer from '../ChatContentContainer'
+import React from 'react'
+import { connect } from 'react-redux'
+import ChatContent from '../../components/Middle/ChatContent'
 import Header from '../../components/Middle/Header'
 import BottomBarContainer from '../BottomBarContainer'
+import * as messageActions from '../ChatContentContainer/actions'
+import { bindActionCreators } from 'redux'
 
 class MiddleContainer extends React.Component {
     constructor(props) {
-        super(props);
-        this.changeTheme = this.changeTheme.bind(this);
+        super(props)
+        this.changeTheme = this.changeTheme.bind(this)
 
-        const localStorage = window.localStorage;
-        const color = localStorage.getItem('themeColor');
-        this.state = {theme: color ? color : 'blue'};
+        const localStorage = window.localStorage
+        const color = localStorage.getItem('themeColor')
+        this.state = {
+            theme: color ? color : 'blue',
+            searchMessage: '',
+            isSearching: false,
+            numResult: 0,
+            currentIndex: 0
+        }
+    }
+
+    componentWillReceiveProps = nextProps => {
+        const { currentRoomId } = this.props
+        if (currentRoomId !== nextProps.currentRoomId) {
+            this.setState({
+                searchMessage: '',
+                isSearching: false,
+                numResult: 0,
+                currentIndex: 0
+            })
+        }
     }
 
     changeTheme(e) {
-        const localStorage = window.localStorage;
-        const color = e.target.className;
-        localStorage.setItem('themeColor', color);
+        const localStorage = window.localStorage
+        const color = e.target.className
+        localStorage.setItem('themeColor', color)
         this.setState({theme: color})
     }
 
-    render() {
+    changeSearchMessage = e => {
+        this.setState({
+            searchMessage: e.target.value
+        })
+    }
 
-        const { currentRoomId } = this.props;
-        if (!currentRoomId) {
-            return false
-        } else {
-            return (
+    closeSearching = () => {
+        const matchingItems = document.querySelectorAll('[class^="search-matching-item"]')
+        matchingItems.forEach(item => item.removeAttribute('style'))
 
-              <div className="middle">
-                  <Header
-                      changeTheme={this.changeTheme}
-                  />
+        this.setState({
+            searchMessage: '',
+            isSearching: false
+        })
+    }
 
-                  <ChatContentContainer
-                    theme={this.state.theme}
-                  />
+    goSearching = async () => {
+        const { searchMessage } = this.state
+        const { actions, currentRoom } = this.props
+        let countResult = 0
 
-                  <BottomBarContainer />
-              </div>
-            );
+        while (this.props.nextFetchingRoom !== -1) {
+            await actions.fetchMoreMessages(this.props.nextFetchingRoom, this.props.currentRoomId)
         }
+
+        this.props.currentRoom.messages.forEach(msg => {
+            const { content } = msg
+            if (!content) return false
+            if (content.toLowerCase().includes(searchMessage.toLowerCase())) countResult++
+        })
+        this.setState({
+            isSearching: true,
+            numResult: countResult,
+            currentIndex: 0
+        })
+    }
+
+    keyPressSearch = e => {
+        if (e.keyCode === 13) {
+            this.goSearching()
+        }
+    }
+
+    increaseIndex = () => {
+        const { currentIndex, numResult } = this.state
+        if (numResult === 0 || currentIndex === numResult - 1) return false
+        this.setState(prevState => ({
+            currentIndex: prevState.currentIndex + 1
+        }))
+    }
+
+    decreaseIndex = () => {
+        const { currentIndex, numResult } = this.state
+        if (currentIndex === 0) return false
+        this.setState(prevState => ({
+            currentIndex: prevState.currentIndex - 1
+        }))
+    }
+
+    render() {
+        const { currentRoomId, isLoadingMessages } = this.props
+        const { theme, searchMessage, isSearching, numResult, currentIndex } = this.state
+
+        if (!currentRoomId) return false
+
+        return <div className="middle">
+            <Header
+                searchMessage={searchMessage}
+                isSearching={isSearching}
+                numResult={numResult}
+                currentIndex={currentIndex}
+                isLoadingMessages={isLoadingMessages}
+                changeTheme={this.changeTheme}
+                closeSearching={this.closeSearching}
+                goSearching={this.goSearching}
+                keyPressSearch={this.keyPressSearch}
+                increaseIndex={this.increaseIndex}
+                decreaseIndex={this.decreaseIndex}
+                changeSearchMessage={this.changeSearchMessage}
+            />
+
+            <ChatContent
+                theme={theme}
+                isSearching={isSearching}
+                searchMessage={searchMessage}
+                currentIndex={currentIndex}
+                {...this.props}
+            />
+
+            <BottomBarContainer />
+        </div>
     }
 }
 
 function mapStateToProps(state, ownProps) {
+    const { currentRoomId, isLoadingMessages } = state
+    const currentRoom = state.rooms.find(room => room.roomId === state.currentRoomId)
     return {
-        currentRoomId: state.currentRoomId
-    };
+        currentRoomId,
+        currentRoom,
+        nextFetchingRoom: currentRoom && currentRoom.nextFetchingRoom || state.currentRoomId,
+        isLoadingMessages
+    }
 }
 
 function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+        actions: bindActionCreators({...messageActions}, dispatch)
+    }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MiddleContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MiddleContainer)

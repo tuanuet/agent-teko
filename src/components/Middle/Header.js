@@ -147,6 +147,7 @@ class Header extends React.Component {
 
     render() {
         const { filterTag } = this.state
+        const { isLoadingMessages, searchMessage, isSearching, numResult, currentIndex } = this.props
         const { currentRoom, listOfTags, tagsOfRoom, agents, currentAgent } = this.props
         let lookup = _.keyBy(tagsOfRoom, tag => tag.id)
         let availableTags = _.filter(listOfTags, item => {
@@ -158,9 +159,6 @@ class Header extends React.Component {
         let modal = null
         if (this.state.showModals.selectListAgent) {
             modal = <SelectAgent {...this.props} onSave={this.onSaveSelectListAgent} onClose={this.closeModal} agents={agents} currentAgent={currentAgent} />
-        }
-        if (this.state.showModals.selectTheme) {
-            modal = <SelectTheme {...this.props} />
         }
 
         return (
@@ -192,6 +190,27 @@ class Header extends React.Component {
                                     {tag.title}
                                 </p>
                             </a>)}
+                        </div>
+                        <div className="search-messages">
+                            { isSearching ? <div>
+                                <span className="move-search">
+                                    <i className={`fa fa-angle-up clickable text-primary ${numResult === 0 || currentIndex === numResult - 1 ? `disabled`: ''}`} aria-hidden="true" onClick={this.props.increaseIndex}></i>
+                                    <i className={`fa fa-angle-down clickable text-primary ${currentIndex === 0 ? `disabled`: ''}`} aria-hidden="true" onClick={this.props.decreaseIndex}></i>
+                                </span>
+                                { numResult === 0 ? `Không có kết quả cho "${searchMessage}"` :
+                                    `${currentIndex + 1} trên ${numResult} kết quả cho "${searchMessage}"` }
+                                <span className="text-success clickable float-right" onClick={this.props.closeSearching}>
+                                    Xong
+                                    <i className="fa fa-check pl-2" aria-hidden="true"></i>
+                                </span>
+                            </div> : <div>
+                                <input value={searchMessage}
+                                    onChange={this.props.changeSearchMessage}
+                                    onKeyDown={this.props.keyPressSearch}
+                                    className="form-control"
+                                    placeholder="Tìm kiếm tin nhắn" />
+                                { isLoadingMessages ? <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i> : <i className="fa fa-search clickable" onClick={this.props.goSearching}></i>}
+                            </div> }
                         </div>
                     </div>
                     <div className="list-tag">
