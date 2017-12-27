@@ -169,14 +169,16 @@ class Header extends React.Component {
         return (
             <div className="header">
                 <div className="title">
-                    { currentRoom.roomStatus !== 1 && currentRoom.roomStatus !== 3 && <div className="group-button">
+                    { currentRoom.roomStatus !== 3 && <div className="group-button">
                         {/* <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
                         data-target="#exampleModal"><i className="fa fa-wrench" onClick={this.showTheme}/></button> */}
                         {/* <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
                         <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button> */}
-                        { currentRoom.roomInfo && currentRoom.roomInfo.numOfUnReadMessages === 0 && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Đánh dấu chưa đọc"><i className="fa fa-envelope-o" onClick={this.markAsUnread}/></button> }
-                        <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thêm admin vào phòng chat"><i className="fa fa-user-plus" onClick={this.showListAgent}/></button>
-                        { currentAgentServeThisRoom && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></button> }
+                        { currentRoom.roomStatus !== 1 && <span>
+                            { currentRoom.roomInfo && currentRoom.roomInfo.numOfUnReadMessages === 0 && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Đánh dấu chưa đọc"><i className="fa fa-envelope-o" onClick={this.markAsUnread}/></button> }
+                            <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thêm admin vào phòng chat"><i className="fa fa-user-plus" onClick={this.showListAgent}/></button>
+                            { currentAgentServeThisRoom && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></button> }
+                        </span> }
                         <button className="red clickable" data-toggle="tooltip" data-placement="top" title="Đóng phòng chat"><i className="fa fa-times" onClick={this.unFollowRoom}/></button>
                         { modal }
                     </div> }

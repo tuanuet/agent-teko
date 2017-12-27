@@ -1,11 +1,11 @@
-import React, {PropTypes} from 'react';
+import React, {PropTypes} from 'react'
 import * as helper from '../../helper'
 
 const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
-    let className = "room-item";
+    let className = "room-item"
 
     if (closedRoom.roomId === currentRoomId) {
-        className += " active";
+        className += " active"
     }
     return (
         <div className={className} onClick={adminChooseRoom.bind(this, closedRoom.roomId)} >
@@ -30,11 +30,11 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
                 </div> }
             </div>
         </div>
-    );
-};
+    )
+}
 
 
-const ClosedRooms = ({currentTab, closedRooms, currentClosedRoomSearchValue, adminChooseRoom, currentRoomId, isHavingMoreClosed, isLoadingMoreRooms, loadClosedRoom}) => {
+const ClosedRooms = ({currentTab, closedRooms, searchValue, searchType, adminChooseRoom, currentRoomId, isHavingMoreClosed, isLoadingMoreRooms, loadClosedRoom}) => {
     return (
         <div className={`tab-pane ${currentTab === 'closed' && 'active'}`} id="closedchat" role="tabpanel">
             { !isLoadingMoreRooms && closedRooms.length === 0 ? <div className="text-center" style={{fontSize: '16px'}}>
@@ -48,12 +48,12 @@ const ClosedRooms = ({currentTab, closedRooms, currentClosedRoomSearchValue, adm
             { isHavingMoreClosed && (isLoadingMoreRooms ? <div className="text-center">
                 <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
                 <span className="sr-only">Loading...</span>
-            </div> : <div className="text-center clickable" onClick={e => loadClosedRoom(currentClosedRoomSearchValue)} style={{ color: '#2b7ec9' }}> {/* Better pass function */}
+            </div> : <div className="text-center clickable" onClick={e => loadClosedRoom(searchValue, searchType)} style={{ color: '#2b7ec9' }}> {/* Better pass function */}
                 Tải thêm
             </div>) }
         </div>
-    );
-};
+    )
+}
 
 
-export default ClosedRooms;
+export default ClosedRooms

@@ -10,8 +10,6 @@ class LeftContainer extends React.Component {
 
     constructor(props, context) {
         super(props, context)
-        this.adminChooseRoom = this.adminChooseRoom.bind(this);
-        this.loadClosedRoom = this.loadClosedRoom.bind(this);
 
         this.state = {
             isHavingMoreClosed: true,
@@ -19,20 +17,21 @@ class LeftContainer extends React.Component {
         }
     }
 
-    adminChooseRoom(roomId) {
+    adminChooseRoom = roomId => {
         const { actions } = this.props
         actions.adminChooseRoom(roomId)
         actions.messagesFetchRequested(roomId)
         actions.resetNumOfUnReadMessages(roomId)
-
     }
 
-    loadClosedRoom = search => {
+    loadClosedRoom = (searchValue = '', searchType = '') => {
+        const { actions } = this.props
+
         this.setState({
             isLoadingMoreRooms: true
         }, () => {
             const numberOfClosedRoom = this.props.rooms.filter(room => room.roomStatus === 3).length
-            this.props.actions.loadClosedRoomRequested(numberOfClosedRoom, CLOSED_ROOM_PAGING_VALUE, search).then(res => {
+            actions.loadClosedRoomRequested(searchValue, searchType, numberOfClosedRoom, CLOSED_ROOM_PAGING_VALUE ).then(res => {
                 const isLoadMore = res.length !== 0
                 this.setState({
                     isLoadingMoreRooms: false,

@@ -29,9 +29,9 @@ const exampleState = {
             fileName: null,
             createdAt: '2017-11-09 12:05:95'
         }],
-        topic: {
-
-        },
+        // topic: {
+        //
+        // },
         customer: {
             id: 1,
             name: 'Hải Nam',

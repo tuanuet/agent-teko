@@ -13,8 +13,8 @@ class LeftComponent extends React.Component {
         this.state = {
             currentTab: 'available',
             searchValue: '',
+            searchType: '',
             filterBy: 'all',
-            currentClosedRoomSearchValue: '',
             now: Date.now()
         }
     }
@@ -23,16 +23,46 @@ class LeftComponent extends React.Component {
         this.updateInterval = setInterval(() => this.setState({ now: Date.now() }), 1000 * 60)
     }
 
-    checkSubmitSearch = e => {
-        if (e.keyCode === 13) {
-            this.searchClosedRooms()
+    componentDidUpdate() {
+        const { rooms } = this.props
+        const numOfUnReadRoom = rooms.filter(room => room.roomStatus === 2 && room.roomInfo && room.roomInfo.numOfUnReadMessages).length
+
+        if (numOfUnReadRoom === 0) {
+            document.title = config.DEFAULT_TITLE
+        } else {
+            document.title = `(${numOfUnReadRoom}) ${config.DEFAULT_TITLE}`
         }
     }
 
     changeCurrentTab = value => {
+        const { currentTab } = this.state
+        const { actions, loadClosedRoom } = this.props
         this.setState({
-            currentTab: value,
+            currentTab: value
+        })
+    }
+
+    resetSearchType = () => {
+        const { currentTab } = this.state
+        const { actions, loadClosedRoom } = this.props
+        this.setState({
+            searchType: '',
             searchValue: ''
+        }, () => {
+            actions.removeAllClosedRooms()
+            loadClosedRoom()
+        })
+    }
+
+    searchRooms = type => {
+        const { currentTab, searchValue } = this.state
+        const { actions, loadClosedRoom } = this.props
+
+        this.setState({
+            searchType: type
+        }, () => {
+            actions.removeAllClosedRooms()
+            loadClosedRoom(searchValue, type)
         })
     }
 
@@ -40,16 +70,6 @@ class LeftComponent extends React.Component {
         this.setState({
             searchValue: e.target.value
         })
-    }
-
-    searchClosedRooms = () => {
-        const { loadClosedRoom, actions } = this.props
-        const { searchValue } = this.state
-        this.setState({
-            currentClosedRoomSearchValue: searchValue
-        })
-        actions.removeAllClosedRooms()
-        loadClosedRoom(searchValue)
     }
 
     changeFilterBy = value => {
@@ -62,36 +82,54 @@ class LeftComponent extends React.Component {
         clearInterval(this.updateInterval)
     }
 
+    handleTabEnterSearch = searchType => e => {
+        if (e.keyCode === 13) {
+            this.searchRooms(searchType)
+        }
+    }
+
     render() {
-        const { currentTab, searchValue, currentClosedRoomSearchValue, filterBy } = this.state
+        const { currentTab, searchType, searchValue, filterBy } = this.state
         const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingRooms, isLoadingMoreRooms } = this.props
-        const filterCondition = room => {
-            if (currentTab === 'closed') return true
-            if (currentTab === 'available' && room.roomStatus === 2) {
-                if (filterBy === 'unread') {
-                    if (!room.roomInfo) return false
-                    if (room.roomInfo.numOfUnReadMessages === 0) return false
-                } else if (filterBy === 'misschat') {
-                    if (!room.roomInfo) return false
-                    if (!room.roomInfo.latestMessage) return false
-                    if (room.roomInfo.latestMessage.messageFrom === 0) return false
-                }
-            }
-            if (room.customer.name.toLowerCase().includes(searchValue.toLowerCase())) return true
-            return room.tags.some(tag => tag.title.toLowerCase().includes(searchValue.toLowerCase()))
+
+        const filterAvailable = room => {
+            if (filterBy === 'unread') {
+                if (!room.roomInfo) return false
+                if (room.roomInfo.numOfUnReadMessages === 0) return false
+                return true
+            } else if (filterBy === 'misschat') {
+                if (!room.roomInfo) return false
+                if (!room.roomInfo.latestMessage) return false
+                if (room.roomInfo.latestMessage.messageFrom === 0) return false
+                return true
+            } else if (filterBy === 'all') return true
+            else return false
         }
 
-        const availableRooms = rooms.filter(room => room.roomStatus === 2).filter(filterCondition)
-        const enableRooms = rooms.filter(room => room.roomStatus === 1).filter(filterCondition)
+        const searchRooms = room => {
+            const { customer } = room
+            const { notes, tags } = customer
+            if (!searchType) return true
+            if (searchType === 'customer') {
+                const { name, phone } = customer
+                return name.toLowerCase().includes(searchValue.toLowerCase())
+                    || phone.toLowerCase().includes(searchValue.toLowerCase())
+            } else if (searchType === 'tag') {
+                return tags.some(tag => {
+                    const { title } = tag
+                    return title.toLowerCase().includes(searchValue.toLowerCase())
+                })
+            } else if (searchType === 'note') {
+                return notes.some(note => {
+                    const { content }  = note
+                    return content.toLowerCase().includes(searchValue.toLowerCase())
+                })
+            } else return false
+        }
+
+        const availableRooms = rooms.filter(room => room.roomStatus === 2).filter(searchRooms).filter(filterAvailable)
+        const enableRooms = rooms.filter(room => room.roomStatus === 1).filter(searchRooms)
         const closedRooms = rooms.filter(room => room.roomStatus === 3)
-
-        const numOfUnReadRoom = rooms.filter(room => room.roomStatus === 2 && room.roomInfo && room.roomInfo.numOfUnReadMessages).length
-
-        if (numOfUnReadRoom === 0) {
-            document.title = config.DEFAULT_TITLE
-        } else {
-            document.title = `(${numOfUnReadRoom}) ${config.DEFAULT_TITLE}`
-        }
 
         return <div className="left">
             <TabBar
@@ -102,13 +140,14 @@ class LeftComponent extends React.Component {
                 changeCurrentTab={this.changeCurrentTab} />
             <SearchBar
                 currentTab={currentTab}
+                searchType={searchType}
                 searchValue={searchValue}
                 filterBy={filterBy}
-                currentClosedRoomSearchValue={currentClosedRoomSearchValue}
+                searchRooms={this.searchRooms}
+                resetSearchType={this.resetSearchType}
                 changeSearchValue={this.changeSearchValue}
-                searchClosedRooms={this.searchClosedRooms}
-                checkSubmitSearch={this.checkSubmitSearch}
-                changeFilterBy={this.changeFilterBy} />
+                changeFilterBy={this.changeFilterBy}
+                handleTabEnterSearch={this.handleTabEnterSearch} />
             { !isLoadingRooms ? <div className="tab-content">
                 <AvailableRooms
                     currentTab={currentTab}
@@ -124,13 +163,14 @@ class LeftComponent extends React.Component {
                 />
                 <ClosedRooms
                     currentTab={currentTab}
-                    closedRooms={closedRooms}
                     currentRoomId={currentRoomId}
-                    currentClosedRoomSearchValue={currentClosedRoomSearchValue}
+                    closedRooms={closedRooms}
                     adminChooseRoom={adminChooseRoom}
                     isHavingMoreClosed={isHavingMoreClosed}
                     isLoadingMoreRooms={isLoadingMoreRooms}
                     loadClosedRoom={loadClosedRoom}
+                    searchValue={searchValue}
+                    searchType={searchType}
                 />
             </div> : <div className="text-center">
                 <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
