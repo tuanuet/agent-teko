@@ -3,7 +3,7 @@ import moment from 'moment'
 import _ from 'lodash'
 import * as helper from '../../helper'
 
-class AvailableRoom extends React.Component {
+class AvailableRoom extends React.PureComponent {
     constructor(props) {
         super(props)
         this.state = {
@@ -40,13 +40,13 @@ class AvailableRoom extends React.Component {
         const { oldestCustomerMessage } = this.state
         const { availableRoom, adminChooseRoom, currentRoomId } = this.props
 
-        let className = "room-item"
+        let className = 'room-item'
         if (availableRoom.roomInfo && availableRoom.roomInfo.numOfUnReadMessages > 0) {
-            className += " unread"
+            className += ' unread'
         }
 
         if (availableRoom.roomId === currentRoomId) {
-            className += " active"
+            className += ' active'
         }
 
         return (

@@ -1,9 +1,11 @@
-import React, {PropTypes} from 'react';
+import React, {PropTypes} from 'react'
 import { firstCallOf_closedRoomsRequested } from '../../container/LeftContainer/roomActions'
 
-const Tab = ({currentTab, numberOfEnableRooms, numberOfActiveRooms, loadClosedRoom, changeCurrentTab}) => {
-    return (
-        <div>
+class Tab extends React.PureComponent {
+    render() {
+        const { currentTab, numberOfEnableRooms, numberOfActiveRooms, loadClosedRoom, changeCurrentTab } = this.props
+
+        return <div>
             <ul className="nav nav-tabs" role="tablist">
                 <li className="nav-item" onClick={e => changeCurrentTab('available')}>
                     <a className={`nav-link ${currentTab === 'available' && 'active'}`} data-toggle="tab" href="#chat" role="tab">Hoạt động
@@ -20,11 +22,11 @@ const Tab = ({currentTab, numberOfEnableRooms, numberOfActiveRooms, loadClosedRo
                 </li>
             </ul>
         </div>
-    );
-};
+    }
+}
 
 Tab.propTypes = {
     numberOfEnableRooms: PropTypes.number
-};
+}
 
-export default Tab;
+export default Tab

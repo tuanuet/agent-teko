@@ -82,12 +82,6 @@ class LeftComponent extends React.Component {
         clearInterval(this.updateInterval)
     }
 
-    handleTabEnterSearch = searchType => e => {
-        if (e.keyCode === 13) {
-            this.searchRooms(searchType)
-        }
-    }
-
     render() {
         const { currentTab, searchType, searchValue, filterBy } = this.state
         const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingRooms, isLoadingMoreRooms } = this.props
@@ -146,8 +140,7 @@ class LeftComponent extends React.Component {
                 searchRooms={this.searchRooms}
                 resetSearchType={this.resetSearchType}
                 changeSearchValue={this.changeSearchValue}
-                changeFilterBy={this.changeFilterBy}
-                handleTabEnterSearch={this.handleTabEnterSearch} />
+                changeFilterBy={this.changeFilterBy} />
             { !isLoadingRooms ? <div className="tab-content">
                 <AvailableRooms
                     currentTab={currentTab}

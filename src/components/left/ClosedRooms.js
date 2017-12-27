@@ -1,14 +1,16 @@
 import React, {PropTypes} from 'react'
 import * as helper from '../../helper'
 
-const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
-    let className = "room-item"
+class ClosedRoom extends React.PureComponent {
+    render() {
+        const { closedRoom, currentRoomId, adminChooseRoom } = this.props
 
-    if (closedRoom.roomId === currentRoomId) {
-        className += " active"
-    }
-    return (
-        <div className={className} onClick={adminChooseRoom.bind(this, closedRoom.roomId)} >
+        let className = 'room-item'
+        if (closedRoom.roomId === currentRoomId) {
+            className += ' active'
+        }
+
+        return <div className={className} onClick={adminChooseRoom.bind(this, closedRoom.roomId)} >
             <div className="customer-control">
                 <img
                     src={closedRoom.customer.avatarUrl}
@@ -30,13 +32,14 @@ const ClosedRoom = ({closedRoom, currentRoomId, adminChooseRoom}) => {
                 </div> }
             </div>
         </div>
-    )
+    }
 }
 
+class ClosedRooms extends React.Component {
+    render() {
+        const { currentTab, closedRooms, searchValue, searchType, adminChooseRoom, currentRoomId, isHavingMoreClosed, isLoadingMoreRooms, loadClosedRoom } = this.props
 
-const ClosedRooms = ({currentTab, closedRooms, searchValue, searchType, adminChooseRoom, currentRoomId, isHavingMoreClosed, isLoadingMoreRooms, loadClosedRoom}) => {
-    return (
-        <div className={`tab-pane ${currentTab === 'closed' && 'active'}`} id="closedchat" role="tabpanel">
+        return <div className={`tab-pane ${currentTab === 'closed' && 'active'}`} id="closedchat" role="tabpanel">
             { !isLoadingMoreRooms && closedRooms.length === 0 ? <div className="text-center" style={{fontSize: '16px'}}>
                 Danh sách rỗng
             </div> : closedRooms.map((closedRoom, index) => <ClosedRoom
@@ -52,7 +55,7 @@ const ClosedRooms = ({currentTab, closedRooms, searchValue, searchType, adminCho
                 Tải thêm
             </div>) }
         </div>
-    )
+    }
 }
 
 

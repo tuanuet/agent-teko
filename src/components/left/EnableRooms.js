@@ -1,9 +1,11 @@
-import React, {PropTypes} from 'react';
-import EnableRoom from './EnableRoom';
+import React, {PropTypes} from 'react'
+import EnableRoom from './EnableRoom'
 
-const EnableRooms = ({currentTab, enableRooms, adminChooseRoom}) => {
-    return (
-        <div className={`tab-pane ${currentTab === 'enable' && 'active'}`} id="unchat" role="tabpanel">
+class EnableRooms extends React.Component {
+    render() {
+        const { currentTab, enableRooms, adminChooseRoom } = this.props
+
+        return <div className={`tab-pane ${currentTab === 'enable' && 'active'}`} id="unchat" role="tabpanel">
             { enableRooms.length === 0 ? <div className="text-center" style={{fontSize: '16px'}}>
                 Danh sách rỗng
             </div> : enableRooms.sort((a, b) => {
@@ -21,12 +23,12 @@ const EnableRooms = ({currentTab, enableRooms, adminChooseRoom}) => {
                         adminChooseRoom={adminChooseRoom}/>
                 }) }
         </div>
-    );
-};
+    }
+}
 
 EnableRooms.propTypes = {
     enableRooms: PropTypes.array.isRequired,
     adminChooseRoom: PropTypes.func.isRequired
-};
+}
 
-export default EnableRooms;
+export default EnableRooms

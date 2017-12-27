@@ -2,15 +2,15 @@ import React, {PropTypes} from 'react';
 import _ from 'lodash';
 import * as helper from '../../helper'
 
-const EnableRoom = ({enableRoom, currentRoomId, adminChooseRoom}) => {
-    let className = 'room-item'
+class EnableRoom extends React.PureComponent {
+    render() {
+        const { enableRoom, currentRoomId, adminChooseRoom } = this.props
 
-    if (enableRoom.roomInfo && enableRoom.roomInfo.numOfUnReadMessages > 0) className += ' unread'
+        let className = 'room-item'
+        if (enableRoom.roomInfo && enableRoom.roomInfo.numOfUnReadMessages > 0) className += ' unread'
+        if (enableRoom.roomId === currentRoomId) className += ' active'
 
-    if (enableRoom.roomId === currentRoomId) className += ' active'
-
-    return (
-        <div className="tab-pane" id="unchat" role="tabpanel" onClick={adminChooseRoom.bind(this, enableRoom.roomId)}>
+        return <div className="tab-pane" id="unchat" role="tabpanel" onClick={adminChooseRoom.bind(this, enableRoom.roomId)}>
             <div className={className}>
                 <div className="customer-control">
                     <img
@@ -38,8 +38,8 @@ const EnableRoom = ({enableRoom, currentRoomId, adminChooseRoom}) => {
                 </div>
             </div>
         </div>
-    );
-};
+    }
+}
 
 EnableRoom.propTypes = {
     enableRoom: PropTypes.object.isRequired,
