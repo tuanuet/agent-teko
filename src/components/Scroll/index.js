@@ -40,10 +40,6 @@ class Scroll extends React.Component {
         const { isLoadingMessages, isSearching, currentIndex, currentRoom, searchMessage } = this.props
         const { roomInfo } = currentRoom
 
-        if (roomInfo && roomInfo.seenAt) { // Keep scroll if Seen message
-            chatNode.parentNode.scrollTop = chatNode.parentNode.scrollTop + 16 // Height of Seen message
-        }
-
         if (this.activeScroll) {
             this.scrollToBottom()
             this.activeScroll = false
@@ -60,6 +56,10 @@ class Scroll extends React.Component {
             const matchingItem = matchingItems[matchingItems.length - currentIndex - 1]
             chatNode.parentNode.scrollTop = matchingItem.offsetTop - 200
             matchingItem.style.background = '#fffd4a'
+        }
+
+        if (roomInfo && roomInfo.seenAt) { // Keep scroll if Seen message
+            chatNode.parentNode.scrollTop = chatNode.parentNode.scrollTop + 16 // Height of Seen message
         }
     }
 
