@@ -59,11 +59,14 @@ export default class Image extends React.PureComponent {
     componentDidMount = () => {
         this.mounted = true
     }
-    componentDidUpdate = () => {
+    scrollDown = () => {
         const { isCustomerBlock, loadingMoreBlock, scrollToBottom } = this.props
         if (!isCustomerBlock)
             if (!loadingMoreBlock)
                 if (scrollToBottom) scrollToBottom()
+    }
+    componentDidUpdate = () => {
+        this.scrollDown()
     }
     componentWillUnmount = () => {
         this.mounted = false
@@ -95,6 +98,7 @@ export default class Image extends React.PureComponent {
                         </div> : <img src={content}
                             alt={message.fileName}
                             className="clickable"
+                            onLoad={this.scrollDown}
                             onClick={this.openZooming}
                             onError={this.handleErrorContent}
                             width={message.fileName.includes(`sticker`) && '120'} /> }

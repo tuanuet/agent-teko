@@ -36,11 +36,14 @@ class Video extends PureComponent {
     componentDidMount = () => {
         this.mounted = true
     }
-    componentDidUpdate = () => {
+    scrollDown = () => {
         const { isCustomerBlock, loadingMoreBlock, scrollToBottom } = this.props
         if (!isCustomerBlock)
             if (!loadingMoreBlock)
                 if (scrollToBottom) scrollToBottom()
+    }
+    componentDidUpdate = () => {
+        this.scrollDown()
     }
     componentWillUnmount = () => {
         this.mounted = false
@@ -53,7 +56,7 @@ class Video extends PureComponent {
         return <div className={`message-margin ${role}`}>
             { isLoading ? <div className="loading-attachment">
                 <i className="spinner fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
-            </div> : <video onError={this.handleErrorContent} className="message-video" width="480" controls>
+            </div> : <video onLoad={this.scrollDown} onError={this.handleErrorContent} className="message-video" width="480" controls>
                 <source src={content} />
             </video> }
         </div>
