@@ -9,6 +9,7 @@ import Info from '../Message/Info'
 import * as MessageTypes from '../../constants/MessageTypes';
 import * as config from '../../constants/config'
 import Attachment from '../Message/Attachment'
+import * as helper from '../../helper'
 
 const getListChat = (messages, scrollToBottom, openZooming, isSearching, searchMessage) => {
     return messages ? messages.map((e, idx) => {
@@ -116,6 +117,7 @@ class ListMessage extends React.Component {
         const { isZooming, content } = this.state
         const { nextFetchingRoom, isLoadingMessages, currentRoom, scrollToBottom } = this.props
         const { searchMessage, isSearching } = this.props
+        const { roomInfo } = currentRoom
         const listMsg = getListChat(currentRoom ? currentRoom.messages : [], scrollToBottom, this.openZooming, isSearching, searchMessage)
 
         return (
@@ -130,6 +132,9 @@ class ListMessage extends React.Component {
                 </div> }
                 <div style={ !isLoadingMessages ? { marginTop: '20px' } : {}}>
                     { listMsg }
+                    { roomInfo && roomInfo.seenAt && <div className="seen-messages">
+                        <i className="fa fa-check" aria-hidden="true"></i> Đã xem lúc {helper.formatSeen(roomInfo.seenAt)}
+                    </div> }
                 </div>
                 { isZooming && <div className="image-overlay" onClick={this.closeZooming}>
                     <span>

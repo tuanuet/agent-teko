@@ -107,12 +107,23 @@ export default function roomReducer(state=initialState.rooms, action) {
                 if (room.messages) {
                     return {
                         ...room,
-                        roomInfo: action.message.messageType === 111 ? {...room.roomInfo} : {...room.roomInfo, latestMessage: action.message, numOfUnReadMessages: unReadMessages },
-                        messages: [...room.messages, action.message]
+                        roomInfo: {
+                            ...room.roomInfo,
+                            latestMessage: action.message,
+                            numOfUnReadMessages: unReadMessages,
+                            seenAt: false
+                        },
+                        messages: [...room.messages, action.message],
+
                     }
                 } else return {
                     ...room,
-                    roomInfo: action.message.messageType === 111 ? {...room.roomInfo} : {...room.roomInfo, latestMessage: action.message, numOfUnReadMessages: unReadMessages },
+                    roomInfo: {
+                        ...room.roomInfo,
+                        latestMessage: action.message,
+                        numOfUnReadMessages: unReadMessages,
+                        seenAt: false
+                    },
                     messages: [action.message]
                 }
             })
@@ -256,6 +267,18 @@ export default function roomReducer(state=initialState.rooms, action) {
                     roomInfo: {
                         ...room.roomInfo,
                         numOfUnReadMessages: 1
+                    }
+                }
+            })
+        case types.CUSTOMER_SEEN:
+            return state.map(room => {
+                if (!room.customer) return room
+                if (room.customer.fbId !== action.fbId) return room
+                return {
+                    ...room,
+                    roomInfo: {
+                        ...room.roomInfo,
+                        seenAt: action.seenAt
                     }
                 }
             })

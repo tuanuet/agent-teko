@@ -180,13 +180,14 @@
 
 .involve-agent {
     border: 1px solid black;
-    padding: 2px 8px;
+    padding: 0 8px;
     border-radius: 6px;
     font-size: 12px;
     margin-left: 10px;
     color: white;
     background: #5387df;
-    margin-bottom: 0;
+    margin-bottom: 3px;
+    display: inline-flex;
 }
 .customer-photos {
     border-top: 1px solid rgba(0, 0, 0, .10);

@@ -172,6 +172,11 @@ header {
             overflow-x: hidden;
             > ol.chat {
                 margin-bottom: 0;
+
+                .seen-messages {
+                    font-size: 11px;
+                    color: #5e5e5e;
+                }
             }
             .content > img {
                 max-width: 400px;

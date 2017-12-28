@@ -18,7 +18,8 @@ const exampleState = {
             latestMessage: {
 
             },
-            numOfUnReadMessages: 1
+            numOfUnReadMessages: 1,
+            seenAt: '<false|timestamp>',
         },
         messages: [{
             senderId: 1,

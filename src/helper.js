@@ -42,8 +42,13 @@ export const now = () => {
     return moment().format('YYYY-MM-DD HH:mm:ss')
 }
 
+export const formatSeen = datetime => {
+    return moment(datetime).calendar(null, {
+        sameDay: 'HH:mm'
+    })
+}
+
 export const formatDatetime = datetime => {
-    const now = moment()
     const value = moment(datetime)
     return capitalizeFirstLetter(value.calendar())
 }

@@ -180,18 +180,8 @@ export default async () => {
         })
 
         socket.on('server-send-message', msg => {
-            console.log('Server send message', msg);
             const { roomId } = msg
             const message = getMessageFromServer(msg)
-
-            store.dispatch(addMessageForRoom(roomId, message))
-        })
-
-        socket.on('server-send-message-failed', msg => {
-            console.log('Server send message', msg);
-            const { roomId } = msg
-            const message = getMessageFromServer(msg)
-
             store.dispatch(addMessageForRoom(roomId, message))
         })
 
@@ -210,6 +200,11 @@ export default async () => {
 
         socket.on('broadcast-mark-unread', roomId => {
             store.dispatch({ type: types.BROADCAST_MARK_UNREAD, roomId })
+        })
+
+        socket.on('customer-seen', data => {
+            const { fbId, seenAt } = data
+            store.dispatch({ type: types.CUSTOMER_SEEN, fbId, seenAt })
         })
 
         socket.on('reconnect', () => {
