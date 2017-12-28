@@ -58,7 +58,7 @@ function* setStatusOfRoom(action) {
         }
 
     } catch (err) {
-        console.log("Err when unfollow room", err.message)
+        alert(`Có lỗi xảy ra khi đóng phòng chat.\n\nChi tiết lỗi: ${err.message}`)
     }
 }
 function* setStatusOfRoomSaga() {
