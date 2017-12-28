@@ -25,7 +25,7 @@ class LeftComponent extends React.Component {
 
     componentDidUpdate() {
         const { rooms } = this.props
-        const numOfUnReadRoom = rooms.filter(room => room.roomStatus === 2 && room.roomInfo && room.roomInfo.numOfUnReadMessages).length
+        const numOfUnReadRoom = rooms.filter(room => room.roomStatus === 2 && room.roomInfo && room.roomInfo.numOfUnReadMessages && !room.tags.find(tag => tag.title === 'Spam')).length
 
         if (numOfUnReadRoom === 0) {
             document.title = config.DEFAULT_TITLE
@@ -103,8 +103,10 @@ class LeftComponent extends React.Component {
         const searchRooms = room => {
             const { customer } = room
             const { notes, tags } = customer
-            if (!searchType) return true
-            if (searchType === 'customer') {
+            if (!searchType) {
+                if (room.tags.find(tag => tag.title === 'Spam')) return false
+                return true
+            } else if (searchType === 'customer') {
                 const { name, phone } = customer
                 return name.toLowerCase().includes(searchValue.toLowerCase())
                     || phone.toLowerCase().includes(searchValue.toLowerCase())

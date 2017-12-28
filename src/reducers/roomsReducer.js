@@ -202,15 +202,24 @@ export default function roomReducer(state=initialState.rooms, action) {
 
                 return {
                     ...room,
+                    customer: {
+                        ...room.customer,
+                        tags: [...room.customer.tags, action.tag]
+                    },
                     tags: [...room.tags, action.tag]
                 }
             })
 
         case types.DELETE_TAG_OF_CUSTOMER_SUCCEED:
             return state.map(room => {
+                if (!room.customer) return room
                 if (room.customer.id !== action.customerId) return room
                 return {
                     ...room,
+                    customer: {
+                        ...room.customer,
+                        tags: room.customer.tags.filter(tag => tag.id !== action.tagId)
+                    },
                     tags: room.tags.filter(tag => tag.id !== action.tagId)
                 }
             })

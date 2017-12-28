@@ -180,8 +180,8 @@ class Header extends React.Component {
                             { currentAgentServeThisRoom && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></button> }
                         </span> }
                         <button className="red clickable" data-toggle="tooltip" data-placement="top" title="Đóng phòng chat"><i className="fa fa-times" onClick={this.unFollowRoom}/></button>
-                        { modal }
                     </div> }
+                    { modal }
                 </div>
 
                 <div className="room-tag">
