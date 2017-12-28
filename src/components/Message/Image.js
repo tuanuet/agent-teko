@@ -59,6 +59,12 @@ export default class Image extends React.PureComponent {
     componentDidMount = () => {
         this.mounted = true
     }
+    componentDidUpdate = () => {
+        const { isCustomerBlock, loadingMoreBlock, scrollToBottom } = this.props
+        if (!isCustomerBlock)
+            if (!loadingMoreBlock)
+                if (scrollToBottom) scrollToBottom()
+    }
     componentWillUnmount = () => {
         this.mounted = false
     }

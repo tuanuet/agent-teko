@@ -11,7 +11,7 @@ import * as config from '../../constants/config'
 import Attachment from '../Message/Attachment'
 import * as helper from '../../helper'
 
-const getListChat = (messages, scrollToBottom, openZooming, isSearching, searchMessage) => {
+const getListChat = (messages, scrollToBottom, openZooming, isSearching, searchMessage, loadingMoreBlock) => {
     return messages ? messages.map((e, idx) => {
         switch (e.messageType) {
         case MessageTypes.IMAGE:
@@ -20,6 +20,7 @@ const getListChat = (messages, scrollToBottom, openZooming, isSearching, searchM
                 message={e}
                 openZooming={openZooming}
                 scrollToBottom={scrollToBottom}
+                loadingMoreBlock={loadingMoreBlock}
             />
         case MessageTypes.FILE:
             return <Attachment
@@ -34,8 +35,9 @@ const getListChat = (messages, scrollToBottom, openZooming, isSearching, searchM
         case MessageTypes.VIDEO:
             return <Video
                 key={`${e.messageId}_${e.fileName}_${idx}`}
-                scrollToBottom={scrollToBottom}
                 message={e}
+                scrollToBottom={scrollToBottom}
+                loadingMoreBlock={loadingMoreBlock}
             />
         case MessageTypes.INFO:
             return <Info
@@ -57,7 +59,8 @@ class ListMessage extends React.Component {
         super(props)
         this.state = {
             isZooming: false,
-            content: ''
+            content: '',
+            loadingMoreBlock: false
         }
     }
 
@@ -114,16 +117,16 @@ class ListMessage extends React.Component {
     }
 
     render() {
-        const { isZooming, content } = this.state
+        const { isZooming, content, loadingMoreBlock } = this.state
         const { nextFetchingRoom, isLoadingMessages, currentRoom, scrollToBottom } = this.props
         const { searchMessage, isSearching } = this.props
         const { roomInfo } = currentRoom
-        const listMsg = getListChat(currentRoom ? currentRoom.messages : [], scrollToBottom, this.openZooming, isSearching, searchMessage)
+        const listMsg = getListChat(currentRoom ? currentRoom.messages : [], scrollToBottom, this.openZooming, isSearching, searchMessage, loadingMoreBlock)
 
         return (
             <ol className="chat">
                 { nextFetchingRoom !== -1 && !isLoadingMessages && <div className="text-center clickable"
-                    onClick={e => { this.fetchMoreMessages() }} style={{ color: '#2b7ec9' }}>
+                    onClick={e => { this.fetchMoreMessages(); this.setState({ loadingMoreBlock: true }) }} style={{ color: '#2b7ec9' }}>
                     Tải thêm
                 </div> }
                 { isLoadingMessages && <div className="text-center">
