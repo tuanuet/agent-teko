@@ -14,11 +14,6 @@ class Scroll extends React.Component {
         chatNode.scrollIntoView(false)
     }
 
-    scrollDown = value => {
-        const chatNode = ReactDOM.findDOMNode(this.messagesContainer)
-        chatNode.parentNode.scrollTop = chatNode.parentNode.scrollTop + value
-    }
-
     componentDidMount() {
         this.scrollToBottom()
     }
@@ -40,14 +35,7 @@ class Scroll extends React.Component {
         const { isLoadingMessages, isSearching, currentIndex, currentRoom, searchMessage } = this.props
         const { roomInfo } = currentRoom
 
-        if (this.activeScroll) {
-            this.scrollToBottom()
-            this.activeScroll = false
-            this.currentChatHeight = chatNode.scrollHeight
-        } else if (this.currentChatHeight !== chatNode.scrollHeight) {
-            chatNode.parentNode.scrollTop = chatNode.scrollHeight - this.currentChatHeight
-            this.currentChatHeight = chatNode.scrollHeight
-        } else if (isLoadingMessages) {
+        if (isLoadingMessages) {
             this.scrollToBottom()
         } else if (isSearching) {
             const matchingItems = document.querySelectorAll('[class^="search-matching-item"]')
@@ -56,10 +44,15 @@ class Scroll extends React.Component {
             const matchingItem = matchingItems[matchingItems.length - currentIndex - 1]
             chatNode.parentNode.scrollTop = matchingItem.offsetTop - 200
             matchingItem.style.background = '#fffd4a'
-        }
-
-        if (roomInfo && roomInfo.seenAt) { // Keep scroll if Seen message
-            chatNode.parentNode.scrollTop = chatNode.parentNode.scrollTop + 16 // Height of Seen message
+        } else if (this.activeScroll) {
+            this.scrollToBottom()
+            this.activeScroll = false
+            this.currentChatHeight = chatNode.scrollHeight
+        } else if (roomInfo && roomInfo.seenAt) { // Case customer seen
+            chatNode.parentNode.scrollTop = chatNode.parentNode.scrollTop + 16
+        } else if (this.currentChatHeight !== chatNode.scrollHeight) { // Case load more messages
+            chatNode.parentNode.scrollTop = chatNode.scrollHeight - this.currentChatHeight
+            this.currentChatHeight = chatNode.scrollHeight
         }
     }
 
