@@ -25,6 +25,11 @@
     border-radius: 4px;
     .list-theme {
       padding-top: 8px;
+
+      ol.list-agents {
+          max-height: 60%;
+          overflow-y: auto;
+      }
     }
     .control {
       display: flex;
