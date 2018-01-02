@@ -1,36 +1,75 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 
-const Reply = ({reply, index}) => {
-    index = index + 1;
-    return(
-        <div className="reply">
-            <p className="reply-content">{`${index}. ${reply.content}`}</p>
-            <div className="icon-button-reply">
-                <i className="fa fa-pencil"></i>
-                <i className="fa fa-trash"></i>
-            </div>
-            </div>
-    )
+class Reply extends React.Component{
+
+    constructor(props, context){
+        super(props, context);
+        this.state={
+            isEditing: false,
+            reply: {
+                id: this.props.reply.id,
+                content: this.props.reply.content
+            }
+        }
+    }
+
+    toggleEditReply = () => {
+        console.log("dada");
+        this.setState({
+            isEditing: !this.state.isEditing
+        })
+    };
+
+    handleOnChangeReply = e => {
+        this.setState({
+           reply : {
+               id: this.state.reply.id,
+               content: e.target.value
+           }
+        })
+    }
+
+    render(){
+        if(!this.state.isEditing) {
+            let index = this.props.index + 1;
+            return (
+                <div className="reply">
+                    <p className="reply-content clickable"
+                       onClick={this.props.insertQuickReply.bind(this, this.state.reply.content)}
+                       title={this.state.reply.content}>{`${index}. ${this.state.reply.content}`}
+                    </p>
+                    <div className="icon-button-reply">
+                        <i className="fa fa-pencil" onClick={this.toggleEditReply}></i>
+                        <i className="fa fa-trash"></i>
+                    </div>
+                </div>
+            )
+        } else{
+            return(
+                <div className="reply">
+                    <input value={this.state.reply.content} autoFocus onChange={this.handleOnChangeReply}/>
+                    <i className="fa fa-check clickable icon-button-reply"></i>
+                </div>
+            )
+        }
+    }
+
+
 };
 
 class ReplyBoard extends React.Component {
-    // insertEmoji = smiley => {
-    //     const { text, unified, texts } = smiley
-    //     const codePoints = unified.split('-').map(u => `0x${u}`)
-    //     const emoji = String.fromCodePoint(...codePoints)
-    //     this.props.insertEmoji(emoji)
-    // };
     constructor(props, context) {
         super(props, context);
         this.state={
             isShowAddReplyBox: false,
-            replies: this.props.replies
+            replies: this.props.replies,
+            isEditReply: false,
         };
         this.showAddReplyBox = this.showAddReplyBox.bind(this);
         this.onKeyUpAddReply = this.onKeyUpAddReply.bind(this);
     }
 
-    showAddReplyBox(event) {
+    showAddReplyBox() {
         this.setState({
             isShowAddReplyBox: !this.state.isShowAddReplyBox
         });
@@ -46,10 +85,10 @@ class ReplyBoard extends React.Component {
 
     render() {
         let replies1=[
-                {"id": 1, content:"Tin nhan nhanh asdasdas asdasdasd  1"},
-                {"id": 2, content:"Tin nhan nhanh 2"},
-                {"id": 3, content:"Tin nhan nhanh 3"},
-                {"id": 4, content:"Tin nhan nhanh 4"},
+                {"id": 1, content:"Tin nhan nhanh 1 asdasdas asdasdasd  1"},
+                {"id": 2, content:"Tin nhan nhanh 2 dsada dsadsadsa "},
+                {"id": 3, content:"Tin nhan nhanh 3 sda dsadsada"},
+                {"id": 4, content:"Tin nhan nhanh 4 dsadsadsa"},
                 {"id": 5, content:"Tin nhan nhanh 5"},
                 {"id": 6, content:"Tin nhan nhanh 6"},
                 {"id": 7, content:"Tin nhan nhanh 7"},
@@ -58,7 +97,7 @@ class ReplyBoard extends React.Component {
                 {"id": 10, content:"Tin nhan nhanh 10"}
             ];
         const repliesNode = replies1.map((reply, index) => {
-            return <Reply key={reply.id} reply={reply} index={index}/>
+            return <Reply key={reply.id} reply={reply} index={index} insertQuickReply={this.props.insertQuickReply}/>
         });
         const { toggleReplyBoard } = this.props;
         const { isShowAddReplyBox, replies} = this.state;
@@ -77,6 +116,7 @@ class ReplyBoard extends React.Component {
                 className="add-reply add-reply-box"
                 placeholder="Thêm tin nhắn nhanh"
                 onKeyUp={this.onKeyUpAddReply}
+                autoFocus={true}
             />
         }
         return <div className="reply-board" onBlur={toggleReplyBoard} tabIndex={0}>

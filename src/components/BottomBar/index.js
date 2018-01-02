@@ -26,6 +26,7 @@ class BottomBar extends React.Component {
             isShowEmojiBoard: false,
             isShowReplyBoard: false
         }
+        this.insertQuickReply = this.insertQuickReply.bind(this);
     }
     enter = e => {
         if (e.charCode === 13 && !e.shiftKey) {
@@ -210,6 +211,13 @@ class BottomBar extends React.Component {
         }))
     };
 
+    insertQuickReply(replyContent) {
+        console.log("hello insert quick reply: " + replyContent);
+        this.setState(prev => ({
+            chatValue: prev.chatValue + ' ' + replyContent
+        }));
+    }
+
     render() {
         const { chatValue, isDragOver, isShowEmojiBoard, isShowReplyBoard } = this.state
         const { currentRoom } = this.props
@@ -223,7 +231,7 @@ class BottomBar extends React.Component {
                     <i className="fa fa-bars clickable" title="Trả lời nhanh" aria-hidden="true" onClick={this.toggleReplyBoard}></i>
 
                     { <ReplyBoard
-                        // insertEmoji={this.insertEmoji}
+                        insertQuickReply={this.insertQuickReply}
                         toggleReplyBoard={this.toggleReplyBoard} /> }
                 </div>
                 <div className={`chat-input ${isDragOver ? `dragover` : ``}`}>
