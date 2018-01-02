@@ -95,6 +95,7 @@ header {
                         background: transparent;
                         color: $primary;
                         font-size: 24px;
+                        display: inline-block;
                         transition-duration: 0.4s;
 
                         &.red {
@@ -319,6 +320,7 @@ header {
                     display: none;
                 }
                 i {
+                    display: inline-block;
                     margin: 0 8px;
                     transition-duration: 0.1s;
                 }

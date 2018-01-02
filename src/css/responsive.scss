@@ -54,4 +54,20 @@
             }
         }
     }
+    .container-chat {
+        .left {
+            .nav-tabs {
+                .nav-item {
+                    a.nav-link {
+                        font-size: 13px;
+                        span.badge {
+                            margin-left: 4px;
+                            font-size: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
