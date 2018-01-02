@@ -2,6 +2,7 @@ import React from 'react'
 import EmojiBoard from '../EmojiBoard'
 import * as actions from '../../actions/action'
 import moment from 'moment'
+import ReplyBoard from './ReplyBoard'
 
 const getMessageFromClient = message => {
     const { senderId, senderName, messageType, messageFrom, content, fileName, createdAt } = message
@@ -22,7 +23,8 @@ class BottomBar extends React.Component {
         this.state = {
             chatValue: '',
             isDragOver: false,
-            isShowEmojiBoard: false
+            isShowEmojiBoard: false,
+            isShowReplyBoard: false
         }
     }
     enter = e => {
@@ -181,25 +183,35 @@ class BottomBar extends React.Component {
         this.setState({
             isDragOver: true
         })
-    }
+    };
+
     handleDragLeave = e => {
         e.preventDefault()
         this.setState({
             isDragOver: false
         })
-    }
+    };
+
     toggleEmojiBoard = e => {
         this.setState(prevState => ({
             isShowEmojiBoard: !prevState.isShowEmojiBoard
         }))
-    }
+    };
+
+    toggleReplyBoard = e => {
+        this.setState(prevState => ({
+            isShowReplyBoard: !prevState.isShowReplyBoard
+        }))
+    };
+
     insertEmoji = char => {
         this.setState(prev => ({
             chatValue: prev.chatValue + char
         }))
-    }
+    };
+
     render() {
-        const { chatValue, isDragOver, isShowEmojiBoard } = this.state
+        const { chatValue, isDragOver, isShowEmojiBoard, isShowReplyBoard } = this.state
         const { currentRoom } = this.props
         const showSeenIcon = currentRoom.roomInfo
             && currentRoom.roomInfo.latestMessage
@@ -207,6 +219,13 @@ class BottomBar extends React.Component {
 
         return (
             <div className={`bottom`}>
+                <div className="icon-reply">
+                    <i className="fa fa-bars clickable" title="Trả lời nhanh" aria-hidden="true" onClick={this.toggleReplyBoard}></i>
+
+                    { <ReplyBoard
+                        // insertEmoji={this.insertEmoji}
+                        toggleReplyBoard={this.toggleReplyBoard} /> }
+                </div>
                 <div className={`chat-input ${isDragOver ? `dragover` : ``}`}>
                     <textarea className="form-control"
                         rows={2}
