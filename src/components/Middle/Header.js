@@ -234,11 +234,11 @@ class Header extends React.Component {
                                 {/* <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
                                 <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button> */}
                                 { currentRoom.roomStatus !== 1 && <span>
-                                    { currentRoom.roomInfo && currentRoom.roomInfo.numOfUnReadMessages === 0 && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Đánh dấu chưa đọc"><i className="fa fa-envelope-o" onClick={this.markAsUnread}/></button> }
-                                    <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thêm admin vào phòng chat"><i className="fa fa-user-plus" onClick={this.showListAgent}/></button>
-                                    { currentAgentServeThisRoom && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></button> }
+                                    { currentRoom.roomInfo && currentRoom.roomInfo.numOfUnReadMessages === 0 && <span className="clickable action-button" data-toggle="tooltip" data-placement="top" title="Đánh dấu chưa đọc"><i className="fa fa-envelope-o" onClick={this.markAsUnread}/></span> }
+                                    <span className="clickable action-button" data-toggle="tooltip" data-placement="top" title="Thêm admin vào phòng chat"><i className="fa fa-user-plus" onClick={this.showListAgent}/></span>
+                                    { currentAgentServeThisRoom && <span className="clickable action-button" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></span> }
                                 </span> }
-                                <button className="red clickable" data-toggle="tooltip" data-placement="top" title="Đóng phòng chat"><i className="fa fa-times" onClick={this.unFollowRoom}/></button>
+                                <span className="red clickable action-button" data-toggle="tooltip" data-placement="top" title="Đóng phòng chat"><i className="fa fa-times" onClick={this.unFollowRoom}/></span>
                             </div> }
                             { modal }
                         </div>

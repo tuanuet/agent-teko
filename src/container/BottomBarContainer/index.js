@@ -32,7 +32,6 @@ class BottomBarContainer extends React.Component {
 
         const { role: { slug } } = agent
         if (currentRoom.roomStatus === 3 && currentRoom.roomType === 'facebook') {
-            if (slug !== 'agent' && slug !== 'operator' && slug !== 'developer') return false
             return <ReopenRoom
                 {...this.props}
                 sendReopenRoom={this.sendReopenRoom} />
