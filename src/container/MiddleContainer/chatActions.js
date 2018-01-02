@@ -90,3 +90,7 @@ export function removeRoom(roomId) {
 export function markAsUnread(roomId) {
     return { type: types.MARK_AS_UNREAD, roomId }
 }
+
+export const offCurrentRoom = () => {
+    return { type: types.OFF_CURRENT_ROOM }
+}

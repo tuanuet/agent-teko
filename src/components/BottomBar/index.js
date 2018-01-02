@@ -200,7 +200,7 @@ class BottomBar extends React.Component {
     }
     render() {
         const { chatValue, isDragOver, isShowEmojiBoard } = this.state
-        const { currentRoom } = this.props
+        const { currentRoom, isMobile } = this.props
         const showSeenIcon = currentRoom.roomInfo
             && currentRoom.roomInfo.latestMessage
             && currentRoom.roomInfo.latestMessage.messageFrom === 1
@@ -228,6 +228,7 @@ class BottomBar extends React.Component {
                         <input type="file" ref={input => this.attachInput = input} onChange={this.uploadImage} />
                         <i className="fa fa-paperclip clickable" aria-hidden="true"></i>
                     </label>
+                    { isMobile && <i className="fa fa-paper-plane-o" aria-hidden="true" onClick={this.send}></i> }
                     { isShowEmojiBoard && <EmojiBoard
                         insertEmoji={this.insertEmoji}
                         toggleEmojiBoard={this.toggleEmojiBoard} /> }

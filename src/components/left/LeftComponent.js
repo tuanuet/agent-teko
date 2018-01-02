@@ -84,7 +84,9 @@ class LeftComponent extends React.Component {
 
     render() {
         const { currentTab, searchType, searchValue, filterBy } = this.state
-        const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingRooms, isLoadingMoreRooms } = this.props
+        const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingRooms, isLoadingMoreRooms, isMobile } = this.props
+
+        if (isMobile && currentRoomId) return false // Hidden if mobile
 
         const filterAvailable = room => {
             if (filterBy === 'unread') {
@@ -127,7 +129,7 @@ class LeftComponent extends React.Component {
         const enableRooms = rooms.filter(room => room.roomStatus === 1).filter(searchRooms)
         const closedRooms = rooms.filter(room => room.roomStatus === 3)
 
-        return <div className="left">
+        return <div className={`left ${isMobile ? `is-mobile` : ``}`}>
             <TabBar
                 currentTab={currentTab}
                 loadClosedRoom={loadClosedRoom}

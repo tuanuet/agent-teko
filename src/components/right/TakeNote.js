@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const TakeNote = ({newNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteState}) => {
+const TakeNote = ({newNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteState, isMobile}) => {
     return (
         <div className="take-note d-flex">
             <textarea
@@ -11,6 +11,7 @@ const TakeNote = ({newNote, handleOnKeyUpTakeNote, onClickSaveNote, updateNoteSt
                 value={newNote}
                 onKeyUp={handleOnKeyUpTakeNote}
             />
+            { isMobile && <button className="btn btn-primary w-100" onClick={onClickSaveNote}>Lưu ghi chú</button> }
         </div>
     );
 };

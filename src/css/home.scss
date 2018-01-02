@@ -76,14 +76,12 @@ header {
             color: #555;
             align-items: center;
             padding: 16px;
-            font-weight: bold;
             background-color: white;
-            //background-image: linear-gradient(to right top, #859cd0, #819ecf, #7da0cf, #7aa1cd, #78a3cc);
-            //background-image: linear-gradient(to right top, #1ac8b1, #00c4b9, #00c0c0, #00bbc5, #00b6c9);
+            // background-image: linear-gradient(to right top, #859cd0, #819ecf, #7da0cf, #7aa1cd, #78a3cc);
+            // background-image: linear-gradient(to right top, #1ac8b1, #00c4b9, #00c0c0, #00bbc5, #00b6c9);
             border-bottom: 1px solid $light-grey;
 
-            > .title {
-                float: right;
+            .control-buttons {
                 display: flex;
                 justify-content: space-between;
 
@@ -129,7 +127,6 @@ header {
                 }
                 .list-tag {
                     margin-top: 10px;
-                    margin-right: 5px;
                     display: inline-block;
                 }
                 .tag {
@@ -493,6 +490,10 @@ header {
     }
 }
 
+#dropdown-tag {
+    min-width: 270px;
+}
+
 .emoji-board {
     position: absolute;
     width: 275px;
@@ -507,15 +508,16 @@ header {
 
 .search-messages {
     display: inline-block;
-    margin-left: 60px;
-    width: 65%;
+    width: 100%;
     font-weight: normal;
     font-size: 14px;
     user-select: none;
+    height: 38px;
+    line-height: 38px;
 
     input {
         display: inline-block;
-        width: 40%;
+        width: 60%;
         border-top: none;
         border-left: none;
         border-right: none;
