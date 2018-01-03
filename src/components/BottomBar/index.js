@@ -2,6 +2,7 @@ import React from 'react'
 import EmojiBoard from '../EmojiBoard'
 import * as actions from '../../actions/action'
 import moment from 'moment'
+import ReplyBoard from './ReplyBoard'
 
 const getMessageFromClient = message => {
     const { senderId, senderName, messageType, messageFrom, content, fileName, createdAt } = message
@@ -22,7 +23,8 @@ class BottomBar extends React.Component {
         this.state = {
             chatValue: '',
             isDragOver: false,
-            isShowEmojiBoard: false
+            isShowEmojiBoard: false,
+            isShowReplyBoard: false
         }
     }
     enter = e => {
@@ -181,32 +183,78 @@ class BottomBar extends React.Component {
         this.setState({
             isDragOver: true
         })
-    }
+    };
+
     handleDragLeave = e => {
         e.preventDefault()
         this.setState({
             isDragOver: false
         })
-    }
+    };
+
     toggleEmojiBoard = e => {
         this.setState(prevState => ({
             isShowEmojiBoard: !prevState.isShowEmojiBoard
         }))
-    }
+    };
+
+    toggleReplyBoard = e => {
+        this.setState(prevState => ({
+            isShowReplyBoard: !prevState.isShowReplyBoard
+        }))
+    };
+
     insertEmoji = char => {
         this.setState(prev => ({
             chatValue: prev.chatValue + char
         }))
+    };
+
+    insertQuickReply = replyContent => {
+        console.log("hello insert quick reply: " + replyContent);
+        this.setState(prev => ({
+            chatValue: prev.chatValue + ' ' + replyContent
+        }));
     }
+
+    editQuickReply = (replyId, replyContent) => {
+
+        this.props.dispatch(actions.updateQuickReply(replyId, replyContent));
+    };
+
+    deleteQuickReply = (replyId) => {
+        if(confirm("Xác nhận xóa tin nhắn nhanh này ?")) {
+            this.props.dispatch(actions.deleteQuickReply(replyId))
+        }
+    };
+
+    addQuickReply = replyContent => {
+        this.props.dispatch(actions.addQuickReply(replyContent));
+    };
+
     render() {
-        const { chatValue, isDragOver, isShowEmojiBoard } = this.state
-        const { currentRoom, isMobile } = this.props
+
+        const { chatValue, isDragOver, isShowEmojiBoard, isShowReplyBoard } = this.state;
+        const { currentRoom, agent, isMobile } = this.props;
+
         const showSeenIcon = currentRoom.roomInfo
             && currentRoom.roomInfo.latestMessage
             && currentRoom.roomInfo.latestMessage.messageFrom === 1
 
         return (
             <div className={`bottom`}>
+                <div className="icon-reply">
+                    <i className="fa fa-bars clickable" title="Trả lời nhanh" aria-hidden="true" onClick={this.toggleReplyBoard}></i>
+
+                    {isShowReplyBoard && <ReplyBoard
+                        insertQuickReply={this.insertQuickReply}
+                        toggleReplyBoard={this.toggleReplyBoard}
+                        editQuickReply = {this.editQuickReply}
+                        deleteQuickReply = {this.deleteQuickReply}
+                        addQuickReply = {this.addQuickReply}
+                        replies = {agent.replies}
+                    /> }
+                </div>
                 <div className={`chat-input ${isDragOver ? `dragover` : ``}`}>
                     <textarea className="form-control"
                         rows={2}
