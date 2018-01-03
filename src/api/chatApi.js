@@ -55,6 +55,18 @@ class ChatApi {
     static fetchMoreMessages(roomId) {
         return axios.get(`${apiTypes.FETCH_MORE_MESSAGES}?roomId=${roomId}`).then(res => res.data)
     }
+
+    static addQuickReplyRequested(replyContent) {
+        return axios.post(apiTypes.ADD_QUICK_REPLY_REQUESTED, {replyContent}).then(res => res.data);
+    }
+
+    static deleteQuickReplyRequested(replyId) {
+        return axios.post(apiTypes.DELETE_QUICK_REPLY_REQUESTED, {replyId}).then(res => res.data);
+    }
+
+    static updateQuickReplyRequested(replyId, replyContent) {
+        return axios.post(apiTypes.UPDATE_QUICK_REPLY_REQUESTED, {replyId, replyContent}).then(res => res.data);
+    }
 }
 
 export default ChatApi;

@@ -21,3 +21,6 @@ export const MARK_SUBSCRIPTIONS_AS_READ = `${API_URL}/api/mark-subscriptions-as-
 
 export const ADMIN_JOIN_ROOM_SUCCEED = `${API_URL}/api/admin-join-room-succeed`
 export const SEND_REQUEST_JOIN_ROOM = `${API_URL}/api/request-join-room`
+export const ADD_QUICK_REPLY_REQUESTED = `${API_URL}/api/add-quick-reply-requested`
+export const DELETE_QUICK_REPLY_REQUESTED = `${API_URL}/api/delete-quick-reply-requested`
+export const UPDATE_QUICK_REPLY_REQUESTED = `${API_URL}/api/update-quick-reply-requested`
