@@ -548,6 +548,13 @@ header {
             overflow: hidden;
             white-space:nowrap;
             text-overflow: ellipsis;
+            transition: width 2s, height 2s, background-color 2s, transform 2s;
+            -webkit-transition: width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+            &:hover {
+                font-size: 15px;
+                color: #5792ff;
+
+            }
         }
         .icon-button-reply {
             margin-top: 6px;
@@ -563,6 +570,9 @@ header {
     .add-reply-box{
         margin: 5px;
         padding: 3px;
+    }
+    .add-reply-button{
+        margin-right: 25%;
     }
 }
 

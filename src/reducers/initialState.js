@@ -47,7 +47,9 @@ const exampleState = {
         tags: [{}],
         createdAt: '2017-11-09 12:05:95'
     }],
-    agent: {},
+    agent: {
+        replies:[{}]
+    },
     agents: [{}],
     tags: [{}],
     currentRoomId: 1,

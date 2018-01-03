@@ -27,7 +27,27 @@ class Reply extends React.Component{
                content: e.target.value
            }
         })
-    }
+    };
+
+    handleOnKeyUpReply = e => {
+        if(e.keyCode === 13) {
+            this.props.editQuickReply(this.state.reply.id, this.state.reply.content);
+            this.setState({
+                isEditing: !this.state.isEditing
+            })
+        }
+    };
+
+    handleOnClickSaveReply = e => {
+        this.props.editQuickReply(this.state.reply.id, this.state.reply.content);
+        this.setState({
+            isEditing: !this.state.isEditing
+        })
+    };
+
+    handleOnDeleteQuickReply = e => {
+        this.props.deleteQuickReply(this.state.reply.id);
+    };
 
     render(){
         if(!this.state.isEditing) {
@@ -40,15 +60,18 @@ class Reply extends React.Component{
                     </p>
                     <div className="icon-button-reply">
                         <i className="fa fa-pencil" onClick={this.toggleEditReply}></i>
-                        <i className="fa fa-trash"></i>
+                        <i className="fa fa-trash" onClick={this.handleOnDeleteQuickReply}></i>
                     </div>
                 </div>
             )
         } else{
             return(
                 <div className="reply">
-                    <input value={this.state.reply.content} autoFocus onChange={this.handleOnChangeReply}/>
-                    <i className="fa fa-check clickable icon-button-reply"></i>
+                    <input value={this.state.reply.content}
+                           autoFocus
+                           onKeyUp={this.handleOnKeyUpReply}
+                           onChange={this.handleOnChangeReply}/>
+                    <i className="fa fa-check clickable icon-button-reply" onClick={this.handleOnClickSaveReply}></i>
                 </div>
             )
         }
@@ -66,7 +89,6 @@ class ReplyBoard extends React.Component {
             isEditReply: false,
         };
         this.showAddReplyBox = this.showAddReplyBox.bind(this);
-        this.onKeyUpAddReply = this.onKeyUpAddReply.bind(this);
     }
 
     showAddReplyBox() {
@@ -75,37 +97,36 @@ class ReplyBoard extends React.Component {
         });
     }
 
-    onKeyUpAddReply(event) {
+    onKeyUpAddReply = event => {
         if (event.keyCode === 13) {
             this.setState({
                 isShowAddReplyBox: !this.state.isShowAddReplyBox
-            })
+            });
+            this.props.addQuickReply(event.target.value);
         }
-    }
+    };
 
     render() {
-        let replies1=[
-                {"id": 1, content:"Tin nhan nhanh 1 asdasdas asdasdasd  1"},
-                {"id": 2, content:"Tin nhan nhanh 2 dsada dsadsadsa "},
-                {"id": 3, content:"Tin nhan nhanh 3 sda dsadsada"},
-                {"id": 4, content:"Tin nhan nhanh 4 dsadsadsa"},
-                {"id": 5, content:"Tin nhan nhanh 5"},
-                {"id": 6, content:"Tin nhan nhanh 6"},
-                {"id": 7, content:"Tin nhan nhanh 7"},
-                {"id": 8, content:"Tin nhan nhanh 8"},
-                {"id": 9, content:"Tin nhan nhanh 9"},
-                {"id": 10, content:"Tin nhan nhanh 10"}
-            ];
-        const repliesNode = replies1.map((reply, index) => {
-            return <Reply key={reply.id} reply={reply} index={index} insertQuickReply={this.props.insertQuickReply}/>
+        const { isShowAddReplyBox, replies} = this.state;
+        const repliesNode = replies.map((reply, index) => {
+            return(
+                <Reply key={reply.id}
+                       reply={reply}
+                       index={index}
+                       insertQuickReply={this.props.insertQuickReply}
+                       editQuickReply={this.props.editQuickReply}
+                       deleteQuickReply={this.props.deleteQuickReply}
+                />
+
+            )
         });
         const { toggleReplyBoard } = this.props;
-        const { isShowAddReplyBox, replies} = this.state;
+
         let bottom = null;
-        if (0) {
+        if (replies.length > 9) {
             bottom = <div className="add-reply">Tối đa 10 tin nhắn nhanh</div>
         } else if (!isShowAddReplyBox) {
-            bottom = <div className="add-reply" onClick={this.showAddReplyBox}>
+            bottom = <div className="add-reply add-reply-button" onClick={this.showAddReplyBox}>
                 <i className="fa fa-plus add-reply">&nbsp;Click để thêm</i>
             </div>
         } else {
@@ -119,17 +140,10 @@ class ReplyBoard extends React.Component {
                 autoFocus={true}
             />
         }
-        return <div className="reply-board" onBlur={toggleReplyBoard} tabIndex={0}>
+        return <div className="reply-board" tabIndex={0}>
             <div className="reply-list">
                 {repliesNode}
             </div>
-
-            {/*{ smileys.map(smiley => {*/}
-                {/*const { sheet_x, sheet_y, unified, text, texts } = smiley*/}
-                {/*return <Emoji key={unified}*/}
-                              {/*smiley={smiley}*/}
-                              {/*insertEmoji={this.insertEmoji} />*/}
-            {/*}) }*/}
             {bottom}
         </div>
     }

@@ -26,7 +26,6 @@ class BottomBar extends React.Component {
             isShowEmojiBoard: false,
             isShowReplyBoard: false
         }
-        this.insertQuickReply = this.insertQuickReply.bind(this);
     }
     enter = e => {
         if (e.charCode === 13 && !e.shiftKey) {
@@ -211,16 +210,31 @@ class BottomBar extends React.Component {
         }))
     };
 
-    insertQuickReply(replyContent) {
+    insertQuickReply = replyContent => {
         console.log("hello insert quick reply: " + replyContent);
         this.setState(prev => ({
             chatValue: prev.chatValue + ' ' + replyContent
         }));
     }
 
+    editQuickReply = (replyId, replyContent) => {
+
+        this.props.dispatch(actions.updateQuickReply(replyId, replyContent));
+    };
+
+    deleteQuickReply = (replyId) => {
+        if(confirm("Xác nhận xóa tin nhắn nhanh này ?")) {
+            this.props.dispatch(actions.deleteQuickReply(replyId))
+        }
+    };
+
+    addQuickReply = replyContent => {
+        this.props.dispatch(actions.addQuickReply(replyContent));
+    };
+
     render() {
-        const { chatValue, isDragOver, isShowEmojiBoard, isShowReplyBoard } = this.state
-        const { currentRoom } = this.props
+        const { chatValue, isDragOver, isShowEmojiBoard, isShowReplyBoard } = this.state;
+        const { currentRoom, agent } = this.props;
         const showSeenIcon = currentRoom.roomInfo
             && currentRoom.roomInfo.latestMessage
             && currentRoom.roomInfo.latestMessage.messageFrom === 1
@@ -230,9 +244,14 @@ class BottomBar extends React.Component {
                 <div className="icon-reply">
                     <i className="fa fa-bars clickable" title="Trả lời nhanh" aria-hidden="true" onClick={this.toggleReplyBoard}></i>
 
-                    { <ReplyBoard
+                    {isShowReplyBoard && <ReplyBoard
                         insertQuickReply={this.insertQuickReply}
-                        toggleReplyBoard={this.toggleReplyBoard} /> }
+                        toggleReplyBoard={this.toggleReplyBoard}
+                        editQuickReply = {this.editQuickReply}
+                        deleteQuickReply = {this.deleteQuickReply}
+                        addQuickReply = {this.addQuickReply}
+                        replies = {agent.replies}
+                    /> }
                 </div>
                 <div className={`chat-input ${isDragOver ? `dragover` : ``}`}>
                     <textarea className="form-control"
