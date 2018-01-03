@@ -1,0 +1,64 @@
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar:hover {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border: none;
+}
+::-webkit-scrollbar-track:hover {
+    -webkit-box-shadow: inset 0 0 4px rgba(#000000, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(#262626, 0.3);
+    -webkit-box-shadow: inset 0 0 4px rgba(#2a2a2a, 0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(#6e6e6e, 0.05);
+}
+
+.image-overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    background-color: #000000;
+    background-color: rgba(#000000, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+    text-align: center;
+
+    &:before {
+        content: ' ';
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+    }
+
+    .overlay-content {
+        max-height: 90%;
+        vertical-align: middle;
+    }
+
+    .close-button {
+        position: absolute;
+        cursor: pointer;
+        top: 20px;
+        right: 50px;
+        font-size: 32px;
+        color: white;
+    }
+}
