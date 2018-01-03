@@ -150,10 +150,15 @@ class Header extends React.Component {
         }
     }
 
+    goBackRoomList = () => {
+        const { actions } = this.props
+        actions.offCurrentRoom()
+    }
+
     render() {
         const { filterTag } = this.state
         const { isLoadingMessages, searchMessage, isSearching, numResult, currentIndex } = this.props
-        const { currentRoom, listOfTags, tagsOfRoom, agents, currentAgent } = this.props
+        const { currentRoom, listOfTags, tagsOfRoom, agents, currentAgent, isMobile, toggleShowInfo } = this.props
         let lookup = _.keyBy(tagsOfRoom, tag => tag.id)
         let availableTags = _.filter(listOfTags, item => {
             return lookup[item.id] === undefined
@@ -168,37 +173,37 @@ class Header extends React.Component {
 
         return (
             <div className="header">
-                <div className="title">
-                    { currentRoom.roomStatus !== 3 && <div className="group-button">
-                        {/* <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
-                        data-target="#exampleModal"><i className="fa fa-wrench" onClick={this.showTheme}/></button> */}
-                        {/* <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
-                        <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button> */}
-                        { currentRoom.roomStatus !== 1 && <span>
-                            { currentRoom.roomInfo && currentRoom.roomInfo.numOfUnReadMessages === 0 && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Đánh dấu chưa đọc"><i className="fa fa-envelope-o" onClick={this.markAsUnread}/></button> }
-                            <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thêm admin vào phòng chat"><i className="fa fa-user-plus" onClick={this.showListAgent}/></button>
-                            { currentAgentServeThisRoom && <button type="button" className="clickable" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></button> }
-                        </span> }
-                        <button className="red clickable" data-toggle="tooltip" data-placement="top" title="Đóng phòng chat"><i className="fa fa-times" onClick={this.unFollowRoom}/></button>
-                    </div> }
-                    { modal }
-                </div>
-
-                <div className="room-tag">
-                    <div className="dropdown">
-                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={this.autoFocusFilter}>
-                            Thêm tag
-                        </button>
-                        <div id="dropdown-tag" className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{maxHeight: 440, overflowY: 'auto'}}>
-                            <div className="dropdown-item">
-                                <input className="form-control" ref={input => this.filterTagInput = input} value={filterTag} onChange={this.changeFilterTag} onKeyDown={this.handleEnterTag} />
+                { isMobile && <div className="row">
+                    <div className="col-12 text-center navigation-mobile">
+                        <span className="float-left" onClick={this.goBackRoomList}>
+                            <i className="fa fa-angle-left" aria-hidden="true"></i>
+                            Quay lại
+                        </span>
+                        <span className="float-right" onClick={toggleShowInfo}>
+                            { currentRoom.customer && currentRoom.customer.name }
+                            <i className="fa fa-angle-right" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div> }
+                <div className="row">
+                    <div className="col-xl-2 col-4">
+                        <div className="dropdown">
+                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={this.autoFocusFilter}>
+                                Thêm tag
+                            </button>
+                            <div id="dropdown-tag" className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{maxHeight: 440, overflowY: 'auto'}}>
+                                <div className="dropdown-item">
+                                    <input className="form-control" ref={input => this.filterTagInput = input} value={filterTag} onChange={this.changeFilterTag} onKeyDown={this.handleEnterTag} />
+                                </div>
+                                {availableTags.filter(tag => tag.title.toLowerCase().includes(filterTag.toLowerCase())).map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag)}>
+                                    <p style={{ color: `${tag.color}`}}>
+                                        {tag.title}
+                                    </p>
+                                </a>)}
                             </div>
-                            {availableTags.filter(tag => tag.title.toLowerCase().includes(filterTag.toLowerCase())).map(tag => <a key={tag.id} className="dropdown-item clickable" onClick={this.onSaveTag.bind(this, tag)}>
-                                <p style={{ color: `${tag.color}`}}>
-                                    {tag.title}
-                                </p>
-                            </a>)}
                         </div>
+                    </div>
+                    <div className="col-xl-7 hidden-lg-down">
                         <div className="search-messages">
                             { isSearching ? <div>
                                 <span className="move-search">
@@ -221,6 +226,26 @@ class Header extends React.Component {
                             </div> }
                         </div>
                     </div>
+                    <div className="col-xl-3 col-8">
+                        <div className="control-buttons float-right">
+                            { currentRoom.roomStatus !== 3 && <div className="group-button">
+                                {/* <button className="" data-toggle="tooltip" data-placement="top" title="Change theme"
+                                data-target="#exampleModal"><i className="fa fa-wrench" onClick={this.showTheme}/></button> */}
+                                {/* <button className="" data-toggle="tooltip" data-placement="top" title="Request user rating">
+                                <i className="fa fa-star" onClick={this.sendRequestUserRating}/></button> */}
+                                { currentRoom.roomStatus !== 1 && <span>
+                                    { currentRoom.roomInfo && currentRoom.roomInfo.numOfUnReadMessages === 0 && <span className="clickable action-button" data-toggle="tooltip" data-placement="top" title="Đánh dấu chưa đọc"><i className="fa fa-envelope-o" onClick={this.markAsUnread}/></span> }
+                                    <span className="clickable action-button" data-toggle="tooltip" data-placement="top" title="Thêm admin vào phòng chat"><i className="fa fa-user-plus" onClick={this.showListAgent}/></span>
+                                    { currentAgentServeThisRoom && <span className="clickable action-button" data-toggle="tooltip" data-placement="top" title="Thoát khỏi phòng chat"><i className="fa fa-sign-out" onClick={this.agentExitRoom}/></span> }
+                                </span> }
+                                <span className="red clickable action-button" data-toggle="tooltip" data-placement="top" title="Đóng phòng chat"><i className="fa fa-times" onClick={this.unFollowRoom}/></span>
+                            </div> }
+                            { modal }
+                        </div>
+                    </div>
+                </div>
+
+                <div className="room-tag">
                     <div className="list-tag">
                         {tagsOfRoom.map(tag => <button key={tag.id} onClick={this.onDeleteTag.bind(this, tag.id)} className="btn btn-success btn-sm tag" type="button" style={{ backgroundColor: `${tag.color}` }}>
                             {`${tag.title}  `} <i className="fa fa-times-circle"></i>
@@ -228,7 +253,6 @@ class Header extends React.Component {
                         )}
                     </div>
                 </div>
-
             </div>
         )
     }
@@ -255,7 +279,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({...{}, ...chatActions}, dispatch)
+        actions: bindActionCreators({...chatActions}, dispatch)
     }
 }
 

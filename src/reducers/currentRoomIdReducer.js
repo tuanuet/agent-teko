@@ -13,6 +13,8 @@ export default function currentRoomIdReducer(state=initialState.currentRoomId, a
             return state === action.roomId ? null : state
         case types.CLICK_SUBSCRIPTION:
             return action.roomId
+        case types.OFF_CURRENT_ROOM:
+            return null
         default:
             return state;
     }

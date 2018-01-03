@@ -1,39 +1,73 @@
 @media screen and (min-width: 1900px) {
-  body {
-    font-size: 20px !important;
-  }
+    body {
+        font-size: 20px !important;
+    }
 }
 
 @media screen and (max-width: 1080px) {
-
-
+    .lio-modal {
+        .body {
+            max-width: 90%;
+        }
+    }
 }
 
 @media screen and (max-width: 768px) {
+    .m-mt16 {
+        margin-top: 16px;
+    }
 
+    .m-my32 {
+        margin-top: 32px;
+        margin-bottom: 32px;
+    }
 
-  .m-mt16 {
-    margin-top: 16px;
-  }
+    .m-mb16 {
+        margin-bottom: 16px;
+    }
 
-  .m-my32 {
-    margin-top: 32px;
-    margin-bottom: 32px;
-  }
+    .m-mb32 {
+        margin-bottom: 32px;
+    }
 
-  .m-mb16 {
-    margin-bottom: 16px;
-  }
+    .m-ml0 {
+        margin-left: 0;
+    }
+    .m-mr0 {
+        margin-right: 0;
+    }
+}
 
-  .m-mb32 {
-    margin-bottom: 32px;
-  }
-
-  .m-ml0 {
-    margin-left: 0;
-  }
-  .m-mr0 {
-    margin-right: 0;
-  }
+@media screen and (max-width: 576px) {
+    .container-chat .middle {
+        > .body .content {
+            > img {
+                max-width: 275px;
+            }
+        }
+        > .body {
+            audio {
+                max-width: 275px;
+            }
+            video {
+                max-width: 275px;
+            }
+        }
+    }
+    .container-chat {
+        .left {
+            .nav-tabs {
+                .nav-item {
+                    a.nav-link {
+                        font-size: 13px;
+                        span.badge {
+                            margin-left: 4px;
+                            font-size: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 }

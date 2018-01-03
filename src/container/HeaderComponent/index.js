@@ -39,10 +39,10 @@ class HeaderContainer extends React.Component {
     }
 
     render() {
-        const { currentAgent, rooms, subscriptions } = this.props
+        const { currentAgent, rooms, subscriptions, isMobile } = this.props
         const countSubscription = subscriptions.filter(sub => !sub.markAsRead).length
 
-        return <header className="clearfix">
+        return <header className={`clearfix ${isMobile ? `is-mobile` : ``}`}>
             <div className="float-left">
                 <a href={API_URL} className="clickable" style={{ marginRight: '15px', color: 'white' }} title="Quay lại trang Dashboard">
                     <i className="fa fa-chevron-left" aria-hidden="true"></i>
@@ -65,15 +65,15 @@ class HeaderContainer extends React.Component {
                     </div>
                 </span>
             </div>
-            <div className="float-right" style={{ marginRight: '50px'}}>
+            <div className="float-right" style={{ marginRight: `${isMobile ? `0` : `50px`}`}}>
                 { currentAgent.isBroadcast == 0 && <span
                     className="clickable"
                     data-toggle="tooltip"
                     data-placement="bottom"
                     title="Nhận trực phòng chat"
                     onClick={this.handleBroadcast}>
-                    <i className="fa fa-volume-control-phone" style={{marginRight: '5px'}}></i>
-                    Nhận trực phòng chat
+                    <i className="fa fa-toggle-off" style={{marginRight: '5px'}}></i>
+                    { !isMobile && `Nhận trực phòng chat` }
                 </span> }
                 { currentAgent.isBroadcast == 1 && <span
                     className="clickable"
@@ -81,8 +81,8 @@ class HeaderContainer extends React.Component {
                     data-placement="bottom"
                     title="Thoát trực phòng chat"
                     onClick={this.handleUnbroadcast}>
-                    <i className="fa fa-volume-control-phone" style={{marginRight: '5px'}}></i>
-                    Đang trực
+                    <i className="fa fa-toggle-on" style={{marginRight: '5px'}}></i>
+                    { !isMobile && `Đang trực` }
                 </span> }
             </div>
         </header>

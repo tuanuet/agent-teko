@@ -32,7 +32,6 @@ class BottomBarContainer extends React.Component {
 
         const { role: { slug } } = agent
         if (currentRoom.roomStatus === 3 && currentRoom.roomType === 'facebook') {
-            if (slug !== 'agent' && slug !== 'operator' && slug !== 'developer') return false
             return <ReopenRoom
                 {...this.props}
                 sendReopenRoom={this.sendReopenRoom} />
@@ -41,7 +40,7 @@ class BottomBarContainer extends React.Component {
             return false
         }
         if (currentRoom.roomStatus === 1) {
-            if (slug !== 'agent' && slug !== 'operator' && slug !== 'developer') return false
+            // All user can reopen room
             return <AcceptRoom sendRequestJoinRoom={this.sendRequestJoinRoom} />
         }
         return <BottomBar {...this.props} />

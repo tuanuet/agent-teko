@@ -103,13 +103,16 @@ class MiddleContainer extends React.Component {
     }
 
     render() {
-        const { currentRoomId, isLoadingMessages } = this.props
+        const { currentRoomId, isLoadingMessages, isMobile, isShowInfo, toggleShowInfo } = this.props
         const { theme, searchMessage, isSearching, numResult, currentIndex } = this.state
 
         if (!currentRoomId) return false
+        if (isMobile && isShowInfo) return false
 
-        return <div className="middle">
+        return <div className={`middle ${isMobile ? `is-mobile` : ``}`}>
             <Header
+                isMobile={isMobile}
+                toggleShowInfo={toggleShowInfo}
                 searchMessage={searchMessage}
                 isSearching={isSearching}
                 numResult={numResult}
@@ -132,7 +135,7 @@ class MiddleContainer extends React.Component {
                 {...this.props}
             />
 
-            <BottomBarContainer />
+            <BottomBarContainer isMobile={isMobile} />
         </div>
     }
 }

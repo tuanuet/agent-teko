@@ -29,7 +29,7 @@ class SearchBar extends React.PureComponent {
                         { filterBy === 'unread' && `Chưa đọc` }
                         { filterBy === 'misschat' && `Chưa trả lời` }
                     </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdown-filter">
+                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-filter">
                         <a className="dropdown-item clickable" onClick={() => changeFilterBy('all')}>Tất cả</a>
                         <a className="dropdown-item clickable" onClick={() => changeFilterBy('unread')}>Chưa đọc</a>
                         <a className="dropdown-item clickable" onClick={() => changeFilterBy('misschat')}>Chưa trả lời</a>

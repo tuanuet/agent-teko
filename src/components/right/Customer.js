@@ -1,12 +1,14 @@
 import React, {PropTypes} from 'react';
 
-const Customer = ({customer, agents}) => {
+const Customer = ({customer, agents, isMobile, toggleShowInfo}) => {
     return (
         <div className="customer" data-toggle="collapse" href="#customer-info" aria-expanded={false}>
-
             <div className="row">
                 <div className="col-md-12 customer-short-info">
-                    <p>{customer.name}</p>
+                    <p onClick={isMobile && toggleShowInfo}>
+                        { isMobile && <i className="fa fa-angle-left" aria-hidden="true" style={{marginRight: '5px'}}></i> }
+                        { customer.name }
+                    </p>
                     <p className="customer-more-info">{customer.fbId ? `Nhắn tin từ Facebook` : `Nhắn tin từ Livechat`}</p>
                     { customer.involveAdmins !== '[]' && <p>
                         Đã chat:
