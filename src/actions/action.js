@@ -7,8 +7,6 @@ export function f5(status) {
     };
 }
 
-
-
 export function addMessage({typeSender, sender, message, time}) {
     return {
         type: Types.ADD_MESSAGE,
@@ -82,4 +80,28 @@ export function clientSendMessage(message) {
         type : Types.CLIENT_SEND_MESSAGE,
         message
     };
+}
+
+//function about replies
+export function addQuickReply(replyContent) {
+
+    return {
+        type: Types.ADD_QUICK_REPLY_REQUESTED,
+        replyContent
+    }
+}
+
+export function deleteQuickReply(replyId) {
+    return {
+        type: Types.DELETE_QUICK_REPLY_REQUESTED,
+        replyId
+    }
+}
+
+export function updateQuickReply(replyId, replyContent) {
+    return {
+        type: Types.UPDATE_QUICK_REPLY_REQUESTED,
+        replyId,
+        replyContent
+    }
 }

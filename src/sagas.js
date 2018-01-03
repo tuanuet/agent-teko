@@ -14,6 +14,11 @@ import fetchNotesSaga from './container/RightContainer/saga/noteSaga';
 import {
     adminSendRequestJoinRoomToSocketSucceed,
 } from "./container/BottomBarContainer/joinRoomSaga"
+import {
+    addQuickReplySaga,
+    deleteQuickReplySaga,
+    updateReplySaga
+} from './container/BottomBarContainer/replySaga';
 import {fork} from 'redux-saga/effects';
 
 export default function* rootSaga() {
@@ -27,4 +32,7 @@ export default function* rootSaga() {
     yield fork(setStatusOfRoomSaga);
     yield fork(saveTagOfCustomerSaga);
     yield fork(deleteTagOfCustomerSaga);
+    yield fork(addQuickReplySaga);
+    yield fork(deleteQuickReplySaga);
+    yield fork(updateReplySaga);
 }
