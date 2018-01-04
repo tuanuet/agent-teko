@@ -51,7 +51,7 @@ export function fetchListOfTagsSucceed(tags) {
     return {type: types.LIST_OF_TAGS_FETCH_SUCCEED, tags};
 }
 
-export function loadClosedRoomRequested(searchValue, searchType, offset, limit) {
+export function loadClosedRoomRequested(searchData, offset, limit) {
     return dispatch => {
         if (!firstCallOf_closedRoomsRequested) {
             firstCallOf_closedRoomsRequested = true;
@@ -60,7 +60,7 @@ export function loadClosedRoomRequested(searchValue, searchType, offset, limit) 
 
         return axios.get(apiType.LOAD_CLOSED_ROOMS, {
             params: {
-                searchValue, searchType, offset, limit
+                searchData, offset, limit
             }
         }).then(res => res.data)
         .then(res => {

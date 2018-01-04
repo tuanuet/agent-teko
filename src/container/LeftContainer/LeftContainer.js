@@ -24,14 +24,14 @@ class LeftContainer extends React.Component {
         actions.resetNumOfUnReadMessages(roomId)
     }
 
-    loadClosedRoom = (searchValue = '', searchType = '') => {
+    loadClosedRoom = (searchData = null) => {
         const { actions } = this.props
 
         this.setState({
             isLoadingMoreRooms: true
         }, () => {
             const numberOfClosedRoom = this.props.rooms.filter(room => room.roomStatus === 3).length
-            actions.loadClosedRoomRequested(searchValue, searchType, numberOfClosedRoom, CLOSED_ROOM_PAGING_VALUE ).then(res => {
+            actions.loadClosedRoomRequested(searchData, numberOfClosedRoom, CLOSED_ROOM_PAGING_VALUE ).then(res => {
                 const isLoadMore = res.length !== 0
                 this.setState({
                     isLoadingMoreRooms: false,

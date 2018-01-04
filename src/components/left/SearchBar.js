@@ -1,28 +1,63 @@
 import React, {PropTypes} from 'react'
 
 class SearchBar extends React.PureComponent {
-    handleChangeSearchType = e => {
-        if (e.keyCode === 40) {
-            this.firstChoice.focus()
+    constructor(props) {
+        super(props)
+        this.state = {
+            showSearchTab: false
         }
     }
-    handleTabEnterSearch = searchType => e => {
-        if (e.keyCode === 13) {
-            if (searchType === 'message') return false
-            this.props.searchRooms(searchType)
-        } else if (e.keyCode === 38) {
-            if (e.target.previousSibling) e.target.previousSibling.focus()
-        } else if (e.keyCode === 40) {
-            if (e.target.nextSibling) e.target.nextSibling.focus()
+    componentWillMount() {
+        window.addEventListener('mousedown', this.handleOutsideClick)
+    }
+    handleOutsideClick = e => {
+        if (!this.searchBar.contains(e.target) && e.target.id !== 'toggle-search-bar') {
+            this.setState({
+                showSearchTab: false
+            })
         }
+    }
+    handleTabEnterSearch = e => {
+        if (e.keyCode === 13) {
+            this.props.searchRooms()
+        } else if (e.keyCode === 38) {
+            if (e.target.parentElement.previousSibling) e.target.parentElement.previousSibling.lastChild.focus()
+        } else if (e.keyCode === 40) {
+            if (e.target.parentElement.nextSibling) e.target.parentElement.nextSibling.lastChild.focus()
+        }
+    }
+    showSearchTab = () => {
+        this.setState({
+            showSearchTab: true
+        })
+    }
+    handleCloseSearchTab = () => {
+        this.setState({
+            showSearchTab: false
+        }, () => {
+            this.props.resetSearchData()
+        })
+    }
+    handleClickSearch = () => {
+        this.setState({
+            showSearchTab: false
+        }, () => {
+            this.props.searchRooms()
+        })
+    }
+    componentWillUnmount() {
+        window.removeEventListener('mousedown', this.handleOutsideClick)
     }
     render() {
-        const { filterBy, currentTab, searchValue, currentClosedRoomSearchValue, changeSearchValue, changeFilterBy, checkSubmitSearch, searchType, searchRooms, resetSearchType } = this.props
+        const { showSearchTab } = this.state
+        const { filterBy, currentTab, searchData, currentClosedRoomSearchValue, changeSearchValue, changeFilterBy, checkSubmitSearch, searchRooms, resetSearchData, isSearchMode } = this.props
 
         return <div className="search-bar">
             <div className="input-group">
-                <input type="text" className="form-control" placeholder={`Tìm kiếm khách hàng`} aria-describedby="btnGroupAddon" value={searchValue} onChange={changeSearchValue} disabled={searchType} onKeyDown={this.handleChangeSearchType} />
-                { searchType && <i className="fa fa-times ml-2 pr-2 clickable" aria-hidden="true" onClick={resetSearchType}></i> }
+                <span id="toggle-search-bar" type="text" className="form-control clickable" aria-describedby="btnGroupAddon" disabled={isSearchMode} onClick={!isSearchMode && (!showSearchTab ? this.showSearchTab : this.handleCloseSearchTab)}>
+                    Tìm kiếm khách hàng
+                </span>
+                { isSearchMode && <i className="fa fa-times ml-2 pr-2 clickable" aria-hidden="true" onClick={this.handleCloseSearchTab}></i> }
                 { currentTab === 'available' && <span id="dropdown-filter" className="dropdown">
                     <button type="button" className="search-rooms-button clickable dropdown-toggle" data-toggle="dropdown" tabIndex={-1}>
                         { filterBy === 'all' && `Tất cả` }
@@ -36,38 +71,52 @@ class SearchBar extends React.PureComponent {
                     </div>
                 </span> }
             </div>
-            { searchValue && <div className="search-choice-container">
-                { searchType ? <div className="search-result">
-                    Tìm kiếm khách hàng có { searchType === 'customer' ? `tên hoặc SĐT`
-                        : searchType === 'tag' ? `tag` : searchType === 'note' ? `ghi chú` : `` } chứa "{searchValue}"
-                </div> : <div className="search-choice">
-                    <div tabIndex={0}
-                        onClick={e => searchRooms('customer')}
-                        onKeyDown={this.handleTabEnterSearch('customer')}
+            <div className="search-choice-container">
+                { isSearchMode ? <div className="search-result">
+                    <div>{ searchData['customer'] && `Tìm kiếm khách hàng có tên hoặc SĐT chứa "${searchData['customer']}"` }</div>
+                    <div>{ searchData['tag'] && `Tìm kiếm khách hàng có tag chứa "${searchData['tag']}"` }</div>
+                    <div>{ searchData['note'] && `Tìm kiếm khách hàng có ghi chú chứa "${searchData['note']}"` }</div>
+                    <div>{ searchData['message'] && `Tìm kiếm khách hàng có tin nhắn chứa "${searchData['message']}"` }</div>
+                </div> : showSearchTab && <div className="search-choice" ref={node => this.searchBar = node}>
+                    <div className="row"
+                        onKeyDown={this.handleTabEnterSearch}
                         ref={element => this.firstChoice = element}
                         title="Tìm kiếm khách hàng có tên hoặc SĐT chứa từ khóa">
-                        <span>Khách chứa</span>{searchValue}
+                        <span className="col-4 col-form-label">Khách chứa</span>
+                        <input value={searchData['customer']}
+                            className="form-control col-7"
+                            onChange={changeSearchValue('customer')}
+                            autoFocus />
                     </div>
-                    <div tabIndex={0}
-                        onClick={e => searchRooms('tag')}
-                        onKeyDown={this.handleTabEnterSearch('tag')}
+                    <div className="row"
+                        onKeyDown={this.handleTabEnterSearch}
                         title="Tìm kiếm khách hàng có tag chứa từ khóa">
-                        <span>Tag chứa</span>{searchValue}
+                        <span className="col-4 col-form-label">Tag chứa</span>
+                        <input value={searchData['tag']}
+                            className="form-control col-7"
+                            onChange={changeSearchValue('tag')} />
                     </div>
-                    <div tabIndex={0}
-                        onClick={e => searchRooms('note')}
-                        onKeyDown={this.handleTabEnterSearch('note')}
+                    <div className="row"
+                        onKeyDown={this.handleTabEnterSearch}
                         title="Tìm kiếm khách hàng có ghi chú chứa từ khóa">
-                        <span>Ghi chú chứa</span>{searchValue}
+                        <span className="col-4 col-form-label">Ghi chú chứa</span>
+                        <input value={searchData['note']}
+                            className="form-control col-7"
+                            onChange={changeSearchValue('note')} />
                     </div>
-                    <div tabIndex={0}
-                        className="disable"
-                        onKeyDown={this.handleTabEnterSearch('message')}
+                    <div className="row disable"
+                        onKeyDown={this.handleTabEnterSearch}
                         title="Tính năng đang được phát triển">
-                        <span>Tin nhắn chứa</span>{searchValue}
+                        <span className="col-4 col-form-label">Tin nhắn chứa</span>
+                        <input value={searchData['message']}
+                            className="form-control col-7"
+                            onChange={changeSearchValue('message')} disabled />
+                    </div>
+                    <div className="row">
+                        <button className="btn btn-outline-success btn-block btn-sm clickable" onClick={this.handleClickSearch}>Tìm kiếm</button>
                     </div>
                 </div> }
-            </div> }
+            </div>
         </div>
     }
 }

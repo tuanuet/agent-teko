@@ -7,13 +7,20 @@ import ClosedRooms from './ClosedRooms'
 import * as config from '../../constants/config'
 import { CLOSED_ROOM_PAGING_VALUE } from '../../constants/config'
 
+const INIT_SEARCH_DATA = {
+    'customer'  : '',
+    'tag'       : '',
+    'note'      : '',
+    'message'   : ''
+}
+
 class LeftComponent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             currentTab: 'available',
-            searchValue: '',
-            searchType: '',
+            searchData: INIT_SEARCH_DATA,
+            isSearchMode: false,
             filterBy: 'all',
             now: Date.now()
         }
@@ -42,34 +49,38 @@ class LeftComponent extends React.Component {
         })
     }
 
-    resetSearchType = () => {
-        const { currentTab } = this.state
+    resetSearchData = () => {
         const { actions, loadClosedRoom } = this.props
         this.setState({
-            searchType: '',
-            searchValue: ''
+            searchData: INIT_SEARCH_DATA,
+            isSearchMode: false
         }, () => {
             actions.removeAllClosedRooms()
             loadClosedRoom()
         })
     }
 
-    searchRooms = type => {
-        const { currentTab, searchValue } = this.state
+    searchRooms = () => {
+        const { currentTab, searchData } = this.state
         const { actions, loadClosedRoom } = this.props
-
+        if (!searchData['customer'] && !searchData['tag'] && !searchData['note'] && !searchData['message']) return false
         this.setState({
-            searchType: type
+            isSearchMode: true
         }, () => {
             actions.removeAllClosedRooms()
-            loadClosedRoom(searchValue, type)
+            loadClosedRoom(searchData)
         })
     }
 
-    changeSearchValue = e => {
-        this.setState({
-            searchValue: e.target.value
-        })
+    changeSearchValue = type => e => {
+        e.preventDefault()
+        const value = e.target.value
+        this.setState(prevState => ({
+            searchData: {
+                ...prevState.searchData,
+                [type]: value
+            }
+        }))
     }
 
     changeFilterBy = value => {
@@ -83,7 +94,7 @@ class LeftComponent extends React.Component {
     }
 
     render() {
-        const { currentTab, searchType, searchValue, filterBy } = this.state
+        const { currentTab, searchData, filterBy, isSearchMode } = this.state
         const { rooms, adminChooseRoom, currentRoomId, loadClosedRoom, isHavingMoreClosed, isLoadingRooms, isLoadingMoreRooms, isMobile } = this.props
 
         if (isMobile && currentRoomId) return false // Hidden if mobile
@@ -105,22 +116,22 @@ class LeftComponent extends React.Component {
         const searchRooms = room => {
             const { customer } = room
             const { notes, tags } = customer
-            if (!searchType) {
+            if (!isSearchMode) {
                 if (room.tags.find(tag => tag.title === 'Spam')) return false
                 return true
-            } else if (searchType === 'customer') {
+            } else if (searchData['customer']) {
                 const { name, phone } = customer
-                return name.toLowerCase().includes(searchValue.toLowerCase())
-                    || phone.toLowerCase().includes(searchValue.toLowerCase())
-            } else if (searchType === 'tag') {
+                return name.toLowerCase().includes(searchData['customer'].toLowerCase())
+                    || phone.toLowerCase().includes(searchData['customer'].toLowerCase())
+            } else if (searchData['tag']) {
                 return tags.some(tag => {
                     const { title } = tag
-                    return title.toLowerCase().includes(searchValue.toLowerCase())
+                    return title.toLowerCase().includes(searchData['tag'].toLowerCase())
                 })
-            } else if (searchType === 'note') {
+            } else if (searchData['note']) {
                 return notes.some(note => {
                     const { content }  = note
-                    return content.toLowerCase().includes(searchValue.toLowerCase())
+                    return content.toLowerCase().includes(searchData['note'].toLowerCase())
                 })
             } else return false
         }
@@ -138,11 +149,11 @@ class LeftComponent extends React.Component {
                 changeCurrentTab={this.changeCurrentTab} />
             <SearchBar
                 currentTab={currentTab}
-                searchType={searchType}
-                searchValue={searchValue}
+                searchData={searchData}
+                isSearchMode={isSearchMode}
                 filterBy={filterBy}
                 searchRooms={this.searchRooms}
-                resetSearchType={this.resetSearchType}
+                resetSearchData={this.resetSearchData}
                 changeSearchValue={this.changeSearchValue}
                 changeFilterBy={this.changeFilterBy} />
             { !isLoadingRooms ? <div className="tab-content">
@@ -166,8 +177,7 @@ class LeftComponent extends React.Component {
                     isHavingMoreClosed={isHavingMoreClosed}
                     isLoadingMoreRooms={isLoadingMoreRooms}
                     loadClosedRoom={loadClosedRoom}
-                    searchValue={searchValue}
-                    searchType={searchType}
+                    searchData={searchData}
                 />
             </div> : <div className="text-center">
                 <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>

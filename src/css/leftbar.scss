@@ -47,9 +47,11 @@
         padding-left: 10px;
         border-radius: 4px;
 
-        input {
+        span {
             background-color: #dedede;
             border: none;
+            color: #5d5d5d;
+            user-select: none;
         }
 
         > i.clickable {
@@ -80,17 +82,10 @@
             width: 100%;
 
             div {
-                cursor: pointer;
                 padding: 10px 25px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
-
-                &:hover {
-                    color: white;
-                    background-color: rgba(#0b3c75, 0.7);
-                    transition: 0.2s;
-                }
 
                 &.disable {
                     opacity: 0.3;
@@ -98,9 +93,15 @@
                 }
 
                 span {
-                    width: 125px;
                     font-weight: bold;
-                    display: inline-block;
+                }
+
+                input {
+                    @include slide-input;
+
+                    &:disabled {
+                        background: none;
+                    }
                 }
             }
         }

@@ -37,7 +37,7 @@ class ClosedRoom extends React.PureComponent {
 
 class ClosedRooms extends React.Component {
     render() {
-        const { currentTab, closedRooms, searchValue, searchType, adminChooseRoom, currentRoomId, isHavingMoreClosed, isLoadingMoreRooms, loadClosedRoom } = this.props
+        const { currentTab, closedRooms, searchData, adminChooseRoom, currentRoomId, isHavingMoreClosed, isLoadingMoreRooms, loadClosedRoom } = this.props
 
         return <div className={`tab-pane ${currentTab === 'closed' && 'active'}`} id="closedchat" role="tabpanel">
             { !isLoadingMoreRooms && closedRooms.length === 0 ? <div className="text-center" style={{fontSize: '16px'}}>
@@ -51,7 +51,7 @@ class ClosedRooms extends React.Component {
             { isHavingMoreClosed && (isLoadingMoreRooms ? <div className="text-center">
                 <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
                 <span className="sr-only">Loading...</span>
-            </div> : <div className="text-center clickable" onClick={e => loadClosedRoom(searchValue, searchType)} style={{ color: '#2b7ec9' }}> {/* Better pass function */}
+            </div> : <div className="text-center clickable" onClick={e => loadClosedRoom(searchData)} style={{ color: '#2b7ec9' }}> {/* Better pass function */}
                 Tải thêm
             </div>) }
         </div>
