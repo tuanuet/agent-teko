@@ -1,146 +1,171 @@
-import React from 'react';
+import React from 'react'
+import ReactDom from 'react-dom'
 
-class Reply extends React.Component{
-
-    constructor(props, context){
-        super(props, context);
-        this.state={
+class Reply extends React.Component {
+    constructor(props, context) {
+        super(props, context)
+        this.state = {
             isEditing: false,
+            isDisplay: true,
             reply: {
-                id: this.props.reply.id,
-                content: this.props.reply.content
+                id: props.reply.id,
+                content: props.reply.content
             }
         }
     }
 
     toggleEditReply = () => {
-        console.log("dada");
-        this.setState({
-            isEditing: !this.state.isEditing
-        })
-    };
+        this.setState(prevState => ({
+            isEditing: !prevState.isEditing
+        }))
+    }
 
     handleOnChangeReply = e => {
-        this.setState({
-           reply : {
-               id: this.state.reply.id,
-               content: e.target.value
-           }
-        })
-    };
+        e.preventDefault()
+        const value = e.target.value
+        this.setState(prevState => ({
+            reply: {
+                ...prevState.reply,
+                content: value
+            }
+        }))
+    }
 
     handleOnKeyUpReply = e => {
-        if(e.keyCode === 13) {
-            this.props.editQuickReply(this.state.reply.id, this.state.reply.content);
-            this.setState({
-                isEditing: !this.state.isEditing
-            })
-        }
-    };
-
-    handleOnClickSaveReply = e => {
-        this.props.editQuickReply(this.state.reply.id, this.state.reply.content);
-        this.setState({
-            isEditing: !this.state.isEditing
-        })
-    };
-
-    handleOnDeleteQuickReply = e => {
-        this.props.deleteQuickReply(this.state.reply.id);
-    };
-
-    render(){
-        if(!this.state.isEditing) {
-            let index = this.props.index + 1;
-            return (
-                <div className="reply">
-                    <p className="reply-content clickable"
-                       onClick={this.props.insertQuickReply.bind(this, this.state.reply.content)}
-                       title={this.state.reply.content}>{`${index}. ${this.state.reply.content}`}
-                    </p>
-                    <div className="icon-button-reply">
-                        <i className="fa fa-pencil" onClick={this.toggleEditReply}></i>
-                        <i className="fa fa-trash" onClick={this.handleOnDeleteQuickReply}></i>
-                    </div>
-                </div>
-            )
-        } else{
-            return(
-                <div className="reply">
-                    <input value={this.state.reply.content}
-                           autoFocus
-                           onKeyUp={this.handleOnKeyUpReply}
-                           onChange={this.handleOnChangeReply}/>
-                    <i className="fa fa-check clickable icon-button-reply" onClick={this.handleOnClickSaveReply}></i>
-                </div>
-            )
+        const { reply } = this.state
+        if (e.keyCode === 13) {
+            e.preventDefault()
+            this.props.editQuickReply(reply.id, reply.content)
+            this.setState(prevState => ({
+                isEditing: !prevState.isEditing
+            }))
         }
     }
 
+    handleOnClickSaveReply = e => {
+        const { reply } = this.state
+        this.props.editQuickReply(reply.id, reply.content)
+        this.setState(prevState => ({
+            isEditing: !prevState.isEditing
+        }))
+    }
 
-};
+    handleOnDeleteQuickReply = e => {
+        const { reply } = this.state
+        const confirm = this.props.deleteQuickReply(reply.id)
+        if (confirm) {
+            this.setState({
+                isDisplay: false
+            })
+        }
+    }
+
+    insertQuickReply = () => {
+        const { reply: { content } } = this.state
+        this.props.insertQuickReply(content)
+        this.props.toggleReplyBoard()
+    }
+
+    render() {
+        const { isEditing, isDisplay, reply } = this.state
+
+        if (!isDisplay) return false
+
+        if (!isEditing) {
+            return <div className="reply">
+                <p className="reply-content clickable"
+                    onClick={this.insertQuickReply}
+                    title={reply.content}>
+                    {reply.content}
+                </p>
+                <div className="icon-button-reply">
+                    <i className="fa fa-pencil" onClick={this.toggleEditReply}></i>
+                    <i className="fa fa-trash" onClick={this.handleOnDeleteQuickReply}></i>
+                </div>
+            </div>
+        } else {
+            return <div className="reply">
+                <input autoFocus={true}
+                    onFocus={e => { e.target.selectionStart = e.target.selectionEnd = e.target.value.length }}
+                    value={reply.content}
+                    className="edit-reply add-reply-box form-control"
+                    onKeyUp={this.handleOnKeyUpReply}
+                    onChange={this.handleOnChangeReply} />
+                <i className="fa fa-check clickable icon-button-reply" onClick={this.handleOnClickSaveReply}></i>
+            </div>
+        }
+    }
+}
 
 class ReplyBoard extends React.Component {
     constructor(props, context) {
-        super(props, context);
-        this.state={
-            isShowAddReplyBox: false,
-            replies: this.props.replies,
+        super(props, context)
+        this.state = {
             isEditReply: false,
-        };
-        this.showAddReplyBox = this.showAddReplyBox.bind(this);
-    }
-
-    showAddReplyBox() {
-        this.setState({
-            isShowAddReplyBox: !this.state.isShowAddReplyBox
-        });
-    }
-
-    onKeyUpAddReply = event => {
-        if (event.keyCode === 13) {
-            this.setState({
-                isShowAddReplyBox: !this.state.isShowAddReplyBox
-            });
-            this.props.addQuickReply(event.target.value);
+            isShowAddReplyBox: false
         }
-    };
+    }
+    componentWillMount() {
+        window.addEventListener('mousedown', this.handleOutsideClick)
+    }
+
+    handleOutsideClick = e => {
+        if (!this.replyBoard.contains(e.target) && e.target.id !== 'toggle-reply-board') {
+            this.props.toggleReplyBoard(e, false)
+        }
+    }
+
+    showAddReplyBox = () => {
+        this.setState(prevState => ({
+            isShowAddReplyBox: !prevState.isShowAddReplyBox
+        }))
+    }
+
+    onKeyUpAddReply = e => {
+        if (e.keyCode === 13) {
+            e.preventDefault()
+            this.setState(prevState => ({
+                isShowAddReplyBox: !prevState.isShowAddReplyBox
+            }))
+            this.props.addQuickReply(e.target.value)
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('mousedown', this.handleOutsideClick)
+    }
 
     render() {
-        const { isShowAddReplyBox, replies} = this.state;
-        const repliesNode = replies.map((reply, index) => {
-            return(
-                <Reply key={reply.id}
-                       reply={reply}
-                       index={index}
-                       insertQuickReply={this.props.insertQuickReply}
-                       editQuickReply={this.props.editQuickReply}
-                       deleteQuickReply={this.props.deleteQuickReply}
-                />
+        const { isShowAddReplyBox } = this.state
+        const { replies } = this.props
+        const repliesNode = replies.map(reply => {
+            return <Reply key={reply.id}
+               reply={reply}
+               insertQuickReply={this.props.insertQuickReply}
+               editQuickReply={this.props.editQuickReply}
+               deleteQuickReply={this.props.deleteQuickReply}
+               toggleReplyBoard={this.props.toggleReplyBoard}
+            />
+        })
+        const { toggleReplyBoard } = this.props
 
-            )
-        });
-        const { toggleReplyBoard } = this.props;
-
-        let bottom = null;
+        let bottom = false
         if (replies.length > 9) {
-            bottom = <div className="add-reply">Tối đa 10 tin nhắn nhanh</div>
+            // Do nothing
         } else if (!isShowAddReplyBox) {
-            bottom = <div className="add-reply add-reply-button" onClick={this.showAddReplyBox}>
-                <i className="fa fa-plus add-reply">&nbsp;Click để thêm</i>
+            bottom = <div className="add-reply add-reply-button clickable" onClick={this.showAddReplyBox}>
+                <i className="fa fa-plus">&nbsp;Thêm tin nhắn nhanh mới</i>
             </div>
         } else {
             bottom = <input
-                ref="addReply"
                 type="text"
-                size={17}
-                className="add-reply add-reply-box"
+                className="add-reply-box form-control"
                 placeholder="Thêm tin nhắn nhanh"
                 onKeyUp={this.onKeyUpAddReply}
                 autoFocus={true}
             />
         }
-        return <div className="reply-board" tabIndex={0}>
+        return <div className="reply-board" ref={node => this.replyBoard = node}>
             <div className="reply-list">
                 {repliesNode}
             </div>

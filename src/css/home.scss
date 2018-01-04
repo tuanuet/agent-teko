@@ -315,19 +315,17 @@ header {
                 font-size: 24px;
                 padding: 0 16px;
                 line-height: 30px;
-                color: #1077ff;
-
+                color: #4d90e8;
 
                 i {
-                    margin: 0 8px;
+                    margin: 0 7px;
                     transition-duration: 0.1s;
                 }
 
-                i:hover {
+                div.add-reply.add-reply-button:hover i:hover {
                     cursor: pointer;
-                    color: #5792ff;
+                    color: #316bed;
                 }
-
 
             }
 
@@ -335,7 +333,7 @@ header {
                 font-size: 24px;
                 padding: 0 16px;
                 line-height: 30px;
-                color: #1077ff;
+                color: #4d90e8;
 
                 input[type="file"] {
                     display: none;
@@ -348,7 +346,7 @@ header {
 
                 i:hover {
                     font-size: 20px;
-                    color: #5792ff;
+                    color: #316bed;
                 }
 
                 i:active {
@@ -532,51 +530,60 @@ header {
 
 .reply-board {
     position: absolute;
-    width: 200px;
-    height: 250px;
+    width: 315px;
     border-radius: 4px;
     border: 1px solid;
     bottom: 60px;
-    right: 755px;
-    overflow-y: auto;
     background-color: #ffffff;
-    padding-left: 5px;
-    .reply{
-        font-size: small;
-        color: black;
-        border-bottom: 0.1px dotted #f2f2f2;
+    padding: 16px;
+    color: #606060;
+    .reply {
         display: flex;
-        justify-content: space-around;
-        p{
-            width: 130px;
+        font-size: 15px;
+        justify-content: space-between;
+        &:last-child {
+            margin-bottom: 16px;
+        }
+        i {
+            font-size: 12px;
+        }
+        p {
+            width: 225px;
             overflow: hidden;
-            white-space:nowrap;
+            white-space: nowrap;
             text-overflow: ellipsis;
-            transition: width 2s, height 2s, background-color 2s, transform 2s;
-            -webkit-transition: width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+            transition: 0.1s;
             &:hover {
-                font-size: 15px;
-                color: #5792ff;
-
+                font-size: 17px;
+                color: #316bed;
             }
+        }
+        .edit-reply {
+            margin-bottom: 8px;
+            padding-top: 3px;
+            padding-left: 0;
         }
         .icon-button-reply {
             margin-top: 6px;
+            > i {
+                cursor: pointer;
+            }
         }
     }
-    .add-reply{
-        float: right;
+    .add-reply {
         font-size: 15px;
-        font-style: italic;
         display: flex;
         justify-content: center;
     }
-    .add-reply-box{
-        margin: 5px;
-        padding: 3px;
-    }
-    .add-reply-button{
-        margin-right: 25%;
+    .add-reply-box {
+        font-size: 15px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+        user-select: none;
     }
 }
 

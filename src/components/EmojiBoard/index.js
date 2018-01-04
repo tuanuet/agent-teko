@@ -25,10 +25,6 @@ class Emoji extends Component {
 }
 
 class EmojiBoard extends Component {
-    constructor(props) {
-        super(props)
-        this.firstClick = false
-    }
     insertEmoji = smiley => {
         const { text, unified, texts } = smiley
         const codePoints = unified.split('-').map(u => `0x${u}`)
@@ -36,18 +32,15 @@ class EmojiBoard extends Component {
         this.props.insertEmoji(emoji)
     }
     componentWillMount() {
-        window.addEventListener('click', this.handleOutsideClick)
+        window.addEventListener('mousedown', this.handleOutsideClick)
     }
     handleOutsideClick = e => {
-        if (!this.firstClick) {
-            this.firstClick = true
-            return false
-        } else if (!this.emoji.contains(e.target)) {
+        if (!this.emoji.contains(e.target) && e.target.id !== 'toggle-emoji-board') {
             this.props.toggleEmojiBoard()
         }
     }
     componentWillUnmount() {
-        window.removeEventListener('click', this.handleOutsideClick)
+        window.removeEventListener('mousedown', this.handleOutsideClick)
     }
     render() {
         const smileys = emos.filter(({category, has_img_messenger, text, obsoletes}, idx) => {

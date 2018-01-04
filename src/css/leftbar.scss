@@ -55,6 +55,10 @@
         > i.clickable {
             font-size: 14px;
             color: #878787;
+            transition: 0.2s;
+            &:hover {
+                font-size: 18px;
+            }
         }
     }
     .search-choice-container {

@@ -22,7 +22,7 @@ class SearchBar extends React.PureComponent {
         return <div className="search-bar">
             <div className="input-group">
                 <input type="text" className="form-control" placeholder={`Tìm kiếm khách hàng`} aria-describedby="btnGroupAddon" value={searchValue} onChange={changeSearchValue} disabled={searchType} onKeyDown={this.handleChangeSearchType} />
-                { searchType && <i className="fa fa-times pr-2 clickable" aria-hidden="true" onClick={resetSearchType}></i> }
+                { searchType && <i className="fa fa-times ml-2 pr-2 clickable" aria-hidden="true" onClick={resetSearchType}></i> }
                 { currentTab === 'available' && <span id="dropdown-filter" className="dropdown">
                     <button type="button" className="search-rooms-button clickable dropdown-toggle" data-toggle="dropdown" tabIndex={-1}>
                         { filterBy === 'all' && `Tất cả` }

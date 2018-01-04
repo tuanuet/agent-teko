@@ -18,7 +18,7 @@ const getMessageFromClient = message => {
     }
 }
 class BottomBar extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             chatValue: '',
@@ -211,21 +211,20 @@ class BottomBar extends React.Component {
     };
 
     insertQuickReply = replyContent => {
-        console.log("hello insert quick reply: " + replyContent);
         this.setState(prev => ({
-            chatValue: prev.chatValue + ' ' + replyContent
+            chatValue: prev.chatValue === '' ? replyContent : prev.chatValue + ' ' + replyContent
         }));
     }
 
     editQuickReply = (replyId, replyContent) => {
-
         this.props.dispatch(actions.updateQuickReply(replyId, replyContent));
     };
 
-    deleteQuickReply = (replyId) => {
-        if(confirm("Xác nhận xóa tin nhắn nhanh này ?")) {
+    deleteQuickReply = replyId => {
+        if (confirm('Xác nhận xóa tin nhắn nhanh này ?')) {
             this.props.dispatch(actions.deleteQuickReply(replyId))
-        }
+            return true
+        } else return false
     };
 
     addQuickReply = replyContent => {
@@ -243,18 +242,18 @@ class BottomBar extends React.Component {
 
         return (
             <div className={`bottom`}>
-                <div className="icon-reply">
-                    <i className="fa fa-bars clickable" title="Trả lời nhanh" aria-hidden="true" onClick={this.toggleReplyBoard}></i>
+                { !isMobile && <div className="icon-reply">
+                    <i id="toggle-reply-board" className="fa fa-bars clickable" title="Trả lời nhanh" aria-hidden="true" onClick={this.toggleReplyBoard}></i>
 
-                    {isShowReplyBoard && <ReplyBoard
+                    { isShowReplyBoard && <ReplyBoard
+                        replies={agent.replies}
                         insertQuickReply={this.insertQuickReply}
                         toggleReplyBoard={this.toggleReplyBoard}
-                        editQuickReply = {this.editQuickReply}
-                        deleteQuickReply = {this.deleteQuickReply}
-                        addQuickReply = {this.addQuickReply}
-                        replies = {agent.replies}
+                        editQuickReply={this.editQuickReply}
+                        deleteQuickReply={this.deleteQuickReply}
+                        addQuickReply={this.addQuickReply}
                     /> }
-                </div>
+                </div> }
                 <div className={`chat-input ${isDragOver ? `dragover` : ``}`}>
                     <textarea className="form-control"
                         rows={2}
@@ -270,7 +269,7 @@ class BottomBar extends React.Component {
                         autoFocus />
                 </div>
                 <div className="icon-button">
-                    <i className="fa fa-smile-o clickable" aria-hidden="true" onClick={this.toggleEmojiBoard}></i>
+                    <i id="toggle-emoji-board" className="fa fa-smile-o clickable" aria-hidden="true" onClick={this.toggleEmojiBoard}></i>
                     { showSeenIcon && <i className="fa fa-eye clickable" aria-hidden="true" onClick={this.sendSeenMessage}></i> }
                     <label>
                         <input type="file" ref={input => this.attachInput = input} onChange={this.uploadImage} />
