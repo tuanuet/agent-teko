@@ -119,21 +119,27 @@ class LeftComponent extends React.Component {
             if (!isSearchMode) {
                 if (room.tags.find(tag => tag.title === 'Spam')) return false
                 return true
-            } else if (searchData['customer']) {
+            }
+            if (searchData['customer']) {
                 const { name, phone } = customer
-                return name.toLowerCase().includes(searchData['customer'].toLowerCase())
-                    || phone.toLowerCase().includes(searchData['customer'].toLowerCase())
-            } else if (searchData['tag']) {
-                return tags.some(tag => {
+                if (!name.toLowerCase().includes(searchData['customer'].toLowerCase())
+                    && !phone.toLowerCase().includes(searchData['customer'].toLowerCase())) return false
+            }
+            if (searchData['tag']) {
+                const condition = tags.some(tag => {
                     const { title } = tag
                     return title.toLowerCase().includes(searchData['tag'].toLowerCase())
                 })
-            } else if (searchData['note']) {
-                return notes.some(note => {
+                if (!condition) return false
+            }
+            if (searchData['note']) {
+                const condition = notes.some(note => {
                     const { content }  = note
                     return content.toLowerCase().includes(searchData['note'].toLowerCase())
                 })
-            } else return false
+                if (!condition) return false
+            }
+            return true
         }
 
         const availableRooms = rooms.filter(room => room.roomStatus === 2).filter(searchRooms).filter(filterAvailable)
