@@ -11,6 +11,8 @@ class SearchBar extends React.PureComponent {
         window.addEventListener('mousedown', this.handleOutsideClick)
     }
     handleOutsideClick = e => {
+        const { showSearchTab } = this.state
+        if (!showSearchTab) return false
         if (!this.searchBar.contains(e.target) && e.target.id !== 'toggle-search-bar') {
             this.setState({
                 showSearchTab: false
