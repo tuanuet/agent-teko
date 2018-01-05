@@ -78,13 +78,13 @@ class RightContainer extends React.Component {
     }
 
     render() {
-        const {customer, notes, photos, currentAgent, currentRoomId, actions, agents, isLoadingMessages, nextFetchingRoom, isMobile, isShowInfo, toggleShowInfo} = this.props
+        const {customer, notes, photos, currentAgent, currentRoomId, actions, agents, isLoadingMessages, nextFetchingRoom, isMobile, isShowInfo, toggleShowInfo, toggleShowOrderCreate, isShowOrderCreate} = this.props
         if (!currentRoomId) return false
         if (isMobile && !isShowInfo) return false
         return (
             <RightComponent
                 isMobile={isMobile}
-                toggleShowInfo={toggleShowInfo}
+                isShowOrderCreate={isShowOrderCreate}
                 actions={actions}
                 customer={customer}
                 agents={agents}
@@ -100,6 +100,8 @@ class RightContainer extends React.Component {
                 updateNoteState={this.updateNoteState}
                 onClickSaveNote={this.onClickSaveNote}
                 handleOnKeyUpTakeNote={this.handleOnKeyUpTakeNote}
+                toggleShowInfo={toggleShowInfo}
+                toggleShowOrderCreate={toggleShowOrderCreate}
             />
         )
     }

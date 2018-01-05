@@ -150,7 +150,6 @@ export default async () => {
             alert(msg)
             return false
         }
-        console.log('Finish handshaking!');
 
         socket.emit('admin-join-default-room', { adminId: agent.id }, ack => {
             console.log('Admin join room default', ack)

@@ -48,24 +48,26 @@ header {
     bottom: 0;
     background: #f1f4f8;
     display: flex;
+    margin-left: 0;
 
     .left {
         width: 25%;
-        min-width: 300px;
-        background-color: white;
-        @import "leftbar";
         display: flex;
         flex-direction: column;
         margin: 16px;
         margin-right: 0;
+        background-color: white;
+        transition: .2s;
+        @import "leftbar";
     }
 
     .middle {
-        flex-grow: 1;
-        position: relative;
+        width: 55%;
         background: white;
         margin: 16px;
         border-radius: 4px;
+        position: relative;
+        transition: .2s;
 
         > .header {
             position: absolute;
@@ -410,7 +412,6 @@ header {
 
     .right {
         width: 20%;
-        min-width: 300px;
         margin: 16px;
         margin-left: 0;
         background: white;

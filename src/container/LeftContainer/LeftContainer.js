@@ -47,10 +47,11 @@ class LeftContainer extends React.Component {
      */
     render() {
         const { isLoadingMoreRooms, isHavingMoreClosed } = this.state
-        const { rooms, currentRoomId, tags, actions, isLoadingRooms, isMobile } = this.props
+        const { rooms, currentRoomId, tags, actions, isLoadingRooms, isMobile, isShowOrderCreate } = this.props
         return (
             <LeftComponent
                 isMobile={isMobile}
+                isShowOrderCreate={isShowOrderCreate}
                 tags={tags}
                 rooms={rooms}
                 actions={actions}

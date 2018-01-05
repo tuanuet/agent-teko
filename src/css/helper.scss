@@ -37,6 +37,9 @@
     border-radius: 0;
 }
 
+@mixin transition-container {
+    transition: 1s;
+}
 .ellip {
   display: block;
   height: 100%;

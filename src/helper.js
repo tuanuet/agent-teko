@@ -43,9 +43,9 @@ export const now = () => {
 }
 
 export const formatSeen = datetime => {
-    return moment(datetime).calendar(null, {
+    return lowerCaseFirstLetter(moment(datetime).calendar(null, {
         sameDay: 'HH:mm'
-    })
+    }))
 }
 
 export const formatDatetime = datetime => {
@@ -62,6 +62,10 @@ export const formatLatestMessage = message => {
     else if (messageType === FILE) return `${subject} đã gửi một tệp`
     else if (messageType === INFO) return `${subject} đánh dấu đã đọc`
     else return `${messageFrom === 0 ? `Bạn: ` : ``}${content}`
+}
+
+const lowerCaseFirstLetter = string => {
+    return string.charAt(0).toLowerCase() + string.slice(1)
 }
 
 const capitalizeFirstLetter = string => {

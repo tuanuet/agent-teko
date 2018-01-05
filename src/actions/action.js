@@ -1,22 +1,22 @@
-import * as Types from '../constants/actionTypes';
+import * as types from '../constants/actionTypes';
 
 export function f5(status) {
     return {
-        type: Types.F5,
+        type: types.F5,
         isF5: status
     };
 }
 
 export function addMessage({typeSender, sender, message, time}) {
     return {
-        type: Types.ADD_MESSAGE,
+        type: types.ADD_MESSAGE,
         message: {typeSender, sender, message, time}
     };
 }
 
 export function updateMessageMetadata(content, title, description, image) {
     return {
-        type: Types.UPDATE_MESSAGE_METADATA,
+        type: types.UPDATE_MESSAGE_METADATA,
         metadata: {content, title, description, image}
     };
 }
@@ -29,24 +29,24 @@ export function updateMessageMetadata(content, title, description, image) {
  */
 export function agentRequested() {
     return {
-        type: Types.AGENT_INFO_FETCH_REQUESTED
+        type: types.AGENT_INFO_FETCH_REQUESTED
     };
 }
 export function agentSucceed(agent, subscriptions) {
     return {
-        type: Types.AGENT_INFO_FETCH_SUCCEED,
+        type: types.AGENT_INFO_FETCH_SUCCEED,
         agent, subscriptions
     };
 }
 export function agentFailure() {
     return {
-        type: Types.AGENT_INFO_FETCH_FAILED,
+        type: types.AGENT_INFO_FETCH_FAILED,
     };
 }
 
 export function sendRating({ratingValue, feedback = ''}) {
     return {
-        type: Types.SEND_RATING,
+        type: types.SEND_RATING,
         rating: {
             ratingValue,
             feedback
@@ -56,20 +56,20 @@ export function sendRating({ratingValue, feedback = ''}) {
 
 export function addAvailableRoom(room) {
     return {
-        type : Types.ADD_ROOM_AVAILABLE,
+        type : types.ADD_ROOM_AVAILABLE,
         room
     };
 }
 export function addEnableRoom(room) {
     return {
-        type : Types.ADD_ROOM_ENABLE,
+        type : types.ADD_ROOM_ENABLE,
         room
     };
 }
 
 export function addMessageForRoom(roomId, message) {
     return {
-        type : Types.ADD_MESSAGE_FOR_ROOM,
+        type : types.ADD_MESSAGE_FOR_ROOM,
         message,
         roomId
     };
@@ -77,7 +77,7 @@ export function addMessageForRoom(roomId, message) {
 
 export function clientSendMessage(message) {
     return {
-        type : Types.CLIENT_SEND_MESSAGE,
+        type : types.CLIENT_SEND_MESSAGE,
         message
     };
 }
@@ -86,21 +86,21 @@ export function clientSendMessage(message) {
 export function addQuickReply(replyContent) {
 
     return {
-        type: Types.ADD_QUICK_REPLY_REQUESTED,
+        type: types.ADD_QUICK_REPLY_REQUESTED,
         replyContent
     }
 }
 
 export function deleteQuickReply(replyId) {
     return {
-        type: Types.DELETE_QUICK_REPLY_REQUESTED,
+        type: types.DELETE_QUICK_REPLY_REQUESTED,
         replyId
     }
 }
 
 export function updateQuickReply(replyId, replyContent) {
     return {
-        type: Types.UPDATE_QUICK_REPLY_REQUESTED,
+        type: types.UPDATE_QUICK_REPLY_REQUESTED,
         replyId,
         replyContent
     }

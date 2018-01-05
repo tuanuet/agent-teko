@@ -136,7 +136,7 @@ class ListMessage extends React.Component {
                 <div style={ !isLoadingMessages ? { marginTop: '20px' } : {}}>
                     { listMsg }
                     { roomInfo && roomInfo.seenAt && <div className="seen-messages">
-                        <i className="fa fa-check" aria-hidden="true"></i> Đã xem lúc {helper.formatSeen(roomInfo.seenAt)}
+                        <i className="fa fa-check" aria-hidden="true"></i> Đã xem {helper.formatSeen(roomInfo.seenAt)}
                     </div> }
                 </div>
                 { isZooming && <div className="image-overlay" onClick={this.closeZooming}>
