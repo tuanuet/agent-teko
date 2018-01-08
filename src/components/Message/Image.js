@@ -95,7 +95,7 @@ export default class Image extends React.PureComponent {
             <div className={role}
                  title={formatDatetime(createdAt)}
                  data-toggle="tooltip"
-                 data-placement= {role !== 'self' ? 'left' : 'right'}
+                 data-placement={role !== 'self' ? 'left' : 'right'}
             >
                 <div className="image">
                     <div className="content">
