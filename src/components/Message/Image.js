@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { ACCESS_TOKEN } from '../../constants/Server'
+import {formatDatetime} from '../../helper';
 
 export default class Image extends React.PureComponent {
     constructor(props) {
@@ -73,7 +74,8 @@ export default class Image extends React.PureComponent {
     }
     render() {
         const { message, isCustomerBlock } = this.props
-        const { isLoading, content } = this.state
+        const { isLoading, content} = this.state
+        const { createdAt } = this.props.message
         const role = message.messageFrom === 0 ? 'self' : 'other'
 
         if (isCustomerBlock) {
@@ -90,7 +92,11 @@ export default class Image extends React.PureComponent {
         }
 
         return (
-            <div className={role}>
+            <div className={role}
+                 title={formatDatetime(createdAt)}
+                 data-toggle="tooltip"
+                 data-placement={role !== 'self' ? 'left' : 'right'}
+            >
                 <div className="image">
                     <div className="content">
                         { isLoading ? <div className="message-margin loading-attachment">
