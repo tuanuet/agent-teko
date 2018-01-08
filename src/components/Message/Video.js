@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import axios from 'axios'
 import { ACCESS_TOKEN } from '../../constants/Server'
-import moment from "moment/moment";
+import {formatDatetime} from '../../helper';
 
 class Video extends PureComponent {
     constructor(props) {
@@ -9,8 +9,7 @@ class Video extends PureComponent {
         this.mounted = false
         this.state = {
             isLoading: false,
-            content: props.message.content,
-            createdAt: props.message.createdAt
+            content: props.message.content
         }
     }
     handleErrorContent = () => {
@@ -53,10 +52,11 @@ class Video extends PureComponent {
     render() {
         const { message } = this.props
         const { isLoading, content } = this.state
+        const { createdAt } = this.props.message.createdAt
         const role = message.messageFrom === 0 ? 'self' : 'other'
 
         return <div className={`message-margin ${role}`}
-                    title={moment(createdAt).calendar()}
+                    title={formatDatetime(createdAt)}
                     data-toggle="tooltip" data-placement= {role !=="self"?"left":"right"}>
             { isLoading ? <div className="loading-attachment">
                 <i className="spinner fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>

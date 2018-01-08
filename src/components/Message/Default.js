@@ -1,6 +1,6 @@
 import React from 'react'
 import { findEmoji, isEmoji } from '../../helper'
-import moment from 'moment';
+import {formatDatetime} from '../../helper';
 
 export default class Default extends React.PureComponent {
     render() {
@@ -12,8 +12,9 @@ export default class Default extends React.PureComponent {
             <div>
                 <div className={`chat-group ${role}`}>
                     <div className={`chat ${message.isError ? `faded` : ``}`}
-                         title={moment(message.createdAt).calendar()}
-                         data-toggle="tooltip" data-placement= {role !=="self"?"left":"right"}
+                         title={formatDatetime(message.createdAt)}
+                         data-toggle="tooltip"
+                         data-placement= {role !== 'self' ? 'left' : 'right'}
                     >
                         <div className="sender-name">{message.senderName}</div>
                         <span className={message.content && searchMessage &&  message.content.toLowerCase().includes(searchMessage.toLowerCase()) && `search-matching-item search-right-message`}>
