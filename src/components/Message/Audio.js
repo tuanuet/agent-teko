@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import axios from 'axios'
 import { ACCESS_TOKEN } from '../../constants/Server'
+import moment from "moment/moment";
 
 class Audio extends PureComponent {
     constructor(props) {
@@ -8,7 +9,8 @@ class Audio extends PureComponent {
         this.mounted = false
         this.state = {
             isLoading: false,
-            content: props.message.content
+            content: props.message.content,
+            createdAt: props.message.createdAt
         }
     }
     handleErrorContent = () => {
@@ -44,7 +46,9 @@ class Audio extends PureComponent {
         const { isLoading, content } = this.state
         const role = message.messageFrom === 0 ? 'self' : 'other'
 
-        return <div className={`message-margin ${role}`}>
+        return <div className={`message-margin ${role}`}
+                    title={moment(createdAt).calendar()}
+                    data-toggle="tooltip" data-placement= {role !=="self"?"left":"right"}>
             { isLoading ? <div className="loading-attachment">
                 <i className="spinner fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
             </div> : <audio

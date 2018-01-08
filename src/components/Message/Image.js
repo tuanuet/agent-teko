@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { ACCESS_TOKEN } from '../../constants/Server'
+import moment from "moment/moment";
 
 export default class Image extends React.PureComponent {
     constructor(props) {
@@ -8,7 +9,8 @@ export default class Image extends React.PureComponent {
         this.mounted = false
         this.state = {
             isLoading: false,
-            content: props.message.content
+            content: props.message.content,
+            createdAt: props.message.createdAt
         }
     }
     openZooming = () => {
@@ -73,7 +75,7 @@ export default class Image extends React.PureComponent {
     }
     render() {
         const { message, isCustomerBlock } = this.props
-        const { isLoading, content } = this.state
+        const { isLoading, content, createdAt } = this.state
         const role = message.messageFrom === 0 ? 'self' : 'other'
 
         if (isCustomerBlock) {
@@ -90,12 +92,16 @@ export default class Image extends React.PureComponent {
         }
 
         return (
-            <div className={role}>
+            <div className={role}
+                 title={moment(createdAt).calendar()}
+                 data-toggle="tooltip" data-placement= {role !=="self"?"left":"right"}
+            >
                 <div className="image">
                     <div className="content">
                         { isLoading ? <div className="message-margin loading-attachment">
                             <i className="spinner fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
                         </div> : <img src={content}
+                            title={moment(createdAt).calendar()}
                             alt={message.fileName}
                             className="clickable"
                             onLoad={this.scrollDown}
