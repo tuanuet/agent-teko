@@ -5,6 +5,9 @@ import MiddleContainer from '../MiddleContainer/MiddleContainer'
 import RightContainer from '../RightContainer/RightContainer'
 import OrderCreateContainer  from '../OrderCreateContainer/index'
 import { NotificationContainer } from 'react-notifications'
+import * as orderActions from 'Actions/orderActions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 require('../../css/cssGroup');
 
@@ -14,7 +17,7 @@ class App extends React.Component {
         this.state = {
             width: window.innerWidth,
             isShowInfo: false,
-            isShowOrderCreate: false
+            isShowOrderCreate: true
         }
     }
     componentWillMount() {
@@ -26,9 +29,12 @@ class App extends React.Component {
         })
     }
     toggleShowOrderCreate = () => {
+        const { actions } = this.props
         this.setState(prevState => ({
             isShowOrderCreate: !prevState.isShowOrderCreate
-        }))
+        }), () => {
+            actions.resetOrder()
+        })
     }
     toggleShowInfo = () => {
         this.setState(prevState => ({
@@ -67,4 +73,10 @@ class App extends React.Component {
     }
 }
 
-export default (App);
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators({...orderActions}, dispatch)
+    }
+}
+
+export default connect(null, mapDispatchToProps)(App)

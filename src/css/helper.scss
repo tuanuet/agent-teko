@@ -40,6 +40,11 @@
 @mixin transition-container {
     transition: 1s;
 }
+
+.slide-input {
+    @include slide-input;
+}
+
 .ellip {
   display: block;
   height: 100%;

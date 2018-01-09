@@ -7,13 +7,11 @@ class OrderCreateComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            step: 'product' // <product|customer|confirm>
+            step: 'customer' // <product|customer|confirm>
         }
     }
-    changeStep = step => e => {
-        this.setState({
-            step
-        })
+    changeStep = step => {
+        this.setState({ step })
     }
     toggleShowOrderCreate = () => {
         // Reset state
@@ -25,18 +23,23 @@ class OrderCreateComponent extends Component {
     }
     render() {
         const { step } = this.state
-        const { isShowOrderCreate } = this.props
+        const { isShowOrderCreate, actions, order } = this.props
         const content = () => {
             if (step === 'product')
                 return <Product step={step}
+                    order={order}
+                    actions={actions}
                     changeStep={this.changeStep}
+                    isShowOrderCreate={isShowOrderCreate}
                     toggleShowOrderCreate={this.toggleShowOrderCreate} />
             else if (step === 'customer')
                 return <Customer step={step}
+                    order={order}
                     changeStep={this.changeStep}
                     toggleShowOrderCreate={this.toggleShowOrderCreate} />
             else if (step === 'confirm')
                 return <Confirm step={step}
+                    order={order}
                     changeStep={this.changeStep}
                     toggleShowOrderCreate={this.toggleShowOrderCreate} />
             else return false

@@ -12,7 +12,7 @@ module.exports = {
     devtool: isProduction ? false : 'cheap-module-eval-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, '../live-chat/public'),
-        allowedHosts: ['local.chat.com'],
+        allowedHosts: ['http://local.chat.com', 'http://tekshop.local'],
         compress: true
     },
     entry: {
@@ -37,6 +37,17 @@ module.exports = {
         filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, '../live-chat/public/js/dist'),
         publicPath: 'js/dist'
+    },
+    resolve: {
+        alias: {
+            Actions: path.resolve(__dirname, 'src/actions/'),
+            Components: path.resolve(__dirname, 'src/components/'),
+            Constants: path.resolve(__dirname, 'src/constants/'),
+            Containers: path.resolve(__dirname, 'src/container/'),
+            Reducers: path.resolve(__dirname, 'src/reducers/'),
+            Helper: path.resolve(__dirname, 'src/helper')
+        },
+        extensions: ['.js', '.jsx']
     },
     module: {
         loaders: [

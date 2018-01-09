@@ -53,6 +53,10 @@ export const formatDatetime = datetime => {
     return capitalizeFirstLetter(value.calendar())
 }
 
+export const numberWithCommas = x => {
+    return parseInt(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export const formatLatestMessage = message => {
     const { content, messageType, messageFrom, senderName } = message
     const subject = messageFrom === 0 ? 'Bạn' : senderName

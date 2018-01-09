@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import Progress from './Progress'
 
 class Customer extends Component {
+    goPrevious = () => {
+        this.props.changeStep('product')
+    }
     render() {
-        const { step, changeStep, toggleShowOrderCreate } = this.props
+        const { step, toggleShowOrderCreate } = this.props
 
         return <div>
             {/* Title */}
             <div className="row">
-                <span className="go-previous" onClick={changeStep('product')}>← Quay lại</span>
+                <span className="go-previous" onClick={this.goPrevious}>← Quay lại</span>
                 <div className="col-12 title text-center text-uppercase font-weight-bold">Thông tin giao hàng</div>
                 <span className="close-order-create text-danger" onClick={toggleShowOrderCreate}>
                     <i className="fa fa-times-circle" aria-hidden="true"></i>
@@ -26,7 +29,7 @@ class Customer extends Component {
             </div>
             <div className="bottom-align">
                 <div className="col-12">
-                    <button type="button" className="btn btn-outline-success btn-block clickable" onClick={changeStep('confirm')}>
+                    <button type="button" className="btn btn-outline-success btn-block clickable">
                         Xác nhận thông tin giao hàng
                     </button>
                 </div>

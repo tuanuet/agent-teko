@@ -10,7 +10,7 @@ require('babel-polyfill');
 
 import moment from 'moment'
 import vietnamLocation from 'moment/locale/vi'
-moment.locale('vi', vietnamLocation)
+moment.updateLocale('vi', vietnamLocation)
 
 import 'react-notifications/lib/notifications.css'
 

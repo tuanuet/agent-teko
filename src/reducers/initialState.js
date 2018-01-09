@@ -6,7 +6,19 @@ export default {
     currentRoomId: null,
     isLoadingRooms: false,
     isLoadingMessage: false, // TODO: Should remove
-    subscriptions: []
+    subscriptions: [],
+    order: {
+        customer: {},
+        orderProducts: [{
+            id: 172,
+            name: 'Bàn phím E-Blue',
+            price: '209000.0000',
+            instock_status: 1,
+            source_url: {},
+            count: 1
+        }],
+        searchProducts: []
+    }
 };
 
 const exampleState = {
@@ -54,5 +66,13 @@ const exampleState = {
     tags: [{}],
     currentRoomId: 1,
     isLoadingMessage: false,
-    subscriptions: []
+    subscriptions: [],
+    order: {
+        customer: {},
+        orderProducts: [{
+            // ...orderProducts,
+            count: 3
+        }],
+        searchProducts: '<[{}], {}>' // Array on fetching succeed, object error when failed
+    }
 }

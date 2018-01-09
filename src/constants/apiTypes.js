@@ -1,4 +1,4 @@
-import { API_URL, NODE_URL } from './Server'
+import { API_URL, NODE_URL, TEKSHOP_URL } from './Server'
 
 export const ROOMS_FETCH_REQUESTED = `${API_URL}/api/fetch-active-rooms`
 export const LIST_OF_TAGS_FETCH_REQUESTED = `${API_URL}/api/fetch-tags`
@@ -18,6 +18,7 @@ export const UPDATE_ADMIN_BROADCAST_ROOMS = `${API_URL}/api/update-admin-broadca
 export const UPDATE_ADMIN_UNBROADCAST_ROOMS = `${API_URL}/api/update-admin-unbroadcast`
 export const UPDATE_CUSTOMER_INFO = `${API_URL}/api/update-customer-info`
 export const MARK_SUBSCRIPTIONS_AS_READ = `${API_URL}/api/mark-subscriptions-as-read`
+export const FETCH_SEARCH_PRODUCTS = `${TEKSHOP_URL}/admin/admin/api/products`
 
 export const ADMIN_JOIN_ROOM_SUCCEED = `${API_URL}/api/admin-join-room-succeed`
 export const SEND_REQUEST_JOIN_ROOM = `${API_URL}/api/request-join-room`
