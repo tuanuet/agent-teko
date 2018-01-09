@@ -57,9 +57,9 @@ class OrderProduct extends PureComponent {
                     <div className="col-5 product-price mb-1">Giá: { numberWithCommas(price) } đồng</div>
                     <div className="col-7 product-quantity mb-1">
                         <span className="pr-1">Số lượng: </span>
-                        <button className="btn btn-sm btn-success clickable" disabled={count === 1} onClick={this.decreaseCount}>-</button>
+                        <button className="btn btn-sm btn-info clickable" disabled={count === 1} onClick={this.decreaseCount}>-</button>
                         <input className="text-center" value={count} onChange={this.changeOrderCount} onKeyDown={this.handleUpDownKey} />
-                        <button className="btn btn-sm btn-success clickable" disabled={count === 500} onClick={this.increaseCount}>+</button>
+                        <button className="btn btn-sm btn-info clickable" disabled={count === 500} onClick={this.increaseCount}>+</button>
                     </div>
                     <div className="col-10 product-total">
                         Thành tiền: { numberWithCommas(price * count) } đồng
@@ -67,7 +67,7 @@ class OrderProduct extends PureComponent {
                 </div>
             </div>
             <div className="remove-product text-danger clickable" onClick={this.removeOrderProduct}>
-                <i className="fa fa-times-circle" aria-hidden="true"></i>
+                <i className="fa fa-times" aria-hidden="true"></i>
             </div>
         </div>
     }

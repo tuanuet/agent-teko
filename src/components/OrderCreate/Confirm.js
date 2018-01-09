@@ -14,7 +14,7 @@ class Confirm extends Component {
                 <span className="go-previous" onClick={this.goPrevious}>← Quay lại</span>
                 <div className="col-12 title text-center text-uppercase font-weight-bold">Kiểm tra đơn hàng</div>
                 <span className="close-order-create text-danger" onClick={toggleShowOrderCreate}>
-                    <i className="fa fa-times-circle" aria-hidden="true"></i>
+                    <i className="fa fa-times" aria-hidden="true"></i>
                 </span>
             </div>
             {/* Progress */}
@@ -29,7 +29,7 @@ class Confirm extends Component {
             </div>
             <div className="bottom-align">
                 <div className="col-12">
-                    <button type="button" className="btn btn-outline-success btn-block clickable">
+                    <button type="button" className="btn btn-outline-info btn-block clickable">
                         Xác nhận đơn hàng và Đặt đơn
                     </button>
                 </div>

@@ -108,7 +108,7 @@ class Product extends PureComponent {
             <div className="row">
                 <div className="col-12 title text-center text-uppercase font-weight-bold">Thông tin giỏ hàng</div>
                 <span className="close-order-create text-danger" onClick={toggleShowOrderCreate}>
-                    <i className="fa fa-times-circle" aria-hidden="true"></i>
+                    <i className="fa fa-times" aria-hidden="true"></i>
                 </span>
             </div>
             {/* Progress */}
@@ -164,7 +164,7 @@ class Product extends PureComponent {
                 </div> }
                 <div className="col-12">
                     <button type="button"
-                        className="btn btn-success btn-block clickable"
+                        className="btn btn-outline-info btn-block clickable"
                         onClick={this.verifyChangeStep}>
                         Xác nhận giỏ hàng
                     </button>
