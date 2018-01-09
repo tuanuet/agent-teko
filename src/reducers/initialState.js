@@ -14,7 +14,7 @@ export default {
             name: 'Bàn phím E-Blue',
             price: '209000.0000',
             instock_status: 1,
-            source_url: {},
+            source_url: { base_image: 'https://phongvu.vn/media/catalog/product/cache/23/image/380x/9df78eab33525d08d6e5fb8d27136e95/i/m/image_8.jpg' },
             count: 1
         }],
         searchProducts: []

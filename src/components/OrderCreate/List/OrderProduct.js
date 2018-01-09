@@ -48,8 +48,7 @@ class OrderProduct extends PureComponent {
 
         return <div className={`row align-items-center product-item`}>
             <div className="col-3">
-                {/* <img src={base_image} className="rounded img-fluid" /> */}
-                <img src="/images/test.png" className="rounded img-fluid" />
+                <img src={base_image} className="rounded img-fluid" />
             </div>
             <div className="col-9">
                 <div className="row">

@@ -197,6 +197,28 @@
             font-size: 13px;
             padding-bottom: 20px;
         }
+
+        .customer-block {
+            margin-top: 20px;
+            max-height: 80%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            .form-group {
+                padding-bottom: 12px;
+            }
+            .form-label {
+                font-size: 14px;
+                font-weight: bold;
+                user-select: none;
+                &.required:after {
+                    content: ' *';
+                    color: $red;
+                }
+            }
+            input, select, textarea {
+                @include slide-input;
+            }
+        }
     }
 }
 

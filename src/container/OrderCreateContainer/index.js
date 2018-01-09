@@ -6,13 +6,17 @@ import * as orderActions from 'Actions/orderActions'
 
 class OrderCreateContainer extends Component {
     render() {
+        const { customer } = this.props
+        if (!customer) return false
         return <OrderCreate {...this.props} />
     }
 }
 
 const mapStateToProps = state => {
-    const { order } = state
-    return { order }
+    const { order, currentRoomId, rooms } = state
+    const currentRoom = rooms.find(room => room.roomId === currentRoomId)
+    const customer = currentRoom ? currentRoom.customer : null
+    return { order, customer }
 }
 
 const mapDispatchToProps = dispatch => {
