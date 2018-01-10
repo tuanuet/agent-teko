@@ -30,3 +30,7 @@ export const resetOrder = () => {
 export const removeOrderProduct = id => {
     return { type: types.REMOVE_ORDER_PRODUCT, id }
 }
+
+export const addOrderCustomerInfo = customer => {
+    return { type: types.ADD_ORDER_CUSTOMER_INFO, customer}
+}

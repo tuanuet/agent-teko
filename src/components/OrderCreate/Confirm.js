@@ -1,12 +1,41 @@
 import React, { Component } from 'react'
 import Progress from './Progress'
+import ConfirmProduct from './List/ConfirmProduct'
+import cities from 'Constants/cities'
+import counties from 'Constants/counties'
+import { numberWithCommas } from 'Helper'
 
 class Confirm extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isLoadingRequest: false,
+            error: ''
+        }
+    }
     goPrevious = () => {
         this.props.changeStep('customer')
     }
+    sendCreateOrder = () => {
+        this.setState({
+            isLoadingRequest: true
+        }, () => {
+
+        })
+    }
     render() {
-        const { step, changeStep, toggleShowOrderCreate } = this.props
+        const { isLoadingRequest } = this.state
+        const { step, changeStep, toggleShowOrderCreate, order } = this.props
+        const { customer, orderProducts } = order
+        const { name, phone, address, city, county, note } = customer
+        const cityName = cities.find(tmp => tmp.region_id == city).default_name
+        const countyName = counties.find(tmp => tmp.city_id == county).name
+
+        let totalPrice = 0
+        orderProducts.forEach(product => {
+            const { price, count } = product
+            totalPrice += price * count
+        })
 
         return <div>
             {/* Title */}
@@ -19,18 +48,53 @@ class Confirm extends Component {
             </div>
             {/* Progress */}
             <Progress step={step} />
-            {/* Search products */}
-            <div className="row">
-                <div className="col-12"></div>
-            </div>
-            {/* Show all products */}
-            <div className="row">
-                <div className="col-12"></div>
+            {/* Show order information */}
+            <div className="row confirm-order-block">
+                <div className="col-12 p-3">
+                    <div className="p-3">
+                        <div className="block-title">
+                            Thông tin giao hàng
+                        </div>
+                        <div className="customer-info-block pb-4">
+                            <div>
+                                <span>Họ tên</span>
+                                {name}
+                            </div>
+                            <div>
+                                <span>Địa chỉ</span>
+                                { [address, cityName, countyName].join(', ') }
+                            </div>
+                            <div>
+                                <span>Điện thoại</span>
+                                {phone}
+                            </div>
+                            <div>
+                                <span>Ghi chú</span>
+                                {note}
+                            </div>
+                        </div>
+                        <div className="block-title">
+                            Thông tin giỏ hàng
+                        </div>
+                        <div className="order-info-block pb-4">
+                            { orderProducts.map(product => {
+                                return <ConfirmProduct key={product.id} product={product} />
+                            }) }
+                        </div>
+                    </div>
+                </div>
             </div>
             <div className="bottom-align">
+                { orderProducts.length > 0 && <div className="col-12 total-price text-center">
+                    Tổng giá trị đơn hàng: { numberWithCommas(totalPrice) } đồng
+                </div> }
                 <div className="col-12">
-                    <button type="button" className="btn btn-outline-info btn-block clickable">
-                        Xác nhận đơn hàng và Đặt đơn
+                    <button type="button"
+                        className="btn btn-outline-warning btn-block clickable next-step-button"
+                        onDoubleClick={this.sendCreateOrder}
+                        disabled={isLoadingRequest}>
+                        { isLoadingRequest && <i className="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> }
+                        { isLoadingRequest ? `Đang xử lý yêu cầu` : `Ấn đúp để xác nhận đơn hàng và đặt đơn` }
                     </button>
                 </div>
             </div>

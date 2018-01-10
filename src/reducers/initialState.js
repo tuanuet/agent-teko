@@ -8,7 +8,16 @@ export default {
     isLoadingMessage: false, // TODO: Should remove
     subscriptions: [],
     order: {
-        customer: {},
+        customer: {
+            name: 'Hải Nam',
+            phone: '01683978805',
+            city: '827',
+            county: '571',
+            address: '444 Hoàng Hoa Thám',
+            email: 'lehainam.dev@gmail.com',
+            note: 'Đơn hàng test\nNam tầng 9',
+            isGetBill: false
+        },
         orderProducts: [{
             id: 172,
             name: 'Bàn phím E-Blue',

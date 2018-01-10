@@ -13,10 +13,10 @@ class OrderCreateContainer extends Component {
 }
 
 const mapStateToProps = state => {
-    const { order, currentRoomId, rooms } = state
+    const { order, currentRoomId, rooms, agent } = state
     const currentRoom = rooms.find(room => room.roomId === currentRoomId)
     const customer = currentRoom ? currentRoom.customer : null
-    return { order, customer }
+    return { order, customer, agent }
 }
 
 const mapDispatchToProps = dispatch => {

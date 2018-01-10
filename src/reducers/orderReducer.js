@@ -50,6 +50,11 @@ export default (state = initialState.order, action) => {
                 ...state,
                 orderProducts: state.orderProducts.filter(product => product.id !== action.id)
             }
+        case types.ADD_ORDER_CUSTOMER_INFO:
+            return {
+                ...state,
+                customer: action.customer
+            }
         case types.RESET_ORDER:
             return initialState.order
         default:

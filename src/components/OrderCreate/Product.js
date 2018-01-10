@@ -164,9 +164,9 @@ class Product extends PureComponent {
                 </div> }
                 <div className="col-12">
                     <button type="button"
-                        className="btn btn-outline-info btn-block clickable"
+                        className="btn btn-outline-warning btn-block clickable"
                         onClick={this.verifyChangeStep}>
-                        Xác nhận giỏ hàng
+                        Xác nhận thông tin giỏ hàng
                     </button>
                 </div>
             </div>
