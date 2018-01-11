@@ -85,7 +85,7 @@ class Customer extends Component {
         else return false
     }
     verifyChangeStep = () => {
-        const { name, phone, city, county, address, isGetBill } = this.state
+        const { affiliateCode, name, phone, city, county, address, isGetBill, email, note } = this.state
         const { company, taxNumber, addressOnBill, addressReceiveBill } = this.state
         const { changeStep, actions } = this.props
 
@@ -93,7 +93,7 @@ class Customer extends Component {
 
         if (isValid) {
             let customer = {
-                name, phone, city, county, address, isGetBill
+                affiliateCode, name, phone, city, county, address, isGetBill, email, note
             }
             if (isGetBill) customer = {
                 ...customer,

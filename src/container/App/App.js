@@ -17,7 +17,7 @@ class App extends React.Component {
         this.state = {
             width: window.innerWidth,
             isShowInfo: false,
-            isShowOrderCreate: true
+            isShowOrderCreate: false
         }
     }
     componentWillMount() {

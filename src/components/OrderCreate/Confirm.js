@@ -3,7 +3,7 @@ import Progress from './Progress'
 import ConfirmProduct from './List/ConfirmProduct'
 import cities from 'Constants/cities'
 import counties from 'Constants/counties'
-import { numberWithCommas } from 'Helper'
+import { numberWithCommas, getCreateOrderData } from 'Helper'
 
 class Confirm extends Component {
     constructor(props) {
@@ -17,10 +17,13 @@ class Confirm extends Component {
         this.props.changeStep('customer')
     }
     sendCreateOrder = () => {
+        const { order: { customer, orderProducts } } = this.props
+
         this.setState({
             isLoadingRequest: true
         }, () => {
-
+            const data = getCreateOrderData(customer, orderProducts)
+            console.log(data);
         })
     }
     render() {
@@ -56,21 +59,21 @@ class Confirm extends Component {
                             Thông tin giao hàng
                         </div>
                         <div className="customer-info-block pb-4">
-                            <div>
-                                <span>Họ tên</span>
-                                {name}
+                            <div className="row">
+                                <span className="col-3 label">Họ tên</span>
+                                <span className="col-9">{name}</span>
                             </div>
-                            <div>
-                                <span>Địa chỉ</span>
-                                { [address, cityName, countyName].join(', ') }
+                            <div className="row">
+                                <span className="col-3 label">Địa chỉ</span>
+                                <span className="col-9">{ [address, cityName, countyName].join(', ') }</span>
                             </div>
-                            <div>
-                                <span>Điện thoại</span>
-                                {phone}
+                            <div className="row">
+                                <span className="col-3 label">Điện thoại</span>
+                                <span className="col-9">{phone}</span>
                             </div>
-                            <div>
-                                <span>Ghi chú</span>
-                                {note}
+                            <div className="row">
+                                <span className="col-3 label">Ghi chú</span>
+                                <span className="col-9">{note}</span>
                             </div>
                         </div>
                         <div className="block-title">

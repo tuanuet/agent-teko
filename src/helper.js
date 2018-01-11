@@ -9,6 +9,8 @@ import {
     AUDIO,
     INFO
 } from './constants/MessageTypes'
+import cities from 'Constants/cities'
+import counties from 'Constants/counties'
 
 let emojiArray = []
 emos.forEach(emo => {
@@ -55,6 +57,66 @@ export const formatDatetime = datetime => {
 
 export const numberWithCommas = x => {
     return parseInt(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export const getCreateOrderData = (customer, orderProducts) => {
+    try {
+        const { affiliateCode, name, email, phone, address, note, city, county } = customer
+        const { isGetBill, company, taxNumber, addressOnBill, addressReceiveBill } = customer
+
+        const findCity = cities.find(tmp => tmp.region_id == city)
+        const findCounty = counties.find(tmp => tmp.city_id == county)
+
+        if (!findCity) throw new Error(`Empty city`)
+        if (!findCounty) throw new Error(`Empty county`)
+
+        let totalPrice = 0
+        orderProducts.forEach(product => {
+            const { price, count } = product
+            totalPrice += price * count
+        })
+
+        const initData = {
+            customer_name: name,
+            customer_email: email,
+            customer_note: note,
+            province_code: findCity.province_code,
+            grand_total: parseInt(totalPrice),
+            deposit_amount: 0,
+            deposit_method: 'COD',
+            discount_amount: 0,
+            is_vat: isGetBill === false ? 0 : 1,
+            shipping: {
+                name,
+                email,
+                telephone: phone,
+                province: findCity.province_code,
+                address_code: findCounty.code,
+                street: address,
+                district,
+            },
+            // billing,
+            // products:,
+            affiliate_code: affiliateCode,
+            created_at: now(),
+            // createdById,
+            // createdByName,
+        }
+
+        const data = {
+            ...initData,
+            ...( isGetBill ? {
+                vat_id: taxNumber,
+                vat_name: company,
+                vat_address: addressOnBill,
+                vat_address_to: addressReceiveBill
+            } : {})
+        }
+
+        return { status: true, data }
+    } catch (err) {
+        return { status: false, err }
+    }
 }
 
 export const formatLatestMessage = message => {

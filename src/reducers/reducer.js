@@ -15,11 +15,11 @@ let reducer = combineReducers({
     agent,
     agents,
     tags,
+    order,
     currentRoomId,
     isLoadingMessages,
     isLoadingRooms,
     subscriptions,
-    order
 })
 
 export default reducer

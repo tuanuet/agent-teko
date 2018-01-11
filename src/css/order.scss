@@ -240,19 +240,24 @@
                 text-transform: uppercase;
                 font-weight: bold;
                 margin-bottom: 8px;
+                user-select: none;
             }
             .customer-info-block {
-                span {
-                    width: 100px;
-                    font-weight: bold;
-                    display: inline-block;
-                    &:after {
-                        content: ':';
+                div {
+                    white-space: pre;
+                    .label {
+                        font-weight: bold;
+                        display: inline-block;
+                        &:after {
+                            content: ':';
+                        }
                     }
                 }
             }
             .order-info-block {
                 max-height: 55%;
+                overflow-x: hidden;
+                overflow-y: auto;
             }
         }
     }

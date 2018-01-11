@@ -7,7 +7,7 @@ class OrderCreateComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            step: 'confirm' // <product|customer|confirm>
+            step: 'product' // <product|customer|confirm>
         }
     }
     changeStep = step => {
