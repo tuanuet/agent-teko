@@ -5,6 +5,7 @@ import * as chatActions from '../../container/MiddleContainer/chatActions'
 import SelectAgent from "../Modal/SelectAgent"
 import SelectTheme from "../Modal/SelectTheme"
 import _ from 'lodash'
+import ConfirmModal from 'Components/Modal/Confirm'
 
 
 class Header extends React.Component {
@@ -25,7 +26,19 @@ class Header extends React.Component {
                 selectListAgent: false
             },
             selectedTag: null,
-            filterTag: ''
+            filterTag: '',
+            confirmModal: {
+                closeRoomModal: {
+                    isVisible: false
+                },
+                deleteTagModal: {
+                    isVisible: false,
+                    tagId: null
+                },
+                exitRoomModal: {
+                    isVisible: false
+                }
+            }
         }
         this.sendRequestUserRating = this.sendRequestUserRating.bind(this)
 
@@ -90,9 +103,15 @@ class Header extends React.Component {
     }
 
     unFollowRoom = () => {
-        if (confirm('Xác nhận đóng phòng chat này lại?')) {
-            this.props.actions.unFollowRoom(this.props.currentRoomId, 3)
-        }
+        let confirmModal = this.state.confirmModal
+        this.setState({
+            confirmModal: {
+                ...confirmModal,
+                closeRoomModal: {
+                    isVisible: true
+                }
+            }
+        })
     }
 
     onSaveTag(tag) {
@@ -104,23 +123,28 @@ class Header extends React.Component {
     }
 
     onDeleteTag(tagId) {
-        const { currentRoom } = this.props
-        if (confirm('Bạn có muốn bỏ tag này?')) {
-            this.props.actions.deleteTagOfCustomerRequested(currentRoom.customer.id, tagId)
-        }
+        let confirmModal = this.state.confirmModal
+        this.setState({
+            confirmModal: {
+                ...confirmModal,
+                deleteTagModal: {
+                    isVisible: true,
+                    tagId: tagId
+                }
+            }
+        })
     }
 
     agentExitRoom = () => {
-        const { currentRoom, actions, currentAgent } = this.props
-        const onlyOneAdmin = currentRoom.agents.length === 1
-        const confirmMessage = `Bạn có muốn thoát khỏi phòng chat này?\n\nSau khi thoát, phòng chat này sẽ không hiển thị trong tab Đang hoạt động của bạn.\n\nSau khi thoát, nếu không còn admin nào quản lý khách hàng này, khách hàng sẽ được chuyển về tab Đang chờ.${onlyOneAdmin ? `\n\nLưu ý: Hiện tại, bạn là admin duy nhất quản lý khách hàng này.` : ``}`
-
-        if (confirm(confirmMessage)) {
-            actions.adminExitRoom(currentRoom.roomId)
-            if (!currentAgent.isBroadcast) {
-                actions.removeRoom(currentRoom.roomId)
+        let confirmModal = this.state.confirmModal
+        this.setState({
+            confirmModal: {
+                ...confirmModal,
+                exitRoomModal: {
+                    isVisible: true,
+                }
             }
-        }
+        })
     }
 
     markAsUnread = () => {
@@ -155,10 +179,65 @@ class Header extends React.Component {
         actions.offCurrentRoom()
     }
 
+    onOkConfirmModal = () => {
+        // const { currentRoom, actions, currentAgent } = this.props
+        // const onlyOneAdmin = currentRoom.agents.length === 1
+        // const confirmMessage = `Bạn có muốn thoát khỏi phòng chat này?\n\nSau khi thoát, phòng chat này sẽ không hiển thị trong tab Đang hoạt động của bạn.\n\nSau khi thoát, nếu không còn admin nào quản lý khách hàng này, khách hàng sẽ được chuyển về tab Đang chờ.${onlyOneAdmin ? `\n\nLưu ý: Hiện tại, bạn là admin duy nhất quản lý khách hàng này.` : ``}`
+        //
+        // if (confirm(confirmMessage)) {
+        //     actions.adminExitRoom(currentRoom.roomId)
+        //     if (!currentAgent.isBroadcast) {
+        //         actions.removeRoom(currentRoom.roomId)
+        //     }
+        // }
+        const { currentRoom, actions, currentRoomId } = this.props
+
+        let {confirmModal} = this.state
+        if (confirmModal.exitRoomModal.isVisible) {
+            actions.removeRoom(currentRoom.roomId)
+        } else if (confirmModal.deleteTagModal.isVisible) {
+            actions.deleteTagOfCustomerRequested(currentRoom.customer.id, confirmModal.deleteTagModal.tagId)
+        } else if (confirmModal.closeRoomModal.isVisible) {
+            actions.unFollowRoom(currentRoomId, 3)
+        }
+        this.setState({
+            confirmModal: {
+                closeRoomModal: {
+                    isVisible: false
+                },
+                deleteTagModal: {
+                    isVisible: false,
+                    tagId: null
+                },
+                exitRoomModal: {
+                    isVisible: false
+                }
+            }
+        })
+    }
+
+    onCancelConfirmModal = e => {
+        this.setState({
+            confirmModal: {
+                closeRoomModal: {
+                    isVisible: false
+                },
+                deleteTagModal: {
+                    isVisible: false,
+                    tagId: null
+                },
+                exitRoomModal: {
+                    isVisible: false
+                }
+            }
+        })
+    }
+
     render() {
         const { filterTag } = this.state
         const { isLoadingMessages, searchMessage, isSearching, numResult, currentIndex } = this.props
         const { currentRoom, listOfTags, tagsOfRoom, agents, currentAgent, isMobile, toggleShowInfo } = this.props
+        const onlyOneAdmin = currentRoom.agents.length === 1
         let lookup = _.keyBy(tagsOfRoom, tag => tag.id)
         let availableTags = _.filter(listOfTags, item => {
             return lookup[item.id] === undefined
@@ -253,6 +332,27 @@ class Header extends React.Component {
                         )}
                     </div>
                 </div>
+                <ConfirmModal
+                    visible={this.state.confirmModal.deleteTagModal.isVisible}
+                    title='Thông báo'
+                    content='Bạn có xác nhận bỏ tag này?'
+                    onOk={this.onOkConfirmModal}
+                    onCancel={this.onCancelConfirmModal}
+                />
+                <ConfirmModal
+                    visible={this.state.confirmModal.closeRoomModal.isVisible}
+                    title='Thông báo'
+                    content='Bạn có xác nhận đóng phòng chat này lại?'
+                    onOk={this.onOkConfirmModal}
+                    onCancel={this.onCancelConfirmModal}
+                />
+                <ConfirmModal
+                    visible={this.state.confirmModal.exitRoomModal.isVisible}
+                    title='Thông báo'
+                    content={`Bạn có muốn thoát khỏi phòng chat này?\n\nSau khi thoát, phòng chat này sẽ không hiển thị trong tab Đang hoạt động của bạn.\n\nSau khi thoát, nếu không còn admin nào quản lý khách hàng này, khách hàng sẽ được chuyển về tab Đang chờ.${onlyOneAdmin ? `\n\nLưu ý: Hiện tại, bạn là admin duy nhất quản lý khách hàng này.` : ``}`}
+                    onOk={this.onOkConfirmModal}
+                    onCancel={this.onCancelConfirmModal}
+                />
             </div>
         )
     }

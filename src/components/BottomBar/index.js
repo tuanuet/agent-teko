@@ -3,6 +3,7 @@ import EmojiBoard from '../EmojiBoard'
 import * as actions from '../../actions/action'
 import moment from 'moment'
 import ReplyBoard from './ReplyBoard'
+import ConfirmModal from 'Components/Modal/Confirm'
 
 const getMessageFromClient = message => {
     const { senderId, senderName, messageType, messageFrom, content, fileName, createdAt } = message
@@ -24,7 +25,11 @@ class BottomBar extends React.Component {
             chatValue: '',
             isDragOver: false,
             isShowEmojiBoard: false,
-            isShowReplyBoard: false
+            isShowReplyBoard: false,
+            confirmModal: {
+                isVisible: false,
+                replyId: null
+            }
         }
     }
     enter = e => {
@@ -221,17 +226,40 @@ class BottomBar extends React.Component {
     };
 
     deleteQuickReply = replyId => {
-        if (confirm('Xác nhận xóa tin nhắn nhanh này ?')) {
-            this.props.dispatch(actions.deleteQuickReply(replyId))
-            return true
-        } else return false
+        this.setState({
+            confirmModal: {
+                isVisible: true,
+                replyId: replyId
+            },
+        })
     };
 
     addQuickReply = replyContent => {
         this.props.dispatch(actions.addQuickReply(replyContent));
     };
 
+    onOkConfirmModal = e => {
+        this.props.dispatch(actions.deleteQuickReply(this.state.confirmModal.replyId))
+        this.setState({
+            isShowReplyBoard: true,
+            confirmModal: {
+                isVisible: false
+            },
+        })
+
+    }
+
+    onCancelConfirmModal = e => {
+        this.setState({
+            isShowReplyBoard: true,
+            confirmModal: {
+                isVisible: false
+            },
+        })
+    }
+
     render() {
+        console.log("confirm modal", this.state.confirmModal.isVisible)
 
         const { chatValue, isDragOver, isShowEmojiBoard, isShowReplyBoard } = this.state;
         const { currentRoom, agent, isMobile } = this.props;
@@ -280,6 +308,13 @@ class BottomBar extends React.Component {
                         insertEmoji={this.insertEmoji}
                         toggleEmojiBoard={this.toggleEmojiBoard} /> }
                 </div>
+                <ConfirmModal
+                    visible={this.state.confirmModal.isVisible}
+                    title='Thông báo'
+                    content='Bạn có xác nhận xóa tin nhắn nhanh này?'
+                    onOk={this.onOkConfirmModal}
+                    onCancel={this.onCancelConfirmModal}
+                    />
             </div>
         )
     }

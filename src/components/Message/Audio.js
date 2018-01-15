@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import axios from 'axios'
 import { ACCESS_TOKEN } from '../../constants/Server'
 import {formatDatetime} from '../../helper';
+import {Tooltip} from 'antd'
 
 class Audio extends PureComponent {
     constructor(props) {
@@ -46,20 +47,23 @@ class Audio extends PureComponent {
         const { createdAt } = this.props.message
         const role = message.messageFrom === 0 ? 'self' : 'other'
 
-        return <div className={`message-margin ${role}`}
-                    title={formatDatetime(createdAt)}
-                    data-toggle="tooltip"
-                    data-placement={role !== 'self' ? 'left' : 'right'}>
-            { isLoading ? <div className="loading-attachment">
-                <i className="spinner fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
-            </div> : <audio
-                onError={this.handleErrorContent}
-                className="message-audio"
-                src={content}
-                controls
-                style={{width: 400}}
-            /> }
-        </div>
+        return
+        <Tooltip
+            placement={role !== 'self' ? 'left' : 'right'}
+            title={formatDatetime(createdAt)}
+        >
+            <div className={`message-margin ${role}`}>
+                { isLoading ? <div className="loading-attachment">
+                    <i className="spinner fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
+                </div> : <audio
+                    onError={this.handleErrorContent}
+                    className="message-audio"
+                    src={content}
+                    controls
+                    style={{width: 400}}
+                /> }
+            </div>
+        </Tooltip>
     }
 }
 
