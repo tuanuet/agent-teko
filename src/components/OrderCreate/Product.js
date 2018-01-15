@@ -2,13 +2,15 @@ import React, { PureComponent } from 'react'
 import Progress from './Progress'
 import SearchProduct from './List/SearchProduct'
 import OrderProduct from './List/OrderProduct'
-import { numberWithCommas } from 'Helper'
+import { numberWithCommas, getCorrectPrice } from 'Helper'
 
 class Product extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
             isSearching: false,
+            isSearchingMore: false,
+            isHavingMore: true,
             shouldShowSearchResult: false,
             searchValue: '',
             error: ''
@@ -17,6 +19,28 @@ class Product extends PureComponent {
     }
     componentDidMount() {
         const { actions } = this.props
+        this.searchResult.addEventListener('scroll', this.trackScrolling)
+    }
+    trackScrolling = () => {
+        const { isSearchingMore, isHavingMore, searchValue } = this.state
+        const { order: { searchProducts }, actions } = this.props
+        if (isSearchingMore) return false
+        if (!isHavingMore) return false
+        if (searchProducts.length === 0) return false
+        const { scrollTop, scrollHeight, clientHeight } = this.searchResult
+        if (scrollTop + clientHeight === scrollHeight) { // Scroll to bottom
+            const offset = searchProducts.length, limit = 10
+            this.setState({
+                isSearchingMore: true
+            }, () => {
+                actions.fetchMoreSearchProducts(searchValue, offset, limit).then(res => {
+                    this.setState({
+                        isSearchingMore: false,
+                        isHavingMore: res.length === 0 ? false : true
+                    })
+                })
+            })
+        }
     }
     searchProducts = () => {
         const { actions } = this.props
@@ -50,7 +74,8 @@ class Product extends PureComponent {
         const value = e.target.value
         clearTimeout(this.timer)
         this.setState({
-            searchValue: value
+            searchValue: value,
+            isHavingMore: true
         }, () => {
             if (value === '') {
                 this.setState({
@@ -93,14 +118,14 @@ class Product extends PureComponent {
         clearTimeout(this.timer)
     }
     render() {
-        const { isSearching, searchValue, shouldShowSearchResult, error } = this.state
+        const { isSearching, searchValue, shouldShowSearchResult, error, isSearchingMore } = this.state
         const { step, toggleShowOrderCreate, order, actions } = this.props
         const { customer, orderProducts, searchProducts } = order
 
         let totalPrice = 0
         orderProducts.forEach(product => {
             const { price, count } = product
-            totalPrice += price * count
+            totalPrice += getCorrectPrice(product) * count
         })
 
         return <div>
@@ -122,21 +147,27 @@ class Product extends PureComponent {
                             aria-hidden="true"
                             onClick={this.toggleShouldShowSearchResult}></i> }
 
-                    <input className="slide-input form-control"
+                    <input className="slide-input form-control pr-5"
                         value={searchValue}
                         onKeyDown={this.handleEnterSearchProducts}
                         onChange={this.handleChangeSearchValue}
                         placeholder="Tìm kiếm sản phẩm"
                         ref={node => this.searchInput = node} />
-                    { shouldShowSearchResult && <div className="search-result" ref={node => this.searchResult = node}>
+                    { <div className="search-result" ref={node => this.searchResult = node} style={{display: shouldShowSearchResult ? `block`: `none`}}>
                         { Array.isArray(searchProducts) ? searchProducts.length === 0 ? <div className="text-center">
                             <img className="img-fluid w-75" src="/images/not-found.jpg" />
                             <div className="product-empty-warning pb-4">
                                 Không tìm thấy sản phẩm nào phù hợp!
                             </div>
-                        </div> : searchProducts.map(product => <SearchProduct key={product.id}
+                        </div> : searchProducts.filter(product => {
+                            const { attributes: { visibility } } = product
+                            return visibility === 'Catalog, Search'
+                        }).map((product, idx) => <SearchProduct key={`${product.id}_${idx}`}
                             product={product}
                             addProductToOrder={this.addProductToOrder} />) : false }
+                        { isSearchingMore && <div className="text-center p-4">
+                            <i className="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
+                        </div> }
                     </div> }
                 </div>
             </div>

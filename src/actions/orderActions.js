@@ -1,6 +1,6 @@
 import axios from 'axios'
 import * as types from 'Constants/actionTypes'
-import { FETCH_SEARCH_PRODUCTS } from 'Constants/apiTypes'
+import { FETCH_SEARCH_PRODUCTS, FETCH_MORE_SEARCH_PRODUCTS, CREATE_ORDER } from 'Constants/apiTypes'
 
 export const fetchSearchProducts = (name, offset, limit) => {
     return dispatch => {
@@ -11,6 +11,39 @@ export const fetchSearchProducts = (name, offset, limit) => {
             if (status) {
                 dispatch({ type: `${types.FETCH_SEARCH_PRODUCTS}_SUCCEED`, products: data })
             } else dispatch({ type: `${types.FETCH_SEARCH_PRODUCTS}_FAILED`, error: data })
+        })
+    }
+}
+
+export const fetchMoreSearchProducts = (name, offset, limit) => {
+    return dispatch => {
+        return axios.get(FETCH_SEARCH_PRODUCTS, {
+            params: { name, start: offset, length: limit }
+        }).then(res => res.data).then(res => {
+            const { status, data } = res
+            if (status) {
+                dispatch({ type: `${types.FETCH_MORE_SEARCH_PRODUCTS}_SUCCEED`, products: data })
+                return data
+            } else dispatch({ type: `${types.FETCH_SEARCH_PRODUCTS}_FAILED`, error: data })
+        })
+    }
+}
+
+export const createOrder = data => {
+    return dispatch => {
+        return axios.post(CREATE_ORDER, data).then(res => res.data).then(res => {
+            const { status, orderInfo, err } = res
+            console.log(res);
+            if (!status) {
+                dispatch({ type: `${types.CREATE_ORDER}_SUCCEED`, orderInfo })
+                return res
+            } else {
+                dispatch({ type: `${types.CREATE_ORDER}_FAILED`, error: err })
+                return res
+            }
+        }).catch(err => {
+            dispatch({ type: `${types.CREATE_ORDER}_FAILED`, error: err })
+            return { status: false, err }
         })
     }
 }

@@ -50,27 +50,23 @@ class Customer extends Component {
         const name = target.name
         const value = target.type === 'checkbox' ? target.checked : target.value
 
-        this.setState({
-            [name]: value
-        }, () => {
-            // Reset county on city changed
-            if (name === 'city') this.setState({
-                county: ''
-            }, () => {
-                // Reset bill address on city and county changed
-                const { isGetBill, city, county } = this.state
-                if (!isGetBill && (name === 'city' || name === 'county')) {
-                    const currentCity = cities.find(tmp => tmp.region_id == city)
-                    const currentCounty = counties.find(tmp => tmp.city_id == county)
-                    const cityName = currentCity ? currentCity.default_name : ''
-                    const countyName = currentCounty ? currentCounty.name : ''
-                    const address = `\n${countyName}\n${cityName}`
-                    this.setState({
-                        addressOnBill: address,
-                        addressReceiveBill: address
-                    })
-                }
-            })
+        this.setState(prevState => ({
+            [name]: value,
+            county: name === 'city' ? '' : name === 'county' ? value : prevState.county
+        }), () => {
+            // Reset bill address on city and county changed
+            const { isGetBill, city, county } = this.state
+            if (!isGetBill && (name === 'city' || name === 'county')) {
+                const currentCity = cities.find(tmp => tmp.region_id == city)
+                const currentCounty = counties.find(tmp => tmp.city_id == county)
+                const cityName = currentCity ? currentCity.default_name : ''
+                const countyName = currentCounty ? currentCounty.name : ''
+                const address = `\n${countyName}\n${cityName}`
+                this.setState({
+                    addressOnBill: address,
+                    addressReceiveBill: address
+                })
+            }
         })
     }
     checkVerifiedData = () => {

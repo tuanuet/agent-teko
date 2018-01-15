@@ -103,7 +103,7 @@ class MiddleContainer extends React.Component {
     }
 
     render() {
-        const { currentRoomId, isLoadingMessages, isMobile, isShowInfo, toggleShowInfo, isShowOrderCreate } = this.props
+        const { currentRoomId, isLoadingMessages, isMobile, isShowInfo, toggleShowInfo, isShowOrderCreate, toggleShowOrderCreate } = this.props
         const { theme, searchMessage, isSearching, numResult, currentIndex } = this.state
 
         if (!currentRoomId) return false
@@ -113,6 +113,8 @@ class MiddleContainer extends React.Component {
             <Header
                 isMobile={isMobile}
                 toggleShowInfo={toggleShowInfo}
+                isShowOrderCreate={isShowOrderCreate}
+                toggleShowOrderCreate={toggleShowOrderCreate}
                 searchMessage={searchMessage}
                 isSearching={isSearching}
                 numResult={numResult}

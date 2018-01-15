@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
-import { numberWithCommas } from 'Helper'
+import { numberWithCommas, checkSpecialPrice } from 'Helper'
+import { TEKSHOP_URL } from 'Constants/Server'
 
 class SearchProduct extends PureComponent {
     handleKeyEvent = e => {
@@ -16,9 +17,13 @@ class SearchProduct extends PureComponent {
         const { product } = this.props
         this.props.addProductToOrder(product)
     }
+    stopPropagation = e => {
+        e.stopPropagation()
+    }
     render() {
         const { product } = this.props
-        const { name, instock_status, source_url: { base_image }, price } = product
+        const { name, instock_status, source_url: { base_image }, price, attributes: { url_path, special_price } } = product
+        const isSpecialPrice = checkSpecialPrice(product)
 
         return <div className={`row align-items-center clickable product-item ${instock_status ? `` : `disabled`}`} onClick={this.addProductToOrder} tabIndex={0} onKeyDown={this.handleKeyEvent}>
             <div className="col-3">
@@ -27,12 +32,18 @@ class SearchProduct extends PureComponent {
             <div className="col-9">
                 <div className="row">
                     <div className="col-12 product-name mb-1">{name}</div>
-                    <div className="col-8 product-price mb-1">Giá: {numberWithCommas(price)} đồng</div>
+                    <div className="col-8 product-price mb-1">Giá: { isSpecialPrice ? <span>
+                        <span className="older-price pr-1">{ numberWithCommas(price) }</span>
+                        <span>{ numberWithCommas(special_price) }</span>
+                    </span> : numberWithCommas(price) } đồng</div>
                     { !instock_status && <div className="col-4 product-out-stock">
                         <button className="btn btn-sm btn-warning float-right">Hết hàng</button>
                     </div> }
                 </div>
             </div>
+            { url_path && <a className="popup-link" href={`${TEKSHOP_URL}/${url_path}`} target="_blank" onClick={this.stopPropagation}>
+                <i className="fa fa-external-link" aria-hidden="true"></i>
+            </a> }
         </div>
     }
 }

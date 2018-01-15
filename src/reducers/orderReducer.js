@@ -13,6 +13,11 @@ export default (state = initialState.order, action) => {
                 ...state,
                 searchProducts: action.error
             }
+        case `${types.FETCH_MORE_SEARCH_PRODUCTS}_SUCCEED`:
+            return {
+                ...state,
+                searchProducts: [...state.searchProducts, ...action.products]
+            }
         case types.FETCH_MORE_SEARCH_PRODUCTS_SUCCEED:
             return state
         case types.ADD_PRODUCT_TO_ORDER:

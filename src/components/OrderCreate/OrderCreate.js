@@ -43,6 +43,9 @@ class OrderCreateComponent extends Component {
             else if (step === 'confirm')
                 return <Confirm step={step}
                     order={order}
+                    agent={agent}
+                    actions={actions}
+                    customer={customer}
                     changeStep={this.changeStep}
                     toggleShowOrderCreate={this.toggleShowOrderCreate} />
             else return false

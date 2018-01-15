@@ -19,10 +19,7 @@ export default class Attachment extends React.PureComponent {
         return (
             <div>
                 <div className={`chat-group ${role}`}
-                     title={formatDatetime(createdAt)}
-                     data-toggle="tooltip"
-                     data-placement={role !== 'self' ? 'left' : 'right'}
-                >
+                    title={formatDatetime(createdAt)}>
                     <div className="chat"><div>
                         <img style={{width: 20, marginRight: 10}} src="/images/client/attachment.png"/><a href={content}>{message.fileName}</a>
                     </div></div>

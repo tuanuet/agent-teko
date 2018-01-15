@@ -56,9 +56,7 @@ class Video extends PureComponent {
         const role = message.messageFrom === 0 ? 'self' : 'other'
 
         return <div className={`message-margin ${role}`}
-                    title={formatDatetime(createdAt)}
-                    data-toggle="tooltip"
-                    data-placement={role !== 'self' ? 'left' : 'right'}>
+                    title={formatDatetime(createdAt)}>
             { isLoading ? <div className="loading-attachment">
                 <i className="spinner fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ color: '#2b7ec9' }}></i>
             </div> : <video onLoad={this.scrollDown} onError={this.handleErrorContent} className="message-video" width="480" controls>

@@ -8,29 +8,8 @@ export default {
     isLoadingMessage: false, // TODO: Should remove
     subscriptions: [],
     order: {
-        customer: {
-            affiliateCode: '50612',
-            name: 'Hải Nam',
-            phone: '01683978805',
-            city: '827',
-            county: '571',
-            address: '444 Hoàng Hoa Thám',
-            email: 'lehainam.dev@gmail.com',
-            note: 'Đơn hàng test\nNam tầng 9',
-            isGetBill: true,
-            company: 'Teko',
-            taxNumber: '101275',
-            addressOnBill: '444 Hoàng Hoa Thám\nQuận Ba Đình\nHà Nội',
-            addressReceiveBill: '102 Hồ Ngọc Khánh\nQuận Ba Đình\nHà Nội',
-        },
-        orderProducts: [{
-            id: 172,
-            name: 'Bàn phím E-Blue',
-            price: '209000.0000',
-            instock_status: 1,
-            source_url: { base_image: 'https://phongvu.vn/media/catalog/product/cache/23/image/380x/9df78eab33525d08d6e5fb8d27136e95/i/m/image_8.jpg' },
-            count: 1
-        }],
+        customer: {},
+        orderProducts: [],
         searchProducts: []
     }
 };
@@ -100,6 +79,7 @@ const exampleState = {
         orderProducts: [{
             id: 172,
             name: 'Bàn phím E-Blue',
+            sku: 'LTP-ASUS-1001',
             price: '209000.0000',
             instock_status: 1,
             source_url: { base_image: 'https://phongvu.vn/media/catalog/product/cache/23/image/380x/9df78eab33525d08d6e5fb8d27136e95/i/m/image_8.jpg' },

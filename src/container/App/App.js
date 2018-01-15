@@ -17,7 +17,7 @@ class App extends React.Component {
         this.state = {
             width: window.innerWidth,
             isShowInfo: false,
-            isShowOrderCreate: false
+            isShowOrderCreate: true
         }
     }
     componentWillMount() {
@@ -60,7 +60,8 @@ class App extends React.Component {
                     isShowInfo={isShowInfo}
                     isShowOrderCreate={isShowOrderCreate}
                     isMobile={isMobile}
-                    toggleShowInfo={this.toggleShowInfo} />
+                    toggleShowInfo={this.toggleShowInfo}
+                    toggleShowOrderCreate={this.toggleShowOrderCreate} />
                 <RightContainer
                     isShowInfo={isShowInfo}
                     isShowOrderCreate={isShowOrderCreate}

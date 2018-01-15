@@ -12,10 +12,7 @@ export default class Default extends React.PureComponent {
             <div>
                 <div className={`chat-group ${role}`}>
                     <div className={`chat ${message.isError ? `faded` : ``}`}
-                         title={formatDatetime(message.createdAt)}
-                         data-toggle="tooltip"
-                         data-placement={role !== 'self' ? 'left' : 'right'}
-                    >
+                        title={formatDatetime(message.createdAt)}>
                         <div className="sender-name">{message.senderName}</div>
                         <span className={message.content && searchMessage &&  message.content.toLowerCase().includes(searchMessage.toLowerCase()) && `search-matching-item search-right-message`}>
                             { message.content ? message.content.trim().split(' ').map((word, idx, { length }) => {

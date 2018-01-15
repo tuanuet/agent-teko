@@ -59,7 +59,33 @@ export const numberWithCommas = x => {
     return parseInt(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export const getCreateOrderData = (customer, orderProducts) => {
+export const checkSpecialPrice = product => {
+    const { attributes: { special_price, special_from_date, special_to_date } } = product
+    const now = moment().format('YYYY-MM-DD HH:mm:ss')
+    if (special_price === null) return false
+    if (special_from_date === null && special_to_date === null) return true
+    if (special_from_date !== null && special_to_date !== null) {
+        if (special_from_date <= now && now <= special_to_date) return true
+        else return false
+    }
+    if (special_from_date !== null) {
+        if (special_from_date <= now) return true
+        else return false
+    }
+    if (special_to_date !== null) {
+        if (now <= special_to_date) return true
+        else return false
+    }
+    return true
+}
+
+export const getCorrectPrice = product => {
+    const { price, attributes: { special_price } } = product
+    const isSpecialPrice = checkSpecialPrice(product)
+    return isSpecialPrice ? special_price : price
+}
+
+export const getCreateOrderData = (customer, orderProducts, agent) => {
     try {
         const { affiliateCode, name, email, phone, address, note, city, county } = customer
         const { isGetBill, company, taxNumber, addressOnBill, addressReceiveBill } = customer
@@ -67,13 +93,14 @@ export const getCreateOrderData = (customer, orderProducts) => {
         const findCity = cities.find(tmp => tmp.region_id == city)
         const findCounty = counties.find(tmp => tmp.city_id == county)
 
-        if (!findCity) throw new Error(`Empty city`)
-        if (!findCounty) throw new Error(`Empty county`)
+        if (!findCity) throw new Error(`Không tìm thấy tỉnh thành tương ứng`)
+        if (!findCounty) throw new Error(`Không tìm thấy quận huyện tương ứng`)
+        if (orderProducts.length === 0) throw new Error(`Đơn hàng trống`)
 
         let totalPrice = 0
         orderProducts.forEach(product => {
             const { price, count } = product
-            totalPrice += price * count
+            totalPrice += parseInt(getCorrectPrice(product) * count)
         })
 
         const initData = {
@@ -88,19 +115,38 @@ export const getCreateOrderData = (customer, orderProducts) => {
             is_vat: isGetBill === false ? 0 : 1,
             shipping: {
                 name,
-                email,
+                // email,
                 telephone: phone,
                 province: findCity.province_code,
                 address_code: findCounty.code,
                 street: address,
-                district,
+                district: findCounty.name,
             },
-            // billing,
-            // products:,
+            billing: {
+                name,
+                email,
+                telephone: phone,
+                // company,
+                addressCode: findCounty.code,
+                street: address,
+                district: findCounty.name,
+            },
+            products: orderProducts.map(product => {
+                const { id, sku, name, price, count } = product
+                return {
+                    product_id: id,
+                    product_sku: sku,
+                    product_type: 'simple',
+                    product_name: name,
+                    price: parseInt(price),
+                    quantity: count,
+                    discount_amount: 0
+                }
+            }),
             affiliate_code: affiliateCode,
-            created_at: now(),
+            created_at: moment().subtract(7, 'hours').format('YYYY-MM-DD HH:mm:ss'),
             // createdById,
-            // createdByName,
+            createdByName: `${agent.name}#${agent.id} from ChatTool`,
         }
 
         const data = {

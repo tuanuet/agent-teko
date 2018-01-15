@@ -93,10 +93,7 @@ export default class Image extends React.PureComponent {
 
         return (
             <div className={role}
-                 title={formatDatetime(createdAt)}
-                 data-toggle="tooltip"
-                 data-placement={role !== 'self' ? 'left' : 'right'}
-            >
+                 title={formatDatetime(createdAt)}>
                 <div className="image">
                     <div className="content">
                         { isLoading ? <div className="message-margin loading-attachment">

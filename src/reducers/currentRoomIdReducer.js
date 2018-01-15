@@ -15,6 +15,8 @@ export default function currentRoomIdReducer(state=initialState.currentRoomId, a
             return action.roomId
         case types.OFF_CURRENT_ROOM:
             return null
+        case types.ROOMS_FETCH_SUCCEED:
+            return 21
         default:
             return state;
     }

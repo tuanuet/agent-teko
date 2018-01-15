@@ -90,7 +90,9 @@ class Header extends React.Component {
     }
 
     unFollowRoom = () => {
+        const { isShowOrderCreate, toggleShowOrderCreate } = this.props
         if (confirm('Xác nhận đóng phòng chat này lại?')) {
+            if (isShowOrderCreate) toggleShowOrderCreate()
             this.props.actions.unFollowRoom(this.props.currentRoomId, 3)
         }
     }
